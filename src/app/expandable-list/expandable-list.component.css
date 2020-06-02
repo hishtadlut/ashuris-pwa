@@ -1,0 +1,17 @@
+.hidden {
+  display: none;
+}
+
+.expandeable-list {
+  width: 80%;
+  background-color: aqua;
+  margin: 20px;
+  border-color: #bce0fd;
+  border-width: 1px;
+  display: block;
+  /* border-style: solid; */
+}
+
+.listTitle {
+  background-color: #2699fb;
+}

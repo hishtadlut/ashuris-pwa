@@ -1,0 +1,17 @@
+<div>
+  <form [formGroup]="writerForm">
+    <input placeholder="שם פרטי" formControlName="firstName">
+    <input placeholder="שם משפחה" formControlName="lastName">
+    <input placeholder="טלפון" formControlName="telephone">
+    <input list="cities" placeholder="עיר" formControlName="city">
+    <datalist id="cities">
+      <option *ngFor="let city of citiesFromDB" [value]="city.city">
+    </datalist>
+    <button [disabled]="writerForm.invalid" (click)="onSubmit()">שלח</button>
+  </form>
+  <div>{{ writerForm.value | json }}</div>
+  <div>{{ writerForm.valid }}</div>
+  <div #mapContainer id="map"></div>
+
+
+</div>

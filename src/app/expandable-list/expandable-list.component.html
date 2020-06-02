@@ -1,0 +1,5 @@
+<div class="expandeable-list">
+  <p class="listTitle" (click)=toogleList()>{{ listTitle }}</p>
+  <app-list-item [listIsClose]="listIsClose" *ngFor="let listItem of listItems" [listItem]="listItem">
+  </app-list-item>
+</div>
