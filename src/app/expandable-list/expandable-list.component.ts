@@ -13,7 +13,7 @@ import { ListItem } from '../interfaces';
 export class ExpandableListComponent implements OnInit, OnDestroy {
 
   @Input() listItems: ListItem[];
-  @Input() listTitle: string[];
+  @Input() listTitle: string;
   listIsClose = true;
   subscription: Subscription;
   constructor(private expandableListService: ExpandableListService) { }

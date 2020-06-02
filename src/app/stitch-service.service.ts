@@ -32,7 +32,7 @@ export class StitchService {
     this.writersCollection = this.db.collection('writers');
     this.citiesCollection = this.db.collection('cities');
     this.client.auth.loginWithCredential(new AnonymousCredential())
-      .then((user: StitchUser) => alert(user.id));
+      .then((user: StitchUser) => console.log(user.id));
   }
   // .then(() =>
   //   this.db.collection('<COLLECTION>').find({ owner_id: this.client.auth.user.id }, { limit: 100 }).asArray()

@@ -1,4 +1,8 @@
-.listItem {
+.list-item {
   background-color: white;
   width: 80%;
+  color: #2699FB;
+  padding: 10px 0;
+  margin: 10px auto;
+
 }

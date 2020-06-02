@@ -4,14 +4,30 @@
 
 .expandeable-list {
   width: 80%;
-  background-color: aqua;
-  margin: 20px;
+  background-color: #BCE0FD;
   border-color: #bce0fd;
   border-width: 1px;
-  display: block;
+  margin: 0 auto;
+  /* display: block; */
   /* border-style: solid; */
+}
+.open-expandeable-list {
+  padding-bottom: 10px;
+}
+
+.app-list-wrapper {
+  margin: 0 auto;
 }
 
 .listTitle {
   background-color: #2699fb;
+  padding: 10px 0;
+  color: white;
+}
+
+:host {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 12pt;
 }
