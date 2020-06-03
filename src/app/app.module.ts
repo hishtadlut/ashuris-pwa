@@ -15,6 +15,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ListItemComponent } from './expandable-list/list-item/list-item.component';
 import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     NavBarComponent,
     ListItemComponent,
     WritersListScreenComponent,
+    AdvancedSearchComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

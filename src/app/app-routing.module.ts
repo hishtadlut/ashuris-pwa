@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { EditWriterComponent } from './edit-writer/edit-writer.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 
 const routes: Routes = [
@@ -10,6 +11,7 @@ const routes: Routes = [
   { path: 'edit-writer', component: EditWriterComponent },
   { path: 'home-page', component: HomePageComponent },
   { path: 'writers-list-screen', component: WritersListScreenComponent },
+  { path: 'advanced-search', component: AdvancedSearchComponent },
 ];
 
 @NgModule({

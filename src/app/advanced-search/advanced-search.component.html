@@ -1,0 +1,16 @@
+<div>
+  <form [formGroup]="advancedSearch">
+    <div class="price-between-wraper">
+      <div class="form-control">
+        <label for="">הגבוה ביותר</label>
+        <input formControlName="highestPrice" type="number">
+      </div>
+
+      <div class="form-control">
+        <label for="">הנמוך ביותר</label>
+        <input formControlName="lowestPrice" type="number">
+      </div>
+    </div>
+  </form>
+  {{ advancedSearch.value | json }}
+</div>
