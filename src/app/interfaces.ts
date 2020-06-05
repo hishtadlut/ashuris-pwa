@@ -5,6 +5,7 @@ export interface Writer {
   lastName: string;
   telephone: string;
   city: string;
+  profileImage: string;
 }
 
 export interface ListItem {

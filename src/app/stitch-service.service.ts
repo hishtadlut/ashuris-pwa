@@ -17,12 +17,14 @@ import { Writer } from './interfaces';
   providedIn: 'root'
 })
 export class StitchService {
+
   db: RemoteMongoDatabase;
   client: StitchAppClient;
   writersFromDB = new Subject<Writer[]>();
   citiesFromDB = new Subject<{ city: string }[]>();
   writersCollection: RemoteMongoCollection<any>;
   citiesCollection: RemoteMongoCollection<any>;
+
   constructor() { }
 
   login() {
@@ -64,11 +66,11 @@ export class StitchService {
   getWriters() {
     const options = { // Match the shape of RemoteFindOptions.
       limit: 10,      // Return only first ten results.
-      projection: {   // Return only the `title`, `releaseDate`, and
-        firstName: 1,     //   (implicitly) the `_id` fields.
-        lastName: 1,
-        telephone: 1,
-      },
+      // projection: {   // Return only the `title`, `releaseDate`, and
+      //   firstName: 1,     //   (implicitly) the `_id` fields.
+      //   lastName: 1,
+      //   telephone: 1,
+      // },
       sort: { // Sort by releaseDate descending (latest first).
         firstName: -1,
       },

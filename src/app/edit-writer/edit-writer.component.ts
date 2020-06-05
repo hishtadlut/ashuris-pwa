@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } fr
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription } from 'rxjs';
-
+import { Writer } from '../interfaces';
+import { fileToBase64 } from '../utils/utils';
 @Component({
   selector: 'app-edit-writer',
   templateUrl: './edit-writer.component.html',
@@ -17,8 +18,6 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   mapOptions: google.maps.MapOptions;
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
-
-
 
   constructor(private stitchService: StitchService) { }
   ngOnInit() {
@@ -35,6 +34,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         Validators.minLength(9),
       ]),
       city: new FormControl('', [
+        Validators.required,
+      ]),
+      profileImage: new FormControl('', [
         Validators.required,
       ]),
       // email: new FormControl('', [
@@ -67,7 +69,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           });
           this.mapInitializer(marker);
           console.log(result);
-        }, () => { }, {enableHighAccuracy: true});
+        }, () => { }, { enableHighAccuracy: true });
 
     } else { /* geolocation IS NOT available */ }
   }
@@ -77,9 +79,21 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     marker.setMap(this.map);
   }
 
+  onUploadFile(file: File) {
+    fileToBase64(file)
+      .then((base64File: string | ArrayBuffer) => {
+        this.writerForm.controls.profileImage.setValue(base64File);
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
   onSubmit() {
-    const { firstName, lastName, telephone, city } = this.writerForm.controls;
-    this.stitchService.createWriter({ firstName: firstName.value, lastName: lastName.value, telephone: telephone.value, city: city.value });
+    const controls = this.writerForm.controls;
+    const { firstName, lastName, telephone, city, profileImage } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
+      return { [k]: v.value };
+    }));
+    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage });
   }
 
   ngOnDestroy() {

@@ -16,6 +16,7 @@ import { ListItemComponent } from './expandable-list/list-item/list-item.compone
 import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { WriterListItemComponent } from './writers-list-screen/writer-list-item/writer-list-item.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AdvancedSearchComponent } from './advanced-search/advanced-search.compo
     ListItemComponent,
     WritersListScreenComponent,
     AdvancedSearchComponent,
+    WriterListItemComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

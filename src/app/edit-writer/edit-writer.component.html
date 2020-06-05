@@ -7,11 +7,15 @@
     <datalist id="cities">
       <option *ngFor="let city of citiesFromDB" [value]="city.city">
     </datalist>
+    <div>
+      <label for="profileImage">Select Image</label>
+      <input (change)="onUploadFile($event.target.files[0])" id="profileImage" style="display:none;" type="file"
+        accept="image/*" value="הוסף תמונת פרופיל">
+    </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">שלח</button>
   </form>
+  <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
   <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div>
   <div #mapContainer id="map"></div>
-
-
 </div>

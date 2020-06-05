@@ -10,7 +10,7 @@ import { Writer } from '../interfaces';
 })
 export class WritersListScreenComponent implements OnInit, OnDestroy {
   writers: Writer[];
-  writersToDisplay: Writer[];
+  writersToDisplay: Writer[] = [];
   writersFromDBSubscription: Subscription;
   constructor(private stitchService: StitchService) { }
 

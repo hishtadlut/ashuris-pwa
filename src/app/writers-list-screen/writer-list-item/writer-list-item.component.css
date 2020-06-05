@@ -1,0 +1,10 @@
+:host {
+  border: solid 1px black;
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+}
+
+:host img {
+  width: 100px
+}
