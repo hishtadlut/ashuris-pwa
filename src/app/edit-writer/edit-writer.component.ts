@@ -4,6 +4,7 @@ import { StitchService } from '../stitch-service.service';
 import { Subscription } from 'rxjs';
 import { Writer } from '../interfaces';
 import { fileToBase64 } from '../utils/utils';
+import { GoogleMapsService } from '../google-maps-service.service';
 @Component({
   selector: 'app-edit-writer',
   templateUrl: './edit-writer.component.html',
@@ -15,11 +16,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   writerForm: FormGroup;
   map: google.maps.Map;
 
-  mapOptions: google.maps.MapOptions;
-
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-  constructor(private stitchService: StitchService) { }
+  constructor(private stitchService: StitchService, private googleMapsService: GoogleMapsService) { }
   ngOnInit() {
     this.writerForm = new FormGroup({
       firstName: new FormControl('', [
@@ -34,6 +33,12 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         Validators.minLength(9),
       ]),
       city: new FormControl('', [
+        Validators.required,
+      ]),
+      street: new FormControl('', [
+        Validators.required,
+      ]),
+      streetNumber: new FormControl('', [
         Validators.required,
       ]),
       profileImage: new FormControl('', [
@@ -51,32 +56,24 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.getGeolocation();
-  }
-
-  getGeolocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (result) => {
-          const coordinates = new google.maps.LatLng(result.coords.latitude, result.coords.longitude);
-          this.mapOptions = {
-            center: coordinates,
-            zoom: 16,
-          };
-          const marker = new google.maps.Marker({
-            position: coordinates,
-            map: this.map,
+    this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
+      .then(() => {
+        this.googleMapsService.reverseGeocoder()
+          .then((result: google.maps.GeocoderResult) => {
+            console.log(result);
+            this.writerForm.controls.city.setValue(
+              result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name
+            );
+            this.writerForm.controls.street.setValue(
+              result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name
+            );
+            this.writerForm.controls.streetNumber.setValue(
+              result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name
+            );
           });
-          this.mapInitializer(marker);
-          console.log(result);
-        }, () => { }, { enableHighAccuracy: true });
+      }).catch((err) => {
 
-    } else { /* geolocation IS NOT available */ }
-  }
-
-  mapInitializer(marker) {
-    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
-    marker.setMap(this.map);
+      });
   }
 
   onUploadFile(file: File) {

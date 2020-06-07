@@ -4,6 +4,8 @@
     <input placeholder="שם משפחה" formControlName="lastName">
     <input placeholder="טלפון" formControlName="telephone">
     <input list="cities" placeholder="עיר" formControlName="city">
+    <input placeholder="רחוב" formControlName="street">
+    <input placeholder="מספר בית" formControlName="streetNumber">
     <datalist id="cities">
       <option *ngFor="let city of citiesFromDB" [value]="city.city">
     </datalist>
