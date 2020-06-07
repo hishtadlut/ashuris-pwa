@@ -1,4 +1,10 @@
-<app-nav-bar></app-nav-bar>
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class = homepage-head>
+  <div class = title-wrapper>
+  <h1>אשורית</h1>
+  <h2>מאגר הסופרים והספרים</h2>
+</div>
+</div>
 <div class="main-wrapper">
   <app-expandable-list class="expandable-list" listTitle="סופרים"
     [listItems]="[{listItemLink: '/edit-writer', listItemText: 'הוספת סופר חדש'},{listItemLink: '/advanced-search', listItemText: 'חיפוש סופר לכתיבה'},{listItemLink: '/writers-list-screen', listItemText: 'מאגר סופרים'}]">
@@ -9,4 +15,13 @@
       {listItemLink: '/', listItemText: 'מאגר ספרים'}
     ]">
   </app-expandable-list>
+  <app-expandable-list class="expandable-list" listTitle="סוחרים" [listItems]="[
+      {listItemLink: '/', listItemText: 'הוספת סוחר חדש'},
+      {listItemLink: '/', listItemText: 'מאגר סוחרים'}
+    ]">
+  </app-expandable-list><app-expandable-list class="expandable-list" listTitle="תזכורות" [listItems]="[
+  {listItemLink: '/', listItemText: 'תזכורות סופרים'},
+  {listItemLink: '/', listItemText: 'תזכורות ספרים'}
+]">
+</app-expandable-list>
 </div>
