@@ -17,7 +17,7 @@
     <div>
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
-    <button [disabled]="writerForm.invalid" (click)="onSubmit()">שלח</button>
+    <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
   <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
   <div>{{ writerForm.value | json }}</div>
