@@ -46,16 +46,16 @@ export class StitchService {
   // });
 
   createWriter(writer: Writer) {
-    this.writersCollection.insertOne(writer)
+    this.citiesCollection.updateOne({ city: writer.city }, { $set: { city: writer.city } }, { upsert: true })
+    .then((result: RemoteUpdateResult) => {
+      console.log(result);
+      this.getCities();
+    }).catch((err) => {
+      console.log(err);
+    });
+    return this.writersCollection.insertOne(writer)
       .then((result: RemoteInsertOneResult) => {
         console.log(result.insertedId);
-      }).catch((err) => {
-        console.log(err);
-      });
-    this.citiesCollection.updateOne({ city: writer.city }, { $set: { city: writer.city } }, { upsert: true })
-      .then((result: RemoteUpdateResult) => {
-        console.log(result);
-        this.getCities();
       }).catch((err) => {
         console.log(err);
       });

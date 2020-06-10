@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Writer } from '../interfaces';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-writer',
@@ -19,7 +20,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-  constructor(private stitchService: StitchService, private googleMapsService: GoogleMapsService) { }
+  constructor(private stitchService: StitchService, private googleMapsService: GoogleMapsService, private router: Router) { }
   ngOnInit() {
     this.writerForm = new FormGroup({
       firstName: new FormControl('', [
@@ -105,7 +106,8 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
       return { [k]: v.value };
     }));
-    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate });
+    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate })
+      .then(() => this.router.navigate(['/writers-list-screen']));
   }
 
   ngOnDestroy() {
