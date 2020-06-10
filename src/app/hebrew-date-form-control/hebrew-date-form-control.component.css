@@ -1,0 +1,17 @@
+.input-container {
+  position: relative;
+}
+
+.hidden-date-input,
+.date-input,
+.date-button {
+  position: absolute;
+}
+
+.date-input {
+  z-index: 10;
+}
+
+.date-button {
+  left: 185px;
+}

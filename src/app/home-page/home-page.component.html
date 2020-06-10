@@ -1,9 +1,9 @@
 <!-- <app-nav-bar></app-nav-bar> -->
-<div class = homepage-head>
-  <div class = title-wrapper>
-  <h1>אשורית</h1>
-  <h2>מאגר הסופרים והספרים</h2>
-</div>
+<div class="homepage-head">
+  <div class="title-wrapper">
+    <h1>אשורית</h1>
+    <h2>מאגר הסופרים והספרים</h2>
+  </div>
 </div>
 <div class="main-wrapper">
   <app-expandable-list class="expandable-list" listTitle="סופרים"
@@ -19,9 +19,10 @@
       {listItemLink: '/', listItemText: 'הוספת סוחר חדש'},
       {listItemLink: '/', listItemText: 'מאגר סוחרים'}
     ]">
-  </app-expandable-list><app-expandable-list class="expandable-list" listTitle="תזכורות" [listItems]="[
+  </app-expandable-list>
+  <app-expandable-list class="expandable-list" listTitle="תזכורות" [listItems]="[
   {listItemLink: '/', listItemText: 'תזכורות סופרים'},
   {listItemLink: '/', listItemText: 'תזכורות ספרים'}
 ]">
-</app-expandable-list>
+  </app-expandable-list>
 </div>

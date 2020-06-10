@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Writer } from '../interfaces';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
+
 @Component({
   selector: 'app-edit-writer',
   templateUrl: './edit-writer.component.html',
@@ -44,6 +45,14 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       profileImage: new FormControl('', [
         Validators.required,
       ]),
+      startDate: new FormGroup({
+        gregorianDate: new FormControl('', [
+          Validators.required,
+        ]),
+        hebrewDateInWords: new FormControl('', [
+          Validators.required,
+        ]),
+      })
       // email: new FormControl('', [
       //   Validators.required,
       //   Validators.email,
@@ -87,10 +96,16 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSubmit() {
     const controls = this.writerForm.controls;
-    const { firstName, lastName, telephone, city, profileImage } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
+    const {
+      firstName,
+      lastName, telephone,
+      city,
+      profileImage,
+      startDate
+    } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
       return { [k]: v.value };
     }));
-    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage });
+    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate });
   }
 
   ngOnDestroy() {

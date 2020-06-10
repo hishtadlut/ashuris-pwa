@@ -6,9 +6,19 @@ export interface Writer {
   telephone: string;
   city: string;
   profileImage: string;
+  startDate: {
+    gregorianDate: CalendarDate
+    hebrewDateInWords: string
+  };
 }
 
 export interface ListItem {
   listItemText: string;
   listItemLink: RouterLink;
+}
+
+export interface CalendarDate {
+  year: number;
+  month: number;
+  day: number;
 }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,8 @@ import { WritersListScreenComponent } from './writers-list-screen/writers-list-s
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { WriterListItemComponent } from './writers-list-screen/writer-list-item/writer-list-item.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HebrewDateFormControlComponent } from './hebrew-date-form-control/hebrew-date-form-control.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { WriterListItemComponent } from './writers-list-screen/writer-list-item/
     WritersListScreenComponent,
     AdvancedSearchComponent,
     WriterListItemComponent,
+    HebrewDateFormControlComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -37,6 +40,8 @@ import { WriterListItemComponent } from './writers-list-screen/writer-list-item/
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     RouterModule,
     GoogleMapsModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

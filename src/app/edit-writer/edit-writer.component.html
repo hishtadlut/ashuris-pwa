@@ -14,6 +14,9 @@
       <input (change)="onUploadFile($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל">
     </div>
+    <div>
+      <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
+    </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">שלח</button>
   </form>
   <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
