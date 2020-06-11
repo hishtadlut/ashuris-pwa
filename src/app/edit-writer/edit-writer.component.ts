@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } fr
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription } from 'rxjs';
-import { Writer } from '../interfaces';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
@@ -101,6 +100,22 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           level: new FormControl('', [
             Validators.required,
           ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        writingTypes: new FormGroup({
+          types: new FormGroup({
+            ari: new FormControl(false, [
+              Validators.required,
+            ]),
+            beitYosef: new FormControl(false, [
+              Validators.required,
+            ]),
+            Welish: new FormControl(false, [
+              Validators.required,
+            ]),
+          }),
           note: new FormControl('', [
             // Validators.required,
           ]),

@@ -20,6 +20,7 @@
     </div>
     <div formGroupName="writingDeatails" class="wrapper-checkbox-sizes">
       <div formGroupName="letterSizes">
+        גודל הכתב
         <div class="row">
           <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
             class="size-checkbox">
@@ -58,31 +59,32 @@
         </div>
       </div>
       <div formGroupName="writingLevel">
-        <div>
+        דרגת כתיבה
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'זול'}">
           <label>
             <input type="radio" formControlName="level" value="זול">
             1
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'פחותה'}">
           <label>
             <input type="radio" formControlName="level" value="פחותה">
             2
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'בינוני'}">
           <label>
             <input type="radio" formControlName="level" value="בינוני">
             3
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'גבוהה'}">
           <label>
             <input type="radio" formControlName="level" value="גבוהה">
             4
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'מיוחד'}">
           <label>
             <input type="radio" formControlName="level" value="מיוחד">
             5
@@ -90,31 +92,32 @@
         </div>
       </div>
       <div formGroupName="stabilityLevel">
-        <div>
+        יציבות
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '1'}">
           <label>
             <input type="radio" formControlName="level" value="1">
             1
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '2'}">
           <label>
             <input type="radio" formControlName="level" value="2">
             2
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '3'}">
           <label>
             <input type="radio" formControlName="level" value="3">
             3
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '4'}">
           <label>
             <input type="radio" formControlName="level" value="4">
             4
           </label>
         </div>
-        <div>
+        <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '5'}">
           <label>
             <input type="radio" formControlName="level" value="5">
             5
@@ -122,35 +125,59 @@
         </div>
       </div>
       <div formGroupName="eraseLevel">
+        מחיקה
         <div>
-          <label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '1'}">
             <input type="radio" formControlName="level" value="1">
             1
           </label>
         </div>
         <div>
-          <label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '2'}">
             <input type="radio" formControlName="level" value="2">
             2
           </label>
         </div>
         <div>
-          <label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '3'}">
             <input type="radio" formControlName="level" value="3">
             3
           </label>
         </div>
         <div>
-          <label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '4'}">
             <input type="radio" formControlName="level" value="4">
             4
           </label>
         </div>
         <div>
-          <label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '5'}">
             <input type="radio" formControlName="level" value="5">
             5
           </label>
+        </div>
+      </div>
+      <div formGroupName="writingTypes">
+        <div formGroupName="types">
+          סוג הכתב
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}">
+            <label>
+              אר"י
+              <input type="checkbox" formControlName="ari">
+            </label>
+          </div>
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}">
+            <label>
+              בית יוסף
+              <input type="checkbox" formControlName="beitYosef">
+            </label>
+          </div>
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}">
+            <label>
+              וועליש
+              <input type="checkbox" formControlName="Welish">
+            </label>
+          </div>
         </div>
       </div>
     </div>
