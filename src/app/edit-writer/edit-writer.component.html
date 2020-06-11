@@ -18,34 +18,44 @@
     <div>
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
-    <div formGroupName="sizes" class="wrapper-checkbox-sizes">
-      <div>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '17']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="17"> 17
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '24']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="24"> 24
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '30']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="30"> 30
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '36']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="36"> 36
-        </label>
-      </div>
-      <div>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '40']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="40"> 40
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '42']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="42"> 42
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '45']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="45"> 45
-        </label>
-        <label [ngClass]="{'checked': writerForm.get(['sizes', '48']).value}" class="size-checkbox">
-          <input type="checkbox" formControlName="48"> 48
-        </label>
+    <div formGroupName="writingDeatails" class="wrapper-checkbox-sizes">
+      <div formGroupName="letterSizes">
+        <div class="row">
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="17"> 17
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '24']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="24"> 24
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '30']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="30"> 30
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '36']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="36"> 36
+          </label>
+        </div>
+        <div class="row">
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '40']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="40"> 40
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '42']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="42"> 42
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '45']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="45"> 45
+          </label>
+          <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '48']).value}"
+            class="size-checkbox">
+            <input type="checkbox" formControlName="48"> 48
+          </label>
+        </div>
       </div>
     </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>

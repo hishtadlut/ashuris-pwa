@@ -37,7 +37,7 @@ import { HebrewDateFormControlComponent } from './hebrew-date-form-control/hebre
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     RouterModule,
     GoogleMapsModule,
     NgbModule,

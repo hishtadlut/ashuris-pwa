@@ -54,31 +54,33 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           Validators.required,
         ]),
       }),
-      sizes: new FormGroup({
-        17: new FormControl(false, [
-          Validators.required,
-        ]),
-        24: new FormControl(false, [
-          Validators.required,
-        ]),
-        30: new FormControl(false, [
-          Validators.required,
-        ]),
-        36: new FormControl(false, [
-          Validators.required,
-        ]),
-        40: new FormControl(false, [
-          Validators.required,
-        ]),
-        42: new FormControl(false, [
-          Validators.required,
-        ]),
-        45: new FormControl(false, [
-          Validators.required,
-        ]),
-        48: new FormControl(false, [
-          Validators.required,
-        ]),
+      writingDeatails: new FormGroup({
+        letterSizes: new FormGroup({
+          17: new FormControl(false, [
+            Validators.required,
+          ]),
+          24: new FormControl(false, [
+            Validators.required,
+          ]),
+          30: new FormControl(false, [
+            Validators.required,
+          ]),
+          36: new FormControl(false, [
+            Validators.required,
+          ]),
+          40: new FormControl(false, [
+            Validators.required,
+          ]),
+          42: new FormControl(false, [
+            Validators.required,
+          ]),
+          45: new FormControl(false, [
+            Validators.required,
+          ]),
+          48: new FormControl(false, [
+            Validators.required,
+          ]),
+        })
       })
       // email: new FormControl('', [
       //   Validators.required,
@@ -97,15 +99,17 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.googleMapsService.reverseGeocoder()
           .then((result: google.maps.GeocoderResult) => {
             console.log(result);
-            this.writerForm.controls.city.setValue(
-              result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name
-            );
-            this.writerForm.controls.street.setValue(
-              result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name
-            );
-            this.writerForm.controls.streetNumber.setValue(
-              result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name
-            );
+            try {
+              this.writerForm.controls.city.setValue(
+                result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name
+              );
+              this.writerForm.controls.street.setValue(
+                result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name
+              );
+              this.writerForm.controls.streetNumber.setValue(
+                result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name
+              );
+            } catch { }
           });
       }).catch((err) => {
 
@@ -122,18 +126,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit() {
-    const controls = this.writerForm.controls;
-    const {
-      firstName,
-      lastName, telephone,
-      city,
-      profileImage,
-      startDate,
-      sizes,
-    } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
-      return { [k]: v.value };
-    }));
-    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate, sizes })
+    this.stitchService.createWriter(this.writerForm.value)
       .then(() => this.router.navigate(['/writers-list-screen']));
   }
 

@@ -65,7 +65,7 @@ export class StitchService {
 
   getWriters() {
     const options = { // Match the shape of RemoteFindOptions.
-      limit: 10,      // Return only first ten results.
+      // limit: 10,      // Return only first ten results.
       // projection: {   // Return only the `title`, `releaseDate`, and
       //   firstName: 1,     //   (implicitly) the `_id` fields.
       //   lastName: 1,

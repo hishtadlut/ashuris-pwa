@@ -7,9 +7,9 @@ import { AdvancedSearchComponent } from './advanced-search/advanced-search.compo
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  // { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'edit-writer', component: EditWriterComponent },
-  { path: 'home-page', component: HomePageComponent },
+  { path: '', component: HomePageComponent, pathMatch: 'full' },
   { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
 ];
