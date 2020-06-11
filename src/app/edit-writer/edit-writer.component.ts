@@ -80,12 +80,32 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           48: new FormControl(false, [
             Validators.required,
           ]),
-        })
+        }),
+        writingLevel: new FormGroup({
+          level: new FormControl('', [
+            Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        stabilityLevel: new FormGroup({
+          level: new FormControl('', [
+            Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        eraseLevel: new FormGroup({
+          level: new FormControl('', [
+            Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
       })
-      // email: new FormControl('', [
-      //   Validators.required,
-      //   Validators.email,
-      // ])
     });
     this.stitchService.getCities();
     this.citiesFromDBSubscription = this.stitchService.citiesFromDB.subscribe(

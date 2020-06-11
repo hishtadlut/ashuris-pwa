@@ -23,7 +23,8 @@
   color: white;
 }
 
-.size-checkbox input {
+div label {}
+label input {
   display: none;
 }
 

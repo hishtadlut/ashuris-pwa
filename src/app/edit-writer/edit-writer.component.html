@@ -57,6 +57,102 @@
           </label>
         </div>
       </div>
+      <div formGroupName="writingLevel">
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="זול">
+            1
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="פחותה">
+            2
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="בינוני">
+            3
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="גבוהה">
+            4
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="מיוחד">
+            5
+          </label>
+        </div>
+      </div>
+      <div formGroupName="stabilityLevel">
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="1">
+            1
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="2">
+            2
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="3">
+            3
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="4">
+            4
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="5">
+            5
+          </label>
+        </div>
+      </div>
+      <div formGroupName="eraseLevel">
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="1">
+            1
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="2">
+            2
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="3">
+            3
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="4">
+            4
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" formControlName="level" value="5">
+            5
+          </label>
+        </div>
+      </div>
     </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
