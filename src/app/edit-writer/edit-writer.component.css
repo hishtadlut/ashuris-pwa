@@ -6,3 +6,27 @@
 .img {
   width: 100px;
 }
+
+.wrapper-checkbox-sizes {
+  display: flex;
+  flex-direction: row;
+}
+
+.size-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+  border-radius: 100%;
+  color: white;
+}
+
+.size-checkbox input {
+  display: none;
+}
+
+.checked {
+  background-color: red;
+}

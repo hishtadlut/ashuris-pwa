@@ -10,6 +10,16 @@ export interface Writer {
     gregorianDate: CalendarDate
     hebrewDateInWords: string
   };
+  sizes: {
+    17: number;
+    24: number;
+    30: number;
+    36: number;
+    40: number;
+    42: number;
+    45: number;
+    48: number;
+  };
 }
 
 export interface ListItem {

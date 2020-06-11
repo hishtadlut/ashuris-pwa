@@ -13,13 +13,43 @@
       <label for="profileImage">Select Image</label>
       <input (change)="onUploadFile($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל">
+      <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
     </div>
     <div>
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
+    <div formGroupName="sizes" class="wrapper-checkbox-sizes">
+      <div>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '17']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="17"> 17
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '24']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="24"> 24
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '30']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="30"> 30
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '36']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="36"> 36
+        </label>
+      </div>
+      <div>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '40']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="40"> 40
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '42']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="42"> 42
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '45']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="45"> 45
+        </label>
+        <label [ngClass]="{'checked': writerForm.get(['sizes', '48']).value}" class="size-checkbox">
+          <input type="checkbox" formControlName="48"> 48
+        </label>
+      </div>
+    </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
-  <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
   <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div>
   <div #mapContainer id="map"></div>

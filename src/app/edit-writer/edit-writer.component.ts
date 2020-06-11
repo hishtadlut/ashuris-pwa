@@ -53,6 +53,32 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         hebrewDateInWords: new FormControl('', [
           Validators.required,
         ]),
+      }),
+      sizes: new FormGroup({
+        17: new FormControl(false, [
+          Validators.required,
+        ]),
+        24: new FormControl(false, [
+          Validators.required,
+        ]),
+        30: new FormControl(false, [
+          Validators.required,
+        ]),
+        36: new FormControl(false, [
+          Validators.required,
+        ]),
+        40: new FormControl(false, [
+          Validators.required,
+        ]),
+        42: new FormControl(false, [
+          Validators.required,
+        ]),
+        45: new FormControl(false, [
+          Validators.required,
+        ]),
+        48: new FormControl(false, [
+          Validators.required,
+        ]),
       })
       // email: new FormControl('', [
       //   Validators.required,
@@ -102,11 +128,12 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       lastName, telephone,
       city,
       profileImage,
-      startDate
+      startDate,
+      sizes,
     } = Object.assign({}, ...Object.entries(controls).map(([k, v]) => {
       return { [k]: v.value };
     }));
-    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate })
+    this.stitchService.createWriter({ firstName, lastName, telephone, city, profileImage, startDate, sizes })
       .then(() => this.router.navigate(['/writers-list-screen']));
   }
 
