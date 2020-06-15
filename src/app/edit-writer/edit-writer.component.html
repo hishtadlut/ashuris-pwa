@@ -4,11 +4,17 @@
     <input placeholder="שם משפחה" formControlName="lastName">
     <input placeholder="טלפון" formControlName="telephone">
     <input list="cities" placeholder="עיר" formControlName="city">
-    <input placeholder="רחוב" formControlName="street">
-    <input placeholder="מספר בית" formControlName="streetNumber">
     <datalist id="cities">
       <option *ngFor="let city of citiesFromDB" [value]="city.city">
     </datalist>
+    <input placeholder="רחוב" formControlName="street">
+    <input placeholder="מספר בית" formControlName="streetNumber">
+    <div formGroupName="communityDeatails">
+      <input list="communities" placeholder="קהילה" formControlName="community">
+      <datalist id="communities">
+        <option *ngFor="let community of communitiesFromDB" [value]="community">
+      </datalist>
+    </div>
     <div>
       <label for="profileImage">Select Image</label>
       <input (change)="onUploadFile($event.target.files[0])" id="profileImage" style="display:none;" type="file"

@@ -22,8 +22,10 @@ export class StitchService {
   client: StitchAppClient;
   writersFromDB = new Subject<Writer[]>();
   citiesFromDB = new Subject<{ city: string }[]>();
+  communitiesFromDB = new Subject<string[]>();
   writersCollection: RemoteMongoCollection<any>;
   citiesCollection: RemoteMongoCollection<any>;
+  communitiesCollection: RemoteMongoCollection<any>;
 
   constructor() { }
 
@@ -33,6 +35,7 @@ export class StitchService {
     this.db = this.client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('ashuris');
     this.writersCollection = this.db.collection('writers');
     this.citiesCollection = this.db.collection('cities');
+    this.communitiesCollection = this.db.collection('communities');
     this.client.auth.loginWithCredential(new AnonymousCredential())
       .then((user: StitchUser) => console.log(user.id));
   }
@@ -47,12 +50,20 @@ export class StitchService {
 
   createWriter(writer: Writer) {
     this.citiesCollection.updateOne({ city: writer.city }, { $set: { city: writer.city } }, { upsert: true })
-    .then((result: RemoteUpdateResult) => {
-      console.log(result);
-      this.getCities();
-    }).catch((err) => {
-      console.log(err);
-    });
+      .then((result: RemoteUpdateResult) => {
+        this.getCities();
+        this.getCommunities();
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    this.communitiesCollection.updateOne({}, { $addToSet: { communities: writer.communityDeatails.community } }, { upsert: true })
+      .then((result: RemoteUpdateResult) => {
+        console.log(result);
+        // this.getCities();
+      }).catch((err) => {
+        console.log(err);
+      });
     return this.writersCollection.insertOne(writer)
       .then((result: RemoteInsertOneResult) => {
         console.log(result.insertedId);
@@ -83,6 +94,15 @@ export class StitchService {
   getCities() {
     this.db.collection('cities').find({}).toArray()
       .then((cities: { city: string }[]) => this.citiesFromDB.next(cities))
+      .catch(console.error);
+  }
+
+  getCommunities() {
+    this.communitiesCollection.findOne({})
+      .then((communities) => {
+        console.log(communities);
+        return this.communitiesFromDB.next(communities.communities);
+      })
       .catch(console.error);
   }
 

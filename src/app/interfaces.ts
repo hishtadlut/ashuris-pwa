@@ -21,6 +21,11 @@ export interface Writer {
       45: number;
       48: number;
     };
+    note: string;
+  };
+  communityDeatails: {
+    community: string;
+    note: string;
   };
 }
 

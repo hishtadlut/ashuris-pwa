@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   citiesFromDBSubscription: Subscription;
   citiesFromDB: { city: string }[];
+  communitiesFromDBSubscription: Subscription;
+  communitiesFromDB: string[];
   writerForm: FormGroup;
   map: google.maps.Map;
 
@@ -45,6 +47,14 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       profileImage: new FormControl('', [
         Validators.required,
       ]),
+      communityDeatails: new FormGroup({
+        community: new FormControl('', [
+          Validators.required
+        ]),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
+      }),
       startDate: new FormGroup({
         gregorianDate: new FormControl('', [
           Validators.required,
@@ -78,6 +88,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           ]),
           48: new FormControl(false, [
             Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
           ]),
         }),
         writingLevel: new FormGroup({
@@ -123,8 +136,12 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     });
     this.stitchService.getCities();
+    this.stitchService.getCommunities();
     this.citiesFromDBSubscription = this.stitchService.citiesFromDB.subscribe(
       (cities) => this.citiesFromDB = cities
+    );
+    this.communitiesFromDBSubscription = this.stitchService.communitiesFromDB.subscribe(
+      (communities) => this.communitiesFromDB = communities
     );
   }
 
@@ -161,8 +178,8 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit() {
-    this.stitchService.createWriter(this.writerForm.value)
-      .then(() => this.router.navigate(['/writers-list-screen']));
+    this.stitchService.createWriter(this.writerForm.value);
+    // .then(() => this.router.navigate(['/writers-list-screen']));
   }
 
   ngOnDestroy() {
