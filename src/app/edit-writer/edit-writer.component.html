@@ -258,50 +258,87 @@
       </div>
     </div>
     <div formGroupName="additionalDetails">
-      <div formGroupName="hasWritenBefore">
-        כתב ספרים בעבר
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='false'>
-        </label>
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='true'>
-        </label>
+      <div>
+        <div formGroupName="hasWritenBefore">
+          כתב ספרים בעבר
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='true'>
+          </label>
+        </div>
+        <div formGroupName="hasWritenKabala">
+          כתב קבלה
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='true'>
+          </label>
+        </div>
+        <div formGroupName="voatsInElection">
+          בחירות
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='true'>
+          </label>
+        </div>
+        <div formGroupName="goesToKotel">
+          הולך לכותל
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='true'>
+          </label>
+        </div>
+        <div formGroupName="beginnerWriter">
+          סופר מתחיל
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="boolean" value='true'>
+          </label>
+        </div>
       </div>
-      <div formGroupName="hasWritenKabala">
-        כתב קבלה
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='false'>
-        </label>
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='true'>
-        </label>
-      </div>
-      <div formGroupName="voatsInElection">
-        בחירות
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='false'>
-        </label>
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='true'>
-        </label>
-      </div>
-      <div formGroupName="goesToKotel">
-        הולך לכותל
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='false'>
-        </label>
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='true'>
-        </label>
-      </div>
-      <div formGroupName="beginnerWriter">
-        סופר מתחיל
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='false'>
-        </label>
-        <label class="size-checkbox">
-          <input type="radio" formControlName="boolean" value='true'>
-        </label>
+      <div>
+        <div formGroupName="writerLevel">
+          דרגת סופר
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}">
+              <input type="radio" formControlName="level" value="1">
+              1
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '2'}">
+              <input type="radio" formControlName="level" value="2">
+              2
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '3'}">
+              <input type="radio" formControlName="level" value="3">
+              3
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '4'}">
+              <input type="radio" formControlName="level" value="4">
+              4
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '5'}">
+              <input type="radio" formControlName="level" value="5">
+              5
+            </label>
+          </div>
+        </div>
       </div>
     </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>

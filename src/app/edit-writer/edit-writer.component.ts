@@ -219,6 +219,14 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
             // Validators.required,
           ]),
         }),
+        writerLevel: new FormGroup({
+          level: new FormControl('', [
+            Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
       })
     });
     this.stitchService.getCities();
