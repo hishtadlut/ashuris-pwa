@@ -63,6 +63,50 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           Validators.required,
         ]),
       }),
+      isAppropriate: new FormGroup({
+        level: new FormControl('', [
+          Validators.required
+        ]),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
+      }),
+      pricesDeatails: new FormGroup({
+        isPricePerPage: new FormControl(true),
+        priceForTorahScroll: new FormGroup({
+          price: new FormControl('', [
+            Validators.required
+          ]),
+          worthIt: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        priceForMezuzah: new FormGroup({
+          price: new FormControl('', [
+            Validators.required
+          ]),
+          worthIt: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        priceForTefillin: new FormGroup({
+          price: new FormControl('', [
+            Validators.required
+          ]),
+          worthIt: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+      }),
       writingDeatails: new FormGroup({
         letterSizes: new FormGroup({
           17: new FormControl(false, [

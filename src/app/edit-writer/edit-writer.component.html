@@ -24,6 +24,76 @@
     <div>
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
+    <div formGroupName="isAppropriate">
+      מידת התאמה
+      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
+        <label>
+          <input type="radio" formControlName="level" value="לא מתאים">
+          1
+        </label>
+      </div>
+      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'מתאים'}">
+        <label>
+          <input type="radio" formControlName="level" value="מתאים">
+          2
+        </label>
+      </div>
+      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'כדאי מאוד'}">
+        <label>
+          <input type="radio" formControlName="level" value="כדאי מאוד">
+          3
+        </label>
+      </div>
+    </div>
+    <div formGroupName="pricesDeatails">
+      <div>
+        <div [ngClass]="{'checked': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'true'}">
+          <label>
+            <input type="radio" formControlName="isPricePerPage" value='true'>
+            מחיר לעמוד
+          </label>
+        </div>
+        <div [ngClass]="{'checked': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'false'}">
+          <label>
+            <input type="radio" formControlName="isPricePerPage" value='false'>
+            מחיר לספר תורה
+          </label>
+        </div>
+      </div>
+      <div formGroupName="priceForTorahScroll">
+        <input placeholder="מחיר לספר תורה" formControlName="price">
+        <div>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='true'>
+          </label>
+        </div>
+      </div>
+      <div formGroupName="priceForMezuzah">
+        <input placeholder="מחיר למזוזה" formControlName="price">
+        <div>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='true'>
+          </label>
+        </div>
+      </div>
+      <div formGroupName="priceForTefillin">
+        <input placeholder="מחיר לתפילין" formControlName="price">
+        <div>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='false'>
+          </label>
+          <label class="size-checkbox">
+            <input type="radio" formControlName="worthIt" value='true'>
+          </label>
+        </div>
+      </div>
+    </div>
     <div formGroupName="writingDeatails" class="wrapper-checkbox-sizes">
       <div formGroupName="letterSizes">
         גודל הכתב
