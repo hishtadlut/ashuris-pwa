@@ -177,6 +177,48 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
             // Validators.required,
           ]),
         }),
+      }),
+      additionalDetails: new FormGroup({
+        hasWritenBefore: new FormGroup({
+          boolean: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        hasWritenKabala: new FormGroup({
+          boolean: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        voatsInElection: new FormGroup({
+          boolean: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        goesToKotel: new FormGroup({
+          boolean: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
+        beginnerWriter: new FormGroup({
+          boolean: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
       })
     });
     this.stitchService.getCities();

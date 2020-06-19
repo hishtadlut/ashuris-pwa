@@ -257,6 +257,53 @@
         </div>
       </div>
     </div>
+    <div formGroupName="additionalDetails">
+      <div formGroupName="hasWritenBefore">
+        כתב ספרים בעבר
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='false'>
+        </label>
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='true'>
+        </label>
+      </div>
+      <div formGroupName="hasWritenKabala">
+        כתב קבלה
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='false'>
+        </label>
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='true'>
+        </label>
+      </div>
+      <div formGroupName="voatsInElection">
+        בחירות
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='false'>
+        </label>
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='true'>
+        </label>
+      </div>
+      <div formGroupName="goesToKotel">
+        הולך לכותל
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='false'>
+        </label>
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='true'>
+        </label>
+      </div>
+      <div formGroupName="beginnerWriter">
+        סופר מתחיל
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='false'>
+        </label>
+        <label class="size-checkbox">
+          <input type="radio" formControlName="boolean" value='true'>
+        </label>
+      </div>
+    </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
   <div>{{ writerForm.value | json }}</div>
