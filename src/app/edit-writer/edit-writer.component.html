@@ -341,6 +341,18 @@
         </div>
       </div>
     </div>
+    <div formGroupName="placeOfWriting">
+      <div>
+        <label class="size-checkbox">
+          בית
+          <input type="radio" formControlName="place" value='בית'>
+        </label>
+        <label class="size-checkbox">
+          אחר
+          <input type="radio" formControlName="place" value='אחר'>
+        </label>
+      </div>
+    </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
   <div>{{ writerForm.value | json }}</div>

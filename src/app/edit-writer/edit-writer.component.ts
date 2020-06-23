@@ -178,6 +178,14 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           ]),
         }),
       }),
+      placeOfWriting: new FormGroup({
+        place: new FormControl('', [
+          // Validators.required,
+        ]),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
+      }),
       additionalDetails: new FormGroup({
         hasWritenBefore: new FormGroup({
           boolean: new FormControl('', [
