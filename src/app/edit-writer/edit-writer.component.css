@@ -1,3 +1,10 @@
+
+
+.edit-writer-wrapper {
+  background-color: #F1F9FF;
+}
+
+
 #map {
   height: 500px;
   width: 100%;
@@ -7,10 +14,7 @@
   width: 100px;
 }
 
-.wrapper-checkbox-sizes {
-  display: flex;
-  flex-direction: row;
-}
+
 
 .size-checkbox {
   display: flex;
@@ -27,16 +31,85 @@
   background-color: red;
 }
 
-a,
-div,
-ion-item,
-.item-md,
-.item-ios,
-.segment-button,
-.select-md .select-ios,
-.button-ios,
-.button-md,
-.searchbar-md,
-.searchbar-ios {
-  pointer-events: auto !important;
+
+
+.page-grid {
+  direction: rtl;
+  text-align: right;
+  /* justify-content: start; */
+/* justify-items: start; */
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(11, auto);
+  grid-gap: 2vh;
+  margin: 0 4vw;
+}
+
+.inner-grid {
+  display: grid;
+  grid-gap: 1vh;
+  padding: 3vw;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.section-title{
+  grid-column: 1 / -1;
+}
+
+.page-grid div {
+  background-color: rgb(255, 255, 255);
+}
+
+.profile-image-section {
+  grid-row: 1 / span 1;
+}
+
+.personal-detail-section {
+  grid-row: 2 / span 1;
+}
+
+.start-date-section {
+  grid-row: 3 / span 1;
+}
+
+.is-appropriate-section {
+  grid-row: 4 / span 1;
+}
+
+.is-appropriate-radio-buttons-wraper {
+  grid-row: 2 / span 1;
+  grid-template: auto auto / 1fr 1fr 1fr;
+  justify-content: center;
+  align-content: center;
+}
+
+.price-deatail-section {
+  grid-row: 5 / span 1;
+}
+
+.writing-detail-section {
+  grid-row: 6 / span 1;
+}
+
+.writing-location-section {
+  grid-row: 7 / span 1;
+}
+
+.additional-details-section {
+  grid-row: 8 / span 1;
+}
+
+.photo-section {
+  grid-row: 9 / span 1;
+}
+
+.recording-section {
+  grid-row: 10 / span 1;
+}
+
+.add-sofer-button {
+  grid-row: 11 / span 1;
 }

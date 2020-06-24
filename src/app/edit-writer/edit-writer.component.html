@@ -1,51 +1,59 @@
-<div>
-  <form [formGroup]="writerForm">
-    <input placeholder="שם פרטי" formControlName="firstName">
-    <input placeholder="שם משפחה" formControlName="lastName">
-    <input placeholder="טלפון" formControlName="telephone">
-    <input list="cities" placeholder="עיר" formControlName="city">
-    <datalist id="cities">
-      <option *ngFor="let city of citiesFromDB" [value]="city.city">
-    </datalist>
-    <input placeholder="רחוב" formControlName="street">
-    <input placeholder="מספר בית" formControlName="streetNumber">
-    <div formGroupName="communityDeatails">
-      <input list="communities" placeholder="קהילה" formControlName="community">
-      <datalist id="communities">
-        <option *ngFor="let community of communitiesFromDB" [value]="community">
-      </datalist>
-    </div>
-    <div>
-      <label for="profileImage">Select Image</label>
+<div class="edit-writer-wrapper">
+  <form [formGroup]="writerForm" class="page-grid">
+    <div class="profile-image-section">
+      <label for="profileImage">הוסף תמונת פרופיל</label>
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל">
       <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
     </div>
-    <div>
+    <div class="personal-detail-section inner-grid">
+      <div>פרטים אישיים</div>
+      <input placeholder="שם פרטי" formControlName="firstName">
+      <input placeholder="שם משפחה" formControlName="lastName">
+      <input placeholder="טלפון" formControlName="telephone">
+      <input list="cities" placeholder="עיר" formControlName="city">
+      <datalist id="cities">
+        <option *ngFor="let city of citiesFromDB" [value]="city.city">
+      </datalist>
+      <input placeholder="רחוב" formControlName="street">
+      <input placeholder="מספר בית" formControlName="streetNumber">
+      <div formGroupName="communityDeatails">
+        <input list="communities" placeholder="קהילה" formControlName="community" class="full-width">
+        <datalist id="communities">
+          <option *ngFor="let community of communitiesFromDB" [value]="community">
+        </datalist>
+      </div>
+    </div>
+    <div class="start-date-section">
+
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
-    <div formGroupName="isAppropriate">
-      מידת התאמה
-      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
-        <label>
-          <input type="radio" formControlName="level" value="לא מתאים">
-          1
-        </label>
-      </div>
-      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'מתאים'}">
-        <label>
-          <input type="radio" formControlName="level" value="מתאים">
-          2
-        </label>
-      </div>
-      <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'כדאי מאוד'}">
-        <label>
-          <input type="radio" formControlName="level" value="כדאי מאוד">
-          3
-        </label>
+    <div formGroupName="isAppropriate" class="is-appropriate-section">
+      <div class="is-appropriate-radio-buttons-wraper inner-grid">
+        <div class="section-title">
+          מידת התאמה
+        </div>
+        <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
+          <label>
+            <input type="radio" formControlName="level" value="לא מתאים">
+            1
+          </label>
+        </div>
+        <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'מתאים'}">
+          <label>
+            <input type="radio" formControlName="level" value="מתאים">
+            2
+          </label>
+        </div>
+        <div [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'כדאי מאוד'}">
+          <label>
+            <input type="radio" formControlName="level" value="כדאי מאוד">
+            3
+          </label>
+        </div>
       </div>
     </div>
-    <div formGroupName="pricesDeatails">
+    <div formGroupName="pricesDeatails" class="price-deatail-section">
       <div>
         <div [ngClass]="{'checked': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'true'}">
           <label>
@@ -94,7 +102,7 @@
         </div>
       </div>
     </div>
-    <div formGroupName="writingDeatails" class="wrapper-checkbox-sizes">
+    <div formGroupName="writingDeatails" class="writing-detail-section">
       <div formGroupName="letterSizes">
         גודל הכתב
         <div class="row">
@@ -257,7 +265,7 @@
         </div>
       </div>
     </div>
-    <div formGroupName="placeOfWriting">
+    <div formGroupName="placeOfWriting" class="writing-location-section">
       <div>
         <label class="size-checkbox">
           בית
@@ -269,7 +277,7 @@
         </label>
       </div>
     </div>
-    <div formGroupName="additionalDetails">
+    <div formGroupName="additionalDetails" class="additional-details-section">
       <div>
         <div formGroupName="hasWritenBefore">
           כתב ספרים בעבר
@@ -353,7 +361,7 @@
         </div>
       </div>
     </div>
-    <div formArrayName="photos">
+    <div formArrayName="photos" class="photo-section">
       <label for="addPhoto">
         הוסף תמונה
         <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
@@ -363,7 +371,7 @@
         <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>
     </div>
-    <div>
+    <div class="recording-section">
       <!-- <input type="file" accept="audio/*" capture> -->
       <label *ngIf="!isRecording" for="click">
         <div>הוסף תזכורת קולית</div>
@@ -377,7 +385,7 @@
       </audio>
     </div>
 
-    <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
+    <button [disabled]="writerForm.invalid" (click)="onSubmit()" class="add-sofer-button">הוסף סופר למאגר</button>
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->

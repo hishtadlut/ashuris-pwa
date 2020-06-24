@@ -1,8 +1,9 @@
-<div [formGroup]="parentForm">
+<div [formGroup]="parentForm" class="date-inner-grid">
+  <div class="section-title">תאריך התחלה</div>
+  <div class="date-button" (click)="d.toggle()" class="date-button">בחר תאריך</div>
   <div class="input-container" formGroupName="startDate">
-    <input class="hidden-date-input" type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)" />
+    <input class="date-input" type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)" />
     <input formControlName="hebrewDateInWords" class="date-input" placeholder="תאריך התחלה">
   </div>
-  <button class="date-button" (click)="d.toggle()">toggle</button>
-  <input style="visibility: hidden;">
+
 </div>

@@ -1,17 +1,26 @@
-.input-container {
-  position: relative;
+.date-inner-grid{
+  display: grid;
+  grid-gap: 1vh;
+  padding: 3vw;
+  grid-template: auto auto / 10vw auto;
 }
 
-.hidden-date-input,
-.date-input,
-.date-button {
-  position: absolute;
-}
 
 .date-input {
-  z-index: 10;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.input-container {
+  grid-column: 2 / 3;
+  display: grid;
+  grid-template: auto / auto;
 }
 
 .date-button {
-  left: 185px;
+  grid-column: 1 / 2;
+}
+
+.section-title {
+  grid-column: span 2;
 }
