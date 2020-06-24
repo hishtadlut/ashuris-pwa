@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-writer',
@@ -18,10 +19,19 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   communitiesFromDB: string[];
   writerForm: FormGroup;
   map: google.maps.Map;
+  isRecording = false;
+  hasRecord = false;
+  record: SafeResourceUrl;
+  mediaRecorder: MediaRecorder;
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-  constructor(private stitchService: StitchService, private googleMapsService: GoogleMapsService, private router: Router) { }
+  constructor(
+    private stitchService: StitchService,
+    private googleMapsService: GoogleMapsService,
+    private router: Router,
+    private sanitizer: DomSanitizer) { }
+
   ngOnInit() {
     this.writerForm = new FormGroup({
       firstName: new FormControl('', [
@@ -235,7 +245,11 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
             // Validators.required,
           ]),
         }),
-      })
+      }),
+      photos: new FormArray([new FormControl('')]),
+      record: new FormControl('', [
+        // Validators.required,
+      ]),
     });
     this.stitchService.getCities();
     this.stitchService.getCommunities();
@@ -270,7 +284,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  onUploadFile(file: File) {
+  onAddProfileImage(file: File) {
     fileToBase64(file)
       .then((base64File: string | ArrayBuffer) => {
         this.writerForm.controls.profileImage.setValue(base64File);
@@ -278,6 +292,60 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(err);
       });
   }
+
+  onAddPhoto(file: File) {
+    fileToBase64(file)
+      .then((base64File: string | ArrayBuffer) => {
+        const photosArray = this.writerForm.controls.photos as FormArray;
+        photosArray.push(new FormControl(base64File));
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
+  startRecording() {
+    const audioChunks = [];
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        this.mediaRecorder = new MediaRecorder(stream);
+
+        this.mediaRecorder.addEventListener('dataavailable', event => {
+          audioChunks.push(event.data);
+        });
+
+        this.mediaRecorder.addEventListener('stop', () => {
+          this.isRecording = false;
+          this.hasRecord = true;
+
+          const audioBlob = new Blob(audioChunks);
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+
+          this.record = this.sanitizer.bypassSecurityTrustResourceUrl(audioUrl);
+          // this.record = audio;
+
+          const reader = new FileReader();
+          reader.readAsDataURL(audioBlob);
+          reader.onloadend = () => {
+            const base64data = reader.result;
+            this.writerForm.controls.record.setValue(base64data);
+          };
+
+          // this.sanitizer.bypassSecurityTrustResourceUrl(audioUrl);
+        });
+
+        this.mediaRecorder.start();
+        this.isRecording = true;
+      });
+  }
+
+  stopRecording() {
+    this.mediaRecorder.stop();
+  }
+
+  // playRecord() {
+  //   this.record.play();
+  // }
 
   onSubmit() {
     this.stitchService.createWriter(this.writerForm.value);

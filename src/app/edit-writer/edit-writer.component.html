@@ -17,7 +17,7 @@
     </div>
     <div>
       <label for="profileImage">Select Image</label>
-      <input (change)="onUploadFile($event.target.files[0])" id="profileImage" style="display:none;" type="file"
+      <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל">
       <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
     </div>
@@ -257,6 +257,18 @@
         </div>
       </div>
     </div>
+    <div formGroupName="placeOfWriting">
+      <div>
+        <label class="size-checkbox">
+          בית
+          <input type="radio" formControlName="place" value='בית'>
+        </label>
+        <label class="size-checkbox">
+          אחר
+          <input type="radio" formControlName="place" value='אחר'>
+        </label>
+      </div>
+    </div>
     <div formGroupName="additionalDetails">
       <div>
         <div formGroupName="hasWritenBefore">
@@ -341,21 +353,33 @@
         </div>
       </div>
     </div>
-    <div formGroupName="placeOfWriting">
-      <div>
-        <label class="size-checkbox">
-          בית
-          <input type="radio" formControlName="place" value='בית'>
-        </label>
-        <label class="size-checkbox">
-          אחר
-          <input type="radio" formControlName="place" value='אחר'>
-        </label>
+    <div formArrayName="photos">
+      <label for="addPhoto">
+        הוסף תמונה
+        <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
+          accept="image/*">
+      </label>
+      <div *ngFor="let photo of writerForm.controls.photos['controls']">
+        <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>
     </div>
+    <div>
+      <!-- <input type="file" accept="audio/*" capture> -->
+      <label *ngIf="!isRecording" for="click">
+        <div>הוסף תזכורת קולית</div>
+        <input type="button" id="click" type="file" accept="audio/*" capture (click)="startRecording()">
+      </label>
+      <div *ngIf="isRecording" (click)="stopRecording()">
+        עצור הקלטה
+      </div>
+      <audio controls *ngIf="hasRecord" [src]="record">
+        השמע הקלטה
+      </audio>
+    </div>
+
     <button [disabled]="writerForm.invalid" (click)="onSubmit()">הוסף סופר למאגר</button>
   </form>
-  <div>{{ writerForm.value | json }}</div>
-  <div>{{ writerForm.valid }}</div>
+  <!-- <div>{{ writerForm.value | json }}</div>
+  <div>{{ writerForm.valid }}</div> -->
   <div #mapContainer id="map"></div>
 </div>
