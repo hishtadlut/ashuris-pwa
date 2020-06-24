@@ -1,0 +1,80 @@
+{
+  "configVersion": 1,
+  "timestamp": 1593013965733,
+  "index": "https://github.com/hishtadlut/ashuris-pwa.git/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://github.com/hishtadlut/ashuris-pwa.git/favicon.ico",
+        "https://github.com/hishtadlut/ashuris-pwa.git/index.html",
+        "https://github.com/hishtadlut/ashuris-pwa.git/main-es2015.878eb6a1eccd313fad6e.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/main-es5.878eb6a1eccd313fad6e.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/manifest.webmanifest",
+        "https://github.com/hishtadlut/ashuris-pwa.git/polyfills-es2015.cbd80ce3abd555113d5e.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/polyfills-es5.88ab8994633f6ed8e906.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/runtime-es2015.1eba213af0b233498d9d.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/runtime-es5.1eba213af0b233498d9d.js",
+        "https://github.com/hishtadlut/ashuris-pwa.git/styles.1e9cc15c74e6294935e2.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-128x128.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-144x144.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-152x152.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-192x192.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-384x384.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-512x512.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-72x72.png",
+        "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://github.com/hishtadlut/ashuris-pwa.git/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://github.com/hishtadlut/ashuris-pwa.git/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "https://github.com/hishtadlut/ashuris-pwa.git/index.html": "d75b49931e9fb624d71cb80289691891864fcc9e",
+    "https://github.com/hishtadlut/ashuris-pwa.git/main-es2015.878eb6a1eccd313fad6e.js": "64589a2e48c12c49a952524293e18ca4ba94116b",
+    "https://github.com/hishtadlut/ashuris-pwa.git/main-es5.878eb6a1eccd313fad6e.js": "6ac8eef3e8476ee415a26a3f71fb38a0ab30ae30",
+    "https://github.com/hishtadlut/ashuris-pwa.git/manifest.webmanifest": "0021c7c47a73587b5d5bd0bd46a860c31b3b6426",
+    "https://github.com/hishtadlut/ashuris-pwa.git/polyfills-es2015.cbd80ce3abd555113d5e.js": "6fb3bf0b8a92d96afeae2f262080da7e737adb5e",
+    "https://github.com/hishtadlut/ashuris-pwa.git/polyfills-es5.88ab8994633f6ed8e906.js": "11cb4ce15f0163ad3ac4feb0eacac19b3dd13eaa",
+    "https://github.com/hishtadlut/ashuris-pwa.git/runtime-es2015.1eba213af0b233498d9d.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://github.com/hishtadlut/ashuris-pwa.git/runtime-es5.1eba213af0b233498d9d.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "https://github.com/hishtadlut/ashuris-pwa.git/styles.1e9cc15c74e6294935e2.css": "0b3bde1da573c27d17c73805a005b4e71305409f"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
