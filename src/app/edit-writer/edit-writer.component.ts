@@ -54,7 +54,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       streetNumber: new FormControl('', [
         Validators.required,
       ]),
-      profileImage: new FormControl('', [
+      profileImage: new FormControl('../../assets/icons/Symbol 216 – 66.svg', [
         Validators.required,
       ]),
       communityDeatails: new FormGroup({
@@ -82,7 +82,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         ]),
       }),
       pricesDeatails: new FormGroup({
-        isPricePerPage: new FormControl(true),
+        isPricePerPage: new FormControl('בחר עמוד או ס"ת'),
         priceForTorahScroll: new FormGroup({
           price: new FormControl('', [
             Validators.required
