@@ -1,11 +1,11 @@
 <div class="edit-writer-wrapper">
   <form [formGroup]="writerForm" class="page-grid">
-    <div class="profile-image-section">
-      <label for="profileImage">הוסף תמונת פרופיל</label>
+    <div class="profile-image-section inner-grid">
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file"
-        accept="image/*" value="הוסף תמונת פרופיל">
+        accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
       <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
-    </div>
+      <label for="profileImage" class="bold-text">הוסף תמונת פרופיל</label>
+      </div>
     <div class="personal-detail-section inner-grid">
       <div class="section-title">פרטים אישיים</div>
       <input placeholder="שם פרטי" formControlName="firstName">
@@ -157,7 +157,7 @@
           </div>
       </div>
       </div>
-      <div formGroupName="writingLevel" class="inner-grid-2">
+      <div formGroupName="writingLevel" class="writing-level inner-grid-2">
         <div class="section-title">
           דרגת כתיבה
         </div>
@@ -194,7 +194,7 @@
           </div>
         </div>
       </div>
-      <div formGroupName="stabilityLevel" class="inner-grid-2">
+      <div formGroupName="stabilityLevel" class="stability-level inner-grid-2">
         <div class="section-title">
           יציבות
         </div>
@@ -231,7 +231,7 @@
         </div>
       </div>
       </div>
-      <div formGroupName="eraseLevel" class="inner-grid-2">
+      <div formGroupName="eraseLevel" class="erase-level inner-grid-2">
         <div class="section-title">
           מחיקה
         </div>
@@ -269,21 +269,23 @@
       </div>
       </div>
       <div formGroupName="writingTypes">
-        <div formGroupName="types">
-          סוג הכתב
-          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}">
+        <div formGroupName="types" class="writing-types inner-grid-2">
+          <div class="section-title">
+            סוג הכתב
+          </div>
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}" class="writing-type">
             <label>
               אר"י
               <input type="checkbox" formControlName="ari">
             </label>
           </div>
-          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}">
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}" class="writing-type">
             <label>
               בית יוסף
               <input type="checkbox" formControlName="beitYosef">
             </label>
           </div>
-          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}">
+          <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}" class="writing-type">
             <label>
               וועליש
               <input type="checkbox" formControlName="Welish">

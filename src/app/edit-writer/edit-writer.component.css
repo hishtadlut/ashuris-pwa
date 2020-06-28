@@ -69,13 +69,32 @@
   margin-bottom: 2vw;
 }
 
+.bold-text{
+  color: #2699FB;
+  font-weight: bold;
+
+}
+
 .page-grid div {
   background-color: rgb(255, 255, 255);
 }
 
 .profile-image-section {
   grid-row: 1 / span 1;
+  grid-template: auto / auto 1fr;
+  align-items: center;
+  grid-gap: 5vw;
 }
+
+.profile-image-section img {
+  width: 12vw;
+  height: 12vw;
+}
+
+.circle-image {
+  border-radius: 100%;
+}
+
 
 .personal-detail-section {
   grid-row: 2 / span 1;
@@ -128,10 +147,13 @@
 
 .writing-detail-section {
   grid-row: 6 / span 1;
+  grid-row-gap: 4vw;
 }
 
+
 .letter-sizes-wrapper {
-  
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
 }
 
 .sizes-row {
@@ -142,6 +164,33 @@
 
 .sizes-row label input {
   display: none;
+}
+
+.writing-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.stability-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.erase-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.writing-types{
+  grid-template: auto auto / 1fr 1fr 1fr;
+}
+
+.writing-type{
+  height: 10vw;
+  width: 10vw;
+  background-color: #000000;
+  text-align: center;
+  font-weight: bold;
 }
 
 .writing-location-section {
