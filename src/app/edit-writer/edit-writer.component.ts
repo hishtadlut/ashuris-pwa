@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, FormControlName } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
@@ -22,6 +22,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   map: google.maps.Map;
   isRecording = false;
   hasRecord = false;
+  dialogFormGroup: FormGroup = null;
 
   // @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
@@ -34,57 +35,52 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.writerForm = new FormGroup({
+      note: new FormControl('', [
+        // Validators.required,
+      ]),
       firstName: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       lastName: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       telephone: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[0-9]*$'),
-        Validators.minLength(9),
+        // Validators.required,
+        // Validators.pattern('^[0-9]*$'),
+        // Validators.minLength(9),
       ]),
       secondTelephone: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[0-9]*$'),
-        Validators.minLength(9),
+        // Validators.required,
+        // Validators.pattern('^[0-9]*$'),
+        // Validators.minLength(9),
       ]),
       email: new FormControl('', [
-        Validators.required,
-        Validators.email,
+        // Validators.required,
+        // Validators.email,
       ]),
       city: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       street: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       streetNumber: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       profileImage: new FormControl('../../assets/icons/Symbol 216 – 66.svg', [
-        Validators.required,
+        // Validators.required,
       ]),
-      communityDeatails: new FormGroup({
-        community: new FormControl('', [
-          Validators.required
-        ]),
-        note: new FormControl('', [
-          // Validators.required,
-        ]),
-      }),
       startDate: new FormGroup({
         gregorianDate: new FormControl('', [
-          Validators.required,
+          // Validators.required,
         ]),
         hebrewDateInWords: new FormControl('', [
-          Validators.required,
+          // Validators.required,
         ]),
       }),
       isAppropriate: new FormGroup({
         level: new FormControl('', [
-          Validators.required
+          // Validators.required
         ]),
         note: new FormControl('', [
           // Validators.required,
@@ -94,7 +90,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         isPricePerPage: new FormControl('בחר עמוד או ס"ת'),
         priceForTorahScroll: new FormGroup({
           price: new FormControl('', [
-            Validators.required
+            // Validators.required
           ]),
           worthIt: new FormControl('', [
             // Validators.required,
@@ -105,7 +101,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         priceForMezuzah: new FormGroup({
           price: new FormControl('', [
-            Validators.required
+            // Validators.required
           ]),
           worthIt: new FormControl('', [
             // Validators.required,
@@ -116,7 +112,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         priceForTefillin: new FormGroup({
           price: new FormControl('', [
-            Validators.required
+            // Validators.required
           ]),
           worthIt: new FormControl('', [
             // Validators.required,
@@ -129,28 +125,28 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       writingDeatails: new FormGroup({
         letterSizes: new FormGroup({
           17: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           24: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           30: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           36: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           40: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           42: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           45: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           48: new FormControl(false, [
-            Validators.required,
+            // Validators.required,
           ]),
           note: new FormControl('', [
             // Validators.required,
@@ -158,7 +154,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         writingLevel: new FormGroup({
           level: new FormControl('', [
-            Validators.required,
+            // Validators.required,
           ]),
           note: new FormControl('', [
             // Validators.required,
@@ -166,7 +162,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         stabilityLevel: new FormGroup({
           level: new FormControl('', [
-            Validators.required,
+            // Validators.required,
           ]),
           note: new FormControl('', [
             // Validators.required,
@@ -174,7 +170,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         eraseLevel: new FormGroup({
           level: new FormControl('', [
-            Validators.required,
+            // Validators.required,
           ]),
           note: new FormControl('', [
             // Validators.required,
@@ -183,19 +179,27 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         writingTypes: new FormGroup({
           types: new FormGroup({
             ari: new FormControl(false, [
-              Validators.required,
+              // Validators.required,
             ]),
             beitYosef: new FormControl(false, [
-              Validators.required,
+              // Validators.required,
             ]),
             Welish: new FormControl(false, [
-              Validators.required,
+              // Validators.required,
             ]),
           }),
           note: new FormControl('', [
             // Validators.required,
           ]),
         }),
+      }),
+      communityDeatails: new FormGroup({
+        community: new FormControl('', [
+          // Validators.required
+        ]),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
       }),
       placeOfWriting: new FormGroup({
         place: new FormControl('', [
@@ -248,7 +252,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         writerLevel: new FormGroup({
           level: new FormControl('', [
-            Validators.required,
+            // Validators.required,
           ]),
           note: new FormControl('', [
             // Validators.required,
@@ -289,6 +293,23 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     //   }).catch((err) => {
 
     //   });
+  }
+
+  openDialog(formGroup: FormGroup) {
+    this.dialogFormGroup = formGroup;
+  }
+
+  closeDialogAndDeleteChanges(noteValueBeforeChanges: string) {
+    this.dialogFormGroup.controls.note.setValue(noteValueBeforeChanges);
+    this.dialogFormGroup = null;
+  }
+
+  HelperAbstractControlToFormGroup(abstractControl): FormGroup {
+    return abstractControl as FormGroup;
+  }
+
+  closeDialog() {
+    this.dialogFormGroup = null;
   }
 
   onAddProfileImage(file: File) {

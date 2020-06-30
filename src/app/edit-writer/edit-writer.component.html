@@ -1,3 +1,6 @@
+<app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null"
+  (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
+</app-note-dialog>
 <div class="edit-writer-wrapper">
   <form [formGroup]="writerForm" class="page-grid">
     <div class="profile-image-section inner-grid">
@@ -11,6 +14,7 @@
     </div>
     <div class="personal-detail-section inner-grid">
       <div class="section-title">פרטים אישיים</div>
+      <p (click)="openDialog(writerForm)" class="note">notenote</p>
       <input placeholder="שם פרטי" formControlName="firstName">
       <input placeholder="שם משפחה" formControlName="lastName">
       <input placeholder="טלפון" formControlName="telephone">
@@ -22,15 +26,8 @@
       </datalist>
       <input placeholder="רחוב" formControlName="street">
       <input placeholder="מספר בית" formControlName="streetNumber">
-      <div formGroupName="communityDeatails">
-        <input list="communities" placeholder="קהילה" formControlName="community" class="full-width">
-        <datalist id="communities">
-          <option *ngFor="let community of communitiesFromDB" [value]="community">
-        </datalist>
-      </div>
     </div>
     <div class="start-date-section">
-
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
     </div>
     <div formGroupName="isAppropriate" class="is-appropriate-section">
@@ -92,6 +89,8 @@
               <img src="../../assets/icons/v.png" alt="">
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTorahScroll'])))"
+              class="note">notenote</p>
           </div>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
@@ -109,6 +108,8 @@
               <img src="../../assets/icons/v.png" alt="">
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForMezuzah'])))"
+              class="note">notenote</p>
           </div>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
@@ -126,6 +127,8 @@
               <img src="../../assets/icons/v.png" alt="">
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTefillin'])))"
+              class="note">notenote</p>
           </div>
         </div>
       </div>
@@ -137,6 +140,8 @@
             גודל הכתב
           </div>
           <div class="sizes-row inner-grid-2">
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'letterSizes'])))"
+              class="note">notenote</p>
             <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
               class="size-checkbox">
               <input type="checkbox" formControlName="17">
@@ -175,11 +180,42 @@
           </div>
         </div>
       </div>
+      <div formGroupName="writingTypes">
+        <div formGroupName="types" class="writing-types inner-grid-2">
+          <div class="section-title">
+            סוג הכתב
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}"
+              class="box-checkbox">
+              אר"י
+              <input type="checkbox" formControlName="ari">
+            </label>
+          </div>
+          <div>
+            <label
+              [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}"
+              class="box-checkbox">
+              בית יוסף
+              <input type="checkbox" formControlName="beitYosef">
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}"
+              class="box-checkbox">
+              וועליש
+              <input type="checkbox" formControlName="Welish">
+            </label>
+          </div>
+        </div>
+      </div>
       <div formGroupName="writingLevel" class="writing-level inner-grid-2">
         <div class="section-title">
           דרגת כתיבה
         </div>
         <div class="number-button-wrapper inner-grid-2">
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'writingLevel'])))"
+            class="note">notenote</p>
           <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'זול'}">
             <label>
               <input type="radio" formControlName="level" value="זול">
@@ -213,6 +249,8 @@
         </div>
       </div>
       <div formGroupName="stabilityLevel" class="stability-level inner-grid-2">
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'stabilityLevel'])))"
+          ass="note">note</p>
         <div class="section-title">
           יציבות
         </div>
@@ -250,6 +288,8 @@
         </div>
       </div>
       <div formGroupName="eraseLevel" class="erase-level inner-grid-2">
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'eraseLevel'])))"
+          ass="note">note</p>
         <div class="section-title">
           מחיקה
         </div>
@@ -286,37 +326,18 @@
           </div>
         </div>
       </div>
-      <div formGroupName="writingTypes">
-        <div formGroupName="types" class="writing-types inner-grid-2">
-          <div class="section-title">
-            סוג הכתב
-          </div>
-          <div>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}"
-              class="box-checkbox">
-              אר"י
-              <input type="checkbox" formControlName="ari">
-            </label>
-          </div>
-          <div>
-            <label
-              [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}"
-              class="box-checkbox">
-              בית יוסף
-              <input type="checkbox" formControlName="beitYosef">
-            </label>
-          </div>
-          <div>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}"
-              class="box-checkbox">
-              וועליש
-              <input type="checkbox" formControlName="Welish">
-            </label>
-          </div>
-        </div>
-      </div>
+    </div>
+    <div formGroupName="communityDeatails">
+      <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['communityDeatails'])))" class="note">note
+      </p>
+      <input list="communities" placeholder="קהילה" formControlName="community" class="full-width">
+      <datalist id="communities">
+        <option *ngFor="let community of communitiesFromDB" [value]="community">
+      </datalist>
     </div>
     <div formGroupName="placeOfWriting" class="writing-location-section inner-grid">
+      <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['placeOfWriting'])))" class="note">note
+      </p>
       <div class="section-title">
         מקום כתיבה
       </div>
@@ -344,6 +365,8 @@
           <div class="description">
             כתב ספרים בעבר
           </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenBefore'])))"
+            class="note">note</p>
           <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenBefore']).value}"
             class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
@@ -356,6 +379,8 @@
           <div class="description">
             כתב קבלה
           </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenBefore'])))"
+            class="note">note</p>
           <label class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
           </label>
@@ -367,6 +392,8 @@
           <div class="description">
             בחירות
           </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'voatsInElection'])))"
+            class="note">note</p>
           <label class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
           </label>
@@ -378,6 +405,10 @@
           <div class="description">
             הולך לכותל
           </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'goesToKotel'])))"
+            class="note">
+            note
+          </p>
           <label class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
           </label>
@@ -389,6 +420,10 @@
           <div class="description">
             סופר מתחיל
           </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'beginnerWriter'])))"
+            class="note">
+            note
+          </p>
           <label class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
           </label>
@@ -400,6 +435,10 @@
       <div>
         <div formGroupName="writerLevel">
           דרגת סופר
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'writerLevel'])))"
+            class="note">
+            note
+          </p>
           <div>
             <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}">
               <input type="radio" formControlName="level" value="1">
@@ -464,4 +503,5 @@
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->
   <!-- <div #mapContainer id="map"></div> -->
+
 </div>

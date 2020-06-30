@@ -1,0 +1,6 @@
+<div class="backdrop" (click)="closeDialogAndDeleteChanges.emit(noteValueBeforeChanges)"></div>
+<div [formGroup]="formGroup" class="dialog">
+  <div>הוסף הערה</div>
+  <textarea formControlName="note" [value]="formGroup.controls.note.value"></textarea>
+  <div (click)="closeDialog.emit()">שמור הערה</div>
+</div>
