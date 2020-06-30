@@ -3,8 +3,11 @@
     <div class="profile-image-section inner-grid">
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
-      <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value" class="img">
-      <label for="profileImage" class="bold-text">הוסף תמונת פרופיל</label>
+      <label for="profileImage" class="bold-text">
+        <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value"
+          class="profile-image">
+        הוסף תמונת פרופיל
+      </label>
     </div>
     <div class="personal-detail-section inner-grid">
       <div class="section-title">פרטים אישיים</div>
@@ -460,5 +463,5 @@
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->
-  <div #mapContainer id="map"></div>
+  <!-- <div #mapContainer id="map"></div> -->
 </div>

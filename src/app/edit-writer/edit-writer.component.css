@@ -1,21 +1,16 @@
 .edit-writer-wrapper {
-  background-color: #F1F9FF;
+  background-color: #f1f9ff;
 }
-
 
 #map {
   height: 500px;
   width: 100%;
 }
 
-.img {
-  width: 100px;
+.profile-image {
+  width: 10vw;
+  object-fit: cover;
 }
-
-
-
-
-
 
 .page-grid {
   direction: rtl;
@@ -44,15 +39,14 @@
 
 .section-title {
   grid-column: 1 / -1;
-  color: #2699FB;
+  color: #2699fb;
   font-weight: bold;
   margin-bottom: 2vw;
 }
 
 .bold-text {
-  color: #2699FB;
+  color: #2699fb;
   font-weight: bold;
-
 }
 
 .page-grid div {
@@ -74,7 +68,6 @@
 .circle-image {
   border-radius: 100%;
 }
-
 
 .personal-detail-section {
   grid-row: 2 / span 1;
@@ -131,7 +124,6 @@
   grid-row-gap: 4vw;
 }
 
-
 .letter-sizes-wrapper {
   padding-bottom: 6vw;
   border-bottom: 1px solid #000;
@@ -164,16 +156,15 @@
   justify-content: center; */
   height: 10vw;
   width: 10vw;
-  background-color: #B4B4B4;
+  background-color: #b4b4b4;
   border-radius: 100%;
   color: white;
   text-align: center;
   /* font-weight: bold; */
 }
 
-
 .checked {
-  background-color: #2699FB;
+  background-color: #2699fb;
 }
 
 .writing-level {
@@ -195,9 +186,8 @@
   grid-template: auto auto / auto auto auto;
 }
 
-
 .writing-types .checked {
-  background-color: #2699FB;
+  background-color: #2699fb;
 }
 
 .box-checkbox input {
@@ -206,7 +196,7 @@
 
 .box-checkbox {
   text-align: center;
-  background-color: #B4B4B4;
+  background-color: #b4b4b4;
   color: white;
   text-align: center;
   padding: 2vw 6vw;
