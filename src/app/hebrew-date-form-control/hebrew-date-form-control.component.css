@@ -22,5 +22,8 @@
 }
 
 .section-title {
-  grid-column: span 2;
+  grid-column: 1 / -1;
+  color: #2699FB;
+  font-weight: bold;
+  margin-bottom: 2vw;
 }

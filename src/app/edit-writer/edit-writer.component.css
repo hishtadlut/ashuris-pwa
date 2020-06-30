@@ -17,18 +17,20 @@
 
 
 .size-checkbox {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100px;
-  width: 100px;
-  background-color: blue;
+  justify-content: center; */
+  height: 10vw;
+  width: 10vw;
+  background-color: #B4B4B4;
   border-radius: 100%;
   color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
 .checked {
-  background-color: red;
+  background-color: #2699FB;
 }
 
 
@@ -49,12 +51,26 @@
   padding: 3vw;
 }
 
+.inner-grid-2 {
+  display: grid;
+  grid-gap: 3vw;
+}
+
 .full-width {
   width: 100%;
 }
 
 .section-title{
   grid-column: 1 / -1;
+  color: #2699FB;
+  font-weight: bold;
+  margin-bottom: 2vw;
+}
+
+.bold-text{
+  color: #2699FB;
+  font-weight: bold;
+
 }
 
 .page-grid div {
@@ -63,7 +79,20 @@
 
 .profile-image-section {
   grid-row: 1 / span 1;
+  grid-template: auto / auto 1fr;
+  align-items: center;
+  grid-gap: 5vw;
 }
+
+.profile-image-section img {
+  width: 12vw;
+  height: 12vw;
+}
+
+.circle-image {
+  border-radius: 100%;
+}
+
 
 .personal-detail-section {
   grid-row: 2 / span 1;
@@ -88,12 +117,87 @@
   grid-row: 5 / span 1;
 }
 
+.type-of-price-selection-wrapper {
+  grid-template: auto / 1fr 1fr;
+}
+
+.prices-input-wrapper{
+  grid-template: auto auto auto / 1fr;
+}
+
+.price-for-item {
+  grid-template: auto / repeat(6, 1fr);
+}
+
+.price-for-item input {
+  grid-column: 1 / span 3;
+}
+
+.worth-it-buttons-wrapper {
+  grid-column: 4 / span 2;
+  grid-template: auto / 1fr 1fr;
+  justify-items: center;
+}
+
+.worth-it-buttons-wrapper label input {
+  display: none;
+}
+
 .writing-detail-section {
   grid-row: 6 / span 1;
+  grid-row-gap: 4vw;
+}
+
+
+.letter-sizes-wrapper {
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.sizes-row {
+  grid-template: auto / 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  direction: ltr;
+}
+
+.sizes-row label input {
+  display: none;
+}
+
+.writing-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.stability-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.erase-level{
+  padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
+}
+
+.writing-types{
+  grid-template: auto auto / 1fr 1fr 1fr;
+}
+
+.writing-type{
+  height: 10vw;
+  width: 10vw;
+  background-color: #000000;
+  text-align: center;
+  font-weight: bold;
 }
 
 .writing-location-section {
   grid-row: 7 / span 1;
+}
+
+.number-button-wrapper {
+  grid-template: auto / repeat(5, 1fr);
+  /* justify-items: center; */
 }
 
 .additional-details-section {
