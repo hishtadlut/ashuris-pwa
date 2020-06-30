@@ -134,81 +134,7 @@
       </div>
     </div>
     <div formGroupName="writingDeatails" class="writing-detail-section inner-grid">
-      <div class="letter-sizes-wrapper">
-        <div formGroupName="letterSizes" class="inner-grid-2">
-          <div class="section-title">
-            גודל הכתב
-          </div>
-          <div class="sizes-row inner-grid-2">
-            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'letterSizes'])))"
-              class="note">note</p>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="17">
-              17
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '24']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="24"> 24
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '30']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="30"> 30
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '36']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="36"> 36
-            </label>
-          </div>
-          <div class="sizes-row inner-grid-2">
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '40']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="40"> 40
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '42']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="42"> 42
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '45']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="45"> 45
-            </label>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '48']).value}"
-              class="size-checkbox">
-              <input type="checkbox" formControlName="48"> 48
-            </label>
-          </div>
-        </div>
-      </div>
-      <div formGroupName="writingTypes">
-        <div formGroupName="types" class="writing-types inner-grid-2">
-          <div class="section-title">
-            סוג הכתב
-          </div>
-          <div>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}"
-              class="box-checkbox">
-              אר"י
-              <input type="checkbox" formControlName="ari">
-            </label>
-          </div>
-          <div>
-            <label
-              [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}"
-              class="box-checkbox">
-              בית יוסף
-              <input type="checkbox" formControlName="beitYosef">
-            </label>
-          </div>
-          <div>
-            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}"
-              class="box-checkbox">
-              וועליש
-              <input type="checkbox" formControlName="Welish">
-            </label>
-          </div>
-        </div>
-      </div>
+
       <div formGroupName="writingLevel" class="writing-level inner-grid-2">
         <div class="section-title">
           דרגת כתיבה
@@ -322,6 +248,81 @@
             <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '5'}">
               <input type="radio" formControlName="level" value="5">
               5
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="letter-sizes-wrapper">
+        <div formGroupName="letterSizes" class="inner-grid-2">
+          <div class="section-title">
+            גודל הכתב
+          </div>
+          <div class="sizes-row inner-grid-2">
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'letterSizes'])))"
+              class="note">note</p>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="17">
+              17
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '24']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="24"> 24
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '30']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="30"> 30
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '36']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="36"> 36
+            </label>
+          </div>
+          <div class="sizes-row inner-grid-2">
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '40']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="40"> 40
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '42']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="42"> 42
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '45']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="45"> 45
+            </label>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '48']).value}"
+              class="size-checkbox">
+              <input type="checkbox" formControlName="48"> 48
+            </label>
+          </div>
+        </div>
+      </div>
+      <div formGroupName="writingTypes">
+        <div formGroupName="types" class="writing-types inner-grid-2">
+          <div class="section-title">
+            סוג הכתב
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'ari']).value}"
+              class="box-checkbox">
+              אר"י
+              <input type="checkbox" formControlName="ari">
+            </label>
+          </div>
+          <div>
+            <label
+              [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'beitYosef']).value}"
+              class="box-checkbox">
+              בית יוסף
+              <input type="checkbox" formControlName="beitYosef">
+            </label>
+          </div>
+          <div>
+            <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingTypes', 'types', 'Welish']).value}"
+              class="box-checkbox">
+              וועליש
+              <input type="checkbox" formControlName="Welish">
             </label>
           </div>
         </div>
