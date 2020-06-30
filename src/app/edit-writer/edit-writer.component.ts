@@ -6,6 +6,7 @@ import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RecordingService } from '../recording.service';
 
 @Component({
   selector: 'app-edit-writer',
@@ -21,8 +22,6 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   map: google.maps.Map;
   isRecording = false;
   hasRecord = false;
-  record: SafeResourceUrl;
-  mediaRecorder: MediaRecorder;
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
@@ -30,7 +29,8 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     private stitchService: StitchService,
     private googleMapsService: GoogleMapsService,
     private router: Router,
-    private sanitizer: DomSanitizer) { }
+    public recordingService: RecordingService,
+    public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.writerForm = new FormGroup({
@@ -246,10 +246,8 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           ]),
         }),
       }),
-      photos: new FormArray([new FormControl('')]),
-      record: new FormControl('', [
-        // Validators.required,
-      ]),
+      photos: new FormArray([]),
+      recordings: new FormArray([]),
     });
     this.stitchService.getCities();
     this.stitchService.getCommunities();
@@ -304,45 +302,47 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startRecording() {
-    const audioChunks = [];
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        this.mediaRecorder = new MediaRecorder(stream);
-
-        this.mediaRecorder.addEventListener('dataavailable', event => {
-          audioChunks.push(event.data);
-        });
-
-        this.mediaRecorder.addEventListener('stop', () => {
-          this.isRecording = false;
-          this.hasRecord = true;
-
-          const audioBlob = new Blob(audioChunks);
-          const audioUrl = URL.createObjectURL(audioBlob);
-          const audio = new Audio(audioUrl);
-
-          this.record = this.sanitizer.bypassSecurityTrustResourceUrl(audioUrl);
-          // this.record = audio;
-
-          const reader = new FileReader();
-          reader.readAsDataURL(audioBlob);
-          reader.onloadend = () => {
-            const base64data = reader.result;
-            this.writerForm.controls.record.setValue(base64data);
-          };
-
-          // this.sanitizer.bypassSecurityTrustResourceUrl(audioUrl);
-        });
-
-        this.mediaRecorder.start();
+    this.recordingService.startRecording()
+      .then(() => {
         this.isRecording = true;
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
   stopRecording() {
-    this.mediaRecorder.stop();
+    this.isRecording = false;
+    this.hasRecord = true;
+
+    this.recordingService.stopRecording()
+      .then((audioBlob: Blob) => {
+        this.recordingService.convertRecordingToBase64(audioBlob)
+          .then((base64data: string) => {
+            // const audioUrl = URL.createObjectURL(base64data);
+            // const audio = new Audio('data:audio/wav;base64' + base64data.split('base64')[1]);
+            const recordingsArray = this.writerForm.controls.recordings as FormArray;
+            // console.log('data:audio/wav;base64' + base64data.split('base64')[1]);
+            // audio.play();
+
+            recordingsArray.push(new FormControl('data:audio/wav;base64' + base64data.split('base64')[1]));
+          });
+
+        // this.recordingService.convertBase64ToBypassSecurityTrustAudioUrl(audioBlob)
+        //   .then((audioUrl: string) => {
+        //     this.recordingService.lastRecording = ;
+        //   });
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
+  deleteRecording(index) {
+    const recordingsArray = this.writerForm.controls.recordings as FormArray;
+    recordingsArray.removeAt(index);
+  }
   // playRecord() {
   //   this.record.play();
   // }
