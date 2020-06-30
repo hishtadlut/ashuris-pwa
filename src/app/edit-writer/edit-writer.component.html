@@ -14,7 +14,7 @@
     </div>
     <div class="personal-detail-section inner-grid">
       <div class="section-title">פרטים אישיים</div>
-      <p (click)="openDialog(writerForm)" class="note">notenote</p>
+      <p (click)="openDialog(writerForm)" class="note">note</p>
       <input placeholder="שם פרטי" formControlName="firstName">
       <input placeholder="שם משפחה" formControlName="lastName">
       <input placeholder="טלפון" formControlName="telephone">
@@ -90,7 +90,7 @@
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTorahScroll'])))"
-              class="note">notenote</p>
+              class="note">note</p>
           </div>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
@@ -109,7 +109,7 @@
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForMezuzah'])))"
-              class="note">notenote</p>
+              class="note">note</p>
           </div>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
@@ -128,7 +128,7 @@
               <input type="radio" formControlName="worthIt" value='true'>
             </label>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTefillin'])))"
-              class="note">notenote</p>
+              class="note">note</p>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@
           </div>
           <div class="sizes-row inner-grid-2">
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'letterSizes'])))"
-              class="note">notenote</p>
+              class="note">note</p>
             <label [ngClass]="{'checked': writerForm.get(['writingDeatails', 'letterSizes', '17']).value}"
               class="size-checkbox">
               <input type="checkbox" formControlName="17">
@@ -215,7 +215,7 @@
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'writingLevel'])))"
-            class="note">notenote</p>
+            class="note">note</p>
           <div [ngClass]="{'checked': writerForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'זול'}">
             <label>
               <input type="radio" formControlName="level" value="זול">
