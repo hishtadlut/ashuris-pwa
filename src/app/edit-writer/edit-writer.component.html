@@ -11,6 +11,7 @@
       <input placeholder="שם פרטי" formControlName="firstName">
       <input placeholder="שם משפחה" formControlName="lastName">
       <input placeholder="טלפון" formControlName="telephone">
+      <input placeholder="אימייל" formControlName="email">
       <input list="cities" placeholder="עיר" formControlName="city">
       <datalist id="cities">
         <option *ngFor="let city of citiesFromDB" [value]="city.city">
@@ -316,13 +317,15 @@
         מקום כתיבה
       </div>
       <div>
-        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'בית'}" class="box-checkbox">
+        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'בית'}"
+          class="box-checkbox">
           בית
           <input type="radio" formControlName="place" value='בית'>
         </label>
       </div>
       <div>
-        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'אחר'}" class="box-checkbox">
+        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'אחר'}"
+          class="box-checkbox">
           אחר
           <input type="radio" formControlName="place" value='אחר'>
         </label>
@@ -337,7 +340,8 @@
           <div class="description">
             כתב ספרים בעבר
           </div>
-          <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenBefore']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenBefore']).value}"
+            class="size-checkbox">
             <input type="radio" formControlName="boolean" value='false'>
           </label>
           <label class="size-checkbox">

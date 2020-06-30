@@ -193,17 +193,8 @@
 
 .writing-types {
   grid-template: auto auto / auto auto auto;
-  /* justify-items: center; */
 }
 
-/* .writing-types .box-checkbox {
-  text-align: center;
-  background-color: #B4B4B4;
-  color: white;
-  text-align: center;
-  padding: 2vw 4vw;
-  border-radius: 4px;
-} */
 
 .writing-types .checked {
   background-color: #2699FB;

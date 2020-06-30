@@ -45,6 +45,10 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         Validators.pattern('^[0-9]*$'),
         Validators.minLength(9),
       ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
       city: new FormControl('', [
         Validators.required,
       ]),
