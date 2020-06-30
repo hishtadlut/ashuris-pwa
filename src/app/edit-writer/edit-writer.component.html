@@ -436,19 +436,21 @@
       </div>
     </div>
     <div class="recording-section">
-      <!-- <input type="file" accept="audio/*" capture> -->
-      <label *ngIf="!isRecording" for="click">
+      <label *ngIf="!isRecording" for="click" (click)="startRecording()">
         <div>הוסף תזכורת קולית</div>
-        <input type="button" id="click" type="file" accept="audio/*" capture (click)="startRecording()">
       </label>
       <div *ngIf="isRecording" (click)="stopRecording()">
         עצור הקלטה
       </div>
-      <audio controls *ngIf="hasRecord" [src]="record">
-        השמע הקלטה
-      </audio>
+      <div *ngIf="hasRecord">
+        <div *ngFor="let recording of writerForm.controls.recordings['controls']; let i = index;">
+          <div (click)="deleteRecording(i)">מחק הקלטה</div>
+          <audio controls *ngIf="recording.value" [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value)"
+            class="img">
+          </audio>
+        </div>
+      </div>
     </div>
-
     <button [disabled]="writerForm.invalid" (click)="onSubmit()" class="add-sofer-button">הוסף סופר למאגר</button>
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
