@@ -1,5 +1,5 @@
 .edit-writer-wrapper {
-  background-color: #f1f9ff;
+  background-color: #F7F7FA;
 }
 
 #map {
@@ -25,7 +25,23 @@
 .inner-grid {
   display: grid;
   grid-gap: 1vh;
-  padding: 3vw;
+  padding: 5vw;
+  position: relative;
+  box-shadow: 0pt 3pt 6pt #00000029;
+}
+
+.inner-grid input {
+  height: 12vw;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  padding-right: 5vw;
+  margin-bottom: 2vw;
+  color: #000000;
+}
+
+.inner-grid input:focus {
+  outline: none;
+  border: 2px solid #D4A75D;
 }
 
 .inner-grid-2 {
@@ -37,11 +53,19 @@
   width: 100%;
 }
 
+.note {
+  position: absolute;
+  top: 3.5vw;
+  left: 4vw;
+}
+
 .section-title {
   grid-column: 1 / -1;
-  color: #2699fb;
+  color: #2A2E43;
   font-weight: bold;
   margin-bottom: 2vw;
+  font-size: 0.9rem;
+  font-family: Arial;
 }
 
 .bold-text {
@@ -163,8 +187,17 @@
   /* font-weight: bold; */
 }
 
+.level-checkbox {
+  height: 10vw;
+  width: 10vw;
+  background-color: #b4b4b4;
+  border-radius: 15%;
+  color: white;
+  text-align: center;
+}
+
 .checked {
-  background-color: #2699fb;
+  background-color: #C89C5B;
 }
 
 .writing-level {
@@ -187,7 +220,7 @@
 }
 
 .writing-types .checked {
-  background-color: #2699fb;
+  background-color: #C89C5B;
 }
 
 .box-checkbox input {
