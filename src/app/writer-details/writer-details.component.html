@@ -1,0 +1,57 @@
+<div class="container" *ngIf="writer">
+    <div>
+        <div>
+            <div>{{ writer.firstName }} {{ writer.lastName }}</div>
+            <div>{{writer.street}} {{writer.city}}</div>
+        </div>
+        <div>{{ writer.reminderState }}</div>
+        <div (click)="onEditWriter()">ערוך</div>
+    </div>
+    <div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div>{{ writer.telephone }}</div>
+                <div>טלפון</div>
+            </div>
+        </div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div>{{ writer.secondTelephone }}</div>
+                <div>טלפון נוסף</div>
+            </div>
+        </div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div>{{ writer.email }}</div>
+                <div>אימייל</div>
+            </div>
+        </div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div>{{ writer.secondTelephone }}</div>
+                <div>בית</div>
+            </div>
+        </div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div><img [src]="!(writer.isAppropriate.level === 'לא מתאים') ? '' : ''" alt=""></div>
+                <div>{{ writer.isAppropriate.level }}</div>
+            </div>
+        </div>
+        <div>
+            <div><img src="" alt=""></div>
+            <div>
+                <div>תאריך התחלה</div>
+                <div>{{ writer.startDate.hebrewDateInWords }}</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div #mapContainer id="map"></div>
+    </div>
+</div>

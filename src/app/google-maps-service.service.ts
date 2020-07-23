@@ -2,26 +2,19 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class GoogleMapsService {
-  currentCoordinates: google.maps.LatLng;
-  mapOptions: google.maps.MapOptions;
   geocoder = new google.maps.Geocoder();
-  map: google.maps.Map;
 
-  constructor() {
-    this.setCurrentCoordinates();
-  }
-
-  setCurrentCoordinates() {
+  getCurrentCoordinates(): Promise<google.maps.LatLng> {
     return new Promise((resolve, reject) => {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (result) => {
-            this.currentCoordinates = new google.maps.LatLng(
+            const currentCoordinates = new google.maps.LatLng(
               result.coords.latitude,
               result.coords.longitude,
               // 32.0845933, 34.8412179
             );
-            resolve(this.currentCoordinates);
+            resolve(currentCoordinates);
           },
           (err) => {
             reject(err);
@@ -40,9 +33,9 @@ export class GoogleMapsService {
     });
   }
 
-  reverseGeocoder() {
+  reverseGeocoder(currentCoordinates: google.maps.LatLng) {
     return new Promise((resolve) => {
-      this.geocoder.geocode({ location: this.currentCoordinates }, (results, status) => {
+      this.geocoder.geocode({ location: currentCoordinates }, (results, status) => {
         if (status === 'OK') {
           if (results[0]) {
             resolve(results[0]);
@@ -56,22 +49,31 @@ export class GoogleMapsService {
     });
   }
 
-  setMapWithCurrentPosition(mapDiv, zoom: number = 16) {
-    return new Promise((resolve, reject) => {
-      this.setCurrentCoordinates()
-        .then((currentCoordinates: google.maps.LatLng) => {
-          this.mapOptions = {
-            center: currentCoordinates,
-            zoom,
-          };
-          this.map = new google.maps.Map(mapDiv, this.mapOptions);
-          this.addMarker(currentCoordinates, this.map);
-          resolve(null);
-        }).catch((err) => {
-          reject(err);
-        });
-    });
 
+
+  // setMapWithCurrentPosition(mapDiv, zoom: number = 16): Promise<google.maps.LatLng> {
+  //   return new Promise((resolve, reject) => {
+  //     this.getCurrentCoordinates()
+  //       .then((currentCoordinates: google.maps.LatLng) => {
+  //         this.setMapWithPosition(mapDiv, currentCoordinates)
+  //         resolve(currentCoordinates);
+  //       }).catch((err) => {
+  //         reject(err);
+  //       });
+  //   });
+
+  // }
+
+  setMapWithPosition(mapDiv, position: google.maps.LatLng, zoom: number = 16) {
+    // if (typeof (position) !== 'string') {
+      const mapOptions = {
+        center: position,
+        zoom,
+      };
+      const map = new google.maps.Map(mapDiv, mapOptions);
+      this.addMarker(position, map);
+      return position;
+    // }
   }
 
 }

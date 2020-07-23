@@ -24,17 +24,17 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   hasRecord = false;
   dialogFormGroup: FormGroup = null;
 
-  // @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
-
   constructor(
     private stitchService: StitchService,
     private googleMapsService: GoogleMapsService,
-    private router: Router,
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.writerForm = new FormGroup({
+      reminderState: new FormControl('off', [
+        // Validators.required,
+      ]),
       note: new FormControl('', [
         // Validators.required,
       ]),
@@ -64,7 +64,11 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       street: new FormControl('', [
         // Validators.required,
       ]),
+      coordinates: new FormControl(),
       streetNumber: new FormControl('', [
+        // Validators.required,
+      ]),
+      apartmentNumber: new FormControl('', [
         // Validators.required,
       ]),
       profileImage: new FormControl('../../assets/icons/Symbol 216 – 66.svg', [
@@ -273,26 +277,25 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    // .then((currentCoordinates) => {
     // this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
-    //   .then(() => {
-    //     this.googleMapsService.reverseGeocoder()
-    //       .then((result: google.maps.GeocoderResult) => {
-    //         console.log(result);
-    //         try {
-    //           this.writerForm.controls.city.setValue(
-    //             result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name
-    //           );
-    //           this.writerForm.controls.street.setValue(
-    //             result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name
-    //           );
-    //           this.writerForm.controls.streetNumber.setValue(
-    //             result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name
-    //           );
-    //         } catch { }
-    //       });
-    //   }).catch((err) => {
-
-    //   });
+    this.googleMapsService.getCurrentCoordinates()
+      .then((currentCoordinates) => {
+        this.googleMapsService.reverseGeocoder(currentCoordinates)
+        .then((result: google.maps.GeocoderResult) => {
+          try {
+            const address = {
+              city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
+              street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
+              streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
+            }
+            this.writerForm.controls.city.setValue(address.city);
+            this.writerForm.controls.street.setValue(address.street);
+            this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+            this.writerForm.controls.coordinates.setValue(currentCoordinates);
+            } catch { }
+          });
+      })
   }
 
   openDialog(formGroup: FormGroup) {

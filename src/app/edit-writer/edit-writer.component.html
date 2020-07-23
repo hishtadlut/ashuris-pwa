@@ -25,7 +25,8 @@
         <option *ngFor="let city of citiesFromDB" [value]="city.city">
       </datalist>
       <input placeholder="רחוב" formControlName="street">
-      <input placeholder="מספר בית" formControlName="streetNumber">
+      <input placeholder="מספר בנין" formControlName="streetNumber">
+      <input placeholder="מספר בית" formControlName="apartmentNumber">
     </div>
     <div class="start-date-section">
       <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
@@ -503,6 +504,5 @@
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->
-  <!-- <div #mapContainer id="map"></div> -->
 
 </div>

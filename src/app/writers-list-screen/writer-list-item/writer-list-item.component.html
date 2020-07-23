@@ -1,3 +1,6 @@
-<img *ngIf="writer.profileImage" [src]="writer.profileImage">
-<div>{{ writer.firstName }} {{ writer.lastName }} {{ writer.telephone }} {{ writer.startDate.hebrewDateInWords }}
+<div class="writer-list-item" (click)="goToWriterDetails()">
+    <div>
+        {{ writer.firstName }} {{ writer.lastName }} {{ writer.telephone }} {{ writer.startDate.hebrewDateInWords }}
+    </div>
+    <img *ngIf="writer.profileImage" [src]="writer.profileImage">
 </div>

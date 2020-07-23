@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Writer } from 'src/app/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-writer-list-item',
@@ -10,9 +11,13 @@ export class WriterListItemComponent implements OnInit {
 
   @Input() writer: Writer;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  goToWriterDetails() {
+    this.router.navigate([`/writer-details`, { id: (this.writer._id) }]);
   }
 
 }

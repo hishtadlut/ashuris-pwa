@@ -20,6 +20,8 @@ import { WriterListItemComponent } from './writers-list-screen/writer-list-item/
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HebrewDateFormControlComponent } from './hebrew-date-form-control/hebrew-date-form-control.component';
 import { NoteDialogComponent } from './note-dialog/note-dialog.component';
+import { WriterDetailsComponent } from './writer-details/writer-details.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { NoteDialogComponent } from './note-dialog/note-dialog.component';
     WriterListItemComponent,
     HebrewDateFormControlComponent,
     NoteDialogComponent,
+    WriterDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -43,7 +46,7 @@ import { NoteDialogComponent } from './note-dialog/note-dialog.component';
     RouterModule,
     GoogleMapsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

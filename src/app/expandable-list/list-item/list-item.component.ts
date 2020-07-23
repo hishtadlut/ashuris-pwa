@@ -17,7 +17,6 @@ export class ListItemComponent implements OnInit {
 
     onItemClicked() {
         this.router.navigate([`/${this.listItem.listItemLink}`]);
-        console.log(this.listItem.listItemLink);
     }
 
 }

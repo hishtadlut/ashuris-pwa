@@ -1,11 +1,21 @@
 import { RouterLink } from '@angular/router';
 
 export interface Writer {
+  _id?: any;
+  reminderState: string
   firstName: string;
   lastName: string;
-  telephone: string;
+  telephone: number;
+  email: string;
+  secondTelephone: number;
   city: string;
+  street: string;
   profileImage: string;
+  coordinates: google.maps.LatLng;
+  isAppropriate: {
+    level: string;
+    note: string;
+  }
   startDate: {
     gregorianDate: CalendarDate
     hebrewDateInWords: string

@@ -9,6 +9,7 @@ import {
   RemoteInsertOneResult,
   RemoteMongoCollection,
   RemoteUpdateResult,
+  BSON
 } from 'mongodb-stitch-browser-sdk';
 import { Subject } from 'rxjs';
 import { Writer } from './interfaces';
@@ -37,7 +38,7 @@ export class StitchService {
     this.citiesCollection = this.db.collection('cities');
     this.communitiesCollection = this.db.collection('communities');
     this.client.auth.loginWithCredential(new AnonymousCredential())
-      .then((user: StitchUser) => console.log(user.id));
+      .then((user: StitchUser) => console.log("Stitch logged in!"));
   }
   // .then(() =>
   //   this.db.collection('<COLLECTION>').find({ owner_id: this.client.auth.user.id }, { limit: 100 }).asArray()
@@ -89,6 +90,10 @@ export class StitchService {
     this.db.collection('writers').find({}, options).toArray()
       .then((writers: Writer[]) => this.writersFromDB.next(writers))
       .catch(console.error);
+  }
+
+  getWriter(id) {
+    return this.db.collection('writers').findOne({_id: new BSON.ObjectId(id)})
   }
 
   getCities() {

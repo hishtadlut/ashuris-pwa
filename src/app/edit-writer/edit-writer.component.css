@@ -2,11 +2,6 @@
   background-color: #f1f9ff;
 }
 
-#map {
-  height: 500px;
-  width: 100%;
-}
-
 .profile-image {
   width: 10vw;
   object-fit: cover;
