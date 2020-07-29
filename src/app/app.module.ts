@@ -22,6 +22,10 @@ import { HebrewDateFormControlComponent } from './hebrew-date-form-control/hebre
 import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 import { WriterDetailsComponent } from './writer-details/writer-details.component';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, metaReducers } from './reducers';
+import { WritersEffects } from './effects/writers.effects';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,15 @@ import { StoreModule } from '@ngrx/store';
     GoogleMapsModule,
     NgbModule,
     FormsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([WritersEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

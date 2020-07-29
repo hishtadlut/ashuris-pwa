@@ -167,6 +167,7 @@
   },
   "defaultProject": "ashuris-pwa",
   "cli": {
-    "analytics": "c37aec8c-b092-4c83-b401-301f58c71721"
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": "8f319d19-d543-43d4-8fee-dc9261acce2c"
   }
 }

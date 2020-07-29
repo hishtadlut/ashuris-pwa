@@ -22,14 +22,14 @@ export interface Writer {
   };
   writingDeatails: {
     letterSizes: {
-      17: number;
-      24: number;
-      30: number;
-      36: number;
-      40: number;
-      42: number;
-      45: number;
-      48: number;
+      17: boolean;
+      24: boolean;
+      30: boolean;
+      36: boolean;
+      40: boolean;
+      42: boolean;
+      45: boolean;
+      48: boolean;
     };
     note: string;
   };
@@ -38,6 +38,7 @@ export interface Writer {
     note: string;
   };
 }
+
 
 export interface ListItem {
   listItemText: string;

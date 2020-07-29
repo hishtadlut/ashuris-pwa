@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StitchService } from '../stitch-service.service';
-import { Subscription } from 'rxjs';
+import { Subscription, pipe, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
+import { Store, select } from '@ngrx/store';
+import { loadWritersList } from '../actions/writers.actions';
+import { State } from '../reducers';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -9,29 +12,29 @@ import { Writer } from '../interfaces';
   styleUrls: ['./writers-list-screen.component.css']
 })
 export class WritersListScreenComponent implements OnInit, OnDestroy {
-  writers: Writer[];
   writersToDisplay: Writer[] = [];
-  writersFromDBSubscription: Subscription;
-  constructor(private stitchService: StitchService) { }
+  writersList$: Observable<Writer[]> = this._store$.pipe(
+    select('writers', 'writersList')
+  )
+  writersList$Subscription: Subscription;
+  writersList: Writer[];
+
+  constructor(private stitchService: StitchService, private _store$: Store<State>) { }
 
   ngOnInit(): void {
-    this.stitchService.getWriters();
-    this.writersFromDBSubscription = this.stitchService.writersFromDB.subscribe(
-      (writers => {
-        this.writers = writers;
-        this.writersToDisplay = writers;
-      })
-    );
+    this._store$.dispatch(loadWritersList())
+    
+    this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList)
   }
 
   onKeyUpSearchByName(event) {
-    this.writersToDisplay = this.writers.filter(writer =>
+    this.writersToDisplay = this.writersList.filter(writer =>
       writer.firstName.includes(event.target.value) || writer.lastName.includes(event.target.value)
     );
   }
 
   ngOnDestroy() {
-    this.writersFromDBSubscription.unsubscribe();
+    this.writersList$Subscription.unsubscribe();
   }
 
 }

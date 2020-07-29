@@ -75,7 +75,7 @@ export class StitchService {
     // .updateOne({ owner_id: this.client.auth.user.id }, { $set: { number: 42 } }, { upsert: true });
   }
 
-  getWriters() {
+  getWriters(): Promise<Writer[]> {
     const options = { // Match the shape of RemoteFindOptions.
       // limit: 10,      // Return only first ten results.
       // projection: {   // Return only the `title`, `releaseDate`, and
@@ -87,13 +87,13 @@ export class StitchService {
         firstName: -1,
       },
     };
-    this.db.collection('writers').find({}, options).toArray()
-      .then((writers: Writer[]) => this.writersFromDB.next(writers))
-      .catch(console.error);
+    return this.db.collection<Writer>('writers').find({}, options).toArray()
+      // .then((writers: Writer[]) => this.writersFromDB.next(writers))
+      // .catch(console.error);
   }
 
-  getWriter(id) {
-    return this.db.collection('writers').findOne({_id: new BSON.ObjectId(id)})
+  getWriter(id: string): Promise<Writer> {
+    return this.db.collection<Writer>('writers').findOne({_id: new BSON.ObjectId(id)});
   }
 
   getCities() {
@@ -105,7 +105,6 @@ export class StitchService {
   getCommunities() {
     this.communitiesCollection.findOne({})
       .then((communities) => {
-        console.log(communities);
         return this.communitiesFromDB.next(communities.communities);
       })
       .catch(console.error);
