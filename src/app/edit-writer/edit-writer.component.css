@@ -54,6 +54,10 @@
   left: 4vw;
 }
 
+label input {
+  display: none;
+}
+
 .section-title {
   grid-column: 1 / -1;
   color: #2A2E43;
@@ -165,6 +169,12 @@
   align-items: center;
 }
 
+.additional-details-section label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .sizes-row label input {
   display: none;
 }
@@ -191,8 +201,20 @@
   text-align: center;
 }
 
+label.level-checkbox {
+  display: grid;
+  align-items: center;
+}
+
+
+.box-checkbox.checked,
 .checked {
   background-color: #C89C5B;
+}
+
+.box-checkbox.checked-blue,
+.checked-blue {
+  background-color: #2A2E43;
 }
 
 .writing-level {
@@ -260,10 +282,17 @@
 
 .additional-detail {
   grid: auto / repeat(5, 1fr);
+  margin-bottom: 4vw;
+  align-items: center;
 }
 
 .description {
   grid-column: 1 / span 2;
+  font-weight: bold;
+  color: #2A2E43;
+  margin-bottom: 2vw;
+  font-size: 0.85rem;
+  font-family: Arial;
 }
 
 .photo-section {
