@@ -6,6 +6,7 @@
   position: relative;
   box-shadow: 0pt 3pt 6pt #00000029;
   position: relative;
+  align-content: center;
 }
 
 
@@ -51,5 +52,8 @@
   min-width: 9vw;
   min-height: 9vw;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* margin: 3vw; */
 }
