@@ -541,8 +541,8 @@
       </div>
     </div>
 
-    <div formArrayName="photos" class="photo-section">
-      <label for="addPhoto">
+    <div formArrayName="photos" class="photo-section inner-grid">
+      <label for="addPhoto" class="section-title">
         הוסף תמונה
         <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
           accept="image/*">
@@ -551,9 +551,9 @@
         <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>
     </div>
-    <div class="recording-section">
+    <div class="recording-section inner-grid">
       <label *ngIf="!isRecording" for="click" (click)="startRecording()">
-        <div>הוסף תזכורת קולית</div>
+        <div class="section-title">הוסף תזכורת קולית</div>
       </label>
       <div *ngIf="isRecording" (click)="stopRecording()">
         עצור הקלטה

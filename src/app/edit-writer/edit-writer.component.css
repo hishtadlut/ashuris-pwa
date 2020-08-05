@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: repeat(11, auto);
-  grid-gap: 2vh;
+  grid-gap: 3vh;
   margin: 0 4vw;
 }
 
@@ -34,9 +34,9 @@
 }
 
 .inner-grid input {
-  height: 12vw;
+  height: 11vw;
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   padding-right: 5vw;
   margin-bottom: 2vw;
   color: #000000;
@@ -71,7 +71,7 @@ label input {
   color: #2A2E43;
   font-weight: bold;
   margin-bottom: 2vw;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-family: Arial;
 }
 
@@ -273,6 +273,10 @@ label.level-checkbox {
   border-radius: 4px;
 }
 
+.price-deatail-section .box-checkbox {
+  margin-bottom: 4vw;
+}
+
 /* .box-checkbox .checked {
   background-color: blue;
 } */
@@ -322,6 +326,7 @@ label.level-checkbox {
 
 .photo-section {
   grid-row: 13 / span 1;
+  grid-template: auto / 1fr 1fr 1fr;
 }
 
 .recording-section {
@@ -330,4 +335,21 @@ label.level-checkbox {
 
 .add-sofer-button {
   grid-row: 15 / span 1;
+  background-color: #D4A75D;
+  font-size: 1fr;
+  color: #313C60;
+  font-weight: bold;
+  padding: 2vw;
+  border-radius: 10px;
+  margin-bottom: 5vw;
+  border: none;
+  box-shadow: 0pt 3pt 6pt #00000029;
 }
+
+.img {
+  width: 20vw;
+  /* margin-left: 4vw;
+  margin-bottom: 4vw; */
+}
+
+
