@@ -14,7 +14,7 @@ import PouchDB from 'pouchdb';
 })
 export class StitchService {
 
-  
+
   writersFromDB = new Subject<Writer[]>();
   citiesFromDB = new Subject<{ city: string }[]>();
   communitiesFromDB = new Subject<string[]>();
@@ -45,7 +45,7 @@ export class StitchService {
       .then(result => {
         !result.rows.some((document: any) => document.doc.city === writer.city) && this.localCitiesDB.put({ city: writer.city, _id: new Date().getMilliseconds().toString() });
       })
-    this.localCommunitiesDB.get<{communities: string[]}>('communities')
+    this.localCommunitiesDB.get<{ communities: string[] }>('communities')
       .then((communities) => {
         const communitiesSet = new Set(communities.communities || []);
         communitiesSet.add(writer.communityDeatails.community);
@@ -77,11 +77,11 @@ export class StitchService {
   }
 
   getWriters(): Promise<Writer[]> {
-    return this.localWritersDB.allDocs<Writer[]>({ include_docs: true })
+    return this.localWritersDB.allDocs<Writer>({ include_docs: true })
       .then((result) => {
         return new Promise(resolve => {
           resolve(result.rows.map(row => row.doc));
-        }) 
+        })
       })
   }
 
@@ -92,16 +92,15 @@ export class StitchService {
   }
 
   getCities() {
-    this.localCitiesDB.allDocs({ include_docs: true })
+    this.localCitiesDB.allDocs<{ city: string }>({ include_docs: true })
       .then(result => {
         const cities = result.rows.map(row => row.doc);
         this.citiesFromDB.next(cities)
-
       })
   }
 
   getCommunities() {
-    this.localCommunitiesDB.get<{communities: string[]}>('communities')
+    this.localCommunitiesDB.get<{ communities: string[] }>('communities')
       .then(communities => {
         return this.communitiesFromDB.next(communities.communities)
       })
