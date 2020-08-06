@@ -1,3 +1,3 @@
 <input (keyup)="onKeyUpSearchByName($event)">
-<p>סופרים ברשימה {{ writersToDisplay.length }}</p>
+<p *ngIf="writersToDisplay">סופרים ברשימה {{ writersToDisplay.length }}</p>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

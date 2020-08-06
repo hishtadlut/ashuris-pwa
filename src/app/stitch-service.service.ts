@@ -1,113 +1,110 @@
 import { Injectable } from '@angular/core';
-import {
-  Stitch,
-  RemoteMongoClient,
-  AnonymousCredential,
-  RemoteMongoDatabase,
-  StitchAppClient,
-  StitchUser,
-  RemoteInsertOneResult,
-  RemoteMongoCollection,
-  RemoteUpdateResult,
-  BSON
-} from 'mongodb-stitch-browser-sdk';
+
 import { Subject } from 'rxjs';
 import { Writer } from './interfaces';
+
+import { v4 as uuidv4 } from 'uuid';
+
+//PouchDB
+import PouchDB from 'pouchdb';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class StitchService {
 
-  db: RemoteMongoDatabase;
-  client: StitchAppClient;
+  
   writersFromDB = new Subject<Writer[]>();
   citiesFromDB = new Subject<{ city: string }[]>();
   communitiesFromDB = new Subject<string[]>();
-  writersCollection: RemoteMongoCollection<any>;
-  citiesCollection: RemoteMongoCollection<any>;
-  communitiesCollection: RemoteMongoCollection<any>;
 
-  constructor() { }
+  localWritersDB = new PouchDB('writersLocal');
+  remoteWritersDB = new PouchDB('http://104.154.30.190:5986/writers_remote', {});
 
-  login() {
-    this.client = Stitch.initializeDefaultAppClient('ashuris-naqyn');
+  localCommunitiesDB = new PouchDB('communitiesLocal');
+  remoteCommunitiesDB = new PouchDB('http://104.154.30.190:5986/communities_remote');
+  // remoteCommunitiesDB = new PouchDB('http://admin:password@104.154.30.190/communities_remote');
 
-    this.db = this.client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('ashuris');
-    this.writersCollection = this.db.collection('writers');
-    this.citiesCollection = this.db.collection('cities');
-    this.communitiesCollection = this.db.collection('communities');
-    this.client.auth.loginWithCredential(new AnonymousCredential())
-      .then((user: StitchUser) => console.log("Stitch logged in!"));
+  localCitiesDB = new PouchDB('citiesLocal');
+  remoteSitiesDB = new PouchDB('http://104.154.30.190:5986/cities_remote');
+
+  constructor() {
+    const options = {
+      live: true,
+      retry: true,
+      continuous: true,
+    }
+    this.localWritersDB.sync(this.remoteWritersDB, options)
+    this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
+    this.localCitiesDB.sync(this.remoteSitiesDB, options)
   }
-  // .then(() =>
-  //   this.db.collection('<COLLECTION>').find({ owner_id: this.client.auth.user.id }, { limit: 100 }).asArray()
-  // ).then(docs => {
-  //   console.log("Found docs", docs)
-  //   console.log("[MongoDB Stitch] Connected to Stitch")
-  // }).catch(err => {
-  //   console.error(err);
-  // });
 
   createWriter(writer: Writer) {
-    this.citiesCollection.updateOne({ city: writer.city }, { $set: { city: writer.city } }, { upsert: true })
-      .then((result: RemoteUpdateResult) => {
-        this.getCities();
-        this.getCommunities();
-      }).catch((err) => {
-        console.log(err);
+    this.localCitiesDB.allDocs({ include_docs: true })
+      .then(result => {
+        !result.rows.some((document: any) => document.doc.city === writer.city) && this.localCitiesDB.put({ city: writer.city, _id: new Date().getMilliseconds().toString() });
+      })
+    this.localCommunitiesDB.get<{communities: string[]}>('communities')
+      .then((communities) => {
+        const communitiesSet = new Set(communities.communities || []);
+        communitiesSet.add(writer.communityDeatails.community);
+        communities.communities = Array.from(communitiesSet);
+        this.localCommunitiesDB.put(communities)
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        if (err.name === 'not_found') {
+          return this.localCommunitiesDB.put({
+            _id: 'communities',
+            communities: []
+          });
+        } else { // hm, some other error
+          console.log(err + 'boom');
+        }
       });
 
-    this.communitiesCollection.updateOne({}, { $addToSet: { communities: writer.communityDeatails.community } }, { upsert: true })
-      .then((result: RemoteUpdateResult) => {
+    this.localWritersDB.put({
+      _id: uuidv4(),
+      ...JSON.parse(JSON.stringify(writer))
+    })
+      .then(result => {
         console.log(result);
-        // this.getCities();
-      }).catch((err) => {
-        console.log(err);
-      });
-    return this.writersCollection.insertOne(writer)
-      .then((result: RemoteInsertOneResult) => {
-        console.log(result.insertedId);
-      }).catch((err) => {
-        console.log(err);
-      });
-
-    // .updateOne({ owner_id: this.client.auth.user.id }, { $set: { number: 42 } }, { upsert: true });
+      })
+      .catch(console.error)
   }
 
   getWriters(): Promise<Writer[]> {
-    const options = { // Match the shape of RemoteFindOptions.
-      // limit: 10,      // Return only first ten results.
-      // projection: {   // Return only the `title`, `releaseDate`, and
-      //   firstName: 1,     //   (implicitly) the `_id` fields.
-      //   lastName: 1,
-      //   telephone: 1,
-      // },
-      sort: { // Sort by releaseDate descending (latest first).
-        firstName: -1,
-      },
-    };
-    return this.db.collection<Writer>('writers').find({}, options).toArray()
-      // .then((writers: Writer[]) => this.writersFromDB.next(writers))
-      // .catch(console.error);
+    return this.localWritersDB.allDocs<Writer[]>({ include_docs: true })
+      .then((result) => {
+        return new Promise(resolve => {
+          resolve(result.rows.map(row => row.doc));
+        }) 
+      })
   }
 
   getWriter(id: string): Promise<Writer> {
-    return this.db.collection<Writer>('writers').findOne({_id: new BSON.ObjectId(id)});
+    return new Promise(resolve => {
+      resolve(this.localWritersDB.get(id));
+    })
   }
 
   getCities() {
-    this.db.collection('cities').find({}).toArray()
-      .then((cities: { city: string }[]) => this.citiesFromDB.next(cities))
-      .catch(console.error);
+    this.localCitiesDB.allDocs({ include_docs: true })
+      .then(result => {
+        const cities = result.rows.map(row => row.doc);
+        this.citiesFromDB.next(cities)
+
+      })
   }
 
   getCommunities() {
-    this.communitiesCollection.findOne({})
-      .then((communities) => {
-        return this.communitiesFromDB.next(communities.communities);
+    this.localCommunitiesDB.get<{communities: string[]}>('communities')
+      .then(communities => {
+        return this.communitiesFromDB.next(communities.communities)
       })
-      .catch(console.error);
   }
 
 }

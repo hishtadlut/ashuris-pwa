@@ -20,7 +20,7 @@ export class WriterListItemComponent implements OnInit {
   }
 
   goToWriterDetails() {
-    this._store$.dispatch(loadWriter({ writerId: this.writer._id.toString() }))
+    this._store$.dispatch(loadWriter({ writerId: this.writer._id }))
     this.router.navigate([`/writer-details`]);
   }
 
