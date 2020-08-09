@@ -97,7 +97,7 @@
   }
 
   .information {
-    color: #2A2E43;
+   color: #2A2E43;
   font-weight: normal;
   font-size: 0.95rem;
   font-family: Arial;
@@ -108,4 +108,78 @@
   font-weight: normal;
   font-size: 0.75rem;
   font-family: Arial;
+  }
+
+  .section-title-btn {
+    background-color: #425B9E;
+    color: #D4A75D;
+    font-weight: bold;
+    font-size: 1.1rem;
+    font-family: Arial;
+    padding: 2vw;
+    text-align: center;
+    border: solid 3px #D4A75D;
+  }
+
+  .internal-details-wrapper {
+    background-color: white;
+    border-right: solid 1.5px #D4A75D;
+    border-left: solid 1.5px #D4A75D;
+  }
+
+  .price-extra-detail {
+    border-bottom: solid 1.5px #D4A75D;
+    display: grid;
+    grid-template-columns: 30vw 20vw 20vw 10vw 5vw;
+    align-items: center;
+    padding: 1.3vw 3.5vw;
+  }
+
+  .writing-extra-detail{
+    border-bottom: solid 1.5px #D4A75D;
+    display: grid;
+    position: relative;
+    grid-template-columns: 30vw auto 5vw;
+    align-items: center;
+    padding: 1.3vw 3.5vw;
+    
+  }
+
+  .detail {
+    color: #2A2E43;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  /* margin-right: 4vw;
+  margin-left: 10vw; */
+  }
+
+  .comment-icon {
+    justify-self: end;
+  }
+
+  .people-icon {
+    position: absolute;
+    grid-column: 2 /3;
+    justify-self: left;
+    padding-left: 5vw;
+    align-self: center;
+  }
+
+  .section {
+    margin-bottom: 5vw;
+  }
+
+  .add-photo-btn {
+    background-color: #D4A75D;
+    color: #2A2E43;
+    font-weight: bold;
+    font-size: 0.9rem;
+    font-family: Arial;
+    padding: 2vw;
+    text-align: center;
+    border: solid 1px #2A2E43;
+    margin: 4vw 3.5vw 0 3.5vw;
+    border-radius: 13px;
+    
   }
