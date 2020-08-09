@@ -20,14 +20,14 @@ export class StitchService {
   communitiesFromDB = new Subject<string[]>();
 
   localWritersDB = new PouchDB('writersLocal');
-  remoteWritersDB = new PouchDB('http://104.154.30.190:5986/writers_remote', {});
+  remoteWritersDB = new PouchDB('https://ashuris.online/writers_remote', {});
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
-  remoteCommunitiesDB = new PouchDB('http://104.154.30.190:5986/communities_remote');
+  remoteCommunitiesDB = new PouchDB('https://ashuris.online/communities_remote');
   // remoteCommunitiesDB = new PouchDB('http://admin:password@104.154.30.190/communities_remote');
 
   localCitiesDB = new PouchDB('citiesLocal');
-  remoteSitiesDB = new PouchDB('http://104.154.30.190:5986/cities_remote');
+  remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
 
   constructor() {
     const options = {
