@@ -3,13 +3,17 @@
 </app-note-dialog>
 <div class="edit-writer-wrapper">
   <form [formGroup]="writerForm" class="page-grid">
-    <div class="profile-image-section inner-grid-t">
+    <div class="profile-image-section">
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file"
         accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
-      <label for="profileImage" class="bold-text">
-        <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value"
-          class="profile-image">
-        הוסף תמונת פרופיל
+      <label for="profileImage" class="bold-text inner-grid">
+        <div>
+          <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value"
+            class="profile-image">
+        </div>
+        <div>
+          הוסף תמונת פרופיל
+        </div>
       </label>
     </div>
     <div class="personal-detail-section inner-grid">
@@ -553,7 +557,12 @@
     </div>
     <div class="recording-section inner-grid">
       <label *ngIf="!isRecording" for="click" (click)="startRecording()">
-        <div class="section-title">הוסף תזכורת קולית</div>
+        <div class="inner-grid-2 add-section">
+          <div>
+            <img src="../../assets/icons/Add.png" alt="">
+          </div>
+          <div class="second-title">הוסף תזכורת קולית</div>
+        </div>
       </label>
       <div *ngIf="isRecording" (click)="stopRecording()">
         עצור הקלטה

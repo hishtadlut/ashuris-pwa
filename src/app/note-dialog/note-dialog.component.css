@@ -10,4 +10,34 @@
 .dialog {
   z-index: 11;
   position: fixed;
+  grid-column: 2 / 3;
+}
+
+.dialog-wrapper {
+  display: grid;
+  grid-template: 1fr auto 1fr / 1fr auto 1fr;
+}
+
+.box {
+  background-color: white;
+  padding: 12vw 5vw 8vw 5vw;
+  text-align: center;
+}
+
+.title {
+  color: #2A2E43;
+  font-weight: bold;
+  margin-bottom: 5vw;
+  font-size: 1.1rem;
+  font-family: Arial;
+}
+
+.button{
+  background-color: #D4A75D;
+  font-size: 0.8rem;
+  color: #313C60;
+  font-weight: bold;
+  padding: 2vw;
+  border-radius: 5px;
+  margin-top: 4vw;
 }

@@ -7,6 +7,21 @@
     width: 100%;
   }
 
+  .nav {
+    background-color: #425B9E;
+    min-height: 68px;
+    padding-top: 15px;
+    display: grid;
+    grid-template: 1fr / 17vw auto 17vw;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+    align-items: center;
+    box-shadow: 5px 10px 8px #66666629;
+  }
+
   .page-wrapper {
     background-color: #F7F7FA;
   }
@@ -40,8 +55,8 @@
     display: grid;
     grid-template: auto / 13vw auto 23vw;
     grid-row: 1 / 2;
-    margin-bottom: 8vw;
-    padding-top: 6vw;
+    margin-bottom: 6vw;
+    padding-top: 9vw;
   }
 
  img {

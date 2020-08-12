@@ -1,14 +1,24 @@
+:host {
+    direction: rtl;
+    
+  }
+
+  .home-page {
+    background-image: url("../../assets/icons/background.png");
+    background-color: black;
+  }
+
 .expandable-list {
 
 }
 .main-wrapper {
-
+ 
 }
 
 .homepage-head {
-    background-color: #2699FB;
     height: 130px;
-    margin-bottom: 30px;
+    padding-top: 25vw;
+    margin-bottom: 20vw;
     display: flex;
     width: fixed;
     /* text-align: center; */

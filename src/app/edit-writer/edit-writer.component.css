@@ -76,8 +76,17 @@ label input {
 }
 
 .bold-text {
-  color: #2699fb;
+  color: #2A2E43;
   font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+}
+
+.bold-text.inner-grid {
+  grid-template: auto / auto 1fr;
+  align-items: center;
+  text-align: right;
+  grid-gap: 5vw;
 }
 
 .page-grid div {
@@ -86,9 +95,9 @@ label input {
 
 .profile-image-section {
   grid-row: 1 / span 1;
-  grid-template: auto / auto 1fr;
   align-items: center;
   grid-gap: 5vw;
+  margin-top: 10vw;
 }
 
 .profile-image-section img {
@@ -350,6 +359,19 @@ label.level-checkbox {
   width: 20vw;
   /* margin-left: 4vw;
   margin-bottom: 4vw; */
+}
+.add-section {
+  grid-template: 1fr / auto 1fr;
+  grid-gap: 5vw;
+  align-items: center;
+}
+
+.second-title {
+  color: #2A2E43;
+  font-weight: bold;
+  margin-bottom: 2vw;
+  font-size: 0.95rem;
+  font-family: Arial;
 }
 
 
