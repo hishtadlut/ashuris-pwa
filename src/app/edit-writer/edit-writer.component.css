@@ -5,6 +5,7 @@
 .profile-image {
   width: 10vw;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .page-grid {
@@ -335,7 +336,9 @@ label.level-checkbox {
 
 .photo-section {
   grid-row: 13 / span 1;
-  grid-template: auto / 1fr 1fr 1fr;
+  grid-template: auto / auto 1fr;
+  grid-gap: 5vw;
+  align-items: center;
 }
 
 .recording-section {
@@ -369,7 +372,7 @@ label.level-checkbox {
 .second-title {
   color: #2A2E43;
   font-weight: bold;
-  margin-bottom: 2vw;
+  /* margin-bottom: 2vw; */
   font-size: 0.95rem;
   font-family: Arial;
 }

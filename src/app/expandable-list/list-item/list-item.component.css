@@ -1,8 +1,15 @@
 .list-item {
-  background-color: white;
+  direction: rtl;
+  background-color: #D4A75D;
   width: 80%;
-  color: #2699FB;
-  padding: 10px 0;
-  margin: 10px auto;
-
+  color: #2A2E43;
+  padding: 2vw 6vw;
+  margin: 6vw auto;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  /* grid-gap: 5vw; */
+  justify-items: right;
+  text-align: right;
 }

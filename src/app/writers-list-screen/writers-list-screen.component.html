@@ -1,3 +1,10 @@
+<div class="simple-search-section">
+    <div class="inputs-search-section">
+
+    </div>
+</div>
+
+
 <input (keyup)="onKeyUpSearchByName($event)">
 <p *ngIf="writersToDisplay">סופרים ברשימה {{ writersToDisplay.length }}</p>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

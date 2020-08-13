@@ -57,6 +57,14 @@
     grid-row: 1 / 2;
     margin-bottom: 6vw;
     padding-top: 9vw;
+    align-items: center;
+  }
+
+  .profile-image {
+  height: 10vw;
+  width: 10vw;
+  border-radius: 50%;
+  object-fit: cover;
   }
 
  img {
@@ -93,6 +101,7 @@
   font-size: 0.95rem;
   font-family: Arial;
   border-radius: 4px;
+  height: 10vw;
   }
 
   .basic-details-section {

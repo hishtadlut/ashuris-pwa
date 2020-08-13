@@ -546,11 +546,16 @@
     </div>
 
     <div formArrayName="photos" class="photo-section inner-grid">
-      <label for="addPhoto" class="section-title">
-        הוסף תמונה
-        <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
-          accept="image/*">
-      </label>
+      <div>
+        <img src="../../assets/icons/Add.png" alt="">
+      </div>
+      <div>
+        <label for="addPhoto" class="second-title">
+          הוסף תמונה
+          <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
+            accept="image/*">
+        </label>
+      </div>
       <div *ngFor="let photo of writerForm.controls.photos['controls']">
         <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>

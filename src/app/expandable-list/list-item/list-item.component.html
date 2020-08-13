@@ -1,1 +1,6 @@
-<div *ngIf="!listIsClose" class="list-item" (click)="onItemClicked()">{{ listItem.listItemText }}</div>
+<div *ngIf="!listIsClose" class="list-item" (click)="onItemClicked()">
+  <div>
+    <img src="../../../assets/icons/add_sofer.png" alt="">
+  </div>
+  <div>{{ listItem.listItemText }}</div>
+</div>
