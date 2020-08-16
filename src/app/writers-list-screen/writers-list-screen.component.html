@@ -1,3 +1,60 @@
+<div class="simple-search-section">
+
+    <div class="inputs-search-section grid">
+
+    <div class="city-section">
+        <div class="title-and-icon grid">
+            <div><img src="../../assets/icons/location.png" alt=""></div>
+            <div class="title">עיר מגורים</div>
+        </div>
+        <div>
+            <input class="narrow-input" type="text">
+        </div>
+    </div>
+
+    <div class="community-section">
+        <div class="title-and-icon grid">
+            <div><img src="../../assets/icons/community.png" alt=""></div>
+            <div class="title">קהילה</div>
+        </div>
+        <div>
+            <input class="narrow-input" type="text">
+        </div>
+    </div>
+
+    </div>
+
+    <div class="two-button-section grid">
+        <div class="button unselected">סופר מתחיל</div>
+        <div class="button">סופר עם נסיון</div>
+    </div>
+
+    <div class="three-button-section grid">
+        <div class="button unselected">לא מתאים</div>
+        <div class="button">מתאים</div>
+        <div class="button">כדאי מאד</div>
+    </div>
+
+    <div class="two-button-section grid">
+        <div class="button">סופר קבוע</div>
+        <div class="button">סופר כללי</div>
+    </div>
+
+    <div class="search-button">חפש סופר</div>
+
+</div>
+
+<div class="name-search grid">
+    <!-- <div class="img"><img src="../../assets/icons/searchs.png" alt=""></div> -->
+    <input class="name-input" type="text" value="חפש לפי שם / שם משפחה">
+</div>
+
+<div class="count-section grid">
+    <div class="count">סופרים ברשימה 458</div>
+    <div class="display-all-btn button">הצג רשימה מלאה</div>
+</div>
+
+
 <input (keyup)="onKeyUpSearchByName($event)">
 <p *ngIf="writersToDisplay">סופרים ברשימה {{ writersToDisplay.length }}</p>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

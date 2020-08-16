@@ -89,7 +89,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       apartmentNumber: new FormControl('', [
         // Validators.required,
       ]),
-      profileImage: new FormControl('../../assets/icons/Symbol 216 – 66.svg', [
+      profileImage: new FormControl('../../assets/icons/Symbol 216 – 5.png', [
         // Validators.required,
       ]),
       startDate: new FormGroup({

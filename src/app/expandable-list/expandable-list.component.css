@@ -4,13 +4,19 @@
 
 .expandeable-list {
   width: 80%;
-  background-color: #BCE0FD;
-  border-color: #bce0fd;
+  background-color: #2A2E43;
+  border-color: #2A2E43;
   border-width: 1px;
   margin: 0 auto;
   /* display: block; */
   /* border-style: solid; */
 }
+
+.expandeable-list.open-expandeable-list {
+  margin-bottom: 8vw;
+}
+
+
 .open-expandeable-list {
   padding-bottom: 10px;
 }
@@ -20,9 +26,10 @@
 }
 
 .listTitle {
-  background-color: #2699fb;
+  background-color: #2A2E43;
   padding: 10px 0;
   color: white;
+  border: solid 2px white;
 }
 
 :host {

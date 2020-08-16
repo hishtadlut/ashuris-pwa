@@ -1,6 +1,6 @@
 .backdrop {
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.6;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -10,4 +10,35 @@
 .dialog {
   z-index: 11;
   position: fixed;
+  grid-column: 2 / 3;
+  margin: 20vh 10vw;
+}
+
+.box {
+  min-width: 80vw;
+  background-color: white;
+  padding: 12vw 5vw 8vw 5vw;
+  text-align: center;
+}
+
+.title {
+  color: #2A2E43;
+  font-weight: bold;
+  margin-bottom: 5vw;
+  font-size: 1.1rem;
+  font-family: Arial;
+}
+
+.button {
+  background-color: #D4A75D;
+  font-size: 0.8rem;
+  color: #313C60;
+  font-weight: bold;
+  padding: 2vw;
+  border-radius: 5px;
+  margin-top: 4vw;
+}
+
+textarea {
+  width: 70vw;
 }
