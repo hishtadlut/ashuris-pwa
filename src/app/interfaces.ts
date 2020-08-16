@@ -2,6 +2,7 @@ import { RouterLink } from '@angular/router';
 
 export interface Writer {
   _id?: any;
+  _rev?: string;
   reminderState: string
   firstName: string;
   lastName: string;
@@ -32,11 +33,56 @@ export interface Writer {
       48: boolean;
     };
     note: string;
+    writingLevel: {
+      level: string,
+      note: string
+    },
+    stabilityLevel: {
+      level: string,
+      note: string
+    },
+    eraseLevel: {
+      level: string,
+      note: string
+    },
+    writingTypes: {
+      types: {
+        ari: boolean,
+        beitYosef: boolean,
+        Welish: boolean
+      },
+    }
   };
   communityDeatails: {
     community: string;
     note: string;
   };
+
+  pricesDeatails: {
+    isPricePerPage: string;
+    priceForMezuzah: {
+      note: string;
+      price: number;
+      worthIt: boolean;
+    }
+
+    priceForTefillin: {
+      note: string;
+      price: number;
+      worthIt: boolean;
+    }
+
+    priceForTorahScroll: {
+      note: string;
+      price: number;
+      worthIt: boolean;
+    }
+  }
+
+  placeOfWriting: {
+    place: string,
+    note: string,
+  },
 }
 
 

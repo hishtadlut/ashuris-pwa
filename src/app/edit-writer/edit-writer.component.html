@@ -81,7 +81,7 @@
       </div>
       <div class="prices-input-wrapper inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
-          <input [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+          <input type="number" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}"
@@ -100,7 +100,7 @@
           </div>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
-          <input placeholder="מחיר למזוזה" formControlName="price">
+          <input type="number" placeholder="מחיר למזוזה" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}"
@@ -119,7 +119,7 @@
           </div>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
-          <input placeholder="מחיר לתפילין" formControlName="price">
+          <input type="number" placeholder="מחיר לתפילין" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}"

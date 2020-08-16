@@ -1,12 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormControlName } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RecordingService } from '../recording.service';
+import { Store, select } from '@ngrx/store';
+import { State } from '../reducers';
+import { Writer } from '../interfaces';
+import { editWriter } from '../actions/writers.actions';
 
 @Component({
   selector: 'app-edit-writer',
@@ -18,17 +22,31 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   citiesFromDB: { city: string }[];
   communitiesFromDBSubscription: Subscription;
   communitiesFromDB: string[];
+
+  editMode$Subscription: Subscription;
+  editMode$: Observable<any> = this._store$.pipe(
+    select('writers', 'writer')
+  );
+
+  writer$Subscription: Subscription;
+  writer$: Observable<any> = this._store$.pipe(
+    select('writers', 'writer')
+  );
+
   writerForm: FormGroup;
   map: google.maps.Map;
   isRecording = false;
   hasRecord = false;
   dialogFormGroup: FormGroup = null;
+  writer: Writer;
+  editMode: any;
 
   constructor(
     private stitchService: StitchService,
     private googleMapsService: GoogleMapsService,
     public recordingService: RecordingService,
-    public sanitizer: DomSanitizer) { }
+    public sanitizer: DomSanitizer,
+    private _store$: Store<State>) { }
 
   ngOnInit() {
     this.writerForm = new FormGroup({
@@ -266,6 +284,15 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });
+    this.editMode$.subscribe((editMode: boolean) => {
+      this.editMode = editMode;
+      if (editMode) {
+        this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
+          this.writer = writer;
+          this.writerForm.patchValue(writer)
+        })
+      }
+    })
     this.stitchService.getCities();
     this.stitchService.getCommunities();
     this.citiesFromDBSubscription = this.stitchService.citiesFromDB.subscribe(
@@ -279,20 +306,21 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     // .then((currentCoordinates) => {
     // this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
+    
     this.googleMapsService.getCurrentCoordinates()
       .then((currentCoordinates) => {
         this.googleMapsService.reverseGeocoder(currentCoordinates)
-        .then((result: google.maps.GeocoderResult) => {
-          try {
-            const address = {
-              city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
-              street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
-              streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
-            }
-            this.writerForm.controls.city.setValue(address.city);
-            this.writerForm.controls.street.setValue(address.street);
-            this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-            this.writerForm.controls.coordinates.setValue(currentCoordinates);
+          .then((result: google.maps.GeocoderResult) => {
+            try {
+              const address = {
+                city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
+                street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
+                streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
+              }
+              this.writerForm.controls.city.setValue(address.city);
+              this.writerForm.controls.street.setValue(address.street);
+              this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+              this.writerForm.controls.coordinates.setValue(currentCoordinates);
             } catch { }
           });
       })
@@ -372,7 +400,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  deleteRecording(index) {
+  deleteRecording(index: number) {
     const recordingsArray = this.writerForm.controls.recordings as FormArray;
     recordingsArray.removeAt(index);
   }
@@ -381,7 +409,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
 
   onSubmit() {
-    this.stitchService.createWriter(this.writerForm.value);
+    this.stitchService.createWriter({...this.writer, ...this.writerForm.value});
     // .then(() => this.router.navigate(['/writers-list-screen']));
   }
 

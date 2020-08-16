@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { Action } from 'rxjs/internal/scheduler/Action';
-import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators';
-import { loadWriter, setWriter, loadWritersList, setWritersList } from '../actions/writers.actions';
+import { mergeMap, map } from 'rxjs/operators';
+import { setWriter, loadWritersList, setWritersList } from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
 import { from } from 'rxjs';
-import { JSDocCommentStmt } from '@angular/compiler';
 
 
 @Injectable()

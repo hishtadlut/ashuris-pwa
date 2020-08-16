@@ -20,7 +20,7 @@ export class StitchService {
   communitiesFromDB = new Subject<string[]>();
 
   localWritersDB = new PouchDB('writersLocal');
-  remoteWritersDB = new PouchDB('https://ashuris.online/writers_remote', {});
+  remoteWritersDB = new PouchDB('https://ashuris.online/writers_remote');
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
   remoteCommunitiesDB = new PouchDB('https://ashuris.online/communities_remote');
@@ -36,8 +36,23 @@ export class StitchService {
       continuous: true,
     }
     this.localWritersDB.sync(this.remoteWritersDB, options)
+      .on('change', (change) => {
+        console.log(change);
+      }).on('error', (err) => {
+        console.log(err);
+      });
     this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
+      .on('change', (change) => {
+        console.log(change);
+      }).on('error', (err) => {
+        console.log(err);
+      });
     this.localCitiesDB.sync(this.remoteSitiesDB, options)
+      .on('change', (change) => {
+        console.log(change);
+      }).on('error', (err) => {
+        console.log(err);
+      });
   }
 
   createWriter(writer: Writer) {
@@ -51,6 +66,9 @@ export class StitchService {
         communitiesSet.add(writer.communityDeatails.community);
         communities.communities = Array.from(communitiesSet);
         this.localCommunitiesDB.put(communities)
+          .then(result => {
+            console.log('result ' + communities);
+          })
           .catch((err) => {
             console.log(err);
           });
@@ -66,14 +84,23 @@ export class StitchService {
         }
       });
 
-    this.localWritersDB.put({
-      _id: uuidv4(),
-      ...JSON.parse(JSON.stringify(writer))
-    })
-      .then(result => {
-        console.log(result);
+    // some strange bag fix TODO  
+    // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
+    if (writer._id) {
+      this.localWritersDB.put({
+        ...writer
       })
-      .catch(console.error)
+    } else {
+      this.localWritersDB.put({
+        // add unike id
+        _id: uuidv4(),
+        ...JSON.parse(JSON.stringify(writer))
+      })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(console.error)
+    }
   }
 
   getWriters(): Promise<Writer[]> {
@@ -82,7 +109,7 @@ export class StitchService {
         return new Promise(resolve => {
           resolve(result.rows.map(row => row.doc));
         })
-      })
+      });
   }
 
   getWriter(id: string): Promise<Writer> {

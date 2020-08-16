@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
 import { StitchService } from '../stitch-service.service';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
+import { editWriter } from '../actions/writers.actions';
 
 @Component({
   selector: 'app-writer-details',
@@ -18,20 +19,29 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   // id: string;
   writer: Writer;
   writer$Subscription: Subscription;
-  writer$ : Observable<any> = this._store$.pipe(
-    select('writers','writer')
-  )
+  writer$: Observable<any> = this._store$.pipe(
+    select('writers', 'writer')
+  );
+  priceForTorahScroll: { pricePerPage: number, priceForScroll: number }
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-   
+
   // constructor(private route: ActivatedRoute, private stitchService: StitchService, private googleMapsService: GoogleMapsService, private store: Store) {}
-  constructor(private _store$: Store<State>, private stitchService: StitchService, private googleMapsService: GoogleMapsService, private store: Store) {}
+  constructor(private route: Router,private _store$: Store<State>, private googleMapsService: GoogleMapsService, private store: Store) { }
 
   ngOnInit(): void {
-    this.writer$Subscription = this.writer$.subscribe((writer: Writer) => this.writer = writer)
+    this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
+      this.writer = writer;
+      if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
+        this.priceForTorahScroll = {
+          pricePerPage: this.writer.pricesDeatails.isPricePerPage ? this.writer.pricesDeatails.priceForTorahScroll.price : (this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245,
+          priceForScroll: this.writer.pricesDeatails.isPricePerPage ? (this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700 : this.writer.pricesDeatails.priceForTorahScroll.price,
+        }
+      }
+    })
   }
-  
+
   ngAfterContentInit() {
     // this.paramsSub = this.route.params.subscribe(params => {
     //   this.stitchService.getWriter(params['id'])
@@ -39,18 +49,20 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     //       this.writer = writer;
     //       setTimeout(() => {
     //         if (!this.writer.coordinates) {
-              
+
     //         }
     //         this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates)
     //       }, 1000);
-          
+
     //     })
     //     .catch(err => console.log(err))
     //  });
   }
 
-  onEditWriter() {
-    alert("TODO!!!")
+  editWriter() {
+    this._store$.dispatch(editWriter())
+    this.route.navigate(['/edit-writer']);
+
   }
 
   ngOnDestroy() {
