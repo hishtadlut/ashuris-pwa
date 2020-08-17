@@ -20,6 +20,10 @@ export const setWritersList = createAction(
   props<{ writersList: Writer[] }>()
 );
 
+export const editWriter = createAction(
+  '[Writers] Edit writer',
+);
+
 
 
 
