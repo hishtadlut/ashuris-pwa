@@ -57,10 +57,10 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         // Validators.required,
       ]),
       firstName: new FormControl('', [
-        // Validators.required,
+        Validators.required,
       ]),
       lastName: new FormControl('', [
-        // Validators.required,
+        Validators.required,
       ]),
       telephone: new FormControl('', [
         // Validators.required,
@@ -102,7 +102,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       isAppropriate: new FormGroup({
         level: new FormControl('', [
-          // Validators.required
+          Validators.required
         ]),
         note: new FormControl('', [
           // Validators.required,
