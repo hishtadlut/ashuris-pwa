@@ -88,7 +88,7 @@ export class StitchService {
     // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
     if (writer._id) {
       this.localWritersDB.put({
-        ...writer
+        ...JSON.parse(JSON.stringify(writer))
       })
     } else {
       this.localWritersDB.put({

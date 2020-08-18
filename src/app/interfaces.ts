@@ -63,19 +63,19 @@ export interface Writer {
     priceForMezuzah: {
       note: string;
       price: number;
-      worthIt: boolean;
+      worthIt: string;
     }
 
     priceForTefillin: {
       note: string;
       price: number;
-      worthIt: boolean;
+      worthIt: string;
     }
 
     priceForTorahScroll: {
       note: string;
       price: number;
-      worthIt: boolean;
+      worthIt: string;
     }
   }
 
@@ -83,6 +83,36 @@ export interface Writer {
     place: string,
     note: string,
   },
+
+  additionalDetails: {
+    hasWritenBefore: {
+      boolean: string,
+      note: string,
+    }
+    hasWritenKabala: {
+      boolean: string,
+      note: string,
+    },
+    voatsInElection: {
+      boolean: string,
+      note: string,
+    },
+    goesToKotel: {
+      boolean: string,
+      note: string,
+    },
+    beginnerWriter: {
+      boolean: string,
+      note: string,
+    },
+    writerLevel: {
+      level: number,
+      note: string,
+    },
+  }
+
+  photos: string[],
+  recordings: string[],
 }
 
 

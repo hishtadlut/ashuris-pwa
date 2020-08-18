@@ -572,7 +572,7 @@
       <div *ngIf="isRecording" (click)="stopRecording()">
         עצור הקלטה
       </div>
-      <div *ngIf="hasRecord">
+      <div>
         <div *ngFor="let recording of writerForm.controls.recordings['controls']; let i = index;">
           <div (click)="deleteRecording(i)">מחק הקלטה</div>
           <audio controls *ngIf="recording.value" [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value)"
@@ -581,7 +581,7 @@
         </div>
       </div>
     </div>
-    <button [disabled]="writerForm.invalid" (click)="onSubmit()" class="add-sofer-button">הוסף סופר למאגר</button>
+    <button [disabled]="writerForm.invalid" (click)="onSubmit()" class="add-sofer-button">{{ (editMode ? 'שמור שינויים' : 'הוסף סופר למאגר') }}</button>
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->

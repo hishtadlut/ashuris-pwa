@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
 import { StitchService } from '../stitch-service.service';
@@ -7,6 +7,7 @@ import { GoogleMapsService } from '../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { editWriter } from '../actions/writers.actions';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-writer-details',
@@ -15,20 +16,26 @@ import { editWriter } from '../actions/writers.actions';
 })
 export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestroy {
 
-  // paramsSub: Subscription
-  // id: string;
+
   writer: Writer;
   writer$Subscription: Subscription;
   writer$: Observable<any> = this._store$.pipe(
     select('writers', 'writer')
   );
-  priceForTorahScroll: { pricePerPage: number, priceForScroll: number }
+  priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
+  openMenuStatus = {
+    pricesDeatails: false,
+    writingDeatails: false,
+    additionalDeatails: false,
+    images: false,
+    recordings: false,
+  }
+
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-
   // constructor(private route: ActivatedRoute, private stitchService: StitchService, private googleMapsService: GoogleMapsService, private store: Store) {}
-  constructor(private route: Router,private _store$: Store<State>, private googleMapsService: GoogleMapsService, private store: Store) { }
+  constructor(private route: Router, private _store$: Store<State>, private googleMapsService: GoogleMapsService, private store: Store, public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
@@ -60,9 +67,22 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   editWriter() {
-    this._store$.dispatch(editWriter())
+    this._store$.dispatch(editWriter({ editMode: true }))
     this.route.navigate(['/edit-writer']);
+  }
 
+  closeMenus(menuToOpen: string) {
+    const menuToOpenStatus = this.openMenuStatus[menuToOpen];
+
+    this.openMenuStatus = {
+      pricesDeatails: false,
+      writingDeatails: false,
+      additionalDeatails: false,
+      images: false,
+      recordings: false,
+    }
+
+    this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
 
   ngOnDestroy() {

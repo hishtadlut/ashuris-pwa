@@ -284,11 +284,21 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });
+
     this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
+      this._store$.dispatch(editWriter({ editMode: false }));
+
       if (editMode) {
         this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
           this.writer = writer;
+
+          const recordingsArray = this.writerForm.controls.recordings as FormArray;
+          writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
+
+          const photosArray = this.writerForm.controls.photos as FormArray;
+          writer.photos.forEach(photo => photosArray.push(new FormControl(photo)));
+
           this.writerForm.patchValue(writer)
         })
       }
@@ -306,7 +316,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     // .then((currentCoordinates) => {
     // this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
-    
+
     this.googleMapsService.getCurrentCoordinates()
       .then((currentCoordinates) => {
         this.googleMapsService.reverseGeocoder(currentCoordinates)
@@ -409,7 +419,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
 
   onSubmit() {
-    this.stitchService.createWriter({...this.writer, ...this.writerForm.value});
+    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
     // .then(() => this.router.navigate(['/writers-list-screen']));
   }
 

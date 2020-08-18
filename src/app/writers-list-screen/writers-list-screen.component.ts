@@ -22,7 +22,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   constructor(private stitchService: StitchService, private _store$: Store<State>) { }
 
   ngOnInit(): void {
-    this._store$.dispatch(loadWritersList())
+    this._store$.dispatch(loadWritersList());
     this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList)
   }
 

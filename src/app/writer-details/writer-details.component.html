@@ -114,49 +114,56 @@
             </div>
         </div>
         <div class="extra-details-section">
-            <div class="section" *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
+            <div class="section" (click)="closeMenus('pricesDeatails')"
+                *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
                 <div class="section-title-btn">מחירים</div>
-                <div class="internal-details-wrapper">
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
-                        <div class="shave description">{{ writer.pricesDeatails.priceForTorahScroll.worthIt }}</div>
-                        <div><img src="../../assets/icons/Checkbox.png" alt=""></div>
+                        <div class="shave description">שווה לדעתי</div>
+                        <div><img
+                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                alt=""></div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
                         <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
-                        <div class="shave description">{{ writer.pricesDeatails.priceForTorahScroll.worthIt }}</div>
-                        <div><img src="../../assets/icons/Checkbox.png" alt=""></div>
+                        <div class="shave description">שווה לדעתי</div>
+                        <div><img
+                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                alt=""></div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר למזוזה</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForMezuzah.price }}</div>
-                        <div class="shave description">{{ writer.pricesDeatails.priceForMezuzah.worthIt }}</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="shave description">שווה לדעתי</div>
+                        <div><img
+                                [src]="writer.pricesDeatails.priceForMezuzah.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                alt=""></div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לתפילין</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForTefillin.price }}</div>
-                        <div class="shave description">{{ writer.pricesDeatails.priceForTefillin.worthIt }}</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="shave description">שווה לדעתי</div>
+                        <div><img
+                                [src]="writer.pricesDeatails.priceForTefillin.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                alt=""></div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
                 </div>
             </div>
-            <div class="section">
+            <div class="section" (click)="closeMenus('writingDeatails')">
                 <div class="section-title-btn">הכתב</div>
-                <div class="internal-details-wrapper">
-
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת כתיבה</div>
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
-
                     <div class="writing-extra-detail">
                         <div class="detail-title description">יציבות</div>
                         <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
@@ -171,23 +178,33 @@
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">גודל הכתב</div>
-                        <div class="detail">36, 40, 42, 45, 48</div>
+                        <div class="detail">
+                            <span>{{ (writer.writingDeatails.letterSizes[17] ? '17' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[24] ? ', 24' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[30] ? ', 30' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[36] ? ', 36' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[40] ? ', 40' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[42] ? ', 42' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[45] ? ', 45' : '') }}</span>
+                            <span>{{ (writer.writingDeatails.letterSizes[48] ? ', 48' : '') }}</span>
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">סוג הכתב</div>
-                        <div class="detail">{{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }} {{ writer.writingDeatails.writingTypes.types.Welish ? 'וועליש' : ''}} {{ writer.writingDeatails.writingTypes.types.beitYosef ? 'בית יוסף' : '' }}</div>
+                        <div class="detail">
+                            {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="section">
+            <div class="section" (click)="closeMenus('additionalDeatails')">
                 <div class="section-title-btn">פרטים אישיים</div>
-                <div class="internal-details-wrapper">
-
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
                     <div class="writing-extra-detail">
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
@@ -203,20 +220,33 @@
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב ספרים בעבר</div>
-                        <div><img src="../../assets/icons/Yes.png" alt=""></div>
+                        <div><img
+                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                alt=""></div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="section">
+            <div class="section" (click)="closeMenus('images')">
                 <div class="section-title-btn">תמונות</div>
-                <div class="add-photo-btn">הוסף תמונה</div>
+                <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
+                    <div *ngFor="let photo of writer.photos">
+                        <img [src]="photo" alt="">
+                    </div>
+                </div>
+                <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
             </div>
 
-            <div class="section">
+            <div class="section" (click)="closeMenus('recordings')">
                 <div class="section-title-btn">תזכורת קולית</div>
+                <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+                    <div *ngFor="let recording of writer.recordings">
+                        <audio controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)" class="img">
+                        </audio>
+                    </div>
+                </div>
             </div>
 
 
