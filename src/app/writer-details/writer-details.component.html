@@ -220,39 +220,52 @@
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב ספרים בעבר</div>
-                        <div><img
-                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
-                                alt=""></div>
+                        <div>
+                            <img
+                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב קבלה</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div>
+                            <img
+                                [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">בחירות</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div>
+                            <img
+                                [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">הולך לכותל</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div>
+                            <img
+                                [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">סופר מתחיל</div>
-                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div>
+                            <img
+                                [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                        </div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת סופר</div>
-                        <div class="detail">5</div>
+                        <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 
