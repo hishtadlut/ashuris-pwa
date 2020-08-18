@@ -69,7 +69,7 @@
 <div class="page-wrapper">
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
-            <img [src]="writer.profileImage" alt="">
+            <img [src]="writer.profileImage" alt="" class="profile-img">
             <div class="name-wrapper">
                 <p class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</p>
                 <p class="writer-location" *ngIf="writer.street && writer.city">{{ writer.street }}, {{ writer.city }}
@@ -204,6 +204,36 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div><img src="../../assets/icons/Yes.png" alt=""></div>
+                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">כתב קבלה</div>
+                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">בחירות</div>
+                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">הולך לכותל</div>
+                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">סופר מתחיל</div>
+                        <div><img src="../../assets/icons/Union 3.png" alt=""></div>
+                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">דרגת סופר</div>
+                        <div class="detail">5</div>
                         <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
                     </div>
 

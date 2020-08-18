@@ -60,7 +60,14 @@
     align-items: center;
   }
 
-  .profile-image {
+  /* .profile-image {
+  height: 10vw;
+  width: 10vw;
+  border-radius: 50%;
+  object-fit: cover;
+  } */
+
+  .profile-img {
   height: 10vw;
   width: 10vw;
   border-radius: 50%;

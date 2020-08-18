@@ -295,3 +295,22 @@ label.level-checkbox {
   font-size: 0.95rem;
   font-family: Arial;
 }
+
+.type-wrapper {
+  grid-template: auto / 1fr 1fr 1fr 1fr;
+}
+
+.input-wrapper {
+  grid-template: auto / 1fr 1fr;
+}
+
+.type {
+  border: solid 1px black;
+  border-radius: 50px;
+  padding: 1.5vw;
+  text-align: center;
+}
+
+.input-wrapper input {
+  width: 20vw;
+}
