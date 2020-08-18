@@ -30,6 +30,8 @@
   background-color: #F7F7FA;
 }
 
+.writer-details-wrapper {}
+
 .page-grid {
   direction: rtl;
   text-align: right;
@@ -60,7 +62,7 @@
   align-items: center;
 }
 
-.profile-image {
+.profile-img {
   height: 10vw;
   width: 10vw;
   border-radius: 50%;
