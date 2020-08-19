@@ -85,7 +85,8 @@
       </div>
       <div class="prices-input-wrapper inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
-          <input type="number" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+          <input type="number" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value"
+            formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}"
@@ -546,16 +547,16 @@
     </div>
 
     <div formArrayName="photos" class="photo-section inner-grid">
-      <div>
-        <img src="../../assets/icons/Add.png" alt="">
-      </div>
-      <div>
-        <label for="addPhoto" class="second-title">
+      <label for="addPhoto" class="second-title">
+        <div>
+          <img src="../../assets/icons/Add.png" alt="">
+        </div>
+        <div>
           הוסף תמונה
           <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
             accept="image/*">
-        </label>
-      </div>
+        </div>
+      </label>
       <div *ngFor="let photo of writerForm.controls.photos['controls']">
         <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>
@@ -581,7 +582,8 @@
         </div>
       </div>
     </div>
-    <button [disabled]="writerForm.invalid" (click)="onSubmit()" class="add-sofer-button">{{ (editMode ? 'שמור שינויים' : 'הוסף סופר למאגר') }}</button>
+    <button [disabled]="writerForm.invalid" (click)="onSubmit()"
+      class="add-sofer-button">{{ (editMode ? 'שמור שינויים' : 'הוסף סופר למאגר') }}</button>
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->

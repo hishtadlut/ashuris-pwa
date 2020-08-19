@@ -1,1 +1,9 @@
-<p>nav-bar works!</p>
+<div *ngIf="!(this._location.path() == '')" class="nav">
+    <div routerLink="/">
+        <img src="../../assets/icons/sydney-opera-house.svg" alt="">
+    </div>
+    <div>פרטי הסופר</div>
+    <div (click)="_location.back()">
+        <img src="../../assets/icons/Backward arrow.svg" alt="">
+    </div>
+</div>

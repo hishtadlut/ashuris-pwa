@@ -119,6 +119,7 @@ export interface Writer {
 export interface ListItem {
   listItemText: string;
   listItemLink: RouterLink;
+  image?: string;
 }
 
 export interface CalendarDate {
