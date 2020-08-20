@@ -39,7 +39,7 @@
   border-radius: 8px;
   font-size: 0.75rem;
   padding-right: 5vw;
-  margin-bottom: 2vw;
+  /* margin-bottom: 2vw; */
   color: #000000;
 }
 
@@ -58,9 +58,12 @@
 }
 
 .note {
-  position: absolute;
-  top: 3.5vw;
-  left: 4vw;
+  align-self: center;
+  justify-self: end;
+}
+
+p {
+  margin: 0;
 }
 
 label input {
@@ -74,6 +77,25 @@ label input {
   margin-bottom: 2vw;
   font-size: 0.95rem;
   font-family: Arial;
+}
+
+.section-title-w-note {
+  grid-column: 1;
+  color: #2A2E43;
+  font-weight: bold;
+  margin-bottom: 2vw;
+  font-size: 0.95rem;
+  font-family: Arial;
+  grid-template: auto / 1fr auto;
+}
+
+.span-title {
+  color: #2A2E43;
+  font-weight: bold;
+  margin-bottom: 2vw;
+  font-size: 0.95rem;
+  font-family: Arial;
+  grid-column: 1 / span 4;
 }
 
 .bold-text {
@@ -204,6 +226,7 @@ label input {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .sizes-row label input {
@@ -293,8 +316,9 @@ label.level-checkbox {
 
 .writing-location-section {
   grid-row: 10 / span 1;
-  grid: auto auto / 1fr 1fr 1fr;
-  justify-items: start;
+  grid: auto auto / auto 1fr;
+  column-gap: 6vw;
+  justify-items: right;
 }
 
 .writing-location-section .box-checkbox {
@@ -316,8 +340,10 @@ label.level-checkbox {
 
 .additional-detail {
   grid: auto / repeat(5, 1fr);
-  margin-bottom: 4vw;
+  margin-bottom: 3vw;
   align-items: center;
+  padding-bottom: 3vw;
+  border-bottom: 1px solid #2A2E43;
 }
 
 .writer-level-section{
@@ -329,14 +355,13 @@ label.level-checkbox {
   grid-column: 1 / span 2;
   font-weight: bold;
   color: #2A2E43;
-  margin-bottom: 2vw;
   font-size: 0.85rem;
   font-family: Arial;
 }
 
 .photo-section {
   grid-row: 13 / span 1;
-  grid-template: auto / auto 1fr;
+  grid-template: auto / auto;
   grid-gap: 5vw;
   align-items: center;
 }

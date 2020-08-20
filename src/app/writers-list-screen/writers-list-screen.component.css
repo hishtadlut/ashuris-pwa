@@ -33,8 +33,10 @@
 }
 
 .narrow-input {
-    max-width: 43vw;
+    width: 43vw;
+    height: 10vw;
     justify-self: right;
+    padding-right: 4vw;
 }
 
 .two-button-section {
@@ -73,6 +75,7 @@
     text-align: center;
     border: solid 3px #C89C5B;
     margin-top: 6vw;
+    width: 100%;
 }
 
 .name-search {

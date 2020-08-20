@@ -1,19 +1,25 @@
 .writer-list-item {
   display: grid;
-  grid-template: auto / 1fr auto;
+  grid-template: auto / auto 1fr auto;
   grid-gap: 6vw;
   align-items: center;
   padding: 0 6vw;
   border-top: solid 1px #2A2E43;
-  /* border-bottom: solid 1px #2A2E43; */
-  /* direction: rtl; */
   height: 20vw;
   background-color: #D9D9D9;
-  font-size: 1rem;
   text-align: right;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
   color: #2A2E43;;
+}
+
+.writer-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.writer-address{
+  font-size: 0.8rem;
+  font-weight: normal;
 }
 
 :host img {
@@ -23,4 +29,19 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
+}
+
+.reminder {
+  height: 5vw;
+  width: 5vw;
+  background-color: #A2A2A2;
+  border-radius: 50%;
+}
+
+.highlight-regular {
+  background-color: #D4A75D;
+}
+
+.highlight-ergent {
+  background-color: #FF373E;
 }
