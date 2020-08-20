@@ -5,6 +5,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { WriterDetailsComponent } from './writer-details/writer-details.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'writer-details', component: WriterDetailsComponent },
   { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
+  { path: 'search-result', component: SearchResultComponent },
 ];
 
 @NgModule({

@@ -10,7 +10,7 @@ import { RecordingService } from '../recording.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { Writer } from '../interfaces';
-import { editWriter } from '../actions/writers.actions';
+import { editWriter, loadWritersList } from '../actions/writers.actions';
 
 @Component({
   selector: 'app-edit-writer',
@@ -46,7 +46,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     private googleMapsService: GoogleMapsService,
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer,
-    private _store$: Store<State>) { }
+    private _store$: Store<State>,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.writerForm = new FormGroup({
@@ -419,8 +421,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
 
   onSubmit() {
-    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
-    // .then(() => this.router.navigate(['/writers-list-screen']));
+    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value })
+    this._store$.dispatch(loadWritersList())
+    this.router.navigate(['/writers-list-screen']);
   }
 
   ngOnDestroy() {

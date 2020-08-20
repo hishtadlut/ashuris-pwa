@@ -3,12 +3,17 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 import { setWriter, loadWritersList, setWritersList } from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
-import { from } from 'rxjs';
+import { from, interval } from 'rxjs';
 
 
 @Injectable()
-export class WritersEffects {
+export class WritersEffects implements OnInitEffects {
   constructor(private actions$: Actions, private stitchService: StitchService) { }
+
+  ngrxOnInitEffects() {
+    return loadWritersList();
+  }
+
   loadWriter$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[Writer] load Writer'),
@@ -26,10 +31,18 @@ export class WritersEffects {
       ofType(loadWritersList),
       mergeMap((action: any) => from(this.stitchService.getWriters())
         .pipe(
-          map(writersList => setWritersList({ writersList: JSON.parse(JSON.stringify(writersList)) })),
+          mergeMap(writersList => [
+            setWritersList({ writersList: JSON.parse(JSON.stringify(writersList)) }),
+          ]),
           // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
       ),
+    )
+  )
+
+  loadWritersListIntervals$ = createEffect(() =>
+    interval(300000).pipe(
+      map(_ => loadWritersList())
     )
   )
 }

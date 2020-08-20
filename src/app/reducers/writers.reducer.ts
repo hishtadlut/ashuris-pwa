@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Writer } from '../interfaces';
-import { setWriter, setWritersList, editWriter } from '../actions/writers.actions';
+import { setWriter, setWritersList, editWriter, setSearchWritersResult } from '../actions/writers.actions';
 import { state } from '@angular/animations';
 import { act } from '@ngrx/effects';
 
@@ -10,13 +10,15 @@ export const writersFeatureKey = 'writers';
 export interface State {
   writer: Writer;
   writersList: Writer[];
-  editMode: boolean
+  editMode: boolean,
+  searchWritersResult: Writer[],
 }
 
 export const initialState: State = {
   writer: null,
   writersList: null,
   editMode: false,
+  searchWritersResult: null,
 };
 
 
@@ -30,6 +32,9 @@ export const writerReducer = createReducer(
   }),
   on(editWriter, (state, action) => {
     return { ...state, editMode: true }
+  }),
+  on(setSearchWritersResult, (state, action) => {
+    return { ...state, searchWritersResult: action.writers }
   }),
 );
 

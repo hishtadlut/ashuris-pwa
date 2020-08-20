@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 //PouchDB
 import PouchDB from 'pouchdb';
+import PouchDBFind from 'pouchdb-find';
 
 
 @Injectable({
@@ -30,6 +31,7 @@ export class StitchService {
   remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
 
   constructor() {
+    PouchDB.plugin(PouchDBFind);
     const options = {
       live: true,
       retry: true,

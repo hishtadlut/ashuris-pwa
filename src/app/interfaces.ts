@@ -127,3 +127,38 @@ export interface CalendarDate {
   month: number;
   day: number;
 }
+
+export interface advancedSearchQuery {
+  lowestPrice: number,
+  highestPrice: number,
+  priceOf: string,
+  writingTypes: {
+    ari: boolean,
+    beitYosef: boolean,
+    welish: boolean,
+  },
+  letterSizes: {
+    17: boolean,
+    24: boolean,
+    30: boolean,
+    36: boolean,
+    40: boolean,
+    42: boolean,
+    45: boolean,
+    48: boolean,
+  },
+  writingLevel: {
+    1: boolean,
+    2: boolean,
+    3: boolean,
+    4: boolean,
+    5: boolean,
+  },
+  isAppropriateLevels: {
+    bad: boolean,
+    good: boolean,
+    veryGood: boolean,
+  },
+  voatsInElection: string,
+  goesToKotel: string,
+};

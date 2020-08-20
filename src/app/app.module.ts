@@ -26,6 +26,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './reducers';
 import { WritersEffects } from './effects/writers.effects';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { WritersEffects } from './effects/writers.effects';
     HebrewDateFormControlComponent,
     NoteDialogComponent,
     WriterDetailsComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

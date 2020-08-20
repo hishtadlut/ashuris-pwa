@@ -13,7 +13,6 @@ export const setWriter = createAction(
 
 export const loadWritersList = createAction(
   '[Writers] load Writers List',
-  
 );
 
 export const setWritersList = createAction(
@@ -24,6 +23,11 @@ export const setWritersList = createAction(
 export const editWriter = createAction(
   '[Writers] Edit writer',
   props<{ editMode: boolean }>()
+);
+
+export const setSearchWritersResult = createAction(
+  '[Writers] Set search writers result',
+  props<{ writers: Writer[] }>()
 );
 
 

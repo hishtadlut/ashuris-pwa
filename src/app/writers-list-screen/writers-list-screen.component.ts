@@ -3,7 +3,6 @@ import { StitchService } from '../stitch-service.service';
 import { Subscription, pipe, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList } from '../actions/writers.actions';
 import { State } from '../reducers';
 
 @Component({
@@ -19,10 +18,9 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   writersList$Subscription: Subscription;
   writersList: Writer[];
 
-  constructor(private stitchService: StitchService, private _store$: Store<State>) { }
+  constructor(private _store$: Store<State>) { }
 
   ngOnInit(): void {
-    this._store$.dispatch(loadWritersList());
     this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList)
   }
 
