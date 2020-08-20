@@ -1,84 +1,85 @@
 :host {
-    direction: rtl;
-  }
+  direction: rtl;
+}
 
 .simple-search-section {
-    background-color: #303E65;
-    padding: 6vw 4vw;
-    margin-bottom: 1vw;
+  background-color: #303E65;
+  padding: 6vw 4vw;
+  margin-bottom: 1vw;
 }
 
 .grid {
-    display: grid;
-    align-items: center;
+  display: grid;
+  align-items: center;
 }
 
 .title {
-    color: white;
-    font-weight: bold;
+  color: white;
+  font-weight: bold;
   font-size: 0.95rem;
   font-family: Arial;
 }
 
 .inputs-search-section {
-    grid-template: auto / 1fr 1fr;
-    grid-gap: 6vw;
+  grid-template: auto / 1fr 1fr;
+  grid-gap: 6vw;
 }
 
 .title-and-icon {
-    grid-template: auto /  auto 1fr;
-    grid-gap: 5vw;
-    margin-bottom: 2vw;
-    text-align: right;
+  grid-template: auto / auto 1fr;
+  grid-gap: 5vw;
+  margin-bottom: 2vw;
+  text-align: right;
 }
 
 .narrow-input {
-    max-width: 43vw;
-    justify-self: right;
+  max-width: 43vw;
+  justify-self: right;
 }
 
 .two-button-section {
-    grid-template: auto / 1fr 1fr;
-    grid-gap: 6vw;
+  grid-template: auto / 1fr 1fr;
+  grid-gap: 6vw;
 }
 
 .three-button-section {
-    grid-template: auto / 1fr 1fr 1fr;
-    grid-gap: 6vw;
+  grid-template: auto / 1fr 1fr 1fr;
+  grid-gap: 6vw;
 }
 
 .button {
-    text-align: center;
-    color: white;
-    font-weight: normal;
+  text-align: center;
+  color: white;
+  font-weight: normal;
   font-size: 0.85rem;
   font-family: Arial;
-    background-color: #C89C5B;
-    padding: 2.5vw 3vw;
-    margin-top: 4vw;
-    border-radius: 4px;
+  background-color: #C4C4C4;
+  padding: 2.5vw 3vw;
+  margin-top: 4vw;
+  border-radius: 4px;
 }
 
-.unselected {
-    background-color: #C4C4C4;
+.checked {
+  background-color: #C89C5B;
+
 }
 
 .search-button {
-    background-color: #2A2E43;
-    color: #C89C5B;
-    font-weight: bold;
-    font-size: 0.95rem;
-    font-family: Arial;
-    padding: 2.2vw;
-    text-align: center;
-    border: solid 3px #C89C5B;
-    margin-top: 6vw;
+  background-color: #2A2E43;
+  color: #C89C5B;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  padding: 2.2vw;
+  text-align: center;
+  border: solid 3px #C89C5B;
+  margin-top: 6vw;
 }
 
 .name-search {
-    padding: 6vw 4vw;
-    position: relative;
-    grid-template: 1fr / 1fr;
+  padding: 6vw 4vw;
+  position: relative;
+  grid-template: 1fr / 1fr;
 }
 
 /* .name-search input {
@@ -86,52 +87,59 @@
 } */
 
 .name-search .img {
-position: absolute;
-right: 5vw;
-height: 20vw;
+  position: absolute;
+  right: 5vw;
+  height: 20vw;
 }
 
 .full-list-button {
-    background-color: #425B9E;
-    border: none;
-    color: #ffffff;
+  background-color: #425B9E;
+  border: none;
+  color: #ffffff;
   font-weight: bold;
   font-size: 0.95rem;
   font-family: Arial;
   border-radius: 4px;
   height: 10vw;
-  }
+}
 
+.name-input {
+  width: 100%;
+  background-color: white;
+  background-image: url('../../assets/icons/searchs.png');
+  background-position: 3.3vw 3.3vw;
+  background-repeat: no-repeat;
+  padding-left: 10vw;
+  padding-right: 4vw;
+  resize: none;
+  box-sizing: border-box;
+  height: 12vw;
+  margin-bottom: 3vw;
+}
 
-  .name-input {
-    width: 100%;
-    background-color: white;
-    background-image: url('../../assets/icons/searchs.png');
-    background-position: 3.3vw 3.3vw;
-    background-repeat: no-repeat;
-    padding-left: 10vw;
-    padding-right: 4vw;
-    resize: none;
-    box-sizing: border-box;
-    height: 12vw;
-    margin-bottom: 3vw;
-  }
+.count-section {
+  grid-template: auto / 1fr auto;
+  grid-gap: 10vw;
+  padding: 1vw 4vw;
+  align-items: end;
+}
 
-  .count-section {
-    grid-template: auto / 1fr auto;
-    grid-gap: 10vw;
-    padding: 1vw 4vw;
-    align-items: end;
-  }
+.display-all-btn {
+  background-color: #2A2E43;
+  margin: 0;
+}
 
-  .display-all-btn{
-    background-color: #2A2E43;
-    margin: 0;
-  }
+.count {
+  font-weight: normal;
+  font-size: 0.75rem;
+  font-family: Arial;
+  text-align: right;
+}
 
-  .count {
-    font-weight: normal;
-    font-size: 0.75rem;
-    font-family: Arial;
-    text-align: right;
-  }
+input[type="radio"] {
+  display: none;
+}
+
+input[type="checkbox"] {
+  display: none;
+}

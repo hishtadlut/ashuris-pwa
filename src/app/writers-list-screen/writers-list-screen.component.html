@@ -1,57 +1,75 @@
-<div class="simple-search-section">
+<form [formGroup]="searchForm">
+    <div class="simple-search-section">
 
-    <div class="inputs-search-section grid">
+        <div class="inputs-search-section grid">
 
-    <div class="city-section">
-        <div class="title-and-icon grid">
-            <div><img src="../../assets/icons/location.png" alt=""></div>
-            <div class="title">עיר מגורים</div>
+            <div class="city-section">
+                <div class="title-and-icon grid">
+                    <div><img src="../../assets/icons/location.png" alt=""></div>
+                    <div class="title">עיר מגורים</div>
+                </div>
+                <div>
+                    <input formControlName="city" class="narrow-input" type="text">
+                </div>
+            </div>
+
+            <div class="community-section">
+                <div class="title-and-icon grid">
+                    <div><img src="../../assets/icons/community.png" alt=""></div>
+                    <div class="title">קהילה</div>
+                </div>
+                <div>
+                    <input formControlName="community" class="narrow-input" type="text">
+                </div>
+            </div>
+
         </div>
-        <div>
-            <input class="narrow-input" type="text">
+
+        <div class="two-button-section grid">
+            <!-- ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'true'}" -->
+            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value === 'false'}" class="button">
+                <input formControlName="hasWritenBefore" value="false" type="radio">
+                סופר מתחיל
+            </label>
+            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value === 'true'}" class="button">
+                <input formControlName="hasWritenBefore" value="true" type="radio">
+                סופר עם נסיון
+            </label>
         </div>
-    </div>
 
-    <div class="community-section">
-        <div class="title-and-icon grid">
-            <div><img src="../../assets/icons/community.png" alt=""></div>
-            <div class="title">קהילה</div>
+        <div class="three-button-section grid" formGroupName="isAppropriate">
+            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'bad']).value}" class="button">
+                <input type="checkbox" formControlName="bad">
+                לא מתאים
+            </label>
+            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'good']).value}" class="button">
+                <input type="checkbox" formControlName="good">
+                מתאים
+            </label>
+            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'veryGood']).value}" class="button">
+                <input type="checkbox" formControlName="veryGood">
+                כדאי מאד
+            </label>
         </div>
-        <div>
-            <input class="narrow-input" type="text">
+
+        <div class="two-button-section grid" formGroupName="isWritingRegularly">
+            <div class="button checked">סופר קבוע</div>
+            <div class="button checked">סופר כללי</div>
         </div>
-    </div>
+
+        <div (click)="search()" class="search-button">חפש סופר</div>
 
     </div>
 
-    <div class="two-button-section grid">
-        <div class="button unselected">סופר מתחיל</div>
-        <div class="button">סופר עם נסיון</div>
+    <div class="name-search grid">
+        <!-- <div class="img"><img src="../../assets/icons/searchs.png" alt=""></div> -->
+        <input formControlName="quickSearch" (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text"
+            placeholder="חפש לפי שם / שם משפחה">
     </div>
 
-    <div class="three-button-section grid">
-        <div class="button unselected">לא מתאים</div>
-        <div class="button">מתאים</div>
-        <div class="button">כדאי מאד</div>
+    <div class="count-section grid">
+        <div *ngIf="writersToDisplay" class="count">סופרים ברשימה {{ writersToDisplay.length }}</div>
+        <div (click)="resetSearch()" class="display-all-btn button">הצג רשימה מלאה</div>
     </div>
-
-    <div class="two-button-section grid">
-        <div class="button">סופר קבוע</div>
-        <div class="button">סופר כללי</div>
-    </div>
-
-    <div class="search-button">חפש סופר</div>
-
-</div>
-
-<div class="name-search grid">
-    <!-- <div class="img"><img src="../../assets/icons/searchs.png" alt=""></div> -->
-    <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם / שם משפחה">
-</div>
-
-<div class="count-section grid">
-    <div *ngIf="writersToDisplay" class="count">סופרים ברשימה {{ writersToDisplay.length }}</div>
-    <div (click)="this.writersToDisplay = this.writersList" class="display-all-btn button">הצג רשימה מלאה</div>
-</div>
-
+</form>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

@@ -9,7 +9,7 @@ import { setSearchWritersResult } from './actions/writers.actions';
 
 
 @Injectable({ providedIn: 'root' })
-export class searchWriterService implements OnDestroy {
+export class SearchWriterService implements OnDestroy {
     writersToDisplay: Writer[] = [];
     writersList$: Observable<Writer[]> = this._store$.pipe(
         select('writers', 'writersList')
@@ -172,6 +172,39 @@ export class searchWriterService implements OnDestroy {
         });
 
         this._store$.dispatch(setSearchWritersResult({ writers: finalResult }));
+    }
+
+    writersListFilter(filters) {
+        const queryResult = this.writersList.filter(writer => {
+            const cityQuery = (writer.city === filters.city || filters.city === '');
+            const communityQuery = (writer.communityDeatails.community === filters.community || filters.community === '');
+            const hasWritenBeforeQuery = writer.additionalDetails.hasWritenBefore.boolean === filters.hasWritenBefore;
+            let isAppropriateQuery = false;
+            if (!filters.isAppropriate.bad && !filters.isAppropriate.good && !filters.isAppropriate.veryGood) {
+                isAppropriateQuery = true;
+            } else {
+                if (filters.isAppropriate.bad && (writer.isAppropriate.level === 'לא מתאים')) {
+                    isAppropriateQuery = true;
+                } else if (filters.isAppropriate.god && (writer.isAppropriate.level === 'מתאים')) {
+                    isAppropriateQuery = true;
+                } else if (filters.isAppropriate.veryGood && (writer.isAppropriate.level === 'כדאי מאוד')) {
+                    isAppropriateQuery = true;
+                }
+            }
+            // good: new FormControl(true),
+            //     veryGood: new FormControl(true),
+
+            return (cityQuery && communityQuery && hasWritenBeforeQuery && isAppropriateQuery)
+            // isAppropriate: { $or: isAppropriateLevelsQuery },
+            // 'additionalDetails.goesToKotel.boolean': { $or: goesToKotelQuery },
+            // 'additionalDetails.voatsInElection.boolean': { $or: voatsInElectionQuery },
+            // 'writingDeatails.writingLevel.level': { $or: writingLevelQuery },
+            // 'isAppropriate.level': { $or: isAppropriateQuery },
+            // 'writingDeatails.letterSizes': { $or: letterSizesQuery },
+            // 'writingDeatails.writingTypes.types': { $or: writingTypesQuery },
+        })
+
+        return queryResult
     }
 
     ngOnDestroy() {

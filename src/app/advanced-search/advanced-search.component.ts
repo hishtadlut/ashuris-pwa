@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { searchWriterService } from '../search-writer.service';
+import { SearchWriterService } from '../search-writer.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AdvancedSearchComponent implements OnInit {
   advancedSearch: FormGroup;
   advancedSearchInitialValues: any;
-  constructor(private searchWriterService: searchWriterService, private router: Router) { }
+  constructor(private searchWriterService: SearchWriterService, private router: Router) { }
 
   ngOnInit(): void {
     this.advancedSearch = new FormGroup({

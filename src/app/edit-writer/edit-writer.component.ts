@@ -283,6 +283,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           ]),
         }),
       }),
+      isWritingRegularly: new FormControl(false),
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });
