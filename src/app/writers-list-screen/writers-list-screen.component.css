@@ -33,8 +33,10 @@
 }
 
 .narrow-input {
-  max-width: 43vw;
-  justify-self: right;
+    width: 43vw;
+    height: 10vw;
+    justify-self: right;
+    padding-right: 4vw;
 }
 
 .two-button-section {
@@ -65,15 +67,16 @@
 }
 
 .search-button {
-  background-color: #2A2E43;
-  color: #C89C5B;
-  font-weight: bold;
-  font-size: 0.95rem;
-  font-family: Arial;
-  padding: 2.2vw;
-  text-align: center;
-  border: solid 3px #C89C5B;
-  margin-top: 6vw;
+    background-color: #2A2E43;
+    color: #C89C5B;
+    font-weight: bold;
+    font-size: 0.95rem;
+    font-family: Arial;
+    padding: 2.2vw;
+    text-align: center;
+    border: solid 3px #C89C5B;
+    margin-top: 6vw;
+    width: 100%;
 }
 
 .name-search {

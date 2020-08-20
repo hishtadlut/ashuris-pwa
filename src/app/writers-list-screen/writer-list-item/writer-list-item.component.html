@@ -1,6 +1,8 @@
 <div class="writer-list-item" (click)="goToWriterDetails()">
-    <div>
-        {{ writer.firstName }} {{ writer.lastName }} {{ writer.telephone }} {{ writer.startDate.hebrewDateInWords }}
-    </div>
     <img *ngIf="writer.profileImage" [src]="writer.profileImage">
+    <div class="writer-details">
+        <div class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</div>
+        <div class="writer-address">{{ writer.street }},  {{ writer.city }}</div>
+    </div>
+    <div class="reminder"></div>
 </div>

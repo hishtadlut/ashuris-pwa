@@ -188,8 +188,25 @@ img {
   border-radius: 13px;
 }
 
+.photo-wrapper {
+  display: grid;
+  position: relative;
+}
+
 .photo-of-writing {
   width: 80vw;
   margin: 5vw;
-  
+  display: block;
+}
+
+.icon-share {
+  position: absolute;
+  right: 76vw;
+  top: 10vw;
+}
+
+.icon-delete {
+  position: absolute;
+  right: 76vw;
+  top: 19vw;
 }
