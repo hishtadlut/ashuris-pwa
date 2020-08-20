@@ -17,7 +17,7 @@ export class AdvancedSearchComponent implements OnInit {
     this.advancedSearch = new FormGroup({
       lowestPrice: new FormControl(300),
       highestPrice: new FormControl(1500),
-      priceOf: new FormControl('pricePerPage'),
+      priceOf: new FormControl('priceForTorahScrollPerPage'),
       writingTypes: new FormGroup({
         ari: new FormControl(true),
         beitYosef: new FormControl(true),
