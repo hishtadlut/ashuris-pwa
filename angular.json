@@ -61,7 +61,8 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             }
-          }
+          },
+          "rebaseRootRelativeCssUrls": true
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

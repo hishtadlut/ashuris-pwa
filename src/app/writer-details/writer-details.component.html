@@ -11,34 +11,34 @@
         </div>
         <div class="basic-details-section">
             <div class="basic-detail .inner-grid" *ngIf="writer.telephone">
-                <img src="../../assets/icons/Phone.png" alt="">
+                <img src="assets/icons/Phone.png" alt="">
                 <div>
                     <div class="information">{{ writer.telephone }}</div>
                     <div class="description">טלפון</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
-                <img src="../../assets/icons/Phone.png" alt="">
+                <img src="assets/icons/Phone.png" alt="">
                 <div>
                     <div class="information">{{ writer.secondTelephone }}</div>
                     <div class="description">טלפון נוסף</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.email">
-                <img src="../../assets/icons/2.png" alt="">
+                <img src="assets/icons/2.png" alt="">
                 <div>
                     <div class="information">{{ writer.email }}</div>
                     <div class="description">אימייל</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.isAppropriate">
-                <img src="../../assets/icons/Yes.png" alt="">
+                <img src="assets/icons/Yes.png" alt="">
                 <div>
                     <div class="information">{{ writer.isAppropriate.level }}</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.startDate">
-                <img src="../../assets/icons/Calendar.png" alt="">
+                <img src="assets/icons/Calendar.png" alt="">
                 <div>
                     <div class="description">תאריך התחלה</div>
                     <div class="information">{{ writer.startDate.hebrewDateInWords }}</div>
@@ -55,36 +55,36 @@
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div><img
-                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
                         <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div><img
-                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                [src]="writer.pricesDeatails.priceForTorahScroll.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר למזוזה</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForMezuzah.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div><img
-                                [src]="writer.pricesDeatails.priceForMezuzah.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                [src]="writer.pricesDeatails.priceForMezuzah.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לתפילין</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForTefillin.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div><img
-                                [src]="writer.pricesDeatails.priceForTefillin.worthIt === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'"
+                                [src]="writer.pricesDeatails.priceForTefillin.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -94,18 +94,18 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת כתיבה</div>
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="writing-extra-detail">
                         <div class="detail-title description">יציבות</div>
                         <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">מחיקה</div>
                         <div class="detail">{{ writer.writingDeatails.eraseLevel.level }}</div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -120,7 +120,7 @@
                             <span>{{ (writer.writingDeatails.letterSizes[45] ? ', 45' : '') }}</span>
                             <span>{{ (writer.writingDeatails.letterSizes[48] ? ', 48' : '') }}</span>
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -128,7 +128,7 @@
                         <div class="detail">
                             {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                 </div>
@@ -140,65 +140,65 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">מקום כתיבה</div>
                         <div class="detail">{{ writer.placeOfWriting.place }}</div>
-                        <div class="people-icon"><img src="../../assets/icons/people.png" alt=""></div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="people-icon"><img src="assets/icons/people.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div>
                             <img
-                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב קבלה</div>
                         <div>
                             <img
-                                [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                                [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">בחירות</div>
                         <div>
                             <img
-                                [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                                [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">הולך לכותל</div>
                         <div>
                             <img
-                                [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                                [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">סופר מתחיל</div>
                         <div>
                             <img
-                                [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? '../../assets/icons/Checkbox.png' : '../../assets/icons/Union 3.png'">
+                                [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת סופר</div>
                         <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
-                        <div class="comment-icon"><img src="../../assets/icons/Path 35.png" alt=""></div>
+                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                 </div>
@@ -208,8 +208,8 @@
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
                     <div *ngFor="let photo of writer.photos" class="photo-wrapper">
-                        <img class="icon-share" src="../../assets/icons/share.png" alt="">
-                        <img class="icon-delete" src="../../assets/icons/delete.png" alt="">
+                        <img class="icon-share" src="assets/icons/share.png" alt="">
+                        <img class="icon-delete" src="assets/icons/delete.png" alt="">
                         <img [src]="photo" alt="" class="photo-of-writing">
                     </div>
                 </div>
