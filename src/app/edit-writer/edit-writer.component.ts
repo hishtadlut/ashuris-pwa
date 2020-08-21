@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, FormControlName } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RecordingService } from '../recording.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
@@ -287,7 +287,6 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });
-
     this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
       this._store$.dispatch(editWriter({ editMode: false }));
