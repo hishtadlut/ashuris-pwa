@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 //PouchDB
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
-
+import { State } from './reducers';
+import { Store } from '@ngrx/store';
+import { loadWritersList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,7 @@ export class StitchService {
   localCitiesDB = new PouchDB('citiesLocal');
   remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
 
-  constructor() {
+  constructor(private _store$: Store<State>) {
     PouchDB.plugin(PouchDBFind);
     const options = {
       live: true,
@@ -40,6 +42,9 @@ export class StitchService {
     this.localWritersDB.sync(this.remoteWritersDB, options)
       .on('change', (change) => {
         console.log(change);
+        if (change.direction === "pull") {
+          this._store$.dispatch(loadWritersList())
+        }
       }).on('error', (err) => {
         console.log(err);
       });
