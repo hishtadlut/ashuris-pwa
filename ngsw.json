@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1598194824182,
+  "timestamp": 1598198227150,
   "index": "/ashuris-pwa/index.html",
   "assetGroups": [
     {
@@ -13,8 +13,8 @@
       "urls": [
         "/ashuris-pwa/favicon.ico",
         "/ashuris-pwa/index.html",
-        "/ashuris-pwa/main-es2015.499a4dad1b74def01e02.js",
-        "/ashuris-pwa/main-es5.499a4dad1b74def01e02.js",
+        "/ashuris-pwa/main-es2015.f1103d7bf458f6ce5c55.js",
+        "/ashuris-pwa/main-es5.f1103d7bf458f6ce5c55.js",
         "/ashuris-pwa/manifest.webmanifest",
         "/ashuris-pwa/polyfills-es2015.3d313551eeafc8a9837e.js",
         "/ashuris-pwa/polyfills-es5.d152982d47eba82fff63.js",
@@ -116,9 +116,9 @@
     "/ashuris-pwa/assets/icons/x.png": "c90663aa98004e1efc42c55526fa2c0094a564d7",
     "/ashuris-pwa/background.e505fba9659977e54225.png": "b4e66109c4af219b2beccf0ecf6a03f2b7201491",
     "/ashuris-pwa/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/ashuris-pwa/index.html": "2008286006a9f07b37dace8b77c74a071dac9656",
-    "/ashuris-pwa/main-es2015.499a4dad1b74def01e02.js": "3e52c3caa4a3dea9b3c0220210a3cf2c0eb59192",
-    "/ashuris-pwa/main-es5.499a4dad1b74def01e02.js": "6c73a63294ee01bd0553730b399c5430f42af47d",
+    "/ashuris-pwa/index.html": "b5ed198204d4327bc869c2caec83306829ed352b",
+    "/ashuris-pwa/main-es2015.f1103d7bf458f6ce5c55.js": "4cdb537b42999a9fef4a67842c4897bd71d44bb2",
+    "/ashuris-pwa/main-es5.f1103d7bf458f6ce5c55.js": "d343ff1ac285d15e3010ea0572851ca131c01bdf",
     "/ashuris-pwa/manifest.webmanifest": "0021c7c47a73587b5d5bd0bd46a860c31b3b6426",
     "/ashuris-pwa/polyfills-es2015.3d313551eeafc8a9837e.js": "3acd3d9fd7699638f41d57514cdc7defc5fbc67a",
     "/ashuris-pwa/polyfills-es5.d152982d47eba82fff63.js": "02ae9b7e85192ded39a84255c60260f7bd2c68bb",
