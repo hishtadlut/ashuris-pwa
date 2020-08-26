@@ -31,7 +31,7 @@
       <input type="email" placeholder="אימייל" formControlName="email">
       <input list="cities" placeholder="עיר" formControlName="city">
       <datalist id="cities">
-        <option *ngFor="let city of citiesFromDB" [value]="city.city">
+        <option *ngFor="let city of citiesFromDB" [value]="city">
       </datalist>
       <input placeholder="רחוב" formControlName="street">
       <input placeholder="מספר בנין" formControlName="streetNumber">

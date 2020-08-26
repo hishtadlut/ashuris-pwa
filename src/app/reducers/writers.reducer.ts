@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Writer } from '../interfaces';
-import { setWriter, setWritersList, editWriter, setSearchWritersResult, useAdvancedSearchParameters, setAdvancedSearchParameters } from '../actions/writers.actions';
+import { setWriter, setWritersList, editWriter, setSearchWritersResult, useAdvancedSearchParameters, setAdvancedSearchParameters, setCitiesList, setCommunitiesList } from '../actions/writers.actions';
 
 
 
@@ -13,6 +13,8 @@ export interface State {
   searchWritersResult: Writer[],
   advancedSearchParameters,
   useAdvancedSearchParameters: boolean,
+  citiesList: string[],
+  communitiesList: string[]
 }
 
 export const initialState: State = {
@@ -22,6 +24,8 @@ export const initialState: State = {
   searchWritersResult: null,
   advancedSearchParameters: null,
   useAdvancedSearchParameters: false,
+  citiesList: [],
+  communitiesList: [],
 };
 
 
@@ -32,6 +36,12 @@ export const writerReducer = createReducer(
   }),
   on(setWritersList, (state, action) => {
     return { ...state, writersList: action.writersList }
+  }),
+  on(setCitiesList, (state, action) => {
+    return { ...state, citiesList: action.citiesList }
+  }),
+  on(setCommunitiesList, (state, action) => {
+    return { ...state, communitiesList: action.communitiesList }
   }),
   on(editWriter, (state, action) => {
     return { ...state, editMode: action.editMode }

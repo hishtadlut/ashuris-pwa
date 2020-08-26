@@ -19,8 +19,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-writer.component.css']
 })
 export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
-  citiesFromDBSubscription: Subscription;
-  citiesFromDB: { city: string }[];
   communitiesFromDBSubscription: Subscription;
   communitiesFromDB: string[];
 
@@ -34,6 +32,17 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     select('writers', 'writer')
   );
 
+  citiesList$Subscription: Subscription;
+  citiesList$: Observable<any> = this._store$.pipe(
+    select('writers', 'citiesList')
+  );
+
+  communitiesList$Subscription: Subscription;
+  communitiesList$: Observable<any> = this._store$.pipe(
+    select('writers', 'communitiesList')
+  );
+  
+  citiesFromDB: string[];
   writerForm: FormGroup;
   map: google.maps.Map;
   isRecording = false;
@@ -51,7 +60,6 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private _location: Location,
   ) { }
-
 
   ngOnInit() {
     this.writerForm = new FormGroup({
@@ -308,12 +316,10 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
         this._store$.dispatch(editWriter({ editMode: false }));
       }
     })
-    this.stitchService.getCities();
-    this.stitchService.getCommunities();
-    this.citiesFromDBSubscription = this.stitchService.citiesFromDB.subscribe(
+    this.citiesList$Subscription = this.citiesList$.subscribe(
       (cities) => this.citiesFromDB = cities
     );
-    this.communitiesFromDBSubscription = this.stitchService.communitiesFromDB.subscribe(
+    this.communitiesList$Subscription = this.communitiesList$.subscribe(
       (communities) => this.communitiesFromDB = communities
     );
   }
@@ -431,6 +437,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.citiesFromDBSubscription.unsubscribe();
+    this.citiesList$Subscription.unsubscribe();
+    this.communitiesList$Subscription.unsubscribe();
   }
 }

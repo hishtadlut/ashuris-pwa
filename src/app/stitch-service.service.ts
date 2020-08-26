@@ -10,7 +10,7 @@ import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
-import { loadWritersList } from './actions/writers.actions';
+import { loadWritersList, setCommunitiesList, setCitiesList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +60,9 @@ export class StitchService {
       }).on('error', (err) => {
         console.log(err);
       });
+
+      this.getCities();
+      this.getCommunities();
   }
 
   createWriter(writer: Writer) {
@@ -128,15 +131,15 @@ export class StitchService {
   getCities() {
     this.localCitiesDB.allDocs<{ city: string }>({ include_docs: true })
       .then(result => {
-        const cities = result.rows.map(row => row.doc);
-        this.citiesFromDB.next(cities)
+        const cities = result.rows.map(row => row.doc.city);        
+        this._store$.dispatch(setCitiesList({citiesList: cities}));
       })
   }
 
   getCommunities() {
     this.localCommunitiesDB.get<{ communities: string[] }>('communities')
-      .then(communities => {
-        return this.communitiesFromDB.next(communities.communities)
+      .then(communities => {        
+        this._store$.dispatch(setCommunitiesList({communitiesList: communities.communities}));
       })
   }
 

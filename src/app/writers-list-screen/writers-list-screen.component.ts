@@ -14,16 +14,32 @@ import { SearchWriterService } from '../search-writer.service';
 })
 export class WritersListScreenComponent implements OnInit, OnDestroy {
   writersToDisplay: Writer[] = [];
+
+  writersList: Writer[];
+  writersList$Subscription: Subscription;
   writersList$: Observable<Writer[]> = this._store$.pipe(
     select('writers', 'writersList')
-  )
-  writersList$Subscription: Subscription;
-  writersList: Writer[];
+  );
+
+  citiesList: string[];
+  citiesList$Subscription: Subscription;
+  citiesList$: Observable<string[]> = this._store$.pipe(
+    select('writers', 'citiesList')
+  );
+
+  communitiesList: string[];
+  communitiesList$Subscription: Subscription;
+  communitiesList$: Observable<string[]> = this._store$.pipe(
+    select('writers', 'communitiesList')
+  );
+
   searchForm: FormGroup;
   constructor(private _store$: Store<State>, private searchWriterService: SearchWriterService) { }
 
   ngOnInit(): void {
     this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
+    this.citiesList$Subscription = this.citiesList$.subscribe((citiesList) => this.citiesList = citiesList);
+    this.communitiesList$Subscription = this.communitiesList$.subscribe((communitiesList) => this.communitiesList = communitiesList);
 
     this.searchForm = new FormGroup({
       city: new FormControl(''),

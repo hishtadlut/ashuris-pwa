@@ -20,23 +20,33 @@ export const setWritersList = createAction(
   props<{ writersList: Writer[] }>()
 );
 
+export const setCitiesList = createAction(
+  '[Writers] Set Cities List',
+  props<{ citiesList: string[] }>()
+);
+
+export const setCommunitiesList = createAction(
+  '[Writers] Set Communities List',
+  props<{ communitiesList: string[] }>()
+);
+
 export const editWriter = createAction(
-  '[Writers] Edit writer',
+  '[Writers] Edit Writer',
   props<{ editMode: boolean }>()
 );
 
 export const setSearchWritersResult = createAction(
-  '[Writers] Set search writers result',
+  '[Writers] Set Search Writers Result',
   props<{ writers: Writer[] }>()
 );
 
 export const setAdvancedSearchParameters = createAction(
-  '[Writers] Set advanced search parameters',
+  '[Writers] Set Sdvanced Dearch Parameters',
   props<{ advancedSearchParameters: any }>()
 );
 
 export const useAdvancedSearchParameters = createAction(
-  '[Writers] use advanced search parameters',
+  '[Writers] Use Advanced Search Parameters',
   props<{ boolean: any }>()
 );
 
