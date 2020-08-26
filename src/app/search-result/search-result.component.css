@@ -6,6 +6,13 @@
     padding: 2vw;
     border-radius: 10px;
     margin-bottom: 5vw;
+    margin-top: 5vw;
     border: solid 2px #C89C5B;
     box-shadow: 0pt 3pt 6pt #00000029;
 }
+
+.page-grid {
+    direction: rtl;
+    display: grid;
+    margin: 0 4vw;
+  }
