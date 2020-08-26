@@ -30,6 +30,15 @@ export const setSearchWritersResult = createAction(
   props<{ writers: Writer[] }>()
 );
 
+export const setAdvancedSearchParameters = createAction(
+  '[Writers] Set advanced search parameters',
+  props<{ advancedSearchParameters: any }>()
+);
+
+export const useAdvancedSearchParameters = createAction(
+  '[Writers] use advanced search parameters',
+  props<{ boolean: any }>()
+);
 
 
 

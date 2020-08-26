@@ -1,3 +1,5 @@
+<app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
+</app-note-dialog-output>
 <div class="page-wrapper">
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
@@ -57,7 +59,9 @@
                         <div><img
                                 [src]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
+                            (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
@@ -66,7 +70,9 @@
                         <div><img
                                 [src]="writer.pricesDeatails.priceForTorahScroll.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
+                            (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר למזוזה</div>
@@ -75,7 +81,9 @@
                         <div><img
                                 [src]="writer.pricesDeatails.priceForMezuzah.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.pricesDeatails.priceForMezuzah.note"
+                            (click)="openDialog($event ,writer.pricesDeatails.priceForMezuzah.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="price-extra-detail">
                         <div class="detail-title description">מחיר לתפילין</div>
@@ -84,7 +92,9 @@
                         <div><img
                                 [src]="writer.pricesDeatails.priceForTefillin.worthIt === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'"
                                 alt=""></div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTefillin.note"
+                            (click)="openDialog($event ,writer.pricesDeatails.priceForTefillin.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -94,18 +104,24 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת כתיבה</div>
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.writingDeatails.writingLevel.note"
+                            (click)="openDialog($event ,writer.writingDeatails.writingLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
                     <div class="writing-extra-detail">
                         <div class="detail-title description">יציבות</div>
                         <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.writingDeatails.stabilityLevel.note"
+                            (click)="openDialog($event ,writer.writingDeatails.stabilityLevel.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">מחיקה</div>
                         <div class="detail">{{ writer.writingDeatails.eraseLevel.level }}</div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.writingDeatails.eraseLevel.note"
+                            (click)="openDialog($event ,writer.writingDeatails.eraseLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -120,7 +136,9 @@
                             <span>{{ (writer.writingDeatails.letterSizes[45] ? ', 45' : '') }}</span>
                             <span>{{ (writer.writingDeatails.letterSizes[48] ? ', 48' : '') }}</span>
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.writingDeatails.note"
+                            (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon"><img
+                                src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -128,7 +146,7 @@
                         <div class="detail">
                             {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <!-- <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div> -->
                     </div>
 
                 </div>
@@ -140,65 +158,80 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.communityDeatails.note"
+                            (click)="openDialog($event ,writer.communityDeatails.note)" class="comment-icon"><img
+                                src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">מקום כתיבה</div>
                         <div class="detail">{{ writer.placeOfWriting.place }}</div>
                         <div class="people-icon"><img src="assets/icons/people.png" alt=""></div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event ,writer.placeOfWriting.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div>
-                            <img
+                            <img *ngIf="(writer.additionalDetails.hasWritenBefore.boolean === 'true') || (writer.additionalDetails.hasWritenBefore.boolean === 'false')"
                                 [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.hasWritenBefore.note"
+                            (click)="openDialog($event ,writer.additionalDetails.hasWritenBefore.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">כתב קבלה</div>
                         <div>
-                            <img
+                            <img *ngIf="(writer.additionalDetails.hasWritenKabala.boolean === 'true') || (writer.additionalDetails.hasWritenKabala.boolean === 'false')"
                                 [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.hasWritenKabala.note"
+                            (click)="openDialog($event ,writer.additionalDetails.hasWritenKabala.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">בחירות</div>
                         <div>
-                            <img
+                            <img *ngIf="(writer.additionalDetails.voatsInElection.boolean === 'true') || (writer.additionalDetails.voatsInElection.boolean === 'false')"
                                 [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.voatsInElection.note"
+                            (click)="openDialog($event ,writer.additionalDetails.voatsInElection.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">הולך לכותל</div>
                         <div>
-                            <img
+                            <img *ngIf="(writer.additionalDetails.goesToKotel.boolean === 'true') || (writer.additionalDetails.goesToKotel.boolean === 'false')"
                                 [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.goesToKotel.note"
+                            (click)="openDialog($event ,writer.additionalDetails.goesToKotel.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">סופר מתחיל</div>
                         <div>
-                            <img
+                            <img *ngIf="(writer.additionalDetails.beginnerWriter.boolean === 'true') || (writer.additionalDetails.beginnerWriter.boolean === 'false')"
                                 [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
                         </div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.beginnerWriter.note"
+                            (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                     <div class="writing-extra-detail">
                         <div class="detail-title description">דרגת סופר</div>
                         <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
-                        <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                        <div *ngIf="writer.additionalDetails.writerLevel.note"
+                            (click)="openDialog($event ,writer.additionalDetails.writerLevel.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
 
                 </div>

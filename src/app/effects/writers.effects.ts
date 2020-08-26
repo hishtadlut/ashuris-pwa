@@ -40,9 +40,9 @@ export class WritersEffects implements OnInitEffects {
     )
   )
 
-  loadWritersListIntervals$ = createEffect(() =>
-    interval(300000).pipe(
-      map(_ => loadWritersList())
-    )
-  )
+  // loadWritersListIntervals$ = createEffect(() =>
+  //   interval(300000).pipe(
+  //     map(_ => loadWritersList())
+  //   )
+  // )
 }

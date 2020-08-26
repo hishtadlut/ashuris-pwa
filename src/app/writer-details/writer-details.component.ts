@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, Event } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
-import { StitchService } from '../stitch-service.service';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
@@ -31,6 +30,8 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     recordings: false,
   }
 
+  dialogContent = null;
+
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
@@ -42,8 +43,8 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
       this.writer = writer;
       if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
         this.priceForTorahScroll = {
-          pricePerPage: this.writer.pricesDeatails.isPricePerPage ? this.writer.pricesDeatails.priceForTorahScroll.price : (this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245,
-          priceForScroll: this.writer.pricesDeatails.isPricePerPage ? (this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700 : this.writer.pricesDeatails.priceForTorahScroll.price,
+          pricePerPage: this.writer.pricesDeatails.isPricePerPage !== "מחיר לספר תורה" ? this.writer.pricesDeatails.priceForTorahScroll.price : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+          priceForScroll: this.writer.pricesDeatails.isPricePerPage !== "מחיר לספר תורה"? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700) : this.writer.pricesDeatails.priceForTorahScroll.price,
         }
       }
     })
@@ -85,9 +86,20 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
 
+  openDialog(event, content: string) {
+    event.stopPropagation()
+    event.preventDefault();
+    this.dialogContent = content;
+  }
+
+  closeDialog() {
+    this.dialogContent = null;
+  }
+
   ngOnDestroy() {
     this.writer$Subscription.unsubscribe();
     // this.paramsSub.unsubscribe()
   }
+
 
 }

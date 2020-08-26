@@ -1,8 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Writer } from '../interfaces';
-import { setWriter, setWritersList, editWriter, setSearchWritersResult } from '../actions/writers.actions';
-import { state } from '@angular/animations';
-import { act } from '@ngrx/effects';
+import { setWriter, setWritersList, editWriter, setSearchWritersResult, useAdvancedSearchParameters, setAdvancedSearchParameters } from '../actions/writers.actions';
+
 
 
 export const writersFeatureKey = 'writers';
@@ -12,6 +11,8 @@ export interface State {
   writersList: Writer[];
   editMode: boolean,
   searchWritersResult: Writer[],
+  advancedSearchParameters,
+  useAdvancedSearchParameters: boolean,
 }
 
 export const initialState: State = {
@@ -19,6 +20,8 @@ export const initialState: State = {
   writersList: null,
   editMode: false,
   searchWritersResult: null,
+  advancedSearchParameters: null,
+  useAdvancedSearchParameters: false,
 };
 
 
@@ -31,10 +34,16 @@ export const writerReducer = createReducer(
     return { ...state, writersList: action.writersList }
   }),
   on(editWriter, (state, action) => {
-    return { ...state, editMode: true }
+    return { ...state, editMode: action.editMode }
   }),
   on(setSearchWritersResult, (state, action) => {
     return { ...state, searchWritersResult: action.writers }
+  }),
+  on(setAdvancedSearchParameters, (state, action) => {  
+    return { ...state, advancedSearchParameters: action.advancedSearchParameters }
+  }),
+  on(useAdvancedSearchParameters, (state, action) => {
+    return { ...state, useAdvancedSearchParameters: action.boolean }
   }),
 );
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, FormControlName } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
@@ -11,6 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { Writer } from '../interfaces';
 import { editWriter, loadWritersList } from '../actions/writers.actions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-writer',
@@ -25,7 +26,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editMode$Subscription: Subscription;
   editMode$: Observable<any> = this._store$.pipe(
-    select('writers', 'writer')
+    select('writers', 'editMode')
   );
 
   writer$Subscription: Subscription;
@@ -48,7 +49,9 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     public sanitizer: DomSanitizer,
     private _store$: Store<State>,
     private router: Router,
+    private _location: Location,
   ) { }
+
 
   ngOnInit() {
     this.writerForm = new FormGroup({
@@ -91,7 +94,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       apartmentNumber: new FormControl('', [
         // Validators.required,
       ]),
-      profileImage: new FormControl('../../assets/icons/Symbol 216 – 5.png', [
+      profileImage: new FormControl('assets/icons/Symbol 216 – 5.png', [
         // Validators.required,
       ]),
       startDate: new FormGroup({
@@ -289,9 +292,8 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
-      this._store$.dispatch(editWriter({ editMode: false }));
 
-      if (editMode) {
+      if (editMode && this._location.path() === '/edit-writer') {
         this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
           this.writer = writer;
 
@@ -303,6 +305,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.writerForm.patchValue(writer)
         })
+        this._store$.dispatch(editWriter({ editMode: false }));
       }
     })
     this.stitchService.getCities();
@@ -318,24 +321,25 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     // .then((currentCoordinates) => {
     // this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
-
-    this.googleMapsService.getCurrentCoordinates()
-      .then((currentCoordinates) => {
-        this.googleMapsService.reverseGeocoder(currentCoordinates)
-          .then((result: google.maps.GeocoderResult) => {
-            try {
-              const address = {
-                city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
-                street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
-                streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
-              }
-              this.writerForm.controls.city.setValue(address.city);
-              this.writerForm.controls.street.setValue(address.street);
-              this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-              this.writerForm.controls.coordinates.setValue(currentCoordinates);
-            } catch { }
-          });
-      })
+    if (this.editMode) {
+      this.googleMapsService.getCurrentCoordinates()
+        .then((currentCoordinates) => {
+          this.googleMapsService.reverseGeocoder(currentCoordinates)
+            .then((result: google.maps.GeocoderResult) => {
+              try {
+                const address = {
+                  city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
+                  street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
+                  streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
+                }
+                this.writerForm.controls.city.setValue(address.city);
+                this.writerForm.controls.street.setValue(address.street);
+                this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+                this.writerForm.controls.coordinates.setValue(currentCoordinates);
+              } catch { }
+            });
+        })
+    }
   }
 
   openDialog(formGroup: FormGroup) {

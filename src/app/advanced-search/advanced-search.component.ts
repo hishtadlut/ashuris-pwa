@@ -1,22 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SearchWriterService } from '../search-writer.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { State } from '../reducers';
+import { setAdvancedSearchParameters, useAdvancedSearchParameters as useAdvancedSearchParametersAction } from '../actions/writers.actions';
+import { Subscription, Observable } from 'rxjs';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
   styleUrls: ['./advanced-search.component.css']
 })
-export class AdvancedSearchComponent implements OnInit {
+export class AdvancedSearchComponent implements OnInit, OnDestroy {
   advancedSearch: FormGroup;
   advancedSearchInitialValues: any;
-  constructor(private searchWriterService: SearchWriterService, private router: Router) { }
+  advancedSearchParameters: any;
+  useAdvancedSearchParameters$Subscription: Subscription;
+  useAdvancedSearchParameters$: Observable<any> = this._store$.pipe(
+    select('writers', 'useAdvancedSearchParameters')
+  );
+  advancedSearchParameters$Subscription: Subscription;
+  advancedSearchParameters$: Observable<any> = this._store$.pipe(
+    select('writers', 'advancedSearchParameters')
+  );
+
+  constructor(private searchWriterService: SearchWriterService, private router: Router, private _store$: Store<State>, private _loaction: Location) { }
 
   ngOnInit(): void {
     this.advancedSearch = new FormGroup({
-      lowestPrice: new FormControl(300),
-      highestPrice: new FormControl(1500),
+      lowestPrice: new FormControl(''),
+      highestPrice: new FormControl(''),
       priceOf: new FormControl('priceForTorahScrollPerPage'),
       writingTypes: new FormGroup({
         ari: new FormControl(true),
@@ -48,12 +64,36 @@ export class AdvancedSearchComponent implements OnInit {
       voatsInElection: new FormControl('any'),
       goesToKotel: new FormControl('any'),
     });
-    this.advancedSearchInitialValues = this.advancedSearch.value;
+    if (!this.advancedSearchInitialValues) {
+      this.advancedSearchInitialValues = this.advancedSearch.value;
+    }
+    this.advancedSearchParameters$Subscription = this.advancedSearchParameters$.subscribe(advancedSearchParameters => {
+      this.advancedSearchParameters = advancedSearchParameters;
+    })
+    this.useAdvancedSearchParameters$Subscription = this.useAdvancedSearchParameters$.subscribe((useAdvancedSearchParameters: boolean) => {
+      if (useAdvancedSearchParameters) {
+        if (this._loaction.path() === '/advanced-search') {
+          if (this.advancedSearchParameters) {
+            this.advancedSearch.patchValue(this.advancedSearchParameters);
+            this._store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+          }
+        }
+      }
+    })
+
   }
 
   search() {
     this.searchWriterService.findSoferAdvancedSearch(this.advancedSearch.value);
     this.router.navigate(['/search-result']);
+    this._store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: this.advancedSearch.value }));
+    this._store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+  }
+
+
+  ngOnDestroy() {
+    this.useAdvancedSearchParameters$Subscription.unsubscribe();
+    this.advancedSearchParameters$Subscription.unsubscribe();
   }
 
 }

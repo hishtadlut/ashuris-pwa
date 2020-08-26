@@ -581,10 +581,10 @@
 
           <div>
             הוסף תמונה
-            
+
           </div>
           <input (change)="onAddPhoto($event.target.files[0])" id="addPhoto" style="display:none;" type="file"
-              accept="image/*">
+            accept="image/*">
         </div>
       </label>
       <div *ngFor="let photo of writerForm.controls.photos['controls']">
@@ -617,5 +617,4 @@
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->
-
 </div>

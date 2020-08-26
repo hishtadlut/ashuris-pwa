@@ -29,7 +29,7 @@ export class SearchWriterService implements OnDestroy {
 
         const goesToKotelQuery = [];
         if (sofer.goesToKotel === 'true') {
-            goesToKotelQuery.push('true')
+            goesToKotelQuery.push('true', '')
         } else if (sofer.goesToKotel === 'any') {
             goesToKotelQuery.push('true', 'false', '');
         } else {
@@ -38,7 +38,7 @@ export class SearchWriterService implements OnDestroy {
 
         const voatsInElectionQuery = [];
         if (sofer.voatsInElection === 'true') {
-            voatsInElectionQuery.push('true')
+            voatsInElectionQuery.push('true', '')
         } else if (sofer.goesToKotel === 'any') {
             voatsInElectionQuery.push('true', 'false', '');
         } else {
@@ -150,12 +150,12 @@ export class SearchWriterService implements OnDestroy {
             })
         );
         const finalResult = queryResult.filter(soferfromDb => {
-            if (sofer.priceOf === 'priceForTorahScrollPerPage' && !soferfromDb.pricesDeatails.isPricePerPage) {
+            if (sofer.priceOf === 'priceForTorahScrollPerPage' && soferfromDb.pricesDeatails.isPricePerPage === 'מחיר לספר תורה') {
                 let price = (soferfromDb.pricesDeatails.priceForTorahScroll.price - 8700) / 245;
                 return price >= sofer.lowestPrice && price <= sofer.highestPrice;
             }
 
-            if (sofer.priceOf === 'priceForTorahScroll' && soferfromDb.pricesDeatails.isPricePerPage) {
+            if (sofer.priceOf === 'priceForTorahScroll' && soferfromDb.pricesDeatails.isPricePerPage === 'מחיר לספר תורה') {
                 let price = (soferfromDb.pricesDeatails.priceForTorahScroll.price * 245) + 8700;
                 return price >= sofer.lowestPrice && price <= sofer.highestPrice;
             }
