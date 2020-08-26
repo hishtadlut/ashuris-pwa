@@ -15,6 +15,14 @@ export const loadWritersList = createAction(
   '[Writers] load Writers List',
 );
 
+export const loadCitiesList = createAction(
+  '[Writers] load Cities List',
+);
+
+export const loadCommunitiesList = createAction(
+  '[Writers] load Communities List',
+);
+
 export const setWritersList = createAction(
   '[Writers] Set Writers List',
   props<{ writersList: Writer[] }>()

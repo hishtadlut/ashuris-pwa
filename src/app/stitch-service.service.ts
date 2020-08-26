@@ -10,7 +10,7 @@ import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
-import { loadWritersList, setCommunitiesList, setCitiesList } from './actions/writers.actions';
+import { loadWritersList, loadCitiesList, loadCommunitiesList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -50,19 +50,19 @@ export class StitchService {
       });
     this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
       .on('change', (change) => {
+        this._store$.dispatch(loadCommunitiesList())
+
         console.log(change);
       }).on('error', (err) => {
         console.log(err);
       });
     this.localCitiesDB.sync(this.remoteSitiesDB, options)
       .on('change', (change) => {
+        this._store$.dispatch(loadCitiesList())
         console.log(change);
       }).on('error', (err) => {
         console.log(err);
       });
-
-      this.getCities();
-      this.getCommunities();
   }
 
   createWriter(writer: Writer) {
@@ -128,19 +128,14 @@ export class StitchService {
     })
   }
 
-  getCities() {
-    this.localCitiesDB.allDocs<{ city: string }>({ include_docs: true })
-      .then(result => {
-        const cities = result.rows.map(row => row.doc.city);        
-        this._store$.dispatch(setCitiesList({citiesList: cities}));
-      })
+  async getCities() {
+    const result = await this.localCitiesDB.allDocs<{ city: string; }>({ include_docs: true });
+    const cities = result.rows.map(row => row.doc.city);
+    return cities;
   }
 
-  getCommunities() {
-    this.localCommunitiesDB.get<{ communities: string[] }>('communities')
-      .then(communities => {        
-        this._store$.dispatch(setCommunitiesList({communitiesList: communities.communities}));
-      })
+  async getCommunities() {
+    return await this.localCommunitiesDB.get<{ communities: string[] }>('communities')
   }
 
 }
