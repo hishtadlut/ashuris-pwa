@@ -1,0 +1,11 @@
+.add-sofer-button {
+    background-color: #2A2E43;
+    font-size: 1fr;
+    color: #C89C5B;
+    font-weight: bold;
+    padding: 2vw;
+    border-radius: 10px;
+    margin-bottom: 5vw;
+    border: solid 2px #C89C5B;
+    box-shadow: 0pt 3pt 6pt #00000029;
+}

@@ -3,6 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Writer } from '../interfaces';
 import { State } from '../reducers';
+import { useAdvancedSearchParameters, setAdvancedSearchParameters } from '../actions/writers.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-result',
@@ -15,10 +17,15 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   )
   searchResult$Subscription: Subscription;
   searchResult: Writer[];
-  constructor(private _store$: Store<State>) { }
+  constructor(private _store$: Store<State>, private router: Router) { }
 
   ngOnInit(): void {
     this.searchResult$Subscription = this.searchResult$.subscribe((searchResult) => this.searchResult = searchResult);
+  }
+
+  newSearch() {
+    this._store$.dispatch(setAdvancedSearchParameters({advancedSearchParameters: null}));
+    this.router.navigate(['/advanced-search'])
   }
 
   ngOnDestroy() {
