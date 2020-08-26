@@ -20,10 +20,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
 
       if (event instanceof NavigationEnd) {
-        // console.log(this.previousUrl);
-        // console.log(event.urlAfterRedirects);
+        console.log(this.previousUrl);
+        console.log(event.urlAfterRedirects);
         if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/search-result')) {
           this._store.dispatch(useAdvancedSearchParameters({ boolean: true }))
+        }
+        if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/')) {
+          this._store.dispatch(useAdvancedSearchParameters({ boolean: false }))
         }
         this.previousUrl = event.urlAfterRedirects
       }
