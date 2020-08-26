@@ -1,2 +1,4 @@
-<app-writer-list-item *ngFor="let writer of searchResult" [writer]="writer"></app-writer-list-item>
-<button type="button" class="add-sofer-button" (click)="newSearch()">חיפוש חדש</button>
+<div class="page-grid">
+    <app-writer-list-item *ngFor="let writer of searchResult" [writer]="writer"></app-writer-list-item>
+    <button type="button" class="add-sofer-button" (click)="newSearch()">חיפוש חדש</button>
+</div>
