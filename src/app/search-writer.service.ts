@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from "@angular/core";
+import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Writer, advancedSearchQuery } from './interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -22,14 +22,14 @@ export class SearchWriterService implements OnDestroy {
 
     findSoferAdvancedSearch(sofer: advancedSearchQuery) {
 
-        const isAppropriateLevelsQuery = []
+        const isAppropriateLevelsQuery = [];
         sofer.isAppropriateLevels.bad ? isAppropriateLevelsQuery.push({ 'level': 'לא מתאים' }) : '';
         sofer.isAppropriateLevels.good ? isAppropriateLevelsQuery.push({ 'level': 'מתאים' }) : '';
         sofer.isAppropriateLevels.veryGood ? isAppropriateLevelsQuery.push({ 'level': 'כדאי מאוד' }) : '';
 
         const goesToKotelQuery = [];
         if (sofer.goesToKotel === 'true') {
-            goesToKotelQuery.push('true', '')
+            goesToKotelQuery.push('true', '');
         } else if (sofer.goesToKotel === 'any') {
             goesToKotelQuery.push('true', 'false', '');
         } else {
@@ -38,7 +38,7 @@ export class SearchWriterService implements OnDestroy {
 
         const voatsInElectionQuery = [];
         if (sofer.voatsInElection === 'true') {
-            voatsInElectionQuery.push('true', '')
+            voatsInElectionQuery.push('true', '');
         } else if (sofer.goesToKotel === 'any') {
             voatsInElectionQuery.push('true', 'false', '');
         } else {
@@ -59,7 +59,7 @@ export class SearchWriterService implements OnDestroy {
             );
         } else {
             if (sofer.writingLevel[1]) {
-                writingLevelQuery.push('זול')
+                writingLevelQuery.push('זול');
             }
             if (sofer.writingLevel[2]) {
                 writingLevelQuery.push('פחותה');
@@ -87,7 +87,7 @@ export class SearchWriterService implements OnDestroy {
             );
         } else {
             if (sofer.isAppropriateLevels.bad === true) {
-                isAppropriateQuery.push('לא מתאים')
+                isAppropriateQuery.push('לא מתאים');
             }
             if (sofer.isAppropriateLevels.good === true) {
                 isAppropriateQuery.push('מתאים');
@@ -113,7 +113,7 @@ export class SearchWriterService implements OnDestroy {
                     .entries(sofer.letterSizes)
                     .filter(([, booleanValue]) => booleanValue)
                     .map(([key]) => ({ [key]: true }))
-            )
+            );
         }
 
         const sameValueWritingTypesQuery = [...new Set(Object.values(sofer.writingTypes))].length === 1;
@@ -124,7 +124,7 @@ export class SearchWriterService implements OnDestroy {
             }
         } else {
             if (sofer.writingTypes.ari === true) {
-                writingTypesQuery.push({ ari: true })
+                writingTypesQuery.push({ ari: true });
             }
             if (sofer.writingTypes.welish === true) {
                 writingTypesQuery.push({ Welish: true });
@@ -161,14 +161,14 @@ export class SearchWriterService implements OnDestroy {
             }
 
             if (sofer.priceOf === 'priceForMezuzah') {
-                return (soferfromDb.pricesDeatails.priceForMezuzah.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForMezuzah.price <= sofer.highestPrice)
+                return (soferfromDb.pricesDeatails.priceForMezuzah.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForMezuzah.price <= sofer.highestPrice);
             }
 
             if (sofer.priceOf === 'priceForTefillin') {
-                return (soferfromDb.pricesDeatails.priceForTefillin.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForTefillin.price <= sofer.highestPrice)
+                return (soferfromDb.pricesDeatails.priceForTefillin.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForTefillin.price <= sofer.highestPrice);
             }
 
-            return (soferfromDb.pricesDeatails.priceForTorahScroll.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForTorahScroll.price <= sofer.highestPrice)
+            return (soferfromDb.pricesDeatails.priceForTorahScroll.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForTorahScroll.price <= sofer.highestPrice);
         });
 
         this._store$.dispatch(setSearchWritersResult({ writers: finalResult }));
@@ -194,7 +194,7 @@ export class SearchWriterService implements OnDestroy {
             // good: new FormControl(true),
             //     veryGood: new FormControl(true),
 
-            return (cityQuery && communityQuery && hasWritenBeforeQuery && isAppropriateQuery)
+            return (cityQuery && communityQuery && hasWritenBeforeQuery && isAppropriateQuery);
             // isAppropriate: { $or: isAppropriateLevelsQuery },
             // 'additionalDetails.goesToKotel.boolean': { $or: goesToKotelQuery },
             // 'additionalDetails.voatsInElection.boolean': { $or: voatsInElectionQuery },
@@ -202,9 +202,9 @@ export class SearchWriterService implements OnDestroy {
             // 'isAppropriate.level': { $or: isAppropriateQuery },
             // 'writingDeatails.letterSizes': { $or: letterSizesQuery },
             // 'writingDeatails.writingTypes.types': { $or: writingTypesQuery },
-        })
+        });
 
-        return queryResult
+        return queryResult;
     }
 
     ngOnDestroy() {
