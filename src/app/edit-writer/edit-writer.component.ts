@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../utils/utils';
@@ -437,6 +437,12 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   // playRecord() {
   //   this.record.play();
   // }
+
+  isChecked(event, formControl: AbstractControl) {
+    if (event.target.value === formControl.value) {
+      formControl.setValue('');
+    }
+  }
 
   onSubmit() {
     this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
