@@ -5,7 +5,6 @@ import { Writer } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
-//PouchDB
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
@@ -38,19 +37,19 @@ export class StitchService {
       live: true,
       retry: true,
       continuous: true,
-    }
+    };
     this.localWritersDB.sync(this.remoteWritersDB, options)
       .on('change', (change) => {
         console.log(change);
-        if (change.direction === "pull") {
-          this._store$.dispatch(loadWritersList())
+        if (change.direction === 'pull') {
+          this._store$.dispatch(loadWritersList());
         }
       }).on('error', (err) => {
         console.log(err);
       });
     this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
       .on('change', (change) => {
-        this._store$.dispatch(loadCommunitiesList())
+        this._store$.dispatch(loadCommunitiesList());
 
         console.log(change);
       }).on('error', (err) => {
@@ -58,7 +57,7 @@ export class StitchService {
       });
     this.localCitiesDB.sync(this.remoteSitiesDB, options)
       .on('change', (change) => {
-        this._store$.dispatch(loadCitiesList())
+        this._store$.dispatch(loadCitiesList());
         console.log(change);
       }).on('error', (err) => {
         console.log(err);
@@ -69,7 +68,7 @@ export class StitchService {
     this.localCitiesDB.allDocs({ include_docs: true })
       .then(result => {
         !result.rows.some((document: any) => document.doc.city === writer.city) && this.localCitiesDB.put({ city: writer.city, _id: new Date().getMilliseconds().toString() });
-      })
+      });
     this.localCommunitiesDB.get<{ communities: string[] }>('communities')
       .then((communities) => {
         const communitiesSet = new Set(communities.communities || []);
@@ -94,12 +93,12 @@ export class StitchService {
         }
       });
 
-    // some strange bag fix TODO  
+    // some strange bag fix TODO
     // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
     if (writer._id) {
       this.localWritersDB.put({
         ...JSON.parse(JSON.stringify(writer))
-      })
+      });
     } else {
       this.localWritersDB.put({
         // add unike id
@@ -109,7 +108,7 @@ export class StitchService {
         .then(result => {
           console.log(result);
         })
-        .catch(console.error)
+        .catch(console.error);
     }
   }
 
@@ -118,14 +117,14 @@ export class StitchService {
       .then((result) => {
         return new Promise(resolve => {
           resolve(result.rows.map(row => row.doc));
-        })
+        });
       });
   }
 
   getWriter(id: string): Promise<Writer> {
     return new Promise(resolve => {
       resolve(this.localWritersDB.get(id));
-    })
+    });
   }
 
   async getCities() {
@@ -135,7 +134,7 @@ export class StitchService {
   }
 
   async getCommunities() {
-    return await this.localCommunitiesDB.get<{ communities: string[] }>('communities')
+    return await this.localCommunitiesDB.get<{ communities: string[] }>('communities');
   }
 
 }
