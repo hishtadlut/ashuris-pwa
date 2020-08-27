@@ -55,7 +55,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
         veryGood: new FormControl(true),
       }),
       quickSearch: new FormControl(''),
-    })
+    });
   }
 
   onKeyUpSearchByName(event) {
@@ -66,11 +66,11 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   resetSearch() {
     this.writersToDisplay = this.writersList;
-    this.searchForm.reset()
+    this.searchForm.reset();
   }
 
   search() {
-    this.writersToDisplay = this.searchWriterService.writersListFilter(this.searchForm.value)
+    this.writersToDisplay = this.searchWriterService.writersListFilter(this.searchForm.value);
   }
 
   ngOnDestroy() {

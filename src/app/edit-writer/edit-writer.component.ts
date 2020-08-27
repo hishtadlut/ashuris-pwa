@@ -314,13 +314,13 @@ export class EditWriterComponent implements OnInit, OnDestroy {
           writer.photos.forEach(photo => photosArray.push(new FormControl(photo)));
 
           this.writerForm.patchValue(writer);
-        })
+        });
         this.textForSaveButton = 'שמור שינויים';
         this._store$.dispatch(editWriter({ editMode: false }));
       } else if (this._location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
         this.setAddressthroghGoogleMaps();
       }
-    })
+    });
 
     this.citiesList$Subscription = this.citiesList$.subscribe(
       (cities) => this.citiesFromDB = cities
@@ -341,14 +341,14 @@ export class EditWriterComponent implements OnInit, OnDestroy {
                 city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
                 street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
                 streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
-              }
+              };
               this.writerForm.controls.city.setValue(address.city);
               this.writerForm.controls.street.setValue(address.street);
               this.writerForm.controls.streetNumber.setValue(address.streetNumber);
               this.writerForm.controls.coordinates.setValue(currentCoordinates);
             } catch { }
           });
-      })
+      });
   }
 
   openDialog(formGroup: FormGroup) {
@@ -439,8 +439,8 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   // }
 
   onSubmit() {
-    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value })
-    this._store$.dispatch(loadWritersList())
+    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
+    this._store$.dispatch(loadWritersList());
     this.router.navigate(['/writers-list-screen']);
   }
 

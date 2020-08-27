@@ -23,22 +23,22 @@ export class NavBarComponent implements OnInit, OnDestroy {
         console.log(this.previousUrl);
         console.log(event.urlAfterRedirects);
         if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/search-result')) {
-          this._store.dispatch(useAdvancedSearchParameters({ boolean: true }))
+          this._store.dispatch(useAdvancedSearchParameters({ boolean: true }));
         }
         if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/')) {
-          this._store.dispatch(useAdvancedSearchParameters({ boolean: false }))
+          this._store.dispatch(useAdvancedSearchParameters({ boolean: false }));
         }
-        this.previousUrl = event.urlAfterRedirects
+        this.previousUrl = event.urlAfterRedirects;
       }
     });
   }
 
   goToHome() {
-    this._location.go('/')
+    this._location.go('/');
   }
 
   goBack() {
-    this._location.back()
+    this._location.back();
   }
 
   ngOnDestroy() {
