@@ -18,7 +18,7 @@ import { Location } from '@angular/common';
   templateUrl: './edit-writer.component.html',
   styleUrls: ['./edit-writer.component.css']
 })
-export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EditWriterComponent implements OnInit, OnDestroy {
   communitiesFromDBSubscription: Subscription;
   communitiesFromDB: string[];
 
@@ -41,7 +41,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   communitiesList$: Observable<any> = this._store$.pipe(
     select('writers', 'communitiesList')
   );
-  
+
   citiesFromDB: string[];
   writerForm: FormGroup;
   map: google.maps.Map;
@@ -50,6 +50,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   dialogFormGroup: FormGroup = null;
   writer: Writer;
   editMode: any;
+  textForSaveButton = 'הוסף סופר למאגר';
 
   constructor(
     private stitchService: StitchService,
@@ -298,6 +299,7 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });
+
     this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
 
@@ -311,41 +313,42 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
           const photosArray = this.writerForm.controls.photos as FormArray;
           writer.photos.forEach(photo => photosArray.push(new FormControl(photo)));
 
-          this.writerForm.patchValue(writer)
+          this.writerForm.patchValue(writer);
         })
+        this.textForSaveButton = 'שמור שינויים';
         this._store$.dispatch(editWriter({ editMode: false }));
+      } else if (this._location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
+        this.setAddressthroghGoogleMaps();
       }
     })
+
     this.citiesList$Subscription = this.citiesList$.subscribe(
       (cities) => this.citiesFromDB = cities
     );
+
     this.communitiesList$Subscription = this.communitiesList$.subscribe(
       (communities) => this.communitiesFromDB = communities
     );
   }
 
-  ngAfterViewInit() {
-    // .then((currentCoordinates) => {
-    // this.googleMapsService.setMapWithCurrentPosition(this.gmap.nativeElement)
-    if (this.editMode) {
-      this.googleMapsService.getCurrentCoordinates()
-        .then((currentCoordinates) => {
-          this.googleMapsService.reverseGeocoder(currentCoordinates)
-            .then((result: google.maps.GeocoderResult) => {
-              try {
-                const address = {
-                  city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
-                  street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
-                  streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
-                }
-                this.writerForm.controls.city.setValue(address.city);
-                this.writerForm.controls.street.setValue(address.street);
-                this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-                this.writerForm.controls.coordinates.setValue(currentCoordinates);
-              } catch { }
-            });
-        })
-    }
+  setAddressthroghGoogleMaps() {
+    this.googleMapsService.getCurrentCoordinates()
+      .then((currentCoordinates) => {
+        this.googleMapsService.reverseGeocoder(currentCoordinates)
+          .then((result: google.maps.GeocoderResult) => {
+            try {
+              const address = {
+                city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
+                street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
+                streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
+              }
+              this.writerForm.controls.city.setValue(address.city);
+              this.writerForm.controls.street.setValue(address.street);
+              this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+              this.writerForm.controls.coordinates.setValue(currentCoordinates);
+            } catch { }
+          });
+      })
   }
 
   openDialog(formGroup: FormGroup) {
@@ -425,6 +428,11 @@ export class EditWriterComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteRecording(index: number) {
     const recordingsArray = this.writerForm.controls.recordings as FormArray;
     recordingsArray.removeAt(index);
+  }
+
+  deletePhoto(index: number) {
+    const photosArray = this.writerForm.controls.photos as FormArray;
+    photosArray.removeAt(index);
   }
   // playRecord() {
   //   this.record.play();

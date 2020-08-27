@@ -587,7 +587,8 @@
             accept="image/*">
         </div>
       </label>
-      <div *ngFor="let photo of writerForm.controls.photos['controls']">
+      <div *ngFor="let photo of writerForm.controls.photos['controls']; let i = index;">
+        <div (click)="deletePhoto(i)">מחק תמונה</div>
         <img *ngIf="photo.value" [src]="photo.value" class="img">
       </div>
     </div>
@@ -613,7 +614,7 @@
       </div>
     </div>
     <button [disabled]="writerForm.invalid" (click)="onSubmit()"
-      class="add-sofer-button">{{ (editMode ? 'שמור שינויים' : 'הוסף סופר למאגר') }}</button>
+      class="add-sofer-button">{{ textForSaveButton }}</button>
   </form>
   <!-- <div>{{ writerForm.value | json }}</div>
   <div>{{ writerForm.valid }}</div> -->
