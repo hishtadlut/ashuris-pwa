@@ -34,6 +34,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   );
 
   searchForm: FormGroup;
+  searchFormInitialValue: any;
   constructor(private _store$: Store<State>, private searchWriterService: SearchWriterService) { }
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       }),
       quickSearch: new FormControl(''),
     });
+
+    this.searchFormInitialValue = this.searchForm.value;
   }
 
   onKeyUpSearchByName(event) {
@@ -66,7 +69,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   resetSearch() {
     this.writersToDisplay = this.writersList;
-    this.searchForm.reset();
+    this.searchForm.reset(this.searchFormInitialValue);
   }
 
   search() {
