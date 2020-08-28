@@ -8,3 +8,7 @@ html {
 label {
   margin-bottom: 0;
 }
+
+.ngb-dp-header {
+  direction: ltr;
+}
