@@ -93,17 +93,17 @@ export class StitchService {
         }
       });
 
-    // some strange bag fix TODO
     // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
+    const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
     if (writer._id) {
       this.localWritersDB.put({
-        ...JSON.parse(JSON.stringify(writer))
+        ...writerClone
       });
     } else {
       this.localWritersDB.put({
         // add unike id
         _id: uuidv4(),
-        ...JSON.parse(JSON.stringify(writer))
+        ...writerClone
       })
         .then(result => {
           console.log(result);

@@ -6,3 +6,14 @@ export function fileToBase64(file: File) {
     reader.onerror = error => reject(error);
   });
 }
+
+export function base64ToBlob(url: string): Promise<Blob> {
+  return new Promise(resolve => {
+    fetch(url)
+      .then(res => resolve(res.blob()));
+  });
+}
+
+export function blobToObjectUrl(blob: Blob): string {
+  return window.URL.createObjectURL(blob);
+}

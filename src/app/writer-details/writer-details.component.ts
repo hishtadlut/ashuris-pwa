@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { Router, Event } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
 import { GoogleMapsService } from '../google-maps-service.service';
@@ -15,7 +15,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestroy {
 
-
   writer: Writer;
   writer$Subscription: Subscription;
   writer$: Observable<any> = this._store$.pipe(
@@ -28,26 +27,34 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     additionalDeatails: false,
     images: false,
     recordings: false,
-  }
+  };
 
   dialogContent = null;
 
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
-  // constructor(private route: ActivatedRoute, private stitchService: StitchService, private googleMapsService: GoogleMapsService, private store: Store) {}
-  constructor(private route: Router, private _store$: Store<State>, private googleMapsService: GoogleMapsService, private store: Store, public sanitizer: DomSanitizer) { }
+  constructor(
+    private route: Router,
+    private _store$: Store<State>,
+    private googleMapsService: GoogleMapsService,
+    private store: Store,
+    public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
       this.writer = writer;
       if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
         this.priceForTorahScroll = {
-          pricePerPage: this.writer.pricesDeatails.isPricePerPage !== "מחיר לספר תורה" ? this.writer.pricesDeatails.priceForTorahScroll.price : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
-          priceForScroll: this.writer.pricesDeatails.isPricePerPage !== "מחיר לספר תורה"? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700) : this.writer.pricesDeatails.priceForTorahScroll.price,
-        }
+          pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? this.writer.pricesDeatails.priceForTorahScroll.price
+            : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+          priceForScroll: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
+            : this.writer.pricesDeatails.priceForTorahScroll.price,
+        };
       }
-    })
+    });
   }
 
   ngAfterContentInit() {
@@ -68,7 +75,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   editWriter() {
-    this._store$.dispatch(editWriter({ editMode: true }))
+    this._store$.dispatch(editWriter({ editMode: true }));
     this.route.navigate(['/edit-writer']);
   }
 
@@ -81,13 +88,13 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
       additionalDeatails: false,
       images: false,
       recordings: false,
-    }
+    };
 
     this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
 
   openDialog(event, content: string) {
-    event.stopPropagation()
+    event.stopPropagation();
     event.preventDefault();
     this.dialogContent = content;
   }

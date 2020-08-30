@@ -112,7 +112,14 @@ export interface Writer {
   }
 
   photos: string[],
-  recordings: string[],
+  recordings: string[];
+  _attachments?: {
+    [string: string]: {
+      content_type: string,
+      // content_type: MimeType,
+      data: Blob
+    },
+  };
 }
 
 
@@ -136,7 +143,7 @@ export interface advancedSearchQuery {
     ari: boolean,
     beitYosef: boolean,
     welish: boolean,
-  },
+  };
   letterSizes: {
     17: boolean,
     24: boolean,
@@ -146,19 +153,19 @@ export interface advancedSearchQuery {
     42: boolean,
     45: boolean,
     48: boolean,
-  },
+  };
   writingLevel: {
     1: boolean,
     2: boolean,
     3: boolean,
     4: boolean,
     5: boolean,
-  },
+  };
   isAppropriateLevels: {
     bad: boolean,
     good: boolean,
     veryGood: boolean,
-  },
-  voatsInElection: string,
-  goesToKotel: string,
-};
+  };
+  voatsInElection: string;
+  goesToKotel: string;
+}

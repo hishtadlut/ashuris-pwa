@@ -311,7 +311,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
           writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
 
           const photosArray = this.writerForm.controls.photos as FormArray;
-          writer.photos.forEach(photo => photosArray.push(new FormControl(photo)));
+          writer.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
           this.writerForm.patchValue(writer);
         });

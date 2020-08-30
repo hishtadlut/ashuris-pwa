@@ -243,7 +243,7 @@
                     <div *ngFor="let photo of writer.photos" class="photo-wrapper">
                         <img class="icon-share" src="assets/icons/share.png" alt="">
                         <img class="icon-delete" src="assets/icons/delete.png" alt="">
-                        <img [src]="photo" alt="" class="photo-of-writing">
+                        <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>
                 </div>
                 <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
