@@ -241,7 +241,7 @@
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
                     <div *ngFor="let photo of writer.photos" class="photo-wrapper">
-                        <img class="icon-share" src="assets/icons/share.png" alt="">
+                        <img class="icon-share" src="assets/icons/share.png" (click)="shareButton($event)" alt="">
                         <img class="icon-delete" src="assets/icons/delete.png" alt="">
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>

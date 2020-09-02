@@ -57,6 +57,24 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     });
   }
 
+  shareButton(event) {
+    // event.stopPropagation();
+    // event.preventDefault();
+    // if (navigator.share) {
+    //   console.log(event.target.parentElement.lastChild.src);
+    //   navigator.share({
+    //     title: 'WebShare API Demo',
+    //     url: `<img src="${event.target.parentElement.lastChild.src}">`,
+    //   }).then(() => {
+    //     console.log('Thanks for sharing!');
+    //     alert(newVariable.canShare())
+    //   })
+    //   .catch(console.error);
+    // } else {
+    //   // fallback
+    // }
+  }
+
   ngAfterContentInit() {
     // this.paramsSub = this.route.params.subscribe(params => {
     //   this.stitchService.getWriter(params['id'])
@@ -107,6 +125,5 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     this.writer$Subscription.unsubscribe();
     // this.paramsSub.unsubscribe()
   }
-
 
 }
