@@ -2,14 +2,14 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
-import { fileToBase64 } from '../utils/utils';
+import { fileToBase64, setAddressthroghGoogleMaps } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RecordingService } from '../recording.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
-import { Writer } from '../interfaces';
+import { Writer, Address } from '../interfaces';
 import { editWriter, loadWritersList } from '../actions/writers.actions';
 import { Location } from '@angular/common';
 
@@ -318,7 +318,12 @@ export class EditWriterComponent implements OnInit, OnDestroy {
         this.textForSaveButton = 'שמור שינויים';
         this._store$.dispatch(editWriter({ editMode: false }));
       } else if (this._location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
-        this.setAddressthroghGoogleMaps();
+        setAddressthroghGoogleMaps().then((address: Address) => {
+          this.writerForm.controls.city.setValue(address.city);
+          this.writerForm.controls.street.setValue(address.street);
+          this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+          this.writerForm.controls.coordinates.setValue(address.coordinates);
+        });
       }
     });
 
@@ -329,26 +334,6 @@ export class EditWriterComponent implements OnInit, OnDestroy {
     this.communitiesList$Subscription = this.communitiesList$.subscribe(
       (communities) => this.communitiesFromDB = communities
     );
-  }
-
-  setAddressthroghGoogleMaps() {
-    this.googleMapsService.getCurrentCoordinates()
-      .then((currentCoordinates) => {
-        this.googleMapsService.reverseGeocoder(currentCoordinates)
-          .then((result: google.maps.GeocoderResult) => {
-            try {
-              const address = {
-                city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
-                street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
-                streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
-              };
-              this.writerForm.controls.city.setValue(address.city);
-              this.writerForm.controls.street.setValue(address.street);
-              this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-              this.writerForm.controls.coordinates.setValue(currentCoordinates);
-            } catch { }
-          });
-      });
   }
 
   openDialog(formGroup: FormGroup) {
@@ -451,6 +436,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.citiesList$Subscription.unsubscribe();
     this.citiesList$Subscription.unsubscribe();
     this.communitiesList$Subscription.unsubscribe();
   }

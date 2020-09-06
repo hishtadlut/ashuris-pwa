@@ -175,3 +175,10 @@ export interface ChangeUrgencyWriter {
   writerId: string;
   levelOfUrgency: number;
 }
+
+export interface Address {
+  city: string;
+  street: string;
+  streetNumber: string;
+  coordinates: google.maps.LatLng;
+}

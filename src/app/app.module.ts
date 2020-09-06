@@ -29,6 +29,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { NoteDialogOutputComponent } from './note-dialog-output/note-dialog-output.component';
 import { RemindersListComponent } from './reminders-list/reminders-list.component';
 import { WriterListItemComponent } from './writer-list-item/writer-list-item.component';
+import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { WriterListItemComponent } from './writer-list-item/writer-list-item.com
     WriterDetailsComponent,
     SearchResultComponent,
     RemindersListComponent,
+    EditDealerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
