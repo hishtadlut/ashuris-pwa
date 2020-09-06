@@ -1,0 +1,29 @@
+:host {
+    direction: rtl;
+  }
+
+  .button-wrapper {
+      display: grid;
+      grid-template: auto / 1fr 1fr;
+      grid-gap: 7vw;
+      margin: 8vw 10vw;
+  }
+
+  button {
+    text-align: center;
+    color: #ffffff;
+    font-weight: normal;
+    font-size: 0.85rem;
+    font-family: Arial;
+    background-color: #C4C4C4;
+    padding: 2.5vw 3vw;
+    margin-top: 4vw;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+  }
+
+
+  .checked {
+    background-color: #2A2E43;
+  }

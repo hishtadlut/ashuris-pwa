@@ -13,7 +13,6 @@
     text-align: right;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: repeat(11, auto);
     grid-gap: 3vh;
     margin: 0 4vw;
 }
@@ -354,34 +353,22 @@ label.level-checkbox {
     font-family: Arial;
 }
 
-.photo-section {
-    grid-row: 13 / span 1;
-    grid-template: auto / auto;
-    grid-gap: 5vw;
-    align-items: center;
-}
-
-.recording-section {
-    grid-row: 14 / span 1;
-}
-
 .add-sofer-button {
-    grid-row: 15 / span 1;
     background-color: #D4A75D;
     font-size: 1fr;
     color: #313C60;
     font-weight: bold;
     padding: 2vw;
     border-radius: 10px;
-    margin-bottom: 5vw;
     border: none;
     box-shadow: 0pt 3pt 6pt #00000029;
+    width: 100%;
 }
 
-.img {
-    width: 20vw;
-    /* margin-left: 4vw;
-    margin-bottom: 4vw; */
+.button-wrapper {
+    grid-template: auto / 1fr 1fr;
+    grid-gap: 5vw;
+    direction: rtl;
 }
 
 .add-section {
