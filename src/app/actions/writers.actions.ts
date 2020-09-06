@@ -6,6 +6,19 @@ export const loadWriter = createAction(
   props<{ writerId: string }>()
 );
 
+export const addToChangeUrgencyWritersList = createAction(
+  '[Writer] Add To Change Urgency Writers List',
+  props<{ writerId: string, levelOfUrgency: number }>()
+);
+
+export const putChangeUrgencyWritersList = createAction(
+  '[Writer] Put Change Urgency Writers List',
+);
+
+export const resetChangeUrgencyWritersList = createAction(
+  '[Writer] Reset Change Urgency Writers List',
+);
+
 export const setWriter = createAction(
   '[Writer] Set Writer',
   props<{ writer: Writer }>()

@@ -1,17 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
-import { setWriter, loadWritersList, setWritersList, loadCitiesList, setCitiesList, loadCommunitiesList, setCommunitiesList } from '../actions/writers.actions';
+import {
+  resetChangeUrgencyWritersList,
+  setWriter,
+  loadWritersList,
+  setWritersList,
+  loadCitiesList,
+  setCitiesList,
+  loadCommunitiesList,
+  setCommunitiesList,
+  putChangeUrgencyWritersList
+} from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
-import { from, interval } from 'rxjs';
-
+import { from, Subscription, Observable } from 'rxjs';
+import { ChangeUrgencyWriter } from '../interfaces';
+import { select, Store } from '@ngrx/store';
+import { State } from '../reducers';
 
 @Injectable()
-export class WritersEffects implements OnInitEffects {
-  constructor(private actions$: Actions, private stitchService: StitchService) { }
-
-  ngrxOnInitEffects() {
-    return loadWritersList();
+export class WritersEffects implements OnInitEffects, OnDestroy {
+  urgencyWritersList: ChangeUrgencyWriter[];
+  urgencyWritersList$Subscription: Subscription;
+  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this._store$.pipe(
+    select('writers', 'urgencyWritersList')
+  );
+  // tslint:disable-next-line: variable-name
+  constructor(private actions$: Actions, private stitchService: StitchService, private _store$: Store<State>) {
+    this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
   }
 
   loadWriter$ = createEffect(() =>
@@ -24,7 +40,7 @@ export class WritersEffects implements OnInitEffects {
         )
       ),
     )
-  )
+  );
 
   loadWritersList$ = createEffect(() =>
     this.actions$.pipe(
@@ -69,6 +85,28 @@ export class WritersEffects implements OnInitEffects {
       ),
     )
   );
+
+  putChangeUrgencyWritersList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(putChangeUrgencyWritersList),
+      mergeMap((action: any) => from(this.stitchService.updateDBFromUrgencyWritersList(this.urgencyWritersList))
+        .pipe(
+          mergeMap(_ => [
+            loadWritersList(),
+            resetChangeUrgencyWritersList(),
+          ]),
+        )
+      ),
+    )
+  );
+
+  ngrxOnInitEffects() {
+    return loadWritersList();
+  }
+
+  ngOnDestroy() {
+    this.urgencyWritersList$Subscription.unsubscribe();
+  }
   // loadWritersListIntervals$ = createEffect(() =>
   //   interval(300000).pipe(
   //     map(_ => loadWritersList())

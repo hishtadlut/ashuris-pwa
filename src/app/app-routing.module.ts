@@ -6,6 +6,7 @@ import { WritersListScreenComponent } from './writers-list-screen/writers-list-s
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { WriterDetailsComponent } from './writer-details/writer-details.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { RemindersListComponent } from './reminders-list/reminders-list.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
   { path: 'search-result', component: SearchResultComponent },
+  { path: 'writer-reminders', component: RemindersListComponent },
 ];
 
 @NgModule({

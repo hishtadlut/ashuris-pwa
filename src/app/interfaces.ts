@@ -3,7 +3,8 @@ import { RouterLink } from '@angular/router';
 export interface Writer {
   _id?: any;
   _rev?: string;
-  reminderState: string
+  levelOfUrgency: number;
+  reminderState: string;
   firstName: string;
   lastName: string;
   telephone: number;
@@ -16,7 +17,7 @@ export interface Writer {
   isAppropriate: {
     level: string;
     note: string;
-  }
+  };
   startDate: {
     gregorianDate: CalendarDate
     hebrewDateInWords: string
@@ -77,12 +78,12 @@ export interface Writer {
       price: number;
       worthIt: string;
     }
-  }
+  };
 
   placeOfWriting: {
     place: string,
     note: string,
-  },
+  };
 
   additionalDetails: {
     hasWritenBefore: {
@@ -109,9 +110,9 @@ export interface Writer {
       level: number,
       note: string,
     },
-  }
+  };
 
-  photos: string[],
+  photos: string[];
   recordings: string[];
   _attachments?: {
     [string: string]: {
@@ -136,9 +137,9 @@ export interface CalendarDate {
 }
 
 export interface advancedSearchQuery {
-  lowestPrice: number,
-  highestPrice: number,
-  priceOf: string,
+  lowestPrice: number;
+  highestPrice: number;
+  priceOf: string;
   writingTypes: {
     ari: boolean,
     beitYosef: boolean,
@@ -168,4 +169,9 @@ export interface advancedSearchQuery {
   };
   voatsInElection: string;
   goesToKotel: string;
+}
+
+export interface ChangeUrgencyWriter {
+  writerId: string;
+  levelOfUrgency: number;
 }

@@ -17,3 +17,15 @@ export function base64ToBlob(url: string): Promise<Blob> {
 export function blobToObjectUrl(blob: Blob): string {
   return window.URL.createObjectURL(blob);
 }
+
+export function sortByLetters(arrayToSort): any[] {
+  return arrayToSort.sort((a, b) => {
+    if (a.lastName < b.lastName) {
+      return -1;
+    }
+    if (a.lastName > b.lastName) {
+      return 1;
+    }
+    return 0;
+  });
+}

@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Writer } from '../interfaces';
+import { Writer, ChangeUrgencyWriter } from '../interfaces';
 import {
   setWriter,
   setWritersList,
@@ -8,8 +8,12 @@ import {
   useAdvancedSearchParameters,
   setAdvancedSearchParameters,
   setCitiesList,
-  setCommunitiesList
+  setCommunitiesList,
+  addToChangeUrgencyWritersList,
+  putChangeUrgencyWritersList,
+  resetChangeUrgencyWritersList
 } from '../actions/writers.actions';
+import { sortByLetters } from '../utils/utils';
 
 
 
@@ -24,6 +28,7 @@ export interface State {
   useAdvancedSearchParameters: boolean;
   citiesList: string[];
   communitiesList: string[];
+  urgencyWritersList: ChangeUrgencyWriter[];
 }
 
 export const initialState: State = {
@@ -35,6 +40,7 @@ export const initialState: State = {
   useAdvancedSearchParameters: false,
   citiesList: [],
   communitiesList: [],
+  urgencyWritersList: [],
 };
 
 
@@ -45,15 +51,7 @@ export const writerReducer = createReducer(
   }),
   on(setWritersList, (state, action) => {
     let sortedWriterList = action.writersList.slice();
-    sortedWriterList = sortedWriterList.sort((writerA, writerB) => {
-      if (writerA.lastName < writerB.lastName) {
-        return -1;
-      }
-      if (writerA.lastName > writerB.lastName) {
-        return 1;
-      }
-      return 0;
-    });
+    sortedWriterList = sortByLetters(sortedWriterList);
     return {
       ...state, writersList: sortedWriterList
     };
@@ -75,6 +73,19 @@ export const writerReducer = createReducer(
   }),
   on(useAdvancedSearchParameters, (state, action) => {
     return { ...state, useAdvancedSearchParameters: action.boolean };
+  }),
+  on(addToChangeUrgencyWritersList, (state, action) => {
+    const urgencyWritersListClone = state.urgencyWritersList.map(writer => Object.assign({}, writer));
+    const writerToChangeIndex = urgencyWritersListClone.findIndex(writer => writer.writerId === action.writerId);
+    if (writerToChangeIndex !== -1) {
+      urgencyWritersListClone[writerToChangeIndex].levelOfUrgency = action.levelOfUrgency;
+    } else {
+      urgencyWritersListClone.push({ writerId: action.writerId, levelOfUrgency: action.levelOfUrgency });
+    }
+    return { ...state, urgencyWritersList: urgencyWritersListClone };
+  }),
+  on(resetChangeUrgencyWritersList, (state) => {
+    return { ...state, urgencyWritersList: [] };
   }),
 );
 

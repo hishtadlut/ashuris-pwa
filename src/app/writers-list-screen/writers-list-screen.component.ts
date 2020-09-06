@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { StitchService } from '../stitch-service.service';
 import { Subscription, pipe, Observable } from 'rxjs';
 import { Writer } from '../interfaces';
 import { Store, select } from '@ngrx/store';

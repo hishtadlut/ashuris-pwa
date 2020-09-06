@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { Subject } from 'rxjs';
-import { Writer } from './interfaces';
+import { Subject, Subscription, Observable } from 'rxjs';
+import { Writer, ChangeUrgencyWriter } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadCitiesList, loadCommunitiesList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StitchService {
-
 
   writersFromDB = new Subject<Writer[]>();
   citiesFromDB = new Subject<{ city: string }[]>();
@@ -31,7 +30,15 @@ export class StitchService {
   localCitiesDB = new PouchDB('citiesLocal');
   remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
 
+  urgencyWritersList: ChangeUrgencyWriter[];
+  urgencyWritersList$Subscription: Subscription;
+  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this._store$.pipe(
+    select('writers', 'urgencyWritersList')
+  );
+
+  // tslint:disable-next-line: variable-name
   constructor(private _store$: Store<State>) {
+    this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
     PouchDB.plugin(PouchDBFind);
     const options = {
       live: true,
@@ -62,11 +69,25 @@ export class StitchService {
       }).on('error', (err) => {
         console.log(err);
       });
+
+    this.localWritersDB.createIndex({
+      index: {
+        fields: ['levelOfUrgency'],
+        name: 'levelOfUrgency',
+      }
+    }).then((result) => {
+      console.log(result);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
+
+
 
   createWriter(writer: Writer) {
     this.localCitiesDB.allDocs({ include_docs: true })
       .then(result => {
+        // tslint:disable-next-line: no-unused-expression max-line-length
         !result.rows.some((document: any) => document.doc.city === writer.city) && this.localCitiesDB.put({ city: writer.city, _id: new Date().getMilliseconds().toString() });
       });
     this.localCommunitiesDB.get<{ communities: string[] }>('communities')
@@ -103,7 +124,7 @@ export class StitchService {
       this.localWritersDB.put({
         // add unike id
         _id: uuidv4(),
-        ...writerClone
+        ...writerClone, levelOfUrgency: 1
       })
         .then(result => {
           console.log(result);
@@ -133,8 +154,34 @@ export class StitchService {
     return cities;
   }
 
+  updateDBFromUrgencyWritersList(writersList: ChangeUrgencyWriter[]): Promise<void> {
+    return new Promise(resolve => {
+      writersList.map(writerToChange => {
+        this.localWritersDB.get<Writer>(writerToChange.writerId).then(writer => {
+          console.log(writer.levelOfUrgency);
+          writer.levelOfUrgency = writerToChange.levelOfUrgency;
+          console.log(writer.levelOfUrgency);
+          this.localWritersDB.put(writer).then(_ => {
+            resolve();
+          });
+        });
+      });
+    });
+    // this.localWritersDB.upsert(writerId, (writer: Writer) => {
+    //   writer.levelOfUrgency = levelOfUrgency;
+    //   return writer;
+    // });
+  }
+
   async getCommunities() {
     return await this.localCommunitiesDB.get<{ communities: string[] }>('communities');
+  }
+
+  async getSoferReminders(levelOfUrgency: number) {
+    return await this.localWritersDB.find({
+      selector: { levelOfUrgency },
+      fields: ['_id', 'firstName', 'lastName', 'city', 'street', 'profileImage', 'levelOfUrgency'],
+    });
   }
 
 }

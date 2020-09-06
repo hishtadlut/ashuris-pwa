@@ -4,5 +4,5 @@
         <div class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</div>
         <div class="writer-address">{{ writer.street }},  {{ writer.city }}</div>
     </div>
-    <div class="reminder"></div>
+    <div class="reminder" [ngClass]="{'highlight-regular': levelOfUrgency === 2, 'highlight-ergent': levelOfUrgency === 3 }" (click)="changeUrgencyLevel($event)"></div>
 </div>

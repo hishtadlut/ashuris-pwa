@@ -1,0 +1,3 @@
+<button (click)="getSoferReminders(3)">דחוף</button>
+<button (click)="getSoferReminders(2)">רגיל</button>
+<app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

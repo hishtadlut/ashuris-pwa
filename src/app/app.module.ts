@@ -16,12 +16,9 @@ import { ListItemComponent } from './expandable-list/list-item/list-item.compone
 import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
-import { WriterListItemComponent } from './writers-list-screen/writer-list-item/writer-list-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HebrewDateFormControlComponent } from './hebrew-date-form-control/hebrew-date-form-control.component';
-import { 
-  NoteDialogComponent
- } from './note-dialog/note-dialog.component';
+import { NoteDialogComponent } from './note-dialog/note-dialog.component';
 import { WriterDetailsComponent } from './writer-details/writer-details.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -30,6 +27,8 @@ import { reducers, metaReducers } from './reducers';
 import { WritersEffects } from './effects/writers.effects';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NoteDialogOutputComponent } from './note-dialog-output/note-dialog-output.component';
+import { RemindersListComponent } from './reminders-list/reminders-list.component';
+import { WriterListItemComponent } from './writer-list-item/writer-list-item.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +46,7 @@ import { NoteDialogOutputComponent } from './note-dialog-output/note-dialog-outp
     NoteDialogOutputComponent,
     WriterDetailsComponent,
     SearchResultComponent,
+    RemindersListComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
