@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
-import { fileToBase64, setAddressthroghGoogleMaps } from '../utils/utils';
+import { fileToBase64 } from '../utils/utils';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -318,7 +318,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
         this.textForSaveButton = 'שמור שינויים';
         this._store$.dispatch(editWriter({ editMode: false }));
       } else if (this._location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
-        setAddressthroghGoogleMaps().then((address: Address) => {
+        this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
           this.writerForm.controls.city.setValue(address.city);
           this.writerForm.controls.street.setValue(address.street);
           this.writerForm.controls.streetNumber.setValue(address.streetNumber);

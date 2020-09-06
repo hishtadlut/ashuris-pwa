@@ -3,11 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { fileToBase64, setAddressthroghGoogleMaps } from '../utils/utils';
+import { fileToBase64 } from '../utils/utils';
 import { Router } from '@angular/router';
 import { StitchService } from '../stitch-service.service';
 import { Location } from '@angular/common';
-import { Address } from '../interfaces';
+import { Address, Dealer } from '../interfaces';
+import { loadDealerList } from '../actions/writers.actions';
+import { GoogleMapsService } from '../google-maps-service.service';
 
 
 @Component({
@@ -27,15 +29,22 @@ export class EditDealerComponent implements OnInit {
   );
   textForSaveButton = 'הוסף סוחר למאגר';
 
+  dealer$Subscription: Subscription;
+  dealerId$: Observable<any> = this.store$.pipe(
+    select('writers', 'currentDealerId')
+  );
+  dealer: Dealer;
+
   constructor(
     private store$: Store<State>,
     private router: Router,
     private stitchService: StitchService,
     private location: Location,
+    private googleMapsService: GoogleMapsService,
   ) { }
 
   ngOnInit(): void {
-    this.editMode = this.location.path() === '/edit-dealer';
+    this.editMode = (this.location.path() === '/edit-dealer');
 
     this.dealerForm = new FormGroup({
       reminderState: new FormControl('off', [
@@ -87,23 +96,22 @@ export class EditDealerComponent implements OnInit {
     );
 
     if (this.editMode) {
-    //   this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
-    //     this.writer = writer;
-
-
-
-    //     this.dealerForm.patchValue(writer);
-    //   });
-    //   this.textForSaveButton = 'שמור שינויים';
-    //   // this.store$.dispatch(editWriter({ editMode: false }));
-    // } else if (!this.editMode) {
-    //   setAddressthroghGoogleMaps()
-    //     .then((address: Address) => {
-    //       this.dealerForm.controls.city.setValue(address.city);
-    //       this.dealerForm.controls.street.setValue(address.street);
-    //       this.dealerForm.controls.streetNumber.setValue(address.streetNumber);
-    //       this.dealerForm.controls.coordinates.setValue(address.coordinates);
-    //     });
+      this.dealer$Subscription = this.dealerId$.subscribe((dealerId: string) => {
+        this.stitchService.getDealerById(dealerId)
+        .then((dealer: Dealer) => {
+          this.dealer = dealer;
+          this.dealerForm.patchValue(dealer);
+        });
+      });
+      this.textForSaveButton = 'שמור שינויים';
+    } else if (!this.editMode) {
+      this.googleMapsService.setAddressThroghGoogleMaps()
+        .then((address: Address) => {
+          this.dealerForm.controls.city.setValue(address.city);
+          this.dealerForm.controls.street.setValue(address.street);
+          this.dealerForm.controls.streetNumber.setValue(address.streetNumber);
+          this.dealerForm.controls.coordinates.setValue(address.coordinates);
+        });
     }
   }
 
@@ -130,9 +138,9 @@ export class EditDealerComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.stitchService.createDealer({ ...this.writer, ...this.writerForm.value });
-    // this._store$.dispatch(loadWritersList());
-    // this.router.navigate(['/writers-list-screen']);
+    this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
+    this.store$.dispatch(loadDealerList());
+    this.router.navigate(['/dealer-list-screen']);
   }
 
 }

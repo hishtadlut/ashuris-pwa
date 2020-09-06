@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Writer, ChangeUrgencyWriter } from '../interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer } from '../interfaces';
 import {
   setWriter,
   setWritersList,
@@ -10,8 +10,9 @@ import {
   setCitiesList,
   setCommunitiesList,
   addToChangeUrgencyWritersList,
-  putChangeUrgencyWritersList,
-  resetChangeUrgencyWritersList
+  setDealer,
+  resetChangeUrgencyWritersList,
+  setDealerList
 } from '../actions/writers.actions';
 import { sortByLetters } from '../utils/utils';
 
@@ -22,6 +23,7 @@ export const writersFeatureKey = 'writers';
 export interface State {
   writer: Writer;
   writersList: Writer[];
+  dealerList: Dealer[];
   editMode: boolean;
   searchWritersResult: Writer[];
   advancedSearchParameters;
@@ -29,11 +31,13 @@ export interface State {
   citiesList: string[];
   communitiesList: string[];
   urgencyWritersList: ChangeUrgencyWriter[];
+  currentDealerId: string;
 }
 
 export const initialState: State = {
   writer: null,
   writersList: null,
+  dealerList: null,
   editMode: false,
   searchWritersResult: null,
   advancedSearchParameters: null,
@@ -41,6 +45,7 @@ export const initialState: State = {
   citiesList: [],
   communitiesList: [],
   urgencyWritersList: [],
+  currentDealerId: null,
 };
 
 
@@ -49,11 +54,21 @@ export const writerReducer = createReducer(
   on(setWriter, (state, action) => {
     return { ...state, writer: action.writer };
   }),
+  on(setDealer, (state, action) => {
+    return { ...state, dealer: action.dealer };
+  }),
   on(setWritersList, (state, action) => {
     let sortedWriterList = action.writersList.slice();
     sortedWriterList = sortByLetters(sortedWriterList);
     return {
       ...state, writersList: sortedWriterList
+    };
+  }),
+  on(setDealerList, (state, action) => {
+    let sortedDealerList = action.dealerList.slice();
+    sortedDealerList = sortByLetters(sortedDealerList);
+    return {
+      ...state, dealerList: sortedDealerList
     };
   }),
   on(setCitiesList, (state, action) => {

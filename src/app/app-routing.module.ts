@@ -8,6 +8,7 @@ import { WriterDetailsComponent } from './writer-details/writer-details.componen
 import { SearchResultComponent } from './search-result/search-result.component';
 import { RemindersListComponent } from './reminders-list/reminders-list.component';
 import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
+import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'search-result', component: SearchResultComponent },
   { path: 'writer-reminders', component: RemindersListComponent },
   { path: 'create-new-dealer', component: EditDealerComponent },
+  { path: 'dealer-list-screen', component: DealerListScreenComponent },
 ];
 
 @NgModule({

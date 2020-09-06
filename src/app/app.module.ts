@@ -30,6 +30,8 @@ import { NoteDialogOutputComponent } from './note-dialog-output/note-dialog-outp
 import { RemindersListComponent } from './reminders-list/reminders-list.component';
 import { WriterListItemComponent } from './writer-list-item/writer-list-item.component';
 import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
+import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
+import { DealerListItemComponent } from './dealer-list-item/dealer-list-item.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
     SearchResultComponent,
     RemindersListComponent,
     EditDealerComponent,
+    DealerListScreenComponent,
+    DealerListItemComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

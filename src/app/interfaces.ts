@@ -182,3 +182,18 @@ export interface Address {
   streetNumber: string;
   coordinates: google.maps.LatLng;
 }
+
+export interface Dealer {
+  _id?: any;
+  _rev?: string;
+  firstName: string;
+  lastName: string;
+  telephone: number;
+  email: string;
+  secondTelephone: number;
+  city: string;
+  street: string;
+  profileImage: string;
+  coordinates: google.maps.LatLng;
+}
+

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Writer, ChangeUrgencyWriter } from './interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,7 +9,7 @@ import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList, loadCitiesList, loadCommunitiesList } from './actions/writers.actions';
+import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,9 @@ export class StitchService {
 
   localCitiesDB = new PouchDB('citiesLocal');
   remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
+
+  localDealersDB = new PouchDB('dealersLocal');
+  remoteDealersDB = new PouchDB('https://ashuris.online/dealers_remote');
 
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyWritersList$Subscription: Subscription;
@@ -54,6 +57,7 @@ export class StitchService {
       }).on('error', (err) => {
         console.log(err);
       });
+
     this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
       .on('change', (change) => {
         this._store$.dispatch(loadCommunitiesList());
@@ -62,6 +66,7 @@ export class StitchService {
       }).on('error', (err) => {
         console.log(err);
       });
+
     this.localCitiesDB.sync(this.remoteSitiesDB, options)
       .on('change', (change) => {
         this._store$.dispatch(loadCitiesList());
@@ -80,6 +85,16 @@ export class StitchService {
     }).catch((err) => {
       console.log(err);
     });
+
+    this.localDealersDB.sync(this.remoteDealersDB, options)
+      .on('change', (change) => {
+        console.log(change);
+        if (change.direction === 'pull') {
+          this._store$.dispatch(loadDealerList());
+        }
+      }).on('error', (err) => {
+        console.log(err);
+      });
   }
 
 
@@ -182,6 +197,41 @@ export class StitchService {
       selector: { levelOfUrgency },
       fields: ['_id', 'firstName', 'lastName', 'city', 'street', 'profileImage', 'levelOfUrgency'],
     });
+  }
+
+  getDealerById(id: string) {
+    return this.localDealersDB.get<Dealer>(id);
+  }
+
+  getDealers() {
+    return this.localDealersDB.allDocs<Dealer>({ include_docs: true })
+      .then((result) => {
+        return new Promise(resolve => {
+          console.log(result.rows);
+          console.log('result.rows');
+          
+          resolve(result.rows.map(row => row.doc));
+        });
+      });
+  }
+
+  createDealer(dealer: Dealer) {
+    const dealerClone = JSON.parse(JSON.stringify(dealer)) as Dealer;
+    if (dealer._id) {
+      this.localDealersDB.put({
+        ...dealerClone
+      });
+    } else {
+      this.localDealersDB.put({
+        // add unike id
+        _id: uuidv4(),
+        ...dealerClone
+      })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(console.error);
+    }
   }
 
 }

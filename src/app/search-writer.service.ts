@@ -13,7 +13,7 @@ export class SearchWriterService implements OnDestroy {
     writersToDisplay: Writer[] = [];
     writersList$: Observable<Writer[]> = this._store$.pipe(
         select('writers', 'writersList')
-    )
+    );
     writersList$Subscription: Subscription;
     writersList: Writer[];
     constructor(private _store$: Store<State>, private pouchDbService: StitchService) {

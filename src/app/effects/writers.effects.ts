@@ -4,13 +4,18 @@ import { mergeMap, map } from 'rxjs/operators';
 import {
   resetChangeUrgencyWritersList,
   setWriter,
+  LoadSomeActions,
   loadWritersList,
   setWritersList,
   loadCitiesList,
   setCitiesList,
   loadCommunitiesList,
   setCommunitiesList,
-  putChangeUrgencyWritersList
+  putChangeUrgencyWritersList,
+  loadDealerList,
+  setDealerList,
+  setDealer,
+  loadDealer
 } from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
 import { from, Subscription, Observable } from 'rxjs';
@@ -42,6 +47,18 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     )
   );
 
+  loadDealer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType('[Dealers] load Dealer'),
+      mergeMap((action: any) => from(this.stitchService.getDealerById(action.dealerId))
+        .pipe(
+          map(dealer => setDealer({ dealer: JSON.parse(JSON.stringify(dealer)) })),
+          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
+        )
+      ),
+    )
+  );
+
   loadWritersList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadWritersList),
@@ -53,6 +70,19 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
             loadCommunitiesList(),
           ]),
           // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
+        )
+      ),
+    )
+  );
+
+  loadDealerList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadDealerList),
+      mergeMap((action: any) => from(this.stitchService.getDealers())
+        .pipe(
+          mergeMap(dealerList => [
+            setDealerList({ dealerList: JSON.parse(JSON.stringify(dealerList)) }),
+          ]),
         )
       ),
     )
@@ -100,8 +130,24 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     )
   );
 
+  loadSomeActions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoadSomeActions),
+      mergeMap((action: any) => from(new Promise(resolve => { resolve(); }))
+        .pipe(
+          mergeMap(_ => [
+            loadWritersList(),
+            loadDealerList(),
+          ]),
+        )
+      ),
+    )
+  );
+
+
+
   ngrxOnInitEffects() {
-    return loadWritersList();
+    return LoadSomeActions();
   }
 
   ngOnDestroy() {

@@ -1,9 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { Writer } from '../interfaces';
+import { Writer, Dealer } from '../interfaces';
 
 export const loadWriter = createAction(
   '[Writer] load Writer',
   props<{ writerId: string }>()
+);
+
+export const loadDealer = createAction(
+  '[Dealers] load Dealer',
+  props<{ dealerId: string }>()
 );
 
 export const addToChangeUrgencyWritersList = createAction(
@@ -24,8 +29,21 @@ export const setWriter = createAction(
   props<{ writer: Writer }>()
 );
 
+export const setDealer = createAction(
+  '[Dealers] Set Dealer',
+  props<{ dealer: Dealer }>()
+);
+
 export const loadWritersList = createAction(
   '[Writers] load Writers List',
+);
+
+export const LoadSomeActions = createAction(
+  '[LoadSomeActions] Load Some Actions',
+);
+
+export const loadDealerList = createAction(
+  '[Dealers] load Dealer List',
 );
 
 export const loadCitiesList = createAction(
@@ -39,6 +57,11 @@ export const loadCommunitiesList = createAction(
 export const setWritersList = createAction(
   '[Writers] Set Writers List',
   props<{ writersList: Writer[] }>()
+);
+
+export const setDealerList = createAction(
+  '[Dealers] Set Dealer List',
+  props<{ dealerList: Dealer[] }>()
 );
 
 export const setCitiesList = createAction(
