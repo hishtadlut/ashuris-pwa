@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
-import { Store, select } from '@ngrx/store';
-import { loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
+import { Store, select,  } from '@ngrx/store';
+import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class StitchService {
       console.log(err);
     });
 
-    this.syncDb(this.localWritersDB, this.remoteWritersDB, loadCommunitiesList);
+    this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
     this.syncDb(this.localCommunitiesDB, this.remoteCommunitiesDB, loadCommunitiesList);
     this.syncDb(this.localCitiesDB, this.remoteSitiesDB, loadCitiesList);
     this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
