@@ -10,6 +10,7 @@ import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
+import { TypedAction } from '@ngrx/store/src/models';
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +98,13 @@ export class StitchService {
       });
   }
 
-
+  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: TypedAction<any>) {
+    localDb.sync(remoteDb, { live: true, retry: true }).on('change', (change) => {
+      this._store$.dispatch(loadDealerList());
+    }).on('error', (err) => {
+      console.log(err);
+    });
+  }
 
   createWriter(writer: Writer) {
     this.localCitiesDB.allDocs({ include_docs: true })
