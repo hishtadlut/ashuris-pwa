@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
-import { Store, select,  } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
 
 @Injectable({
