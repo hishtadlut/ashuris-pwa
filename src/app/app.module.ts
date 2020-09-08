@@ -33,10 +33,10 @@ import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
 import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
 import { DealerListItemComponent } from './dealer-list-item/dealer-list-item.component';
 import { DealerDetailsComponent } from './dealer-details/dealer-details.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
-import { BookListScreenComponent } from './book-list-screen/book-list-screen.component';
-import { BookListItemComponent } from './book-list-item/book-list-item.component';
-import { EditBookComponent } from './edit-book/edit-book.component';
+import { BookDetailsComponent } from './book-components/book-details/book-details.component';
+import { BookListScreenComponent } from './book-components/book-list-screen/book-list-screen.component';
+import { BookListItemComponent } from './book-components/book-list-item/book-list-item.component';
+import { EditBookComponent } from './book-components/edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
