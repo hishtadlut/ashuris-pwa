@@ -33,6 +33,10 @@ import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
 import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
 import { DealerListItemComponent } from './dealer-list-item/dealer-list-item.component';
 import { DealerDetailsComponent } from './dealer-details/dealer-details.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
+import { BookListScreenComponent } from './book-list-screen/book-list-screen.component';
+import { BookListItemComponent } from './book-list-item/book-list-item.component';
+import { EditBookComponent } from './edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +59,10 @@ import { DealerDetailsComponent } from './dealer-details/dealer-details.componen
     DealerListScreenComponent,
     DealerListItemComponent,
     DealerDetailsComponent,
+    BookDetailsComponent,
+    BookListScreenComponent,
+    BookListItemComponent,
+    EditBookComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
