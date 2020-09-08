@@ -1,0 +1,38 @@
+<app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
+</app-note-dialog-output>
+<div class="page-wrapper">
+    <div class="writer-details-wrapper page-grid" *ngIf="dealer">
+        <div class="top-section">
+            <img [src]="dealer.profileImage" alt="" class="profile-img">
+            <div class="name-wrapper">
+                <p class="dealer-name">{{ dealer.lastName }} {{ dealer.firstName }}</p>
+                <p class="dealer-location" *ngIf="dealer.street && dealer.city">{{ dealer.street }}, {{ dealer.city }}
+                </p>
+            </div>
+            <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
+        </div>
+        <div class="basic-details-section">
+            <div class="basic-detail .inner-grid" *ngIf="dealer.telephone">
+                <img src="assets/icons/Phone.png" alt="">
+                <div>
+                    <div class="information">{{ dealer.telephone }}</div>
+                    <div class="description">טלפון</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
+                <img src="assets/icons/Phone.png" alt="">
+                <div>
+                    <div class="information">{{ dealer.secondTelephone }}</div>
+                    <div class="description">טלפון נוסף</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid" *ngIf="dealer.email">
+                <img src="assets/icons/2.png" alt="">
+                <div>
+                    <div class="information">{{ dealer.email }}</div>
+                    <div class="description">אימייל</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

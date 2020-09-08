@@ -32,6 +32,7 @@ import { WriterListItemComponent } from './writer-list-item/writer-list-item.com
 import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
 import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
 import { DealerListItemComponent } from './dealer-list-item/dealer-list-item.component';
+import { DealerDetailsComponent } from './dealer-details/dealer-details.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { DealerListItemComponent } from './dealer-list-item/dealer-list-item.com
     EditDealerComponent,
     DealerListScreenComponent,
     DealerListItemComponent,
+    DealerDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

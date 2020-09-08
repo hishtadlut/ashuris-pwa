@@ -22,6 +22,7 @@ export const writersFeatureKey = 'writers';
 
 export interface State {
   writer: Writer;
+  dealer: Dealer;
   writersList: Writer[];
   dealerList: Dealer[];
   editMode: boolean;
@@ -36,6 +37,7 @@ export interface State {
 
 export const initialState: State = {
   writer: null,
+  dealer: null,
   writersList: null,
   dealerList: null,
   editMode: false,

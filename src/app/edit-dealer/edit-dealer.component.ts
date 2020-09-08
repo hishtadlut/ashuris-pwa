@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -17,7 +17,7 @@ import { GoogleMapsService } from '../google-maps-service.service';
   templateUrl: './edit-dealer.component.html',
   styleUrls: ['./edit-dealer.component.css']
 })
-export class EditDealerComponent implements OnInit {
+export class EditDealerComponent implements OnInit, OnDestroy {
   editMode: boolean;
   dealerForm: FormGroup;
   dialogFormGroup: FormGroup = null;
@@ -29,11 +29,11 @@ export class EditDealerComponent implements OnInit {
   );
   textForSaveButton = 'הוסף סוחר למאגר';
 
-  dealer$Subscription: Subscription;
-  dealerId$: Observable<any> = this.store$.pipe(
-    select('writers', 'currentDealerId')
-  );
   dealer: Dealer;
+  dealer$Subscription: Subscription;
+  dealer$: Observable<any> = this.store$.pipe(
+    select('writers', 'dealer')
+  );
 
   constructor(
     private store$: Store<State>,
@@ -96,12 +96,9 @@ export class EditDealerComponent implements OnInit {
     );
 
     if (this.editMode) {
-      this.dealer$Subscription = this.dealerId$.subscribe((dealerId: string) => {
-        this.stitchService.getDealerById(dealerId)
-        .then((dealer: Dealer) => {
-          this.dealer = dealer;
-          this.dealerForm.patchValue(dealer);
-        });
+      this.dealer$Subscription = this.dealer$.subscribe((dealer: Dealer) => {
+        this.dealer = dealer;
+        this.dealerForm.patchValue(dealer);
       });
       this.textForSaveButton = 'שמור שינויים';
     } else if (!this.editMode) {
@@ -141,6 +138,10 @@ export class EditDealerComponent implements OnInit {
     this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
     this.store$.dispatch(loadDealerList());
     this.router.navigate(['/dealer-list-screen']);
+  }
+
+  ngOnDestroy() {
+    this.dealer$Subscription.unsubscribe();
   }
 
 }

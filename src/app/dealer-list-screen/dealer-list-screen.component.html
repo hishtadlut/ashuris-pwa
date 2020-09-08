@@ -1,1 +1,7 @@
+<div class="name-search grid">
+    <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם / שם משפחה">
+</div>
+<div class="count-section grid">
+    <div *ngIf="dealersToDisplay" class="count">סוחרים ברשימה {{ dealersToDisplay.length }}</div>
+</div>
 <app-dealer-list-item *ngFor="let dealer of dealersToDisplay" [dealer]="dealer"></app-dealer-list-item>

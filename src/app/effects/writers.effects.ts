@@ -15,7 +15,6 @@ import {
   loadDealerList,
   setDealerList,
   setDealer,
-  loadDealer
 } from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
 import { from, Subscription, Observable } from 'rxjs';

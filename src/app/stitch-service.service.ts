@@ -207,9 +207,6 @@ export class StitchService {
     return this.localDealersDB.allDocs<Dealer>({ include_docs: true })
       .then((result) => {
         return new Promise(resolve => {
-          console.log(result.rows);
-          console.log('result.rows');
-          
           resolve(result.rows.map(row => row.doc));
         });
       });
