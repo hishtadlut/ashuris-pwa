@@ -9,8 +9,7 @@ import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
-import { TypedAction } from '@ngrx/store/src/models';
+import { loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -44,37 +43,6 @@ export class StitchService {
   constructor(private _store$: Store<State>) {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
     PouchDB.plugin(PouchDBFind);
-    const options = {
-      live: true,
-      retry: true,
-      continuous: true,
-    };
-    this.localWritersDB.sync(this.remoteWritersDB, options)
-      .on('change', (change) => {
-        console.log(change);
-        if (change.direction === 'pull') {
-          this._store$.dispatch(loadWritersList());
-        }
-      }).on('error', (err) => {
-        console.log(err);
-      });
-
-    this.localCommunitiesDB.sync(this.remoteCommunitiesDB, options)
-      .on('change', (change) => {
-        this._store$.dispatch(loadCommunitiesList());
-
-        console.log(change);
-      }).on('error', (err) => {
-        console.log(err);
-      });
-
-    this.localCitiesDB.sync(this.remoteSitiesDB, options)
-      .on('change', (change) => {
-        this._store$.dispatch(loadCitiesList());
-        console.log(change);
-      }).on('error', (err) => {
-        console.log(err);
-      });
 
     this.localWritersDB.createIndex({
       index: {
@@ -87,23 +55,19 @@ export class StitchService {
       console.log(err);
     });
 
-    this.localDealersDB.sync(this.remoteDealersDB, options)
+    this.syncDb(this.localWritersDB, this.remoteWritersDB, loadCommunitiesList);
+    this.syncDb(this.localCommunitiesDB, this.remoteCommunitiesDB, loadCommunitiesList);
+    this.syncDb(this.localCitiesDB, this.remoteSitiesDB, loadCitiesList);
+    this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
+  }
+
+  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: any) {
+    localDb.sync(remoteDb, { live: true, retry: true })
       .on('change', (change) => {
-        console.log(change);
-        if (change.direction === 'pull') {
-          this._store$.dispatch(loadDealerList());
-        }
+        this._store$.dispatch(actionToDispatch());
       }).on('error', (err) => {
         console.log(err);
       });
-  }
-
-  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: TypedAction<any>) {
-    localDb.sync(remoteDb, { live: true, retry: true }).on('change', (change) => {
-      this._store$.dispatch(loadDealerList());
-    }).on('error', (err) => {
-      console.log(err);
-    });
   }
 
   createWriter(writer: Writer) {
