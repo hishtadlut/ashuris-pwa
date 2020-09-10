@@ -38,7 +38,7 @@
       <input placeholder="מספר בית" formControlName="apartmentNumber">
     </div>
     <div class="start-date-section">
-      <app-hebrew-date-form-control [parentForm]="writerForm"></app-hebrew-date-form-control>
+      <app-hebrew-date-form-control [parentForm]="writerForm" formGroupName="startDate" sectionTitle="תאריך התחלה"></app-hebrew-date-form-control>
     </div>
     <div formGroupName="isAppropriate" class="is-appropriate-section">
       <div class="is-appropriate-radio-buttons-wraper inner-grid">

@@ -1,15 +1,14 @@
 <div [formGroup]="parentForm" class="date-inner-grid">
-  <div class="section-title">תאריך התחלה</div>
+  <div class="section-title">{{ sectionTitle }}</div>
   <div class="input-wrapper">
     <div class="date-button" (click)="d.toggle()" class="date-button">
       <div class="calendar-box">
         <img src="assets/icons/Calendar.svg" alt="">
       </div>
     </div>
-    <div class="input-container" formGroupName="startDate">
+    <div class="input-container" [formGroupName]="formGroupName">
       <input class="date-input" type="text" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelect($event)" />
-      <input formControlName="hebrewDateInWords" class="date-input" placeholder="תאריך התחלה">
+      <input formControlName="hebrewDateInWords" class="date-input" [placeholder]="sectionTitle">
     </div>
   </div>
-
 </div>

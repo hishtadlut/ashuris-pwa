@@ -19,37 +19,35 @@ import { Location } from '@angular/common';
   styleUrls: ['./edit-writer.component.css']
 })
 export class EditWriterComponent implements OnInit, OnDestroy {
-  communitiesFromDBSubscription: Subscription;
-  communitiesFromDB: string[];
-
+  editMode: boolean;
   editMode$Subscription: Subscription;
-  editMode$: Observable<any> = this._store$.pipe(
+  editMode$: Observable<any> = this.store$.pipe(
     select('writers', 'editMode')
   );
 
+  writer: Writer;
   writer$Subscription: Subscription;
-  writer$: Observable<any> = this._store$.pipe(
+  writer$: Observable<any> = this.store$.pipe(
     select('writers', 'writer')
   );
 
+  citiesFromDB: string[];
   citiesList$Subscription: Subscription;
-  citiesList$: Observable<any> = this._store$.pipe(
+  citiesList$: Observable<any> = this.store$.pipe(
     select('writers', 'citiesList')
   );
 
+  communitiesFromDB: string[];
   communitiesList$Subscription: Subscription;
-  communitiesList$: Observable<any> = this._store$.pipe(
+  communitiesList$: Observable<any> = this.store$.pipe(
     select('writers', 'communitiesList')
   );
 
-  citiesFromDB: string[];
   writerForm: FormGroup;
   map: google.maps.Map;
   isRecording = false;
   hasRecord = false;
   dialogFormGroup: FormGroup = null;
-  writer: Writer;
-  editMode: any;
   textForSaveButton = 'הוסף סופר למאגר';
 
   constructor(
@@ -57,16 +55,13 @@ export class EditWriterComponent implements OnInit, OnDestroy {
     private googleMapsService: GoogleMapsService,
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer,
-    private _store$: Store<State>,
+    private store$: Store<State>,
     private router: Router,
-    private _location: Location,
+    private location: Location,
   ) { }
 
   ngOnInit() {
     this.writerForm = new FormGroup({
-      reminderState: new FormControl('off', [
-        // Validators.required,
-      ]),
       note: new FormControl('', [
         // Validators.required,
       ]),
@@ -303,7 +298,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
     this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
 
-      if (editMode && this._location.path() === '/edit-writer') {
+      if (editMode && this.location.path() === '/edit-writer') {
         this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
           this.writer = writer;
 
@@ -316,8 +311,8 @@ export class EditWriterComponent implements OnInit, OnDestroy {
           this.writerForm.patchValue(writer);
         });
         this.textForSaveButton = 'שמור שינויים';
-        this._store$.dispatch(editWriter({ editMode: false }));
-      } else if (this._location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
+        this.store$.dispatch(editWriter({ editMode: false }));
+      } else if (this.location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
         this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
           this.writerForm.controls.city.setValue(address.city);
           this.writerForm.controls.street.setValue(address.street);
@@ -431,12 +426,14 @@ export class EditWriterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
-    this._store$.dispatch(loadWritersList());
+    this.store$.dispatch(loadWritersList());
     this.router.navigate(['/writers-list-screen']);
   }
 
   ngOnDestroy() {
-    this.citiesList$Subscription.unsubscribe();
+    // TODO
+    // this.editMode$Subscription.unsubscribe();
+    // this.writer$Subscription.unsubscribe();
     this.citiesList$Subscription.unsubscribe();
     this.communitiesList$Subscription.unsubscribe();
   }

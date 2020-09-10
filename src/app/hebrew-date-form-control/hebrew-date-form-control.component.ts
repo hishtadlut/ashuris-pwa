@@ -21,6 +21,8 @@ import { Subject, Subscription } from 'rxjs';
 })
 export class HebrewDateFormControlComponent implements OnInit, OnDestroy {
   @Input() parentForm: FormGroup;
+  @Input() formGroupName: string;
+  @Input() sectionTitle: string;
   model: NgbDateStruct;
   selectedDateSubject = new Subject<NgbDate>();
   onSelectedDateSuscription: Subscription;
@@ -32,8 +34,8 @@ export class HebrewDateFormControlComponent implements OnInit, OnDestroy {
     this.onSelectedDateSuscription = this.selectedDateSubject.subscribe((date: NgbDate) => {
       const gregorianDate = parseHebrewDateToGregorianDate(date, this.calendar);
       const hebrewDateInWords = parseHebrewDateToWords(date, this.i18n);
-      this.parentForm.get(['startDate', 'gregorianDate']).setValue(gregorianDate);
-      this.parentForm.get(['startDate', 'hebrewDateInWords']).setValue(hebrewDateInWords);
+      this.parentForm.get([this.formGroupName, 'gregorianDate']).setValue(gregorianDate);
+      this.parentForm.get([this.formGroupName, 'hebrewDateInWords']).setValue(hebrewDateInWords);
     });
   }
 

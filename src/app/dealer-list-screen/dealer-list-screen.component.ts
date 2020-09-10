@@ -34,8 +34,6 @@ export class DealerListScreenComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dealerList$Subscription = this.dealerList$.subscribe((dealerList) => {
       this.dealerList = this.dealersToDisplay = dealerList;
-      console.log('dealerList');
-      
     });
     this.citiesList$Subscription = this.citiesList$.subscribe((citiesList) => this.citiesList = citiesList);
     this.communitiesList$Subscription = this.communitiesList$.subscribe((communitiesList) => this.communitiesList = communitiesList);

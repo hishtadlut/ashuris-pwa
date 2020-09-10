@@ -10,9 +10,9 @@
       [listItems]="[{listItemLink: '/edit-writer', listItemText: 'הוספת סופר חדש', image: 'assets/icons/add_sofer.png'},{listItemLink: '/advanced-search', listItemText: 'חיפוש סופר לכתיבה', image: 'assets/icons/search.png'},{listItemLink: '/writers-list-screen', listItemText: 'מאגר סופרים', image: 'assets/icons/maagar.png'}]">
     </app-expandable-list>
     <app-expandable-list class="expandable-list" listTitle="ספרים" [listItems]="[
-        {listItemLink: '/', listItemText: 'הוספת ספר חדש', image: 'assets/icons/add_sofer.png'},
+        {listItemLink: '/create-new-book', listItemText: 'הוספת ספר חדש', image: 'assets/icons/add_sofer.png'},
         {listItemLink: '/', listItemText: 'חיפוש ספר לרכישה', image: 'assets/icons/search.png'},
-        {listItemLink: '/', listItemText: 'מאגר ספרים', image: 'assets/icons/maagar.png'}
+        {listItemLink: '/book-list-screen', listItemText: 'מאגר ספרים', image: 'assets/icons/maagar.png'}
       ]">
     </app-expandable-list>
     <app-expandable-list class="expandable-list" listTitle="סוחרים" [listItems]="[
@@ -22,7 +22,7 @@
     </app-expandable-list>
     <app-expandable-list class="expandable-list" listTitle="תזכורות" [listItems]="[
     {listItemLink: '/writer-reminders', listItemText: 'תזכורות סופרים', image: 'assets/icons/maagar.png'},
-    {listItemLink: '/', listItemText: 'תזכורות ספרים', image: 'assets/icons/maagar.png'}
+    {listItemLink: '/book-reminders', listItemText: 'תזכורות ספרים', image: 'assets/icons/maagar.png'}
   ]">
     </app-expandable-list>
   </div>

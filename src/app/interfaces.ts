@@ -4,7 +4,6 @@ export interface Writer {
   _id?: any;
   _rev?: string;
   levelOfUrgency: number;
-  reminderState: string;
   firstName: string;
   lastName: string;
   telephone: number;
@@ -176,6 +175,11 @@ export interface ChangeUrgencyWriter {
   levelOfUrgency: number;
 }
 
+export interface ChangeUrgencyBook {
+  bookId: string;
+  levelOfUrgency: number;
+}
+
 export interface Address {
   city: string;
   street: string;
@@ -197,3 +201,95 @@ export interface Dealer {
   coordinates: google.maps.LatLng;
 }
 
+export interface Book {
+  _id?: any;
+  _rev?: string;
+  levelOfUrgency: number;
+  name: string;
+  writer: string;
+  dealer: string;
+  note: string;
+  isSold: {
+    boolean: boolean;
+    note: string;
+  };
+  endDate: {
+    gregorianDate: CalendarDate
+    hebrewDateInWords: string
+  };
+  isAppropriate: {
+    level: string;
+    note: string;
+  };
+  writingDeatails: {
+    writingLevel: {
+      level: string,
+      note: string
+    },
+    stabilityLevel: {
+      level: number,
+      note: string
+    },
+    eraseLevel: {
+      level: number,
+      note: string
+    },
+    parchmentLevel: {
+      level: number,
+      note: string
+    },
+    parchmentType: {
+      type: string;
+      note: string;
+    }
+    writingType: string;
+    letterSize: {
+      size: string;
+      note: string;
+    };
+  };
+
+  communityDeatails: {
+    community: string;
+    note: string;
+  };
+
+  pricesDeatails: {
+    isPricePerPage: string;
+    priceForTorahScroll: {
+      price: number;
+      howMuchIsItWorth: number;
+      negotiation: string,
+      note: string;
+    }
+  };
+
+  additionalDetails: {
+    writerLevel: {
+      level: number,
+      note: string,
+    },
+    hasKtavKabala: {
+      boolean: string,
+      note: string,
+    },
+    voatsInElection: {
+      boolean: string,
+      note: string,
+    },
+    goesToKotel: {
+      boolean: string,
+      note: string,
+    },
+  };
+
+  photos: string[];
+  recordings: string[];
+  _attachments?: {
+    [string: string]: {
+      content_type: string,
+      // content_type: MimeType,
+      data: Blob
+    },
+  };
+}

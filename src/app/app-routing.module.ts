@@ -10,21 +10,29 @@ import { RemindersListComponent } from './reminders-list/reminders-list.componen
 import { EditDealerComponent } from './edit-dealer/edit-dealer.component';
 import { DealerListScreenComponent } from './dealer-list-screen/dealer-list-screen.component';
 import { DealerDetailsComponent } from './dealer-details/dealer-details.component';
+import { EditBookComponent } from './book-components/edit-book/edit-book.component';
+import { BookListScreenComponent } from './book-components/book-list-screen/book-list-screen.component';
+import { BookDetailsComponent } from './book-components/book-details/book-details.component';
 
 
 const routes: Routes = [
   // { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   { path: 'edit-writer', component: EditWriterComponent },
-  { path: 'writer-details', component: WriterDetailsComponent },
-  { path: 'writers-list-screen', component: WritersListScreenComponent },
+  { path: 'edit-dealer', component: EditDealerComponent },
+  { path: 'edit-book', component: EditBookComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
   { path: 'search-result', component: SearchResultComponent },
-  { path: 'writer-reminders', component: RemindersListComponent },
   { path: 'create-new-dealer', component: EditDealerComponent },
-  { path: 'edit-dealer', component: EditDealerComponent },
+  { path: 'create-new-book', component: EditBookComponent },
+  { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'dealer-list-screen', component: DealerListScreenComponent },
+  { path: 'book-list-screen', component: BookListScreenComponent},
+  { path: 'writer-details', component: WriterDetailsComponent },
   { path: 'dealer-details', component: DealerDetailsComponent },
+  { path: 'book-details', component: BookDetailsComponent },
+  { path: 'writer-reminders', component: RemindersListComponent },
+  { path: 'book-reminders', component: RemindersListComponent },
 ];
 
 @NgModule({

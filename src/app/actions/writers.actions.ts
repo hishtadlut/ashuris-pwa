@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Writer, Dealer } from '../interfaces';
+import { Writer, Dealer, Book } from '../interfaces';
 
 export const loadWriter = createAction(
   '[Writer] load Writer',
@@ -11,18 +11,38 @@ export const loadDealer = createAction(
   props<{ dealerId: string }>()
 );
 
+export const loadBook = createAction(
+  '[Books] load Book',
+  props<{ bookId: string }>()
+);
+
 export const addToChangeUrgencyWritersList = createAction(
   '[Writer] Add To Change Urgency Writers List',
   props<{ writerId: string, levelOfUrgency: number }>()
+);
+
+export const addToChangeUrgencyBookList = createAction(
+  '[Writer] Add To Change Urgency Book List',
+  props<{ bookId: string, levelOfUrgency: number }>()
 );
 
 export const putChangeUrgencyWritersList = createAction(
   '[Writer] Put Change Urgency Writers List',
 );
 
+export const putChangeUrgencyBookList = createAction(
+  '[Writer] Put Change Urgency Book List',
+);
+
 export const resetChangeUrgencyWritersList = createAction(
   '[Writer] Reset Change Urgency Writers List',
 );
+
+export const resetChangeUrgencyBookList = createAction(
+  '[Writer] Reset Change Urgency Book List',
+);
+
+
 
 export const setWriter = createAction(
   '[Writer] Set Writer',
@@ -34,6 +54,13 @@ export const setDealer = createAction(
   props<{ dealer: Dealer }>()
 );
 
+export const setBook = createAction(
+  '[Dealers] Set Book',
+  props<{ book: Book }>()
+);
+
+
+
 export const loadWritersList = createAction(
   '[Writers] load Writers List',
 );
@@ -44,6 +71,10 @@ export const LoadSomeActions = createAction(
 
 export const loadDealerList = createAction(
   '[Dealers] load Dealer List',
+);
+
+export const loadBookList = createAction(
+  '[Books] load Book List',
 );
 
 export const loadCitiesList = createAction(
@@ -62,6 +93,11 @@ export const setWritersList = createAction(
 export const setDealerList = createAction(
   '[Dealers] Set Dealer List',
   props<{ dealerList: Dealer[] }>()
+);
+
+export const setBookList = createAction(
+  '[Books] Set Book List',
+  props<{ bookList: Book[] }>()
 );
 
 export const setCitiesList = createAction(

@@ -14,16 +14,16 @@ import { useAdvancedSearchParameters } from '../actions/writers.actions';
 export class NavBarComponent implements OnInit, OnDestroy {
   routerNavigation$Subscription: Subscription;
   previousUrl: string;
-  constructor(public _location: Location, private router: Router, private _store: Store<State>) { }
+  constructor(public location: Location, private router: Router, private store: Store<State>) { }
 
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/search-result')) {
-          this._store.dispatch(useAdvancedSearchParameters({ boolean: true }));
+          this.store.dispatch(useAdvancedSearchParameters({ boolean: true }));
         }
         if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/')) {
-          this._store.dispatch(useAdvancedSearchParameters({ boolean: false }));
+          this.store.dispatch(useAdvancedSearchParameters({ boolean: false }));
         }
         this.previousUrl = event.urlAfterRedirects;
       }
@@ -31,11 +31,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   goToHome() {
-    this._location.go('/');
+    this.location.go('/');
   }
 
   goBack() {
-    this._location.back();
+    this.location.back();
   }
 
   ngOnDestroy() {

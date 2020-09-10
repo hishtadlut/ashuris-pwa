@@ -16,25 +16,25 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   writersList: Writer[];
   writersList$Subscription: Subscription;
-  writersList$: Observable<Writer[]> = this._store$.pipe(
+  writersList$: Observable<Writer[]> = this.store$.pipe(
     select('writers', 'writersList')
   );
 
   citiesList: string[];
   citiesList$Subscription: Subscription;
-  citiesList$: Observable<string[]> = this._store$.pipe(
+  citiesList$: Observable<string[]> = this.store$.pipe(
     select('writers', 'citiesList')
   );
 
   communitiesList: string[];
   communitiesList$Subscription: Subscription;
-  communitiesList$: Observable<string[]> = this._store$.pipe(
+  communitiesList$: Observable<string[]> = this.store$.pipe(
     select('writers', 'communitiesList')
   );
 
   searchForm: FormGroup;
   searchFormInitialValue: any;
-  constructor(private _store$: Store<State>, private searchWriterService: SearchWriterService) { }
+  constructor(private store$: Store<State>, private searchWriterService: SearchWriterService) { }
 
   ngOnInit(): void {
     this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);

@@ -15,10 +15,16 @@ import {
   loadDealerList,
   setDealerList,
   setDealer,
+  loadBookList,
+  setBookList,
+  loadBook,
+  setBook,
+  putChangeUrgencyBookList,
+  resetChangeUrgencyBookList,
 } from '../actions/writers.actions';
 import { StitchService } from '../stitch-service.service';
 import { from, Subscription, Observable } from 'rxjs';
-import { ChangeUrgencyWriter } from '../interfaces';
+import { ChangeUrgencyWriter, ChangeUrgencyBook } from '../interfaces';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers';
 
@@ -26,12 +32,19 @@ import { State } from '../reducers';
 export class WritersEffects implements OnInitEffects, OnDestroy {
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyWritersList$Subscription: Subscription;
-  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this._store$.pipe(
+  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this.store$.pipe(
     select('writers', 'urgencyWritersList')
   );
+
+  urgencyBookList: ChangeUrgencyBook[];
+  urgencyBookList$Subscription: Subscription;
+  urgencyBookList$: Observable<ChangeUrgencyBook[]> = this.store$.pipe(
+    select('writers', 'urgencyBookList')
+  );
   // tslint:disable-next-line: variable-name
-  constructor(private actions$: Actions, private stitchService: StitchService, private _store$: Store<State>) {
+  constructor(private actions$: Actions, private stitchService: StitchService, private store$: Store<State>) {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
+    this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
   }
 
   loadWriter$ = createEffect(() =>
@@ -52,6 +65,18 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
       mergeMap((action: any) => from(this.stitchService.getDealerById(action.dealerId))
         .pipe(
           map(dealer => setDealer({ dealer: JSON.parse(JSON.stringify(dealer)) })),
+          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
+        )
+      ),
+    )
+  );
+
+  loadBook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBook),
+      mergeMap((action: any) => from(this.stitchService.getBookById(action.bookId))
+        .pipe(
+          map(book => setBook({ book: JSON.parse(JSON.stringify(book)) })),
           // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
       ),
@@ -81,6 +106,19 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
         .pipe(
           mergeMap(dealerList => [
             setDealerList({ dealerList: JSON.parse(JSON.stringify(dealerList)) }),
+          ]),
+        )
+      ),
+    )
+  );
+
+  loadBookList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBookList),
+      mergeMap((action: any) => from(this.stitchService.getBooks())
+        .pipe(
+          mergeMap(bookList => [
+            setBookList({ bookList: JSON.parse(JSON.stringify(bookList)) }),
           ]),
         )
       ),
@@ -129,6 +167,20 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     )
   );
 
+  putChangeUrgencyBookList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(putChangeUrgencyBookList),
+      mergeMap((action: any) => from(this.stitchService.updateDBFromUrgencyBookList(this.urgencyBookList))
+        .pipe(
+          mergeMap(_ => [
+            loadBookList(),
+            resetChangeUrgencyBookList(),
+          ]),
+        )
+      ),
+    )
+  );
+
   loadSomeActions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadSomeActions),
@@ -137,6 +189,7 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
           mergeMap(_ => [
             loadWritersList(),
             loadDealerList(),
+            loadBookList(),
           ]),
         )
       ),
@@ -151,6 +204,7 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
 
   ngOnDestroy() {
     this.urgencyWritersList$Subscription.unsubscribe();
+    this.urgencyBookList$Subscription.unsubscribe();
   }
   // loadWritersListIntervals$ = createEffect(() =>
   //   interval(300000).pipe(

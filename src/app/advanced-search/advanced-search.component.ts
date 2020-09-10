@@ -19,15 +19,15 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
   advancedSearchInitialValues: any;
   advancedSearchParameters: any;
   useAdvancedSearchParameters$Subscription: Subscription;
-  useAdvancedSearchParameters$: Observable<any> = this._store$.pipe(
+  useAdvancedSearchParameters$: Observable<any> = this.store$.pipe(
     select('writers', 'useAdvancedSearchParameters')
   );
   advancedSearchParameters$Subscription: Subscription;
-  advancedSearchParameters$: Observable<any> = this._store$.pipe(
+  advancedSearchParameters$: Observable<any> = this.store$.pipe(
     select('writers', 'advancedSearchParameters')
   );
 
-  constructor(private searchWriterService: SearchWriterService, private router: Router, private _store$: Store<State>, private _loaction: Location) { }
+  constructor(private searchWriterService: SearchWriterService, private router: Router, private store$: Store<State>, private _loaction: Location) { }
 
   ngOnInit(): void {
     this.advancedSearch = new FormGroup({
@@ -75,7 +75,7 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
         if (this._loaction.path() === '/advanced-search') {
           if (this.advancedSearchParameters) {
             this.advancedSearch.patchValue(this.advancedSearchParameters);
-            this._store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+            this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
           }
         }
       }
@@ -86,8 +86,8 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
   search() {
     this.searchWriterService.findSoferAdvancedSearch(this.advancedSearch.value);
     this.router.navigate(['/search-result']);
-    this._store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: this.advancedSearch.value }));
-    this._store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+    this.store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: this.advancedSearch.value }));
+    this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
   }
 
 

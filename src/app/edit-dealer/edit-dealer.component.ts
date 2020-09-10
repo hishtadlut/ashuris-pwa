@@ -47,9 +47,7 @@ export class EditDealerComponent implements OnInit, OnDestroy {
     this.editMode = (this.location.path() === '/edit-dealer');
 
     this.dealerForm = new FormGroup({
-      reminderState: new FormControl('off', [
-        // Validators.required,
-      ]),
+
       note: new FormControl('', [
         // Validators.required,
       ]),

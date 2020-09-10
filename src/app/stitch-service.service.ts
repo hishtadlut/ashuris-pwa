@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Writer, ChangeUrgencyWriter, Dealer } from './interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import PouchDB from 'pouchdb';
+import PouchdbUpsert from 'pouchdb-upsert';
+PouchDB.plugin(PouchdbUpsert);
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList } from './actions/writers.actions';
+import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList, loadBookList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +22,8 @@ export class StitchService {
   citiesFromDB = new Subject<{ city: string }[]>();
   communitiesFromDB = new Subject<string[]>();
 
-  localWritersDB = new PouchDB('writersLocal');
-  remoteWritersDB = new PouchDB('https://ashuris.online/writers_remote');
+  localWritersDB = new PouchDB<Writer>('writersLocal');
+  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online/writers_remote');
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
   remoteCommunitiesDB = new PouchDB('https://ashuris.online/communities_remote');
@@ -30,18 +32,28 @@ export class StitchService {
   localCitiesDB = new PouchDB('citiesLocal');
   remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
 
-  localDealersDB = new PouchDB('dealersLocal');
-  remoteDealersDB = new PouchDB('https://ashuris.online/dealers_remote');
+  localDealersDB = new PouchDB<Dealer>('dealersLocal');
+  remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online/dealers_remote');
+
+  localBooksDB = new PouchDB<Book>('booksLocal');
+  remoteBooksDB = new PouchDB<Book>('https://ashuris.online/books_remote');
 
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyWritersList$Subscription: Subscription;
-  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this._store$.pipe(
+  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this.store$.pipe(
     select('writers', 'urgencyWritersList')
   );
 
+  urgencyBookList: ChangeUrgencyBook[];
+  urgencyBookList$Subscription: Subscription;
+  urgencyBookList$: Observable<ChangeUrgencyBook[]> = this.store$.pipe(
+    select('writers', 'urgencyBookList')
+  );
+
   // tslint:disable-next-line: variable-name
-  constructor(private _store$: Store<State>) {
+  constructor(private store$: Store<State>) {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
+    this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
     PouchDB.plugin(PouchDBFind);
 
     this.localWritersDB.createIndex({
@@ -59,12 +71,13 @@ export class StitchService {
     this.syncDb(this.localCommunitiesDB, this.remoteCommunitiesDB, loadCommunitiesList);
     this.syncDb(this.localCitiesDB, this.remoteSitiesDB, loadCitiesList);
     this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
+    this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
   }
 
   syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: any) {
     localDb.sync(remoteDb, { live: true, retry: true })
       .on('change', (change) => {
-        this._store$.dispatch(actionToDispatch());
+        this.store$.dispatch(actionToDispatch());
       }).on('error', (err) => {
         console.log(err);
       });
@@ -83,7 +96,7 @@ export class StitchService {
         communities.communities = Array.from(communitiesSet);
         this.localCommunitiesDB.put(communities)
           .then(result => {
-            console.log('result ' + communities);
+            console.log(result);
           })
           .catch((err) => {
             console.log(err);
@@ -103,8 +116,8 @@ export class StitchService {
     // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
     const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
     if (writer._id) {
-      this.localWritersDB.put({
-        ...writerClone
+      this.localWritersDB.upsert(writer._id, () => {
+        return { ...writerClone };
       });
     } else {
       this.localWritersDB.put({
@@ -144,19 +157,26 @@ export class StitchService {
     return new Promise(resolve => {
       writersList.map(writerToChange => {
         this.localWritersDB.get<Writer>(writerToChange.writerId).then(writer => {
-          console.log(writer.levelOfUrgency);
           writer.levelOfUrgency = writerToChange.levelOfUrgency;
-          console.log(writer.levelOfUrgency);
           this.localWritersDB.put(writer).then(_ => {
             resolve();
           });
         });
       });
     });
-    // this.localWritersDB.upsert(writerId, (writer: Writer) => {
-    //   writer.levelOfUrgency = levelOfUrgency;
-    //   return writer;
-    // });
+  }
+
+  updateDBFromUrgencyBookList(bookList: ChangeUrgencyBook[]): Promise<void> {
+    return new Promise(resolve => {
+      bookList.map(bookToChange => {
+        this.localBooksDB.get<Writer>(bookToChange.bookId).then(book => {
+          book.levelOfUrgency = bookToChange.levelOfUrgency;
+          this.localBooksDB.put(book).then(_ => {
+            resolve();
+          });
+        });
+      });
+    });
   }
 
   async getCommunities() {
@@ -170,12 +190,52 @@ export class StitchService {
     });
   }
 
+  async getBookReminders(levelOfUrgency: number) {
+    return await this.localBooksDB.find({
+      selector: { levelOfUrgency },
+      fields: ['_id', 'name', 'levelOfUrgency'],
+    });
+  }
+
+  async getWritersFullName() {
+    const writersList = await this.localWritersDB.find({
+      selector: {},
+      fields: ['firstName', 'lastName'],
+    });
+    return writersList.docs.map((writerResponse) => {
+      return `${writerResponse.lastName} ${writerResponse.firstName}`;
+    });
+  }
+
+  async getDealersFullName() {
+    const dealersList = await this.localDealersDB.find({
+      selector: {},
+      fields: ['firstName', 'lastName'],
+    });
+    return dealersList.docs.map((dealerResponse) => {
+      return `${dealerResponse.lastName} ${dealerResponse.firstName}`;
+    });
+  }
+
   getDealerById(id: string) {
     return this.localDealersDB.get<Dealer>(id);
   }
 
+  getBookById(id: string) {
+    return this.localBooksDB.get<Book>(id);
+  }
+
   getDealers() {
     return this.localDealersDB.allDocs<Dealer>({ include_docs: true })
+      .then((result) => {
+        return new Promise(resolve => {
+          resolve(result.rows.map(row => row.doc));
+        });
+      });
+  }
+
+  getBooks() {
+    return this.localBooksDB.allDocs<Book>({ include_docs: true })
       .then((result) => {
         return new Promise(resolve => {
           resolve(result.rows.map(row => row.doc));
@@ -194,6 +254,25 @@ export class StitchService {
         // add unike id
         _id: uuidv4(),
         ...dealerClone
+      })
+        .then(result => {
+          console.log(result);
+        })
+        .catch(console.error);
+    }
+  }
+
+  createBook(book: Book) {
+    const bookClone = JSON.parse(JSON.stringify(book)) as Book;
+    if (book._id) {
+      this.localBooksDB.upsert(book._id, () => {
+        return { ...bookClone };
+      });
+    } else {
+      this.localBooksDB.put({
+        // add unike id
+        _id: uuidv4(),
+        ...bookClone
       })
         .then(result => {
           console.log(result);

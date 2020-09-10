@@ -1,0 +1,217 @@
+<app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
+</app-note-dialog-output>
+<div class="page-wrapper">
+    <div class="book-details-wrapper page-grid" *ngIf="book">
+        <div class="top-section">
+            <div class="name-wrapper">
+                <p class="book-name">{{ book.name }}</p>
+                <div class="reminder"
+                    [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
+                </div>
+            </div>
+            <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
+        </div>
+        <div class="basic-details-section">
+            <div class="basic-detail .inner-grid" *ngIf="book.writer">
+                <img src="assets/icons/Phone.png" alt="">
+                <div>
+                    <div class="information">{{ book.writer }}</div>
+                    <div class="description">סופר</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid" *ngIf="book.dealer">
+                <img src="assets/icons/Phone.png" alt="">
+                <div>
+                    <div class="information">{{ book.dealer }}</div>
+                    <div class="description">סוחר</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid">
+                <img src="assets/icons/2.png" alt="">
+                <div>
+                    <div class="information">{{ book.isSold.boolean ? 'נמכר' : 'לא נמכר' }}</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid" *ngIf="book.isAppropriate">
+                <img src="assets/icons/Yes.png" alt="">
+                <div>
+                    <div class="information">{{ book.isAppropriate.level }}</div>
+                </div>
+            </div>
+            <div class="basic-detail .inner-grid" *ngIf="book.endDate">
+                <img src="assets/icons/Calendar.png" alt="">
+                <div>
+                    <div class="description">תאריך סיום</div>
+                    <div class="information">{{ book.endDate.hebrewDateInWords }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="extra-details-section">
+            <div class="section" (click)="closeMenus('writingDeatails')">
+                <div class="section-title-btn">הכתב</div>
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">דרגת כתיבה</div>
+                        <div class="detail">{{ book.writingDeatails.writingLevel.level }}</div>
+                        <div *ngIf="book.writingDeatails.writingLevel.note"
+                            (click)="openDialog($event ,book.writingDeatails.writingLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">יציבות</div>
+                        <div class="detail">{{ book.writingDeatails.stabilityLevel.level }}</div>
+                        <div *ngIf="book.writingDeatails.stabilityLevel.note"
+                            (click)="openDialog($event ,book.writingDeatails.stabilityLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">מחיקה</div>
+                        <div class="detail">{{ book.writingDeatails.eraseLevel.level }}</div>
+                        <div *ngIf="book.writingDeatails.eraseLevel.note"
+                            (click)="openDialog($event ,book.writingDeatails.eraseLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">איכות הקלף</div>
+                        <div class="detail">{{ book.writingDeatails.parchmentLevel.level }}</div>
+                        <div *ngIf="book.writingDeatails.parchmentLevel.note"
+                            (click)="openDialog($event ,book.writingDeatails.parchmentLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">סוג הקלף</div>
+                        <div class="detail">{{ book.writingDeatails.parchmentType.type }}</div>
+                        <div *ngIf="book.writingDeatails.parchmentType.note"
+                            (click)="openDialog($event ,book.writingDeatails.parchmentType.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">גודל הכתב</div>
+                        <div class="detail">
+                            <span>{{ (book.writingDeatails.letterSize.size) }}</span>
+                        </div>
+                        <div *ngIf="book.writingDeatails.letterSize.note"
+                            (click)="openDialog($event ,book.writingDeatails.letterSize.note)" class="comment-icon"><img
+                                src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">סוג הכתב</div>
+                        <div class="detail">
+                            {{ book.writingDeatails.writingType }}
+                        </div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">כתב קבלה</div>
+                        <div>
+                            <img *ngIf="(book.additionalDetails.hasKtavKabala.boolean === 'true') || (book.additionalDetails.hasKtavKabala.boolean === 'false')"
+                                [src]="book.additionalDetails.hasKtavKabala.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
+                        </div>
+                        <div *ngIf="book.additionalDetails.hasKtavKabala.note"
+                            (click)="openDialog($event ,book.additionalDetails.hasKtavKabala.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">בחירות</div>
+                        <div>
+                            <img *ngIf="(book.additionalDetails.voatsInElection.boolean === 'true') || (book.additionalDetails.voatsInElection.boolean === 'false')"
+                                [src]="book.additionalDetails.voatsInElection.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
+                        </div>
+                        <div *ngIf="book.additionalDetails.voatsInElection.note"
+                            (click)="openDialog($event ,book.additionalDetails.voatsInElection.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">הולך לכותל</div>
+                        <div>
+                            <img *ngIf="(book.additionalDetails.goesToKotel.boolean === 'true') || (book.additionalDetails.goesToKotel.boolean === 'false')"
+                                [src]="book.additionalDetails.goesToKotel.boolean === 'true' ? 'assets/icons/Checkbox.png' : 'assets/icons/Union 3.png'">
+                        </div>
+                        <div *ngIf="book.additionalDetails.goesToKotel.note"
+                            (click)="openDialog($event ,book.additionalDetails.goesToKotel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section" (click)="closeMenus('pricesDeatails')"
+                *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
+                <div class="section-title-btn">מחיר</div>
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
+                    <div class="price-extra-detail">
+                        <div class="detail-title description">מחיר לעמוד</div>
+                        <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
+                    </div>
+                    <div class="price-extra-detail">
+                        <div class="detail-title description">מחיר לספר תורה</div>
+                        <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
+                    </div>
+                    <div class="price-extra-detail">
+                        <div class="detail-title description">כמה שווה</div>
+                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth }}</div>
+                    </div>
+                    <div class="price-extra-detail">
+                        <div class="detail-title description">משא ומתן</div>
+                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.negotiation }}</div>
+                        <div class="shave description"></div>
+                        <div *ngIf="book.pricesDeatails.priceForTorahScroll.note"
+                            (click)="openDialog($event ,book.pricesDeatails.priceForTorahScroll.note)"
+                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" (click)="closeMenus('additionalDeatails')">
+                <div class="section-title-btn">הסופר</div>
+                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">קהילה</div>
+                        <div class="detail">{{ book.communityDeatails.community }}</div>
+                        <div *ngIf="book.communityDeatails.note"
+                            (click)="openDialog($event ,book.communityDeatails.note)" class="comment-icon"><img
+                                src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+                    <div class="writing-extra-detail">
+                        <div class="detail-title description">דרגת סופר</div>
+                        <div class="detail">{{ book.additionalDetails.writerLevel.level }}</div>
+                        <div *ngIf="book.additionalDetails.writerLevel.note"
+                            (click)="openDialog($event ,book.additionalDetails.writerLevel.note)" class="comment-icon">
+                            <img src="assets/icons/Path 35.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" (click)="closeMenus('images')">
+                <div class="section-title-btn">תמונות</div>
+                <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
+                    <div *ngFor="let photo of book.photos" class="photo-wrapper">
+                        <img class="icon-share" src="assets/icons/share.png" alt="">
+                        <img class="icon-delete" src="assets/icons/delete.png" alt="">
+                        <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
+                    </div>
+                </div>
+                <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
+            </div>
+
+            <div class="section" (click)="closeMenus('recordings')">
+                <div class="section-title-btn">תזכורת קולית</div>
+                <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+                    <div *ngFor="let recording of book.recordings">
+                        <audio controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)" class="img">
+                        </audio>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

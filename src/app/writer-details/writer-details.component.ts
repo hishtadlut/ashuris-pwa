@@ -17,7 +17,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
 
   writer: Writer;
   writer$Subscription: Subscription;
-  writer$: Observable<any> = this._store$.pipe(
+  writer$: Observable<any> = this.store$.pipe(
     select('writers', 'writer')
   );
   priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
@@ -36,7 +36,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
 
   constructor(
     private route: Router,
-    private _store$: Store<State>,
+    private store$: Store<State>,
     private googleMapsService: GoogleMapsService,
     private store: Store,
     public sanitizer: DomSanitizer) { }
@@ -93,7 +93,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   editWriter() {
-    this._store$.dispatch(editWriter({ editMode: true }));
+    this.store$.dispatch(editWriter({ editMode: true }));
     this.route.navigate(['/edit-writer']);
   }
 

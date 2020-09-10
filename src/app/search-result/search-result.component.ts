@@ -12,19 +12,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
-  searchResult$: Observable<Writer[]> = this._store$.pipe(
+  searchResult$: Observable<Writer[]> = this.store$.pipe(
     select('writers', 'searchWritersResult')
   )
   searchResult$Subscription: Subscription;
   searchResult: Writer[];
-  constructor(private _store$: Store<State>, private router: Router) { }
+  constructor(private store$: Store<State>, private router: Router) { }
 
   ngOnInit(): void {
     this.searchResult$Subscription = this.searchResult$.subscribe((searchResult) => this.searchResult = searchResult);
   }
 
   newSearch() {
-    this._store$.dispatch(setAdvancedSearchParameters({advancedSearchParameters: null}));
+    this.store$.dispatch(setAdvancedSearchParameters({advancedSearchParameters: null}));
     this.router.navigate(['/advanced-search'])
   }
 

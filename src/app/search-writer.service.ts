@@ -11,12 +11,12 @@ import { setSearchWritersResult } from './actions/writers.actions';
 @Injectable({ providedIn: 'root' })
 export class SearchWriterService implements OnDestroy {
     writersToDisplay: Writer[] = [];
-    writersList$: Observable<Writer[]> = this._store$.pipe(
+    writersList$: Observable<Writer[]> = this.store$.pipe(
         select('writers', 'writersList')
     );
     writersList$Subscription: Subscription;
     writersList: Writer[];
-    constructor(private _store$: Store<State>, private pouchDbService: StitchService) {
+    constructor(private store$: Store<State>, private pouchDbService: StitchService) {
         this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = writersList);
     }
 
@@ -171,7 +171,7 @@ export class SearchWriterService implements OnDestroy {
             return (soferfromDb.pricesDeatails.priceForTorahScroll.price >= sofer.lowestPrice && soferfromDb.pricesDeatails.priceForTorahScroll.price <= sofer.highestPrice);
         });
 
-        this._store$.dispatch(setSearchWritersResult({ writers: finalResult }));
+        this.store$.dispatch(setSearchWritersResult({ writers: finalResult }));
     }
 
     writersListFilter(filters) {

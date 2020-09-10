@@ -1,9 +1,14 @@
 <div class="button-wrapper">
     <div>
-        <button (click)="getSoferReminders(3)">דחוף</button>
+        <button (click)="getReminders(3)">דחוף</button>
     </div>
     <div>
-        <button (click)="getSoferReminders(2)">רגיל</button>
+        <button (click)="getReminders(2)">רגיל</button>
     </div>
 </div>
-<app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>
+<div *ngIf="this.booksOrDealersPage === 'dealers'">
+    <app-writer-list-item *ngFor="let writer of listToDisplay" [writer]="writer"></app-writer-list-item>
+</div>
+<div *ngIf="this.booksOrDealersPage === 'books'">
+    <app-book-list-item *ngFor="let book of listToDisplay" [book]="book"></app-book-list-item>
+</div>

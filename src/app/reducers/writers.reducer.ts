@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Writer, ChangeUrgencyWriter, Dealer } from '../interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from '../interfaces';
 import {
   setWriter,
   setWritersList,
@@ -10,9 +10,13 @@ import {
   setCitiesList,
   setCommunitiesList,
   addToChangeUrgencyWritersList,
-  setDealer,
   resetChangeUrgencyWritersList,
-  setDealerList
+  setDealer,
+  setDealerList,
+  setBookList,
+  setBook,
+  addToChangeUrgencyBookList,
+  resetChangeUrgencyBookList
 } from '../actions/writers.actions';
 import { sortByLetters } from '../utils/utils';
 
@@ -23,8 +27,10 @@ export const writersFeatureKey = 'writers';
 export interface State {
   writer: Writer;
   dealer: Dealer;
+  book: Book;
   writersList: Writer[];
   dealerList: Dealer[];
+  bookList: Book[];
   editMode: boolean;
   searchWritersResult: Writer[];
   advancedSearchParameters;
@@ -32,14 +38,17 @@ export interface State {
   citiesList: string[];
   communitiesList: string[];
   urgencyWritersList: ChangeUrgencyWriter[];
+  urgencyBookList: ChangeUrgencyBook[];
   currentDealerId: string;
 }
 
 export const initialState: State = {
   writer: null,
   dealer: null,
+  book: null,
   writersList: null,
   dealerList: null,
+  bookList: null,
   editMode: false,
   searchWritersResult: null,
   advancedSearchParameters: null,
@@ -47,6 +56,7 @@ export const initialState: State = {
   citiesList: [],
   communitiesList: [],
   urgencyWritersList: [],
+  urgencyBookList: [],
   currentDealerId: null,
 };
 
@@ -58,6 +68,9 @@ export const writerReducer = createReducer(
   }),
   on(setDealer, (state, action) => {
     return { ...state, dealer: action.dealer };
+  }),
+  on(setBook, (state, action) => {
+    return { ...state, book: action.book };
   }),
   on(setWritersList, (state, action) => {
     let sortedWriterList = action.writersList.slice();
@@ -71,6 +84,13 @@ export const writerReducer = createReducer(
     sortedDealerList = sortByLetters(sortedDealerList);
     return {
       ...state, dealerList: sortedDealerList
+    };
+  }),
+  on(setBookList, (state, action) => {
+    let sortedBookList = action.bookList.slice();
+    sortedBookList = sortByLetters(sortedBookList);
+    return {
+      ...state, bookList: sortedBookList
     };
   }),
   on(setCitiesList, (state, action) => {
@@ -101,8 +121,21 @@ export const writerReducer = createReducer(
     }
     return { ...state, urgencyWritersList: urgencyWritersListClone };
   }),
+  on(addToChangeUrgencyBookList, (state, action) => {
+    const urgencyBookListClone = state.urgencyBookList.map(book => Object.assign({}, book));
+    const bookToChangeIndex = urgencyBookListClone.findIndex(book => book.bookId === action.bookId);
+    if (bookToChangeIndex !== -1) {
+      urgencyBookListClone[bookToChangeIndex].levelOfUrgency = action.levelOfUrgency;
+    } else {
+      urgencyBookListClone.push({ bookId: action.bookId, levelOfUrgency: action.levelOfUrgency });
+    }
+    return { ...state, urgencyBookList: urgencyBookListClone };
+  }),
   on(resetChangeUrgencyWritersList, (state) => {
     return { ...state, urgencyWritersList: [] };
+  }),
+  on(resetChangeUrgencyBookList, (state) => {
+    return { ...state, urgencBbookList: [] };
   }),
 );
 
