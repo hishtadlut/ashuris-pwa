@@ -1,9 +1,9 @@
 <div class="button-wrapper">
     <div>
-        <button (click)="getReminders(3)">דחוף</button>
+        <button [ngClass]="{'checked': levelOfUrgency === 3}" (click)="getReminders(3)">דחוף</button>
     </div>
     <div>
-        <button (click)="getReminders(2)">רגיל</button>
+        <button [ngClass]="{'checked': levelOfUrgency === 2}" (click)="getReminders(2)">רגיל</button>
     </div>
 </div>
 <div *ngIf="this.booksOrDealersPage === 'dealers'">

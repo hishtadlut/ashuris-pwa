@@ -14,6 +14,7 @@ import { BooksOrDealers } from '../enums';
 export class RemindersListComponent implements OnInit {
 
   constructor(private location: Location, private stitchService: StitchService) { }
+  levelOfUrgency = 3;
   booksOrDealersPage: BooksOrDealers;
   getReminders: (levelOfUrgency: number) => void;
   listToDisplay: Writer[] | Book[] = [];
@@ -21,22 +22,25 @@ export class RemindersListComponent implements OnInit {
     if (this.location.path() === '/writer-reminders') {
       this.booksOrDealersPage = BooksOrDealers.dealers;
       this.getReminders = this.getSoferReminders;
-      this.getReminders(3);
+      this.getReminders(this.levelOfUrgency);
     } else if (this.location.path() === '/book-reminders') {
       this.booksOrDealersPage = BooksOrDealers.books;
       this.getReminders = this.getbookReminders;
-      this.getReminders(3);
+      this.getReminders(this.levelOfUrgency);
     }
   }
 
   getSoferReminders(levelOfUrgency: number) {
+    this.levelOfUrgency = levelOfUrgency;
     this.stitchService.getSoferReminders(levelOfUrgency)
         .then((writersResponse) => {
+          this.levelOfUrgency = levelOfUrgency;
           this.listToDisplay = sortByLetters(writersResponse.docs) as Writer[];
         });
   }
 
   getbookReminders(levelOfUrgency: number) {
+    this.levelOfUrgency = levelOfUrgency;
     this.stitchService.getBookReminders(levelOfUrgency)
         .then((booksResponse) => {
           this.listToDisplay = sortByLetters(booksResponse.docs) as Book[];
