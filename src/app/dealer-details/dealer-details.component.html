@@ -33,6 +33,13 @@
                     <div class="description">אימייל</div>
                 </div>
             </div>
+            <div class="basic-detail .inner-grid" *ngIf="dealer.city">
+                <img src="assets/icons/2.png" alt="">
+                <div>
+                    <div class="information">{{ dealer.street }} {{ dealer.streetNumber }} {{ dealer.city }}</div>
+                    <div class="description">כתובת</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

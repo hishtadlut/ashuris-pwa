@@ -11,6 +11,7 @@ export interface Writer {
   secondTelephone: number;
   city: string;
   street: string;
+  streetNumber: string;
   profileImage: string;
   coordinates: google.maps.LatLng;
   isAppropriate: {
@@ -197,6 +198,7 @@ export interface Dealer {
   secondTelephone: number;
   city: string;
   street: string;
+  streetNumber: string;
   profileImage: string;
   coordinates: google.maps.LatLng;
 }

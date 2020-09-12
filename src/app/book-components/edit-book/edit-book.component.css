@@ -16,6 +16,7 @@
   grid-template-rows: repeat(11, auto);
   grid-gap: 3vh;
   margin: 0 4vw;
+  padding-top: 5vw;
 }
 
 .inner-grid {
@@ -60,6 +61,13 @@
 .note {
   align-self: center;
   justify-self: end;
+}
+
+.note-absolute-position {
+  align-self: center;
+  justify-self: end;
+  position: absolute;
+  margin-left: 3vw;
 }
 
 p {
@@ -117,7 +125,6 @@ label input {
 }
 
 .profile-image-section {
-  grid-row: 1 / span 1;
   align-items: center;
   grid-gap: 5vw;
   margin-top: 10vw;
@@ -132,27 +139,13 @@ label input {
   border-radius: 100%;
 }
 
-.personal-detail-section {
-  grid-row: 2 / span 1;
-}
-
-.end-date-section {
-  grid-row: 3 / span 1;
-}
-
-.is-appropriate-section {
-  grid-row: 4 / span 1;
-}
-
 .is-appropriate-radio-buttons-wraper {
-  grid-row: 2 / span 1;
   grid-template: auto auto / 1fr 1fr 1fr;
   justify-content: center;
   align-content: center;
 }
 
 .price-deatail-section {
-  grid-row: 5 / span 1;
 }
 
 .type-of-price-selection-wrapper {
@@ -165,10 +158,15 @@ label input {
 
 .price-for-item {
   grid-template: auto / repeat(6, 1fr);
+  position: relative;
+}
+
+.gap {
+  margin-bottom: 3vw;
 }
 
 .price-for-item input {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 6;
 }
 
 .worth-it-buttons-wrapper {
@@ -183,22 +181,18 @@ label input {
 }
 
 .writing-detail-section {
-  grid-row: 6 / span 1;
   grid-row-gap: 4vw;
 }
 
 .sizes-section {
-  grid-row: 7 / span 1;
   grid-row-gap: 4vw;
 }
 
 .writing-type-section {
-  grid-row: 8 / span 1;
   grid-row-gap: 4vw;
 }
 
 .community-section, .parchment-section {
-  grid-row: 9 / span 1;
   grid-row-gap: 4vw;
 }
 
@@ -297,6 +291,7 @@ label.level-checkbox {
   text-align: center;
   padding: 2vw 6vw;
   border-radius: 4px;
+  width: 100%;
 }
 
 .price-deatail-section .box-checkbox {
@@ -308,7 +303,6 @@ label.level-checkbox {
   } */
 
 .writing-location-section {
-  grid-row: 10 / span 1;
   grid: auto auto / auto 1fr;
   column-gap: 6vw;
   justify-items: right;
@@ -323,24 +317,22 @@ label.level-checkbox {
   /* justify-items: center; */
 }
 
-.additional-details-section {
-  grid-row: 11 / span 1;
-}
-
 .additional-details-section input {
   display: none;
 }
 
 .additional-detail {
   grid: auto / repeat(5, 1fr);
-  margin-bottom: 3vw;
   align-items: center;
-  padding-bottom: 3vw;
+}
+
+.stroke {
   border-bottom: 1px solid #2A2E43;
+  margin-bottom: 3vw;
+  padding-bottom: 3vw;
 }
 
 .writer-level-section {
-  grid-row: 12 / span 1;
   grid-template: auto / 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -353,18 +345,12 @@ label.level-checkbox {
 }
 
 .photo-section {
-  grid-row: 13 / span 1;
   grid-template: auto / auto;
   grid-gap: 5vw;
   align-items: center;
 }
 
-.recording-section {
-  grid-row: 14 / span 1;
-}
-
 .add-book-button {
-  grid-row: 15 / span 1;
   background-color: #D4A75D;
   font-size: 1fr;
   color: #313C60;
@@ -394,4 +380,21 @@ label.level-checkbox {
   /* margin-bottom: 2vw; */
   font-size: 0.95rem;
   font-family: Arial;
+}
+
+label .visible-input {
+  display: inline-block;
+}
+
+.is-sold-section {
+  grid-template: auto / auto 1fr auto;
+  align-items: center;
+}
+
+.align-center {
+  align-self: center;
+}
+
+.margin-top-bottom {
+  margin: 3vw 0;
 }

@@ -2,6 +2,6 @@
     <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם">
 </div>
 <div class="count-section grid">
-    <div *ngIf="booksToDisplay" class="count">סוחרים ברשימה {{ booksToDisplay.length }}</div>
+    <div *ngIf="booksToDisplay" class="count">ספרים ברשימה {{ booksToDisplay.length }}</div>
 </div>
 <app-book-list-item *ngFor="let book of booksToDisplay" [book]="book"></app-book-list-item>

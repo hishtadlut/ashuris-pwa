@@ -1,0 +1,37 @@
+:host {
+  direction: rtl;
+}
+
+.name-search {
+  padding: 6vw 4vw;
+  position: relative;
+  grid-template: 1fr / 1fr;
+}
+
+.grid {
+  display: grid;
+  align-items: center;
+}
+
+.name-input {
+  width: 100%;
+  background-color: white;
+  background-image: url('../../../assets/icons/searchs.png');
+  background-image: url('../../../assets/icons/searchs.png');
+  background-position: 3.3vw 3.3vw;
+  background-repeat: no-repeat;
+  padding-left: 10vw;
+  padding-right: 4vw;
+  resize: none;
+  box-sizing: border-box;
+  height: 12vw;
+  margin-bottom: 3vw;
+}
+
+.count {
+  font-weight: normal;
+  font-size: 0.75rem;
+  font-family: Arial;
+  text-align: right;
+  margin: 3vw 5vw;
+}
