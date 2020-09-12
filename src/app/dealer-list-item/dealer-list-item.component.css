@@ -31,3 +31,15 @@
     object-fit: cover;
     display: block;
 }
+
+button {
+    background-color: #2A2E43;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.95rem;
+    font-family: Arial;
+    border-radius: 4px;
+    height: 10vw;
+    padding: 0 4vw;
+  }

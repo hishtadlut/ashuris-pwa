@@ -3,24 +3,24 @@
 <div class="page-wrapper">
     <div class="book-details-wrapper page-grid" *ngIf="book">
         <div class="top-section">
-            <div class="name-wrapper">
+            <div>
                 <p class="book-name">{{ book.name }}</p>
+            </div>
                 <div class="reminder"
                     [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
                 </div>
-            </div>
             <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
         </div>
         <div class="basic-details-section">
             <div class="basic-detail .inner-grid" *ngIf="book.writer">
-                <img src="assets/icons/Phone.png" alt="">
+                <img src="assets/icons/man.png" alt="">
                 <div>
                     <div class="information">{{ book.writer }}</div>
                     <div class="description">סופר</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="book.dealer">
-                <img src="assets/icons/Phone.png" alt="">
+                <img src="assets/icons/man.png" alt="">
                 <div>
                     <div class="information">{{ book.dealer }}</div>
                     <div class="description">סוחר</div>

@@ -270,6 +270,7 @@ label.level-checkbox {
 
 .erase-level {
   padding-bottom: 6vw;
+  border-bottom: 1px solid #000;
 }
 
 .writing-types {

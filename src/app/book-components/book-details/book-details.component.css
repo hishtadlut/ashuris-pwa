@@ -38,7 +38,7 @@
 
 .top-section {
     display: grid;
-    grid-template: auto / 13vw auto 23vw;
+    grid-template: auto / 50% auto auto;
     grid-row: 1 / 2;
     margin-bottom: 6vw;
     padding-top: 9vw;
@@ -56,16 +56,13 @@ img {
     grid-column: 1 / 2;
 }
 
-.name-wrapper {
-    grid-column: 2 / 3;
-}
-
 .book-name {
     color: #2A2E43;
     font-weight: bold;
     font-size: 0.95rem;
     font-family: Arial;
     margin-bottom: 0;
+    margin-right: 3vw;
 }
 
 .edit-button {
@@ -208,6 +205,8 @@ img {
     width: 5vw;
     background-color: #A2A2A2;
     border-radius: 50%;
+    justify-self: left;
+    margin-left: 6vw;
   }
   
   .highlight-regular {
