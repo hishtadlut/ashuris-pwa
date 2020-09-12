@@ -295,7 +295,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
       recordings: new FormArray([]),
     });
 
-    this.editMode$.subscribe((editMode: boolean) => {
+    this.editMode$Subscription = this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
 
       if (editMode && this.location.path() === '/edit-writer') {
@@ -432,8 +432,10 @@ export class EditWriterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // TODO
-    // this.editMode$Subscription.unsubscribe();
-    // this.writer$Subscription.unsubscribe();
+    if (this.editMode && this.location.path() === '/edit-writer') {
+      this.writer$Subscription.unsubscribe();
+    }
+    this.editMode$Subscription.unsubscribe();
     this.citiesList$Subscription.unsubscribe();
     this.communitiesList$Subscription.unsubscribe();
   }
