@@ -139,7 +139,9 @@ export class EditDealerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dealer$Subscription.unsubscribe();
+    if (this.editMode) {
+      this.dealer$Subscription.unsubscribe();
+    }
   }
 
 }
