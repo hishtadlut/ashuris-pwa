@@ -431,7 +431,6 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // TODO
     if (this.editMode && this.location.path() === '/edit-writer') {
       this.writer$Subscription.unsubscribe();
     }
