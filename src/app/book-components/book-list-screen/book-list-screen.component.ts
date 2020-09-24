@@ -3,6 +3,10 @@ import { Book } from '../../interfaces';
 import { State } from '../../reducers';
 import { Store, select } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
+import { Location } from '@angular/common';
+import { LocationPath } from 'src/app/enums';
+import { ActivatedRoute } from '@angular/router';
+import { StitchService } from 'src/app/stitch-service.service';
 
 @Component({
   selector: 'app-book-list-screen',
@@ -18,12 +22,26 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
     select('writers', 'bookList')
   );
 
-  constructor(private store$: Store<State>) { }
+  locationWithoutParameters: string;
+
+  constructor(
+    private store$: Store<State>,
+    private location: Location,
+    private activatedRoute: ActivatedRoute,
+    private pouchDbService: StitchService
+  ) { }
 
   ngOnInit(): void {
-    this.bookList$Subscription = this.bookList$.subscribe((bookList) => {
-      this.bookList = this.booksToDisplay = bookList;
-    });
+    this.locationWithoutParameters = this.location.path().split('?')[0];
+    if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
+      this.bookList$Subscription = this.bookList$.subscribe((bookList) => {
+        this.bookList = this.booksToDisplay = bookList;
+      });
+    } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
+      this.pouchDbService.getDealerBooks(this.activatedRoute.queryParams['id']).then(books => {
+        this.booksToDisplay = books;
+      });
+    }
   }
 
   onKeyUpSearchByName(event) {
@@ -33,7 +51,9 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.bookList$Subscription.unsubscribe();
+    if (this.bookList$Subscription) {
+      this.bookList$Subscription.unsubscribe();
+    }
   }
 
 }

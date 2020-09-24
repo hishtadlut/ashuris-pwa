@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'dealer-list-screen', component: DealerListScreenComponent },
   { path: 'book-list-screen', component: BookListScreenComponent},
+  { path: 'dealer-book-list', component: BookListScreenComponent},
   { path: 'writer-details', component: WriterDetailsComponent },
   { path: 'dealer-details', component: DealerDetailsComponent },
   { path: 'book-details', component: BookDetailsComponent },

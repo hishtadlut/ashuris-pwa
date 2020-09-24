@@ -295,4 +295,25 @@ export class StitchService {
     }).catch(console.log);
   }
 
+  async getDealerBookIds(dealerId: string): Promise<string[]> {
+    const dealerList = await this.localDealersDB.find({
+      selector: { _id: dealerId },
+      fields: ['books']
+    });
+    return dealerList.docs.map(dealer => dealer.books)[0];
+  }
+
+  async getDealerBooks(dealerId: string) {
+    const bookIds = await this.getDealerBookIds(dealerId);
+    const bookList = bookIds.map(async bookId => {
+      const bookList = await this.localBooksDB.find({
+        selector: { _id: bookId },
+        fields: ['_id', 'levelOfUrgency', 'name'],
+        limit: 1
+      });
+      return bookList.docs[0];
+    });
+    return await Promise.all(bookList);
+  }
+
 }

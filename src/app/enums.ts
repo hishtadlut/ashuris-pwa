@@ -8,6 +8,8 @@ export enum LocationPath {
   BOOKS_ADVANCED_SEARCH_RESULT = '/books-search-result',
   WRITERS_ADVANCED_SEARCH = '/writers-advanced-search',
   WRITERS_ADVANCED_SEARCH_RESULT = '/writers-search-result',
+  BOOK_LIST_SCREEN = '/book-list-screen',
+  DEALER_BOOK_LIST = '/dealer-book-list',
 }
 
 export enum SearchFor {

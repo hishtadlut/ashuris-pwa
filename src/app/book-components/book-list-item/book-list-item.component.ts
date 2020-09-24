@@ -18,8 +18,6 @@ export class BookListItemComponent implements OnInit {
   levelOfUrgency: number;
   ngOnInit(): void {
     this.levelOfUrgency = this.book.levelOfUrgency || 1;
-    console.log('this.book');
-    
   }
 
   goToBookDetails() {

@@ -22,4 +22,10 @@ export class DealerListItemComponent implements OnInit {
     this.store$.dispatch(loadDealer({ dealerId: this.dealer._id }));
     this.router.navigate([`/dealer-details`]);
   }
+
+  showDealerBooks(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.router.navigate([`/dealer-book-list`], { queryParams: { id: this.dealer._id}});
+  }
 }

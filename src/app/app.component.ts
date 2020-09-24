@@ -3,6 +3,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import { putChangeUrgencyWritersList, putChangeUrgencyBookList } from './actions/writers.actions';
+import { LocationPath } from './enums';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
           this.store.dispatch(putChangeUrgencyWritersList());
         } else if (
           this.previousUrl === '/book-list-screen' ||
-          this.previousUrl === '/book-reminders'
+          this.previousUrl === '/book-reminders' ||
+          this.previousUrl === LocationPath.DEALER_BOOK_LIST
         ) {
           this.store.dispatch(putChangeUrgencyBookList());
         }

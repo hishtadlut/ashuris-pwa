@@ -4,8 +4,10 @@ import { Observable, Subscription } from 'rxjs';
 import { Book, Writer } from '../interfaces';
 import { State } from '../reducers';
 import { setAdvancedSearchParameters } from '../actions/writers.actions';
-import { Location } from '@angular/common';
+import { Location, ɵBrowserPlatformLocation } from '@angular/common';
 import { LocationPath } from '../enums';
+import { StitchService } from '../stitch-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-result',
@@ -18,16 +20,18 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   );
   searchResult$Subscription: Subscription;
   searchResult: Writer[] | Book[];
-
   locationPath: typeof LocationPath = LocationPath;
-  constructor(private store$: Store<State>, public location: Location) { }
+  constructor(
+    private store$: Store<State>,
+    public location: Location,
+  ) { }
 
   ngOnInit(): void {
     this.searchResult$Subscription = this.searchResult$.subscribe((searchResult) => this.searchResult = searchResult);
   }
 
   newSearch() {
-    this.store$.dispatch(setAdvancedSearchParameters({advancedSearchParameters: null}));
+    this.store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: null }));
     this.location.back();
   }
 
