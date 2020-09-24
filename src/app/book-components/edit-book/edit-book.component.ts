@@ -31,7 +31,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   );
 
   writersFullNameList: string[];
-  dealersFullNameList: string[];
+  dealerList: { fullName: string; _id: string; }[];
 
   book: Book;
   book$Subscription: Subscription;
@@ -46,6 +46,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   };
 
   textForSaveButton = 'הוסף ספר למאגר';
+  dealerId = '';
 
   constructor(
     public recordingService: RecordingService,
@@ -66,9 +67,9 @@ export class EditBookComponent implements OnInit, OnDestroy {
         this.writersFullNameList = writersFullNameList;
       }));
 
-    this.stitchService.getDealersFullName()
-      .then((dealersFullNameList => {
-        this.dealersFullNameList = dealersFullNameList;
+    this.stitchService.getDealersFullNameAndId()
+      .then((dealerList => {
+        this.dealerList = dealerList;
       }));
 
     this.bookForm = new FormGroup({
@@ -240,6 +241,10 @@ export class EditBookComponent implements OnInit, OnDestroy {
     }
   }
 
+  setDealerId(event) {
+    this.dealerId = this.dealerList.find(dealer => dealer.fullName === event.target.value)?._id;
+  }
+
   isChecked(event, formControl: AbstractControl) {
     if (event.target.value === formControl.value) {
       formControl.setValue('');
@@ -311,7 +316,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.stitchService.createBook({ ...this.book, ...this.bookForm.value });
+    this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
     this.store$.dispatch(loadBookList());
     this.router.navigate(['/book-list-screen']);
   }

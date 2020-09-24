@@ -115,7 +115,7 @@ export interface Writer {
   photos: string[];
   recordings: string[];
   _attachments?: {
-    [string: string]: {
+    [x: string]: {
       content_type: string,
       // content_type: MimeType,
       data: Blob
@@ -201,6 +201,7 @@ export interface Dealer {
   streetNumber: string;
   profileImage: string;
   coordinates: google.maps.LatLng;
+  books: string[];
 }
 
 export interface Book {
@@ -288,7 +289,7 @@ export interface Book {
   photos: string[];
   recordings: string[];
   _attachments?: {
-    [string: string]: {
+    [x: string]: {
       content_type: string,
       // content_type: MimeType,
       data: Blob

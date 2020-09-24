@@ -212,13 +212,13 @@ export class StitchService {
     });
   }
 
-  async getDealersFullName() {
+  async getDealersFullNameAndId(): Promise<{ fullName: string, _id: string }[]> {
     const dealersList = await this.localDealersDB.find({
       selector: {},
-      fields: ['firstName', 'lastName'],
+      fields: ['_id', 'firstName', 'lastName'],
     });
     return dealersList.docs.map((dealerResponse) => {
-      return `${dealerResponse.lastName} ${dealerResponse.firstName}`;
+      return { fullName: `${dealerResponse.lastName} ${dealerResponse.firstName}`, _id: dealerResponse._id };
     });
   }
 
@@ -267,7 +267,7 @@ export class StitchService {
     }
   }
 
-  createBook(book: Book) {
+  createBook(book: Book, dealerId: string) {
     const bookClone = JSON.parse(JSON.stringify(book)) as Book;
     if (book._id) {
       this.localBooksDB.upsert(book._id, () => {
@@ -281,9 +281,18 @@ export class StitchService {
       })
         .then(result => {
           console.log(result);
+          this.addBookToDealer(result.id, dealerId);
         })
         .catch(console.error);
     }
+  }
+
+  addBookToDealer(bookId: string, dealerId: string) {
+    this.localDealersDB.get(dealerId).then(dealer => {
+      const bookArray = dealer.books ? dealer.books : [];
+      bookArray.push(bookId);
+      this.localDealersDB.put({ ...dealer, books: bookArray });
+    }).catch(console.log);
   }
 
 }
