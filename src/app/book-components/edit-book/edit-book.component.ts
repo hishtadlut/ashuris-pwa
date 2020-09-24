@@ -316,7 +316,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
     this.router.navigate(['/book-list-screen']);
   }
 
-  routeToCreateNewWriter() {
+  routeToCreateNewDealer() {
     this.router.navigate(['/create-new-dealer']);
   }
 
