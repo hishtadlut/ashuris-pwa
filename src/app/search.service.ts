@@ -1,5 +1,5 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
-import { Writer, advancedSearchQuery, Book } from './interfaces';
+import { Writer, AdvancedSearchQuery, Book } from './interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from './reducers';
@@ -27,7 +27,7 @@ export class SearchService implements OnDestroy {
         this.bookList$Subscription = this.bookList$.subscribe((bookList) => this.bookList = bookList);
     }
 
-    advancedSearch(query: advancedSearchQuery, searchFor: SearchFor, location: LocationPath) {
+    advancedSearch(query: AdvancedSearchQuery, searchFor: SearchFor, location: LocationPath) {
 
         const findInDbParms = {
             selector: {
@@ -161,7 +161,7 @@ export class SearchService implements OnDestroy {
         return queryResult;
     }
 
-    writingLevelQuery(writingLevel: advancedSearchQuery['writingLevel']): { 'writingDeatails.writingLevel.level': { $eq: string; }; }[] {
+    writingLevelQuery(writingLevel: AdvancedSearchQuery['writingLevel']): { 'writingDeatails.writingLevel.level': { $eq: string; }; }[] {
         // all options are true or false.;
         const sameValueWritingLevelQuery = [...new Set(Object.values(writingLevel))].length;
         const writingLevelQuery = [];
@@ -201,7 +201,7 @@ export class SearchService implements OnDestroy {
         });
     }
 
-    isAppropriateQuery(isAppropriateLevels: advancedSearchQuery['isAppropriateLevels']): { 'isAppropriate.level': { $eq: string } }[] {
+    isAppropriateQuery(isAppropriateLevels: AdvancedSearchQuery['isAppropriateLevels']): { 'isAppropriate.level': { $eq: string } }[] {
         // all options are true or false.;
         const sameValueIsAppropriateQuery = [...new Set(Object.values(isAppropriateLevels))].length;
         let isAppropriateQueryResult: { 'isAppropriate.level': { $eq: string } }[];
@@ -237,7 +237,7 @@ export class SearchService implements OnDestroy {
     }
 
     letterSizesQuery(
-        letterSizes: advancedSearchQuery['letterSizes'],
+        letterSizes: AdvancedSearchQuery['letterSizes'],
         location: LocationPath
     ): { [x: string]: { $eq: boolean | string } }[] {
         // all options are true or false.;
@@ -277,7 +277,7 @@ export class SearchService implements OnDestroy {
         return letterSizesQuery;
     }
 
-    writingTypesQuery(writingTypes: advancedSearchQuery['writingTypes'], location: LocationPath) {
+    writingTypesQuery(writingTypes: AdvancedSearchQuery['writingTypes'], location: LocationPath) {
         const sameValueWritingTypesQuery = [...new Set(Object.values(writingTypes))].length === 1;
         const writingTypesQuery = [];
         if (sameValueWritingTypesQuery) {

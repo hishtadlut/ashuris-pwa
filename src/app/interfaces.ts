@@ -136,7 +136,7 @@ export interface CalendarDate {
   day: number;
 }
 
-export interface advancedSearchQuery {
+export interface AdvancedSearchQuery {
   lowestPrice: number;
   highestPrice: number;
   priceOf: string;
