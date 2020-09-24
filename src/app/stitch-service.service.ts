@@ -7,7 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import PouchDB from 'pouchdb';
 import PouchdbUpsert from 'pouchdb-upsert';
+import PouchdbAuthentication from 'pouchdb-authentication';
 PouchDB.plugin(PouchdbUpsert);
+PouchDB.plugin(PouchdbAuthentication);
+PouchDB.plugin(PouchDBFind);
+
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
@@ -23,20 +27,20 @@ export class StitchService {
   communitiesFromDB = new Subject<string[]>();
 
   localWritersDB = new PouchDB<Writer>('writersLocal');
-  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online/writers_remote');
+  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers_remote');
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
-  remoteCommunitiesDB = new PouchDB('https://ashuris.online/communities_remote');
+  remoteCommunitiesDB = new PouchDB('https://ashuris.online:5985/communities_remote');
   // remoteCommunitiesDB = new PouchDB('http://admin:password@104.154.30.190/communities_remote');
 
   localCitiesDB = new PouchDB('citiesLocal');
-  remoteSitiesDB = new PouchDB('https://ashuris.online/cities_remote');
+  remoteSitiesDB = new PouchDB('https://ashuris.online:5985/cities_remote');
 
   localDealersDB = new PouchDB<Dealer>('dealersLocal');
-  remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online/dealers_remote');
+  remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online:5985/dealers_remote');
 
   localBooksDB = new PouchDB<Book>('booksLocal');
-  remoteBooksDB = new PouchDB<Book>('https://ashuris.online/books_remote');
+  remoteBooksDB = new PouchDB<Book>('https://ashuris.online:5985/books_remote');
 
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyWritersList$Subscription: Subscription;
@@ -54,7 +58,6 @@ export class StitchService {
   constructor(private store$: Store<State>) {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
     this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
-    PouchDB.plugin(PouchDBFind);
 
     this.localWritersDB.createIndex({
       index: {
@@ -75,12 +78,14 @@ export class StitchService {
   }
 
   syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: any) {
-    localDb.sync(remoteDb, { live: true, retry: true })
-      .on('change', (change) => {
-        this.store$.dispatch(actionToDispatch());
-      }).on('error', (err) => {
-        console.log(err);
-      });
+    remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
+      localDb.sync(remoteDb, { live: true, retry: true })
+        .on('change', (change) => {
+          this.store$.dispatch(actionToDispatch());
+        }).on('error', (err) => {
+          console.log(err);
+        });
+    });
   }
 
   createWriter(writer: Writer) {

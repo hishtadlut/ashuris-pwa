@@ -29,11 +29,11 @@
             <input class="display-none" type="radio" formControlName="priceOf" value="priceForTorahScroll">
             ס"ת
           </label>
-          <label [ngClass]="{'selected': advancedSearch.get(['priceOf']).value === 'priceForMezuzah'}" class="type">
+          <label *ngIf="advancedSearchLocation === locationPath.WRITERS_ADVANCED_SEARCH" [ngClass]="{'selected': advancedSearch.get(['priceOf']).value === 'priceForMezuzah'}" class="type">
             <input class="display-none" type="radio" formControlName="priceOf" value="priceForMezuzah">
             מזוזה
           </label>
-          <label [ngClass]="{'selected': advancedSearch.get(['priceOf']).value === 'priceForTefillin'}" class="type">
+          <label *ngIf="advancedSearchLocation === locationPath.WRITERS_ADVANCED_SEARCH" [ngClass]="{'selected': advancedSearch.get(['priceOf']).value === 'priceForTefillin'}" class="type">
             <input class="display-none" type="radio" formControlName="priceOf" value="priceForTefillin">
             תפילין
           </label>

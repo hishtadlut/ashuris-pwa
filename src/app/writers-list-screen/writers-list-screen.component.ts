@@ -4,7 +4,7 @@ import { Writer } from '../interfaces';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { FormGroup, FormControl } from '@angular/forms';
-import { SearchWriterService } from '../search-writer.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -34,7 +34,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
   searchFormInitialValue: any;
-  constructor(private store$: Store<State>, private searchWriterService: SearchWriterService) { }
+  constructor(private store$: Store<State>, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
@@ -72,7 +72,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    this.writersToDisplay = this.searchWriterService.writersListFilter(this.searchForm.value);
+    this.writersToDisplay = this.searchService.writersListFilter(this.searchForm.value);
   }
 
   ngOnDestroy() {

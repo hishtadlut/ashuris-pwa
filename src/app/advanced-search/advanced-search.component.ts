@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { SearchWriterService } from '../search-writer.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { SearchService } from '../search.service';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { setAdvancedSearchParameters, useAdvancedSearchParameters as useAdvancedSearchParametersAction } from '../actions/writers.actions';
 import { Subscription, Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { LocationPath, SearchFor } from '../enums';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./advanced-search.component.css']
 })
 export class AdvancedSearchComponent implements OnInit, OnDestroy {
+  locationPath: typeof LocationPath = LocationPath;
+  advancedSearchLocation: LocationPath;
   advancedSearch: FormGroup;
   advancedSearchInitialValues: any;
   advancedSearchParameters: any;
@@ -27,9 +30,19 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     select('writers', 'advancedSearchParameters')
   );
 
-  constructor(private searchWriterService: SearchWriterService, private router: Router, private store$: Store<State>, private _loaction: Location) { }
+  constructor(
+    private searchService: SearchService,
+    private router: Router,
+    private store$: Store<State>,
+    private location: Location
+    ) { }
 
   ngOnInit(): void {
+    if (this.location.path() === LocationPath.BOOKS_ADVANCED_SEARCH) {
+      this.advancedSearchLocation = LocationPath.BOOKS_ADVANCED_SEARCH;
+    } else if (this.location.path() === LocationPath.WRITERS_ADVANCED_SEARCH) {
+      this.advancedSearchLocation = LocationPath.WRITERS_ADVANCED_SEARCH;
+    }
     this.advancedSearch = new FormGroup({
       lowestPrice: new FormControl(''),
       highestPrice: new FormControl(''),
@@ -69,25 +82,36 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     }
     this.advancedSearchParameters$Subscription = this.advancedSearchParameters$.subscribe(advancedSearchParameters => {
       this.advancedSearchParameters = advancedSearchParameters;
-    })
+    });
     this.useAdvancedSearchParameters$Subscription = this.useAdvancedSearchParameters$.subscribe((useAdvancedSearchParameters: boolean) => {
       if (useAdvancedSearchParameters) {
-        if (this._loaction.path() === '/advanced-search') {
+        if (this.advancedSearchLocation === LocationPath.WRITERS_ADVANCED_SEARCH) {
           if (this.advancedSearchParameters) {
             this.advancedSearch.patchValue(this.advancedSearchParameters);
-            this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+            this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }));
+          }
+        } else if (this.advancedSearchLocation === LocationPath.BOOKS_ADVANCED_SEARCH) {
+          if (this.advancedSearchParameters) {
+            this.advancedSearch.patchValue(this.advancedSearchParameters);
+            this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }));
           }
         }
+
       }
-    })
+    });
 
   }
 
   search() {
-    this.searchWriterService.findSoferAdvancedSearch(this.advancedSearch.value);
-    this.router.navigate(['/search-result']);
+    if (this.location.path() === LocationPath.BOOKS_ADVANCED_SEARCH) {
+      this.searchService.advancedSearch(this.advancedSearch.value, SearchFor.BOOKS, LocationPath.BOOKS_ADVANCED_SEARCH);
+      this.router.navigate(['/books-search-result']);
+    } else if (this.location.path() === LocationPath.WRITERS_ADVANCED_SEARCH) {
+      this.searchService.advancedSearch(this.advancedSearch.value, SearchFor.WRITERS, LocationPath.WRITERS_ADVANCED_SEARCH);
+      this.router.navigate(['/writers-search-result']);
+    }
     this.store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: this.advancedSearch.value }));
-    this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }))
+    this.store$.dispatch(useAdvancedSearchParametersAction({ boolean: true }));
   }
 
 

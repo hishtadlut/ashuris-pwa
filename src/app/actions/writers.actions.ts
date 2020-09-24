@@ -115,9 +115,9 @@ export const editWriter = createAction(
   props<{ editMode: boolean }>()
 );
 
-export const setSearchWritersResult = createAction(
-  '[Writers] Set Search Writers Result',
-  props<{ writers: Writer[] }>()
+export const setAdvancedSearchResult = createAction(
+  '[Writers] Set Advanced Search Result',
+  props<{ items: Writer[] | Book[] }>()
 );
 
 export const setAdvancedSearchParameters = createAction(

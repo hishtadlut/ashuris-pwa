@@ -4,7 +4,7 @@ import {
   setWriter,
   setWritersList,
   editWriter,
-  setSearchWritersResult,
+  setAdvancedSearchResult,
   useAdvancedSearchParameters,
   setAdvancedSearchParameters,
   setCitiesList,
@@ -32,7 +32,7 @@ export interface State {
   dealerList: Dealer[];
   bookList: Book[];
   editMode: boolean;
-  searchWritersResult: Writer[];
+  advancedSearchResult: Writer[] | Book[];
   advancedSearchParameters;
   useAdvancedSearchParameters: boolean;
   citiesList: string[];
@@ -50,7 +50,7 @@ export const initialState: State = {
   dealerList: null,
   bookList: null,
   editMode: false,
-  searchWritersResult: null,
+  advancedSearchResult: null,
   advancedSearchParameters: null,
   useAdvancedSearchParameters: false,
   citiesList: [],
@@ -73,7 +73,7 @@ export const writerReducer = createReducer(
     return { ...state, book: action.book };
   }),
   on(setWritersList, (state, action) => {
-    let sortedWriterList = action.writersList.slice();
+    let sortedWriterList = action.writersList.slice(1);
     sortedWriterList = sortByLetters(sortedWriterList);
     return {
       ...state, writersList: sortedWriterList
@@ -102,8 +102,8 @@ export const writerReducer = createReducer(
   on(editWriter, (state, action) => {
     return { ...state, editMode: action.editMode };
   }),
-  on(setSearchWritersResult, (state, action) => {
-    return { ...state, searchWritersResult: action.writers };
+  on(setAdvancedSearchResult, (state, action) => {
+    return { ...state, advancedSearchResult: action.items };
   }),
   on(setAdvancedSearchParameters, (state, action) => {
     return { ...state, advancedSearchParameters: action.advancedSearchParameters };

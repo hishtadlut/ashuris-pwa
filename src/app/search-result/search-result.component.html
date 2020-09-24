@@ -1,4 +1,9 @@
 <div class="page-grid">
-    <app-writer-list-item *ngFor="let writer of searchResult" [writer]="writer"></app-writer-list-item>
+    <div *ngIf="location.path() === locationPath.WRITERS_ADVANCED_SEARCH_RESULT">
+        <app-writer-list-item *ngFor="let item of searchResult" [writer]="item"></app-writer-list-item>
+    </div>
+    <div *ngIf="location.path() === locationPath.BOOKS_ADVANCED_SEARCH_RESULT">
+        <app-book-list-item *ngFor="let item of searchResult" [book]="item"></app-book-list-item>
+    </div>
     <button type="button" class="add-sofer-button" (click)="newSearch()">חיפוש חדש</button>
 </div>

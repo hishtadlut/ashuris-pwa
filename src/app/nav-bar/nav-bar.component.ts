@@ -19,10 +19,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/search-result')) {
+        if ((event.urlAfterRedirects === '/writers-advanced-search') && (this.previousUrl === '/search-result')) {
           this.store.dispatch(useAdvancedSearchParameters({ boolean: true }));
         }
-        if ((event.urlAfterRedirects === '/advanced-search') && (this.previousUrl === '/')) {
+        if ((event.urlAfterRedirects === '/writers-advanced-search') && (this.previousUrl === '/')) {
           this.store.dispatch(useAdvancedSearchParameters({ boolean: false }));
         }
         this.previousUrl = event.urlAfterRedirects;
