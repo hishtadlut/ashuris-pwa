@@ -4,14 +4,15 @@ import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import { putChangeUrgencyWritersList, putChangeUrgencyBookList } from './actions/writers.actions';
 import { LocationPath } from './enums';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  routerNavigation$Subscription: any;
+export class AppComponent implements OnInit {
+  routerNavigation$Subscription: Subscription;
   previousUrl: any;
   // tslint:disable-next-line: variable-name
   constructor(private router: Router, private store: Store<State>) { }
@@ -37,10 +38,5 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  ngOnDestroy() {
-
-  }
-
 
 }
