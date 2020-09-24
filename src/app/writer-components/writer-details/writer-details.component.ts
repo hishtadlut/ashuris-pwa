@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { Writer } from '../interfaces';
-import { GoogleMapsService } from '../google-maps-service.service';
+import { Writer } from '../../interfaces';
+import { GoogleMapsService } from '../../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
-import { State } from '../reducers';
-import { editWriter } from '../actions/writers.actions';
+import { State } from '../../reducers';
+import { editWriter } from '../../actions/writers.actions';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

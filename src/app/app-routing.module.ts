@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EditWriterComponent } from './edit-writer/edit-writer.component';
+import { EditWriterComponent } from './writer-components/edit-writer/edit-writer.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { WritersListScreenComponent } from './writers-list-screen/writers-list-screen.component';
+import { WritersListScreenComponent } from './writer-components/writers-list-screen/writers-list-screen.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
-import { WriterDetailsComponent } from './writer-details/writer-details.component';
+import { WriterDetailsComponent } from './writer-components/writer-details/writer-details.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { RemindersListComponent } from './reminders-list/reminders-list.component';
 import { EditDealerComponent } from './edit-dealer/edit-dealer.component';

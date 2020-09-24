@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, pipe, Observable } from 'rxjs';
-import { Writer } from '../interfaces';
+import { Writer } from '../../interfaces';
 import { Store, select } from '@ngrx/store';
-import { State } from '../reducers';
+import { State } from '../../reducers';
 import { FormGroup, FormControl } from '@angular/forms';
-import { SearchService } from '../search.service';
+import { SearchService } from '../../search.service';
 
 @Component({
   selector: 'app-writers-list-screen',

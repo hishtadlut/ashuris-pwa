@@ -38,9 +38,10 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
         this.bookList = this.booksToDisplay = bookList;
       });
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
-      this.pouchDbService.getDealerBooks(this.activatedRoute.queryParams['id']).then(books => {
-        this.booksToDisplay = books;
-      });
+      this.pouchDbService.getDealerBooks(this.activatedRoute.queryParams['id'])
+        .then(books => {
+          this.booksToDisplay = books;
+        });
     }
   }
 

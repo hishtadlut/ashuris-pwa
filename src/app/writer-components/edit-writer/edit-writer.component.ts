@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
-import { StitchService } from '../stitch-service.service';
+import { StitchService } from '../../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
-import { fileToBase64 } from '../utils/utils';
-import { GoogleMapsService } from '../google-maps-service.service';
+import { fileToBase64 } from '../../utils/utils';
+import { GoogleMapsService } from '../../google-maps-service.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RecordingService } from '../recording.service';
+import { RecordingService } from '../../recording.service';
 import { Store, select } from '@ngrx/store';
-import { State } from '../reducers';
-import { Writer, Address } from '../interfaces';
-import { editWriter, loadWritersList } from '../actions/writers.actions';
+import { State } from '../../reducers';
+import { Writer, Address } from '../../interfaces';
+import { editWriter, loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
 
 @Component({
