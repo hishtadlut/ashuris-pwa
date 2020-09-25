@@ -53,7 +53,6 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       const streetNumber = this.activatedRoute.queryParams['streetNumber'];
       this.pouchDbService.getWritersInRoom(city, street, streetNumber)
         .then(writers => {
-          console.log(writers);
           this.writersList = this.writersToDisplay = writers;
         });
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
