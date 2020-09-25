@@ -48,9 +48,9 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
-      const city = this.activatedRoute.queryParams['city'];
-      const street = this.activatedRoute.queryParams['street'];
-      const streetNumber = this.activatedRoute.queryParams['streetNumber'];
+      const city = this.activatedRoute.snapshot.queryParamMap.get('city');
+      const street = this.activatedRoute.snapshot.queryParamMap.get('street');
+      const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
       this.pouchDbService.getWritersInRoom(city, street, streetNumber)
         .then(writers => {
           this.writersList = this.writersToDisplay = writers;

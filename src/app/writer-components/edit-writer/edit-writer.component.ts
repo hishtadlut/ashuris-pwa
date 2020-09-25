@@ -425,9 +425,13 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
-    this.store$.dispatch(loadWritersList());
-    this.router.navigate(['/writers-list-screen']);
+    if (this.writerForm.valid) {
+      this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
+      this.store$.dispatch(loadWritersList());
+      this.router.navigate(['/writers-list-screen']);
+    } else {
+      alert('יש למלא שם פרטי, שם משפחה ומידת התאמה')
+    }
   }
 
   ngOnDestroy() {
