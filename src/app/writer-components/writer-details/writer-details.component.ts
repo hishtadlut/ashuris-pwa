@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { Writer } from '../../interfaces';
+import { Address, Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
@@ -35,7 +35,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
   constructor(
-    private route: Router,
+    private router: Router,
     private store$: Store<State>,
     private googleMapsService: GoogleMapsService,
     private store: Store,
@@ -94,7 +94,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
 
   editWriter() {
     this.store$.dispatch(editWriter({ editMode: true }));
-    this.route.navigate(['/edit-writer']);
+    this.router.navigate(['/edit-writer']);
   }
 
   closeMenus(menuToOpen: string) {
@@ -119,6 +119,17 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
 
   closeDialog() {
     this.dialogContent = null;
+  }
+
+  writersInRoomList(event): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const city = this.writer.city;
+    const street = this.writer.street;
+    const streetNumber = this.writer.streetNumber;
+
+    this.router.navigate(['writers-in-room-list'], { queryParams: { city, street, streetNumber } });
   }
 
   ngOnDestroy() {

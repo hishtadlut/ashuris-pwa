@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from './interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook, Address } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -314,6 +314,14 @@ export class StitchService {
       return bookList.docs[0];
     });
     return await Promise.all(bookList);
+  }
+
+  async getWritersInRoom(city: string, street: string, streetNumber: string): Promise<Writer[]> {
+    const writerList = await this.localWritersDB.find({
+      selector: { city, street, streetNumber },
+      fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
+    });
+    return writerList.docs.map(writer => writer);
   }
 
 }

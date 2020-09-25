@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, pipe, Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../../interfaces';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SearchService } from '../../search.service';
+import { ActivatedRoute } from '@angular/router';
+import { StitchService } from 'src/app/stitch-service.service';
+import { LocationPath } from 'src/app/enums';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -34,10 +38,27 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
   searchFormInitialValue: any;
-  constructor(private store$: Store<State>, private searchService: SearchService) { }
+  constructor(
+    private store$: Store<State>,
+    private searchService: SearchService,
+    private activatedRoute: ActivatedRoute,
+    private pouchDbService: StitchService,
+    private location: Location,
+  ) { }
 
   ngOnInit(): void {
-    this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
+    if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
+      const city = this.activatedRoute.queryParams['city'];
+      const street = this.activatedRoute.queryParams['street'];
+      const streetNumber = this.activatedRoute.queryParams['streetNumber'];
+      this.pouchDbService.getWritersInRoom(city, street, streetNumber)
+        .then(writers => {
+          console.log(writers);
+          this.writersList = this.writersToDisplay = writers;
+        });
+    } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
+      this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
+    }
     this.citiesList$Subscription = this.citiesList$.subscribe((citiesList) => this.citiesList = citiesList);
     this.communitiesList$Subscription = this.communitiesList$.subscribe((communitiesList) => this.communitiesList = communitiesList);
 
@@ -76,7 +97,9 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.writersList$Subscription.unsubscribe();
+    if (this.writersList$Subscription) {
+      this.writersList$Subscription.unsubscribe();
+    }
   }
 
 }

@@ -73,8 +73,8 @@ export const writerReducer = createReducer(
     return { ...state, book: action.book };
   }),
   on(setWritersList, (state, action) => {
-    let sortedWriterList = action.writersList.slice(1);
-    sortedWriterList = sortByLetters(sortedWriterList);
+    let sortedWriterList = action.writersList.slice();
+    sortedWriterList = sortByLetters(sortedWriterList).filter(writer => writer.lastName);
     return {
       ...state, writersList: sortedWriterList
     };

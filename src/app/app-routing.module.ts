@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'books-search-result', component: SearchResultComponent },
   { path: 'create-new-dealer', component: EditDealerComponent },
   { path: 'create-new-book', component: EditBookComponent },
+  { path: 'writers-in-room-list', component: WritersListScreenComponent },
   { path: 'writers-list-screen', component: WritersListScreenComponent },
   { path: 'dealer-list-screen', component: DealerListScreenComponent },
   { path: 'book-list-screen', component: BookListScreenComponent},

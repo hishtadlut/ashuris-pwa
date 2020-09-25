@@ -166,7 +166,10 @@
                     <div class="writing-extra-detail">
                         <div class="detail-title description">מקום כתיבה</div>
                         <div class="detail">{{ writer.placeOfWriting.place }}</div>
-                        <div class="people-icon"><img src="assets/icons/people.png" alt=""></div>
+                        <div *ngIf="writer.placeOfWriting.place === 'אחר'" (click)="writersInRoomList($event)"
+                            class="people-icon">
+                            <img src="assets/icons/people.png" alt="">
+                        </div>
                         <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event ,writer.placeOfWriting.note)"
                             class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>

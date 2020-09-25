@@ -185,7 +185,7 @@ export interface Address {
   city: string;
   street: string;
   streetNumber: string;
-  coordinates: google.maps.LatLng;
+  coordinates?: google.maps.LatLng;
 }
 
 export interface Dealer {
