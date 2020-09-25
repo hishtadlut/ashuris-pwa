@@ -133,9 +133,13 @@ export class EditDealerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
-    this.store$.dispatch(loadDealerList());
-    this.router.navigate(['/dealer-list-screen']);
+    if (this.dealerForm.valid) {
+      this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
+      this.store$.dispatch(loadDealerList());
+      this.router.navigate(['/dealer-list-screen'])
+    } else {
+      alert('יש למלא שם פרטי ושם משפחה')
+    }
   }
 
   ngOnDestroy() {

@@ -77,10 +77,10 @@ export class EditBookComponent implements OnInit, OnDestroy {
         Validators.required,
       ]),
       writer: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       dealer: new FormControl('', [
-        Validators.required,
+        // Validators.required,
       ]),
       note: new FormControl('', [
         // Validators.required,
@@ -316,9 +316,15 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
-    this.store$.dispatch(loadBookList());
-    this.router.navigate(['/book-list-screen']);
+
+    if (this.bookForm.valid) {
+      this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
+      this.store$.dispatch(loadBookList());
+      this.router.navigate(['/book-list-screen']);
+    } else {
+      alert('יש למלא שם לספר')
+    }
+
   }
 
   routeToCreateNewDealer() {
