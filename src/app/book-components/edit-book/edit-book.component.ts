@@ -322,7 +322,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       this.store$.dispatch(loadBookList());
       this.router.navigate(['/book-list-screen']);
     } else {
-      alert('יש למלא שם לספר')
+      alert('יש למלא שם לספר');
     }
 
   }
