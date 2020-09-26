@@ -12,6 +12,7 @@ import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
 import { editWriter, loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
+import { LocationPath } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-writer',
@@ -49,6 +50,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   hasRecord = false;
   dialogFormGroup: FormGroup = null;
   textForSaveButton = 'הוסף סופר למאגר';
+  editOrCreatePage: boolean;
 
   constructor(
     private stitchService: StitchService,
@@ -297,8 +299,8 @@ export class EditWriterComponent implements OnInit, OnDestroy {
 
     this.editMode$Subscription = this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
-
-      if (editMode && this.location.path() === '/edit-writer') {
+      this.editOrCreatePage = (this.location.path() === LocationPath.EDIT_WRITER) || (this.location.path()  === LocationPath.CREATE_WRITER);
+      if (editMode && this.editOrCreatePage) {
         this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
           this.writer = writer;
 
@@ -312,7 +314,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
         });
         this.textForSaveButton = 'שמור שינויים';
         this.store$.dispatch(editWriter({ editMode: false }));
-      } else if (this.location.path() === '/edit-writer' && this.textForSaveButton !== 'שמור שינויים') {
+      } else if (this.editOrCreatePage && (this.textForSaveButton !== 'שמור שינויים')) {
         this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
           this.writerForm.controls.city.setValue(address.city);
           this.writerForm.controls.street.setValue(address.street);
@@ -430,12 +432,12 @@ export class EditWriterComponent implements OnInit, OnDestroy {
       this.store$.dispatch(loadWritersList());
       this.router.navigate(['/writers-list-screen']);
     } else {
-      alert('יש למלא שם פרטי, שם משפחה ומידת התאמה')
+      alert('יש למלא שם פרטי, שם משפחה ומידת התאמה');
     }
   }
 
   ngOnDestroy() {
-    if (this.editMode && this.location.path() === '/edit-writer') {
+    if (this.editMode && this.editOrCreatePage) {
       this.writer$Subscription.unsubscribe();
     }
     this.editMode$Subscription.unsubscribe();

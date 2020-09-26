@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, Event, NavigationEnd } from '@angular/router';
+import { Router, Event, NavigationEnd, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import { putChangeUrgencyWritersList, putChangeUrgencyBookList } from './actions/writers.actions';
