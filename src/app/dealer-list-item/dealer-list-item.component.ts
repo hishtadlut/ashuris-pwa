@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { loadDealer } from 'src/app/actions/writers.actions';
 import { Dealer } from 'src/app/interfaces';
+import { preventDefaultAndStopPropagation } from '../utils/utils';
 
 @Component({
   selector: 'app-dealer-list-item',
@@ -24,8 +25,7 @@ export class DealerListItemComponent implements OnInit {
   }
 
   showDealerBooks(event: Event) {
-    event.stopPropagation();
-    event.preventDefault();
+    preventDefaultAndStopPropagation(event);
     this.router.navigate([`/dealer-book-list`], { queryParams: { id: this.dealer._id}});
   }
 }

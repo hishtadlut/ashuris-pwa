@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { loadWriter, addToChangeUrgencyWritersList } from 'src/app/actions/writers.actions';
+import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-writer-list-item',
@@ -26,10 +27,8 @@ export class WriterListItemComponent implements OnInit {
     this.router.navigate([`/writer-details`]);
   }
 
-  changeUrgencyLevel(event) {
-    event.stopPropagation();
-    event.preventDefault();
-
+  changeUrgencyLevel(event: Event) {
+    preventDefaultAndStopPropagation(event);
     this.levelOfUrgency !== 3 ? this.levelOfUrgency++ : this.levelOfUrgency = 1;
     this.store$.dispatch(addToChangeUrgencyWritersList({ writerId: this.writer._id, levelOfUrgency: this.levelOfUrgency }));
   }

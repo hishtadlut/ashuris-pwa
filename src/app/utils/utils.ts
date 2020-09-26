@@ -29,3 +29,8 @@ export function sortByLetters(arrayToSort): any[] {
     return 0;
   });
 }
+
+export function preventDefaultAndStopPropagation(event: Event) {
+  event.stopPropagation();
+  event.preventDefault();
+}

@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Store, select } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-book-details',
@@ -28,7 +29,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   dialogContent = null;
   priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
-
+  preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
   constructor(
     public sanitizer: DomSanitizer,
     private store$: Store<State>,
@@ -52,9 +53,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDialog(event, content: string) {
-    event.stopPropagation();
-    event.preventDefault();
+  openDialog(event: Event, content: string) {
+    preventDefaultAndStopPropagation(event)
     this.dialogContent = content;
   }
 
@@ -88,6 +88,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
 export class WriterDetailsComponent {
 
-  
+
 
 }

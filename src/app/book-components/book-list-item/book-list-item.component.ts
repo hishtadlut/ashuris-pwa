@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import { loadBook, addToChangeUrgencyBookList } from 'src/app/actions/writers.actions';
 import { Book } from 'src/app/interfaces';
+import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-book-list-item',
@@ -26,9 +27,7 @@ export class BookListItemComponent implements OnInit {
   }
 
   changeUrgencyLevel(event) {
-    event.stopPropagation();
-    event.preventDefault();
-
+    preventDefaultAndStopPropagation(event);
     this.levelOfUrgency !== 3 ? this.levelOfUrgency++ : this.levelOfUrgency = 1;
     this.store$.dispatch(addToChangeUrgencyBookList({ bookId: this.book._id, levelOfUrgency: this.levelOfUrgency }));
   }

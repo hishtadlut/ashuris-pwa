@@ -6,6 +6,7 @@ import { GoogleMapsService } from '../google-maps-service.service';
 import { State } from '../reducers';
 import { Dealer } from '../interfaces';
 import { Subscription, Observable } from 'rxjs';
+import { preventDefaultAndStopPropagation } from '../utils/utils';
 
 @Component({
   selector: 'app-dealer-details',
@@ -35,9 +36,8 @@ export class DealerDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDialog(event, content: string) {
-    event.stopPropagation();
-    event.preventDefault();
+  openDialog(event: Event, content: string) {
+    preventDefaultAndStopPropagation(event);
     this.dialogContent = content;
   }
 

@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { editWriter } from '../../actions/writers.actions';
 import { DomSanitizer } from '@angular/platform-browser';
+import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-writer-details',
@@ -30,7 +31,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   };
 
   dialogContent = null;
-
+  preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
 
   @ViewChild('mapContainer', { static: false }) gmap: ElementRef;
 
@@ -111,9 +112,8 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
 
-  openDialog(event, content: string) {
-    event.stopPropagation();
-    event.preventDefault();
+  openDialog(event: Event, content: string) {
+    preventDefaultAndStopPropagation(event)
     this.dialogContent = content;
   }
 
