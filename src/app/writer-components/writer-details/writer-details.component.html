@@ -178,7 +178,7 @@
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div>
                             <img *ngIf="(writer.additionalDetails.hasWritenBefore.boolean === 'true') || (writer.additionalDetails.hasWritenBefore.boolean === 'false')"
-                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'tfalse) ? assets/icons/Union 3.png'" : '')>
+                                [src]="writer.additionalDetails.hasWritenBefore.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'false' ? 'assets/icons/Union 3.png' : '')">
                         </div>
                         <div *ngIf="writer.additionalDetails.hasWritenBefore.note"
                             (click)="openDialog($event ,writer.additionalDetails.hasWritenBefore.note)"
@@ -189,7 +189,7 @@
                         <div class="detail-title description">כתב קבלה</div>
                         <div>
                             <img *ngIf="(writer.additionalDetails.hasWritenKabala.boolean === 'true') || (writer.additionalDetails.hasWritenKabala.boolean === 'false')"
-                                [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'tfalse) ? assets/icons/Union 3.png'" : '')>
+                                [src]="writer.additionalDetails.hasWritenKabala.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'false' ? 'assets/icons/Union 3.png' : '')">
                         </div>
                         <div *ngIf="writer.additionalDetails.hasWritenKabala.note"
                             (click)="openDialog($event ,writer.additionalDetails.hasWritenKabala.note)"
@@ -200,7 +200,7 @@
                         <div class="detail-title description">בחירות</div>
                         <div>
                             <img *ngIf="(writer.additionalDetails.voatsInElection.boolean === 'true') || (writer.additionalDetails.voatsInElection.boolean === 'false')"
-                                [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'tfalse) ? assets/icons/Union 3.png'" : '')>
+                                [src]="writer.additionalDetails.voatsInElection.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'false' ? 'assets/icons/Union 3.png' : '')">
                         </div>
                         <div *ngIf="writer.additionalDetails.voatsInElection.note"
                             (click)="openDialog($event ,writer.additionalDetails.voatsInElection.note)"
@@ -211,7 +211,7 @@
                         <div class="detail-title description">הולך לכותל</div>
                         <div>
                             <img *ngIf="(writer.additionalDetails.goesToKotel.boolean === 'true') || (writer.additionalDetails.goesToKotel.boolean === 'false')"
-                                [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'tfalse) ? assets/icons/Union 3.png'" : '')>
+                                [src]="writer.additionalDetails.goesToKotel.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'false' ? 'assets/icons/Union 3.png' : '')">
                         </div>
                         <div *ngIf="writer.additionalDetails.goesToKotel.note"
                             (click)="openDialog($event ,writer.additionalDetails.goesToKotel.note)"
@@ -222,7 +222,7 @@
                         <div class="detail-title description">סופר מתחיל</div>
                         <div>
                             <img *ngIf="(writer.additionalDetails.beginnerWriter.boolean === 'true') || (writer.additionalDetails.beginnerWriter.boolean === 'false')"
-                                [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'tfalse) ? assets/icons/Union 3.png'" : '')>
+                                [src]="writer.additionalDetails.beginnerWriter.boolean === 'true' ? 'assets/icons/Checkbox.png' : (writer.pricesDeatails.priceForTorahScroll.worthIt === 'false' ? 'assets/icons/Union 3.png' : '')">
                         </div>
                         <div *ngIf="writer.additionalDetails.beginnerWriter.note"
                             (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)"
