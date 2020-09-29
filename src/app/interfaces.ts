@@ -301,9 +301,10 @@ export interface WriterListFilters {
   city: string;
   community: string;
   hasWritenBefore: string;
+  hasNotWritenBefore: string;
   isWritingRegularly: {
-    writingRegularly: string;
-    notWritingRegularly: string;
+    writingRegularly: boolean;
+    notWritingRegularly: boolean;
   };
   isAppropriate: {
     bad: string;

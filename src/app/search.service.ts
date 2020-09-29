@@ -102,13 +102,20 @@ export class SearchService implements OnDestroy {
         const queryResult = this.writersList.filter(writer => {
             const cityQuery = (writer.city === filters.city || filters.city === '');
             const communityQuery = (writer.communityDeatails.community === filters.community || filters.community === '');
-            const hasWritenBeforeQuery = writer.additionalDetails.hasWritenBefore.boolean === filters.hasWritenBefore;
+
+            let hasWritenBeforeQuery = false;
+            if ((filters.hasWritenBefore === 'true') && (writer.additionalDetails.hasWritenBefore.boolean === 'true')) {
+                hasWritenBeforeQuery = true;
+            }
+            if ((filters.hasNotWritenBefore === 'true') && (writer.additionalDetails.hasWritenBefore.boolean !== 'true')) {
+                hasWritenBeforeQuery = true;
+            }
 
             let isWritingRegularlyQuery = false;
-            if ((filters.isWritingRegularly.writingRegularly === 'true') && (writer.isWritingRegularly === 'true')) {
+            if ((filters.isWritingRegularly.writingRegularly) && (writer.isWritingRegularly === 'true')) {
                 isWritingRegularlyQuery = true;
             }
-            if ((filters.isWritingRegularly.notWritingRegularly === 'true') && (writer.isWritingRegularly !== 'true')) {
+            if ((filters.isWritingRegularly.notWritingRegularly) && (writer.isWritingRegularly !== 'true')) {
                 isWritingRegularlyQuery = true;
             }
 

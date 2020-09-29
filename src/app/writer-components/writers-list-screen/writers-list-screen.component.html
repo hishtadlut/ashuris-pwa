@@ -32,13 +32,12 @@
         </div>
 
         <div class="two-button-section grid">
-            <!-- ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'true'}" -->
-            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value === 'false'}" class="button">
-                <input formControlName="hasWritenBefore" value="false" type="radio">
+            <label [ngClass]="{'checked': searchForm.get(['hasNotWritenBefore']).value}" class="button">
+                <input formControlName="hasNotWritenBefore" type="checkbox">
                 סופר מתחיל
             </label>
-            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value === 'true'}" class="button">
-                <input formControlName="hasWritenBefore" value="true" type="radio">
+            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value}" class="button">
+                <input formControlName="hasWritenBefore" type="checkbox">
                 סופר עם נסיון
             </label>
         </div>
