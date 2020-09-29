@@ -92,7 +92,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    this.writersToDisplay = this.searchService.writersListFilter(this.searchForm.value);
+    this.writersToDisplay = this.searchService.writerListFilter(this.searchForm.value);
   }
 
   ngOnDestroy() {

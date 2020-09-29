@@ -1,5 +1,5 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
-import { Writer, AdvancedSearchQuery, Book } from './interfaces';
+import { Writer, AdvancedSearchQuery, Book, WriterListFilters } from './interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from './reducers';
@@ -98,24 +98,33 @@ export class SearchService implements OnDestroy {
         }
     }
 
-    writersListFilter(filters) {
+    writerListFilter(filters: WriterListFilters) {
         const queryResult = this.writersList.filter(writer => {
             const cityQuery = (writer.city === filters.city || filters.city === '');
             const communityQuery = (writer.communityDeatails.community === filters.community || filters.community === '');
             const hasWritenBeforeQuery = writer.additionalDetails.hasWritenBefore.boolean === filters.hasWritenBefore;
+
+            let isWritingRegularlyQuery = false;
+            if ((filters.isWritingRegularly.writingRegularly === 'true') && (writer.isWritingRegularly === 'true')) {
+                isWritingRegularlyQuery = true;
+            }
+            if ((filters.isWritingRegularly.notWritingRegularly === 'true') && (writer.isWritingRegularly !== 'true')) {
+                isWritingRegularlyQuery = true;
+            }
+
             let isAppropriateQuery = false;
             if (!filters.isAppropriate.bad && !filters.isAppropriate.good && !filters.isAppropriate.veryGood) {
                 isAppropriateQuery = true;
             } else {
                 if (filters.isAppropriate.bad && (writer.isAppropriate.level === 'לא מתאים')) {
                     isAppropriateQuery = true;
-                } else if (filters.isAppropriate.god && (writer.isAppropriate.level === 'מתאים')) {
+                } else if (filters.isAppropriate.good && (writer.isAppropriate.level === 'מתאים')) {
                     isAppropriateQuery = true;
                 } else if (filters.isAppropriate.veryGood && (writer.isAppropriate.level === 'כדאי מאוד')) {
                     isAppropriateQuery = true;
                 }
             }
-            return (cityQuery && communityQuery && hasWritenBeforeQuery && isAppropriateQuery);
+            return (cityQuery && communityQuery && hasWritenBeforeQuery && isAppropriateQuery && isWritingRegularlyQuery);
         });
 
         return queryResult;

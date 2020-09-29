@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
-import { Address, Writer } from '../../interfaces';
+import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { editWriter } from '../../actions/writers.actions';
 import { DomSanitizer } from '@angular/platform-browser';
-import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+import { base64ToBlob, preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+declare const navigator: any;
 
 @Component({
   selector: 'app-writer-details',
@@ -40,7 +41,8 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     private store$: Store<State>,
     private googleMapsService: GoogleMapsService,
     private store: Store,
-    public sanitizer: DomSanitizer) { }
+    public sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
     this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
@@ -113,7 +115,7 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   openDialog(event: Event, content: string) {
-    preventDefaultAndStopPropagation(event)
+    preventDefaultAndStopPropagation(event);
     this.dialogContent = content;
   }
 
@@ -121,9 +123,8 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     this.dialogContent = null;
   }
 
-  writersInRoomList(event): void {
-    event.stopPropagation();
-    event.preventDefault();
+  writersInRoomList(event: Event): void {
+    preventDefaultAndStopPropagation(event);
 
     const city = this.writer.city;
     const street = this.writer.street;

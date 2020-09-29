@@ -111,7 +111,7 @@ export interface Writer {
       note: string,
     },
   };
-
+  isWritingRegularly: string;
   photos: string[];
   recordings: string[];
   _attachments?: {
@@ -294,5 +294,20 @@ export interface Book {
       // content_type: MimeType,
       data: Blob
     },
+  };
+}
+
+export interface WriterListFilters {
+  city: string;
+  community: string;
+  hasWritenBefore: string;
+  isWritingRegularly: {
+    writingRegularly: string;
+    notWritingRegularly: string;
+  };
+  isAppropriate: {
+    bad: string;
+    good: string;
+    veryGood: string;
   };
 }
