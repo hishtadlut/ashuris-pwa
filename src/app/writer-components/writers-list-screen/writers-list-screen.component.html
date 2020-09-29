@@ -59,8 +59,14 @@
         </div>
 
         <div class="two-button-section grid" formGroupName="isWritingRegularly">
-            <div class="button checked">סופר קבוע</div>
-            <div class="button checked">סופר כללי</div>
+            <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'writingRegularly']).value}" class="button">
+                <input type="checkbox" formControlName="writingRegularly">
+                סופר קבוע
+            </label>
+            <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'notWritingRegularly']).value}" class="button">
+                <input type="checkbox" formControlName="notWritingRegularly">
+                סופר כללי
+            </label>
         </div>
 
         <div (click)="search()" class="search-button">חפש סופר</div>
