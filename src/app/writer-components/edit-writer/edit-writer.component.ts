@@ -292,7 +292,12 @@ export class EditWriterComponent implements OnInit, OnDestroy {
           ]),
         }),
       }),
-      isWritingRegularly: new FormControl(false),
+      isWritingRegularly: new FormGroup({
+        boolean: new FormControl(true),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
+      }),
       photos: new FormArray([]),
       recordings: new FormArray([]),
     });

@@ -38,7 +38,7 @@
                     <div class="information">{{ book.isAppropriate.level }}</div>
                 </div>
             </div>
-            <div class="basic-detail .inner-grid" *ngIf="book.endDate">
+            <div class="basic-detail .inner-grid" *ngIf="book.endDate.hebrewDateInWords">
                 <img src="assets/icons/Calendar.png" alt="">
                 <div>
                     <div class="description">תאריך סיום</div>

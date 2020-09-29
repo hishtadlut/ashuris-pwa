@@ -112,10 +112,10 @@ export class SearchService implements OnDestroy {
             }
 
             let isWritingRegularlyQuery = false;
-            if ((filters.isWritingRegularly.writingRegularly) && (writer.isWritingRegularly === 'true')) {
+            if ((filters.isWritingRegularly.writingRegularly) && (writer.isWritingRegularly.boolean)) {
                 isWritingRegularlyQuery = true;
             }
-            if ((filters.isWritingRegularly.notWritingRegularly) && (writer.isWritingRegularly !== 'true')) {
+            if ((filters.isWritingRegularly.notWritingRegularly) && (!writer.isWritingRegularly.boolean)) {
                 isWritingRegularlyQuery = true;
             }
 

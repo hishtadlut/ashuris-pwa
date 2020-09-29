@@ -38,7 +38,8 @@
       <input placeholder="מספר בית" formControlName="apartmentNumber">
     </div>
     <div class="start-date-section">
-      <app-hebrew-date-form-control [parentForm]="writerForm" formGroupName="startDate" sectionTitle="תאריך התחלה"></app-hebrew-date-form-control>
+      <app-hebrew-date-form-control [parentForm]="writerForm" formGroupName="startDate" sectionTitle="תאריך התחלה">
+      </app-hebrew-date-form-control>
     </div>
     <div formGroupName="isAppropriate" class="is-appropriate-section">
       <div class="is-appropriate-radio-buttons-wraper inner-grid">
@@ -67,6 +68,19 @@
             3
           </label>
         </div>
+      </div>
+    </div>
+    <div formGroupName="isWritingRegularly" class="inner-grid-2 is-sold-section">
+      <div class="align-center">
+        <input id="isWritingRegularly" class="visible-input" type="checkbox" formControlName="boolean">
+      </div>
+      <div>
+        <label class="section-title" for="isWritingRegularly">סופר קבוע</label>
+      </div>
+      <div>
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['isWritingRegularly'])))"
+          class="note">
+          <img src="assets/icons/Edit.svg"></p>
       </div>
     </div>
     <div formGroupName="pricesDeatails" class="price-deatail-section inner-grid">
@@ -98,13 +112,15 @@
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}"
               class="size-checkbox">
               <img src="assets/icons/x.png" alt="">
-              <input type="radio" formControlName="worthIt" value='false' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='false'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'true'}"
               class="size-checkbox">
               <img src="assets/icons/v.png" alt="">
-              <input type="radio" formControlName="worthIt" value='true' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='true'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
             </label>
 
           </div>
@@ -118,13 +134,15 @@
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}"
               class="size-checkbox">
               <img src="assets/icons/x.png" alt="">
-              <input type="radio" formControlName="worthIt" value='false' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='false'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'true'}"
               class="size-checkbox">
               <img src="assets/icons/v.png" alt="">
-              <input type="radio" formControlName="worthIt" value='true' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='true'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
             </label>
 
           </div>
@@ -138,13 +156,15 @@
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}"
               class="size-checkbox">
               <img src="assets/icons/x.png" alt="">
-              <input type="radio" formControlName="worthIt" value='false' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='false'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'true'}"
               class="size-checkbox">
               <img src="assets/icons/v.png" alt="">
-              <input type="radio" formControlName="worthIt" value='true' (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
+              <input type="radio" formControlName="worthIt" value='true'
+                (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
             </label>
 
           </div>
@@ -624,9 +644,8 @@
         </div>
       </div>
     </div>
-    <button (click)="onSubmit()"
-      class="add-sofer-button">{{ textForSaveButton }}</button>
+    <button (click)="onSubmit()" class="add-sofer-button">{{ textForSaveButton }}</button>
   </form>
-  <!-- <div>{{ writerForm.value | json }}</div>
-  <div>{{ writerForm.valid }}</div> -->
+  <div>{{ writerForm.get(['isWritingRegularly', 'boolean']).value }}</div>
+  <!-- <div>{{ writerForm.valid }}</div> -->
 </div>

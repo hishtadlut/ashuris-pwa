@@ -111,7 +111,10 @@ export interface Writer {
       note: string,
     },
   };
-  isWritingRegularly: string;
+  isWritingRegularly: {
+    boolean: string,
+    note: string
+  };
   photos: string[];
   recordings: string[];
   _attachments?: {

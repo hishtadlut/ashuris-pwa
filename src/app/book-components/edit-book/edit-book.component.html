@@ -15,24 +15,25 @@
       <datalist id="writers">
         <option *ngFor="let writer of writersFullNameList" [value]="writer">
       </datalist>
-      <input (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
+      <input (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer"
+        class="full-width">
       <datalist id="dealers">
         <option *ngFor="let dealer of dealerList" [value]="dealer.fullName" [id]="dealer._id">
       </datalist>
       <div class="margin-top-bottom" (click)="routeToCreateNewDealer()"> + הוספת סוחר חדש למאגר</div>
 
-        <div formGroupName="isSold" class="inner-grid-2 is-sold-section">
-          <div class="align-center">
-            <input id="is-sold" class="visible-input" type="checkbox" formControlName="boolean">
-          </div>
-          <div>
-            <label class="section-title" for="is-sold">האם נמכר</label>
-          </div>
-          <div>
-            <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note"><img
-                src="assets/icons/Edit.svg" alt=""></p>
-          </div>
+      <div formGroupName="isSold" class="inner-grid-2 is-sold-section">
+        <div class="align-center">
+          <input id="is-sold" class="visible-input" type="checkbox" formControlName="boolean">
         </div>
+        <div>
+          <label class="section-title" for="is-sold">האם נמכר</label>
+        </div>
+        <div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note"><img
+              src="assets/icons/Edit.svg" alt=""></p>
+        </div>
+      </div>
 
     </div>
     <div class="end-date-section">
