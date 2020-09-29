@@ -13,8 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   routerNavigation$Subscription: Subscription;
-  previousUrl: any;
-  // tslint:disable-next-line: variable-name
+  previousUrl: string;
   constructor(private router: Router, private store: Store<State>) { }
 
   ngOnInit() {
