@@ -6,9 +6,9 @@
             <div>
                 <p class="book-name">{{ book.name }}</p>
             </div>
-                <div class="reminder"
-                    [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
-                </div>
+            <!-- <div class="reminder"
+                [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
+            </div> -->
             <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
         </div>
         <div class="basic-details-section">
@@ -192,7 +192,8 @@
             <div class="section" (click)="closeMenus('images')">
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
-                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos" class="photo-wrapper">
+                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos"
+                        class="photo-wrapper">
                         <img class="icon-share" src="assets/icons/share.png" alt="">
                         <img class="icon-delete" src="assets/icons/delete.png" alt="">
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
