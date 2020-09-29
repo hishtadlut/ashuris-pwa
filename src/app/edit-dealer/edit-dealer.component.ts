@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { Address, Dealer } from '../interfaces';
 import { loadDealerList } from '../actions/writers.actions';
 import { GoogleMapsService } from '../google-maps-service.service';
+import { LocationPath } from '../enums';
 
 
 @Component({
@@ -136,7 +137,11 @@ export class EditDealerComponent implements OnInit, OnDestroy {
     if (this.dealerForm.valid) {
       this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
       this.store$.dispatch(loadDealerList());
-      this.router.navigate(['/dealer-list-screen']);
+      if (this.location.path() === LocationPath.CREATE_DEALER_FOR_BOOK) {
+        this.router.navigate([LocationPath.CREATE_BOOK]);
+      } else {
+        this.router.navigate(['/dealer-list-screen']);
+      }
     } else {
       alert('יש למלא שם פרטי ושם משפחה');
     }

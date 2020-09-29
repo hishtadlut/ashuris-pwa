@@ -13,7 +13,9 @@ export enum LocationPath {
   WRITERS_IN_ROOM_LIST = '/writers-in-room-list',
   WRITERS_LIST_SCREEN = '/writers-list-screen',
   CREATE_WRITER = '/create-writer',
+  CREATE_BOOK = '/create-book',
   EDIT_WRITER = '/edit-writer',
+  CREATE_DEALER_FOR_BOOK = '/create-dealer-for-book'
 }
 
 export enum SearchFor {

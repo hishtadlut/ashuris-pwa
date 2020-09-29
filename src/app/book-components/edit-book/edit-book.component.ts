@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
 import { loadBookList } from '../../actions/writers.actions';
+import { LocationPath } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-book',
@@ -328,7 +329,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   routeToCreateNewDealer() {
-    this.router.navigate(['/create-new-dealer']);
+    this.router.navigate([LocationPath.CREATE_DEALER_FOR_BOOK]);
   }
 
   ngOnDestroy() {
