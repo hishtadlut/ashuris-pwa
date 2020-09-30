@@ -85,6 +85,10 @@ export const loadCommunitiesList = createAction(
   '[Writers] load Communities List',
 );
 
+export const loadParchmentList = createAction(
+  '[Writers] load Parchments List',
+);
+
 export const setWritersList = createAction(
   '[Writers] Set Writers List',
   props<{ writersList: Writer[] }>()
@@ -108,6 +112,11 @@ export const setCitiesList = createAction(
 export const setCommunitiesList = createAction(
   '[Writers] Set Communities List',
   props<{ communitiesList: string[] }>()
+);
+
+export const setParchmentList = createAction(
+  '[Writers] Set Parchments List',
+  props<{ parchmentList: string[] }>()
 );
 
 export const editWriter = createAction(

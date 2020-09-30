@@ -9,6 +9,7 @@ import {
   setAdvancedSearchParameters,
   setCitiesList,
   setCommunitiesList,
+  setParchmentList,
   addToChangeUrgencyWritersList,
   resetChangeUrgencyWritersList,
   setDealer,
@@ -37,6 +38,7 @@ export interface State {
   useAdvancedSearchParameters: boolean;
   citiesList: string[];
   communitiesList: string[];
+  parchmentList: string[];
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyBookList: ChangeUrgencyBook[];
   currentDealerId: string;
@@ -55,6 +57,7 @@ export const initialState: State = {
   useAdvancedSearchParameters: false,
   citiesList: [],
   communitiesList: [],
+  parchmentList: [],
   urgencyWritersList: [],
   urgencyBookList: [],
   currentDealerId: null,
@@ -98,6 +101,9 @@ export const writerReducer = createReducer(
   }),
   on(setCommunitiesList, (state, action) => {
     return { ...state, communitiesList: action.communitiesList };
+  }),
+  on(setParchmentList, (state, action) => {
+    return { ...state, parchmentList: action.parchmentList };
   }),
   on(editWriter, (state, action) => {
     return { ...state, editMode: action.editMode };

@@ -10,7 +10,9 @@ import {
   loadCitiesList,
   setCitiesList,
   loadCommunitiesList,
+  loadParchmentList,
   setCommunitiesList,
+  setParchmentList,
   putChangeUrgencyWritersList,
   loadDealerList,
   setDealerList,
@@ -92,6 +94,7 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
             setWritersList({ writersList: JSON.parse(JSON.stringify(writersList)) }),
             loadCitiesList(),
             loadCommunitiesList(),
+            loadParchmentList(),
           ]),
           // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
@@ -153,6 +156,20 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     )
   );
 
+  loadParchmentList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadParchmentList),
+      mergeMap((action: any) => from(this.stitchService.getParchments())
+        .pipe(
+          mergeMap(parchments => [
+            setParchmentList({ parchmentList: parchments.parchments }),
+          ]),
+          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
+        )
+      ),
+    )
+  );
+
   putChangeUrgencyWritersList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(putChangeUrgencyWritersList),
@@ -190,6 +207,7 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
             loadWritersList(),
             loadDealerList(),
             loadBookList(),
+            loadParchmentList(),
           ]),
         )
       ),

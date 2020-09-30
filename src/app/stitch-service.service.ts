@@ -15,7 +15,7 @@ PouchDB.plugin(PouchDBFind);
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList, loadBookList } from './actions/writers.actions';
+import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList, loadBookList, loadParchmentList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,9 @@ export class StitchService {
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
   remoteCommunitiesDB = new PouchDB('https://ashuris.online:5985/communities_remote');
-  // remoteCommunitiesDB = new PouchDB('http://admin:password@104.154.30.190/communities_remote');
+
+  localParchmentsDB = new PouchDB('parchmentsLocal');
+  remoteParchmentsDB = new PouchDB('https://ashuris.online:5985/parchments_remote');
 
   localCitiesDB = new PouchDB('citiesLocal');
   remoteSitiesDB = new PouchDB('https://ashuris.online:5985/cities_remote');
@@ -54,7 +56,6 @@ export class StitchService {
     select('writers', 'urgencyBookList')
   );
 
-  // tslint:disable-next-line: variable-name
   constructor(private store$: Store<State>) {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
     this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
@@ -72,6 +73,7 @@ export class StitchService {
 
     this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
     this.syncDb(this.localCommunitiesDB, this.remoteCommunitiesDB, loadCommunitiesList);
+    this.syncDb(this.localParchmentsDB, this.remoteParchmentsDB, loadParchmentList);
     this.syncDb(this.localCitiesDB, this.remoteSitiesDB, loadCitiesList);
     this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
     this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
@@ -188,6 +190,10 @@ export class StitchService {
     return await this.localCommunitiesDB.get<{ communities: string[] }>('communities');
   }
 
+  async getParchments() {
+    return await this.localParchmentsDB.get<{ parchments: string[] }>('parchments');
+  }
+
   async getSoferReminders(levelOfUrgency: number) {
     return await this.localWritersDB.find({
       selector: { levelOfUrgency },
@@ -268,6 +274,7 @@ export class StitchService {
   }
 
   createBook(book: Book, dealerId: string) {
+    this.upsertParchmentTypeToDB(book.writingDeatails.parchmentType.type);
     const bookClone = JSON.parse(JSON.stringify(book)) as Book;
     if (book._id) {
       this.localBooksDB.upsert(book._id, () => {
@@ -322,6 +329,32 @@ export class StitchService {
       fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
     });
     return writerList.docs.map(writer => writer);
+  }
+
+  upsertParchmentTypeToDB(parchmentType: string) {
+    this.localParchmentsDB.get<{ parchments: string[] }>('parchments')
+      .then((parchments) => {
+        const parchmentsSet = new Set(parchments.parchments || []);
+        parchmentsSet.add(parchmentType);
+        parchments.parchments = Array.from(parchmentsSet);
+        this.localParchmentsDB.put(parchments)
+          .then(result => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        if (err.name === 'not_found') {
+          return this.localParchmentsDB.put({
+            _id: 'parchments',
+            parchments: []
+          });
+        } else { // hm, some other error
+          console.log(err + 'boom');
+        }
+      });
   }
 
 }

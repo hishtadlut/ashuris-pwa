@@ -31,6 +31,12 @@ export class EditBookComponent implements OnInit, OnDestroy {
     select('writers', 'communitiesList')
   );
 
+  parchmentTypes: string[];
+  parchmentTypes$Subscription: Subscription;
+  parchmentTypes$: Observable<any> = this.store$.pipe(
+    select('writers', 'parchmentList')
+  );
+
   writersFullNameList: string[];
   dealerList: { fullName: string; _id: string; }[];
 
@@ -61,6 +67,11 @@ export class EditBookComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.communitiesList$Subscription = this.communitiesList$.subscribe(
       (communities) => this.communities = communities
+    );
+
+    this.parchmentTypes$Subscription = this.parchmentTypes$.subscribe(
+      (parchmentTypes) => {this.parchmentTypes = parchmentTypes;console.log(parchmentTypes);
+      }
     );
 
     this.stitchService.getWritersFullName()
@@ -104,7 +115,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       }),
       isAppropriate: new FormGroup({
         level: new FormControl('', [
-          Validators.required
+          // Validators.required
         ]),
         note: new FormControl('', [
           // Validators.required,
@@ -317,7 +328,8 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-
+    console.log('ads');
+    
     if (this.bookForm.valid) {
       this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.store$.dispatch(loadBookList());
