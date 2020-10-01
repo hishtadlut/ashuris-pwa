@@ -38,7 +38,7 @@
 
 .top-section {
     display: grid;
-    grid-template: auto / 50% auto auto;
+    grid-template: auto / auto auto;
     grid-row: 1 / 2;
     margin-bottom: 6vw;
     padding-top: 9vw;
