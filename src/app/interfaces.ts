@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 export interface Writer {
   _id?: any;
   _rev?: string;
+  note: string;
   levelOfUrgency: number;
   firstName: string;
   lastName: string;

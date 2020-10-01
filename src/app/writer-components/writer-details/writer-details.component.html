@@ -4,6 +4,10 @@
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
             <img [src]="writer.profileImage" alt="" class="profile-img">
+            <div *ngIf="writer.note"
+                (click)="openDialog($event ,writer.note)" class="comment-icon">
+                <img src="assets/icons/Path 35.png" alt="">
+            </div>
             <div class="name-wrapper">
                 <p class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</p>
                 <p class="writer-location" *ngIf="writer.street && writer.city">{{ writer.street }}, {{ writer.city }}
@@ -243,7 +247,8 @@
             <div class="section" (click)="closeMenus('images')">
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
-                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos" class="photo-wrapper">
+                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos"
+                        class="photo-wrapper">
                         <img class="icon-share" src="assets/icons/share.png" (click)="shareButton($event)" alt="">
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>
