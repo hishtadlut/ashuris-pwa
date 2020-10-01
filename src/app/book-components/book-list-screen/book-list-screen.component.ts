@@ -40,7 +40,7 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
     if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
       this.getBooksBySoldCondition(false);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
-      this.pouchDbService.getDealerBooks(this.activatedRoute.queryParams['id'])
+      this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
         .then(books => {
           this.booksToDisplay = books;
         });
