@@ -293,7 +293,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
         }),
       }),
       isWritingRegularly: new FormGroup({
-        boolean: new FormControl(true),
+        boolean: new FormControl(false),
         note: new FormControl('', [
           // Validators.required,
         ]),
