@@ -117,7 +117,7 @@ label input {
 }
 
 .profile-image-section {
-  grid-row: 1 / span 1;
+  /* grid-row: 1 / span 1; */
   align-items: center;
   grid-gap: 5vw;
   margin-top: 10vw;
@@ -133,15 +133,15 @@ label input {
 }
 
 .personal-detail-section {
-  grid-row: 2 / span 1;
+  /* grid-row: 2 / span 1; */
 }
 
 .start-date-section {
-  grid-row: 3 / span 1;
+  /* grid-row: 3 / span 1; */
 }
 
 .is-appropriate-section {
-  grid-row: 4 / span 1;
+  /* grid-row: 4 / span 1; */
 }
 
 .is-appropriate-radio-buttons-wraper {
@@ -151,8 +151,14 @@ label input {
   align-content: center;
 }
 
+.is-sold-section {
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  grid-gap: 5vw;
+}
+
 .price-deatail-section {
-  grid-row: 5 / span 1;
+  /* grid-row: 5 / span 1; */
 }
 
 .type-of-price-selection-wrapper {
@@ -183,26 +189,23 @@ label input {
 }
 
 .writing-detail-section {
-  grid-row: 6 / span 1;
+  /* grid-row: 6 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .sizes-section {
-  grid-row: 7 / span 1;
+  /* grid-row: 7 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .writing-type-section {
-  grid-row: 8 / span 1;
+  /* grid-row: 8 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .community-section {
-  grid-row: 9 / span 1;
+  /* grid-row: 9 / span 1; */
   grid-row-gap: 4vw;
-}
-
-.letter-sizes-wrapper {
 }
 
 .sizes-row {
@@ -315,7 +318,7 @@ label.level-checkbox {
 } */
 
 .writing-location-section {
-  grid-row: 10 / span 1;
+  /* grid-row: 10 / span 1; */
   grid: auto auto / auto 1fr;
   column-gap: 6vw;
   justify-items: right;
@@ -331,7 +334,7 @@ label.level-checkbox {
 }
 
 .additional-details-section {
-  grid-row: 11 / span 1;
+  /* grid-row: 11 / span 1; */
 }
 
 .additional-details-section input {
@@ -347,7 +350,7 @@ label.level-checkbox {
 }
 
 .writer-level-section{
-  grid-row: 12 / span 1;
+  /* grid-row: 12 / span 1; */
   grid-template: auto / 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -360,18 +363,18 @@ label.level-checkbox {
 }
 
 .photo-section {
-  grid-row: 13 / span 1;
+  /* grid-row: 13 / span 1; */
   grid-template: auto / auto;
   grid-gap: 5vw;
   align-items: center;
 }
 
 .recording-section {
-  grid-row: 14 / span 1;
+  /* grid-row: 14 / span 1; */
 }
 
 .add-sofer-button {
-  grid-row: 15 / span 1;
+  /* grid-row: 15 / span 1; */
   background-color: #D4A75D;
   font-size: 1fr;
   color: #313C60;
