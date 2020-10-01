@@ -120,7 +120,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
         ]),
       }),
       pricesDeatails: new FormGroup({
-        isPricePerPage: new FormControl('בחר עמוד או ס"ת'),
+        isPricePerPage: new FormControl('מחיר לעמוד'),
         priceForTorahScroll: new FormGroup({
           price: new FormControl('', [
             // Validators.required
