@@ -1,9 +1,9 @@
-<div class="button-wrapper">
-    <div>
-        <button>ספרים שנמכרו</button>
+<div *ngIf="this.locationWithoutParameters === locationPath.BOOK_LIST_SCREEN" class="button-wrapper">
+    <div (click)="showOnlySoldedBooks = true" >
+        <button [ngClass]="{'checked': showOnlySoldedBooks}" (click)="getBooksBySoldCondition(true)">ספרים שנמכרו</button>
     </div>
-    <div>
-        <button>ספרים למכירה</button>
+    <div (click)="showOnlySoldedBooks = false" >
+        <button [ngClass]="{'checked': !showOnlySoldedBooks}" (click)="getBooksBySoldCondition(false)">ספרים למכירה</button>
     </div>
 </div>
 <div class="name-search grid">

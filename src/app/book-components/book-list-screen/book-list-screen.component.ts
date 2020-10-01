@@ -14,6 +14,8 @@ import { StitchService } from 'src/app/stitch-service.service';
   styleUrls: ['./book-list-screen.component.css']
 })
 export class BookListScreenComponent implements OnInit, OnDestroy {
+  locationPath: typeof LocationPath = LocationPath;
+
   booksToDisplay: Book[] = [];
 
   bookList: Book[];
@@ -23,6 +25,7 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
   );
 
   locationWithoutParameters: string;
+  showOnlySoldedBooks: boolean;
 
   constructor(
     private store$: Store<State>,
@@ -32,17 +35,23 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.showOnlySoldedBooks = false;
     this.locationWithoutParameters = this.location.path().split('?')[0];
     if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
-      this.bookList$Subscription = this.bookList$.subscribe((bookList) => {
-        this.bookList = this.booksToDisplay = bookList;
-      });
+      this.getBooksBySoldCondition(false);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
       this.pouchDbService.getDealerBooks(this.activatedRoute.queryParams['id'])
         .then(books => {
           this.booksToDisplay = books;
         });
     }
+  }
+
+  getBooksBySoldCondition(isSold: boolean) {
+    this.pouchDbService.getBooksBySoldCondition(isSold)
+      .then(books => {
+        this.bookList = this.booksToDisplay = books.docs;
+      });
   }
 
   onKeyUpSearchByName(event) {

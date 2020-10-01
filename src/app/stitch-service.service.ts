@@ -208,6 +208,13 @@ export class StitchService {
     });
   }
 
+  async getBooksBySoldCondition(isSold: boolean) {
+    return await this.localBooksDB.find({
+      selector: { 'isSold.boolean': isSold },
+      fields: ['_id', 'name', 'levelOfUrgency'],
+    });
+  }
+
   async getWritersFullName() {
     const writersList = await this.localWritersDB.find({
       selector: {},
@@ -245,13 +252,11 @@ export class StitchService {
       });
   }
 
-  getBooks() {
-    return this.localBooksDB.allDocs<Book>({ include_docs: true })
-      .then((result) => {
-        return new Promise(resolve => {
-          resolve(result.rows.map(row => row.doc));
-        });
-      });
+  async getBooks(): Promise<unknown> {
+    const result = await this.localBooksDB.allDocs<Book>({ include_docs: true });
+    return new Promise(resolve => {
+      resolve(result.rows.map(row => row.doc));
+    });
   }
 
   createDealer(dealer: Dealer) {
