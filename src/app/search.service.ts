@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Writer, AdvancedSearchQuery, Book, WriterListFilters } from './interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -6,6 +6,7 @@ import { State } from './reducers';
 import { StitchService } from './stitch-service.service';
 import { setAdvancedSearchResult } from './actions/writers.actions';
 import { LocationPath, SearchFor } from './enums';
+import { writer } from 'repl';
 
 
 @Injectable({ providedIn: 'root' })
@@ -28,7 +29,12 @@ export class SearchService implements OnDestroy {
     }
 
     advancedSearch(query: AdvancedSearchQuery, searchFor: SearchFor, location: LocationPath) {
-
+        if (query.highestPrice.toString() === '') {
+            query.highestPrice = 999999;
+        }
+        if (query.lowestPrice.toString() === '') {
+            query.lowestPrice = 0;
+        }
         const findInDbParms = {
             selector: {
                 $and: [
@@ -44,9 +50,9 @@ export class SearchService implements OnDestroy {
                     {
                         $or: this.writingLevelQuery(query.writingLevel)
                     },
-                    {
-                        $or: this.writingTypesQuery(query.writingTypes, location)
-                    },
+                    // {
+                    //     $or: this.writingTypesQuery(query.writingTypes, location)
+                    // },
                     {
                         $or: this.letterSizesQuery(query.letterSizes, location)
                     }
@@ -87,8 +93,25 @@ export class SearchService implements OnDestroy {
 
         if (searchFor === SearchFor.WRITERS) {
             this.pouchDbService.localWritersDB.find(findInDbParms).then(result => {
-                console.log(result);
-                this.store$.dispatch(setAdvancedSearchResult({ items: result.docs.filter(jsQuery) }));
+                const filter = result.docs.filter(item => {
+                    if (
+                        (query.writingTypes.ari === false)
+                        && (query.writingTypes.beitYosef === false)
+                        && (query.writingTypes.welish === false)
+                    ) {
+                        return true;
+                    }
+                    if (query.writingTypes.ari && item.writingDeatails.writingTypes.types.ari) {
+                        return true;
+                    }
+                    if (query.writingTypes.beitYosef && item.writingDeatails.writingTypes.types.beitYosef) {
+                        return true;
+                    }
+                    if (query.writingTypes.welish && item.writingDeatails.writingTypes.types.Welish) {
+                        return true;
+                    }
+                }).filter(jsQuery);
+                this.store$.dispatch(setAdvancedSearchResult({ items: filter }));
             });
         } else if (searchFor === SearchFor.BOOKS) {
             this.pouchDbService.localBooksDB.find(findInDbParms).then(result => {
@@ -257,39 +280,39 @@ export class SearchService implements OnDestroy {
         location: LocationPath
     ): { [x: string]: { $eq: boolean | string } }[] {
         // all options are true or false.;
-        const sameValueLetterSizesQuery = [...new Set(Object.values(letterSizes))].length;
+        // const sameValueLetterSizesQuery = [...new Set(Object.values(letterSizes))].length;
         const letterSizesQuery: { [x: string]: { $eq: boolean | string } }[] = [];
 
-        if (sameValueLetterSizesQuery === 1) {
-            letterSizesQuery.push(
-                ...Object
-                    .keys(letterSizes)
-                    .map(([key]) => {
-                        const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
-                        const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
-                        return {
-                            [path]: {
-                                $eq: isWriterSearch ? true : key
-                            }
-                        };
-                    })
-            );
-        } else {
-            letterSizesQuery.push(
-                ...Object
-                    .entries(letterSizes)
-                    .filter(([, booleanValue]) => booleanValue)
-                    .map(([key]) => {
-                        const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
-                        const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
-                        return {
-                            [path]: {
-                                $eq: isWriterSearch ? true : key
-                            }
-                        };
-                    })
-            );
-        }
+        // if (sameValueLetterSizesQuery === 1) {
+        //     letterSizesQuery.push(
+        //         ...Object
+        //             .keys(letterSizes)
+        //             .map(([key]) => {
+        //                 const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
+        //                 const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
+        //                 return {
+        //                     [path]: {
+        //                         $eq: isWriterSearch ? true : key
+        //                     }
+        //                 };
+        //             })
+        //     );
+        // } else {
+        letterSizesQuery.push(
+            ...Object
+                .entries(letterSizes)
+                .filter(([, booleanValue]) => booleanValue)
+                .map(([key]) => {
+                    const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
+                    const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
+                    return {
+                        [path]: {
+                            $eq: isWriterSearch ? true : key
+                        }
+                    };
+                })
+        );
+        // }
         return letterSizesQuery;
     }
 
