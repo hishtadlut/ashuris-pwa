@@ -98,7 +98,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
         // Validators.required,
       ]),
       isSold: new FormGroup({
-        boolean: new FormControl('', [
+        boolean: new FormControl(false, [
           // Validators.required,
         ]),
         note: new FormControl('', [
