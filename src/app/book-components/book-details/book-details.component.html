@@ -195,7 +195,6 @@
                     <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos"
                         class="photo-wrapper">
                         <img class="icon-share" src="assets/icons/share.png" alt="">
-                        <img class="icon-delete" src="assets/icons/delete.png" alt="">
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>
                 </div>
