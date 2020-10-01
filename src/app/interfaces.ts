@@ -303,8 +303,8 @@ export interface Book {
 export interface WriterListFilters {
   city: string;
   community: string;
-  hasWritenBefore: string;
-  hasNotWritenBefore: string;
+  hasWritenBefore: boolean;
+  hasNotWritenBefore: boolean;
   isWritingRegularly: {
     writingRegularly: boolean;
     notWritingRegularly: boolean;

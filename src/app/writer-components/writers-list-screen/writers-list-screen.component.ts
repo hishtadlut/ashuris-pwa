@@ -64,8 +64,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     this.searchForm = new FormGroup({
       city: new FormControl(''),
       community: new FormControl(''),
-      hasWritenBefore: new FormControl('true'),
-      hasNotWritenBefore: new FormControl('true'),
+      hasWritenBefore: new FormControl(true),
+      hasNotWritenBefore: new FormControl(true),
       isWritingRegularly: new FormGroup({
         writingRegularly: new FormControl(true),
         notWritingRegularly: new FormControl(true),

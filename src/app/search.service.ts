@@ -104,10 +104,10 @@ export class SearchService implements OnDestroy {
             const communityQuery = (writer.communityDeatails.community === filters.community || filters.community === '');
 
             let hasWritenBeforeQuery = false;
-            if ((filters.hasWritenBefore === 'true') && (writer.additionalDetails.hasWritenBefore.boolean === 'true')) {
+            if ((filters.hasWritenBefore === true) && (writer.additionalDetails.hasWritenBefore.boolean === 'true')) {
                 hasWritenBeforeQuery = true;
             }
-            if ((filters.hasNotWritenBefore === 'true') && (writer.additionalDetails.hasWritenBefore.boolean !== 'true')) {
+            if ((filters.hasNotWritenBefore === true) && (writer.additionalDetails.hasWritenBefore.boolean !== 'true')) {
                 hasWritenBeforeQuery = true;
             }
 
