@@ -13,6 +13,7 @@ export interface Writer {
   city: string;
   street: string;
   streetNumber: string;
+  apartmentNumber: string;
   profileImage: string;
   coordinates: google.maps.LatLng;
   isAppropriate: {
@@ -203,6 +204,7 @@ export interface Dealer {
   city: string;
   street: string;
   streetNumber: string;
+  apartmentNumber: string;
   profileImage: string;
   coordinates: google.maps.LatLng;
   books: string[];
