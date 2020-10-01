@@ -70,7 +70,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
     );
 
     this.parchmentTypes$Subscription = this.parchmentTypes$.subscribe(
-      (parchmentTypes) => {this.parchmentTypes = parchmentTypes;console.log(parchmentTypes);
+      (parchmentTypes) => {this.parchmentTypes = parchmentTypes;
       }
     );
 
@@ -328,8 +328,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('ads');
-    
     if (this.bookForm.valid) {
       this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.store$.dispatch(loadBookList());
