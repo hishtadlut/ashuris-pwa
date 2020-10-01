@@ -5,7 +5,7 @@
         <div class="top-section">
             <img [src]="writer.profileImage" alt="" class="profile-img">
             <div *ngIf="writer.note"
-                (click)="openDialog($event ,writer.note)" class="comment-icon">
+                (click)="openDialog($event ,writer.note)" class="comment-icon-absolute">
                 <img src="assets/icons/Path 35.png" alt="">
             </div>
             <div class="name-wrapper">
