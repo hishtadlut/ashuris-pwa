@@ -43,6 +43,7 @@
   margin-bottom: 6vw;
   padding-top: 9vw;
   align-items: center;
+  position: relative;
 }
 
 .profile-img {
@@ -161,6 +162,12 @@ img {
 
 .comment-icon {
   justify-self: end;
+}
+
+.comment-icon-absolute {
+  position: absolute;
+  right: 60%;
+  top: 50%;
 }
 
 .people-icon {
