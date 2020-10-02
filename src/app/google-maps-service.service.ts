@@ -66,13 +66,13 @@ export class GoogleMapsService {
 
   setMapWithPosition(mapDiv, position: google.maps.LatLng, zoom: number = 16) {
     // if (typeof (position) !== 'string') {
-      const mapOptions = {
-        center: position,
-        zoom,
-      };
-      const map = new google.maps.Map(mapDiv, mapOptions);
-      this.addMarker(position, map);
-      return position;
+    const mapOptions = {
+      center: position,
+      zoom,
+    };
+    const map = new google.maps.Map(mapDiv, mapOptions);
+    this.addMarker(position, map);
+    return position;
     // }
   }
 
@@ -84,9 +84,15 @@ export class GoogleMapsService {
             .then((result: google.maps.GeocoderResult) => {
               try {
                 const address = {
-                  city: result.address_components.find(addressComponent => addressComponent.types.includes('locality')).long_name,
-                  street: result.address_components.find(addressComponent => addressComponent.types.includes('route')).long_name,
-                  streetNumber: result.address_components.find(addressComponent => addressComponent.types.includes('street_number')).long_name,
+                  city: result.address_components.find(
+                    addressComponent => addressComponent.types.includes('locality')
+                  )?.long_name,
+                  street: result.address_components.find(
+                    addressComponent => addressComponent.types.includes('route')
+                  )?.long_name,
+                  streetNumber: result.address_components.find(
+                    addressComponent => addressComponent.types.includes('street_number')
+                  )?.long_name,
                   coordinates: currentCoordinates
                 };
                 resolve(address);

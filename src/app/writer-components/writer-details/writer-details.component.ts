@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../../interfaces';
@@ -25,7 +25,7 @@ interface Navigator {
   templateUrl: './writer-details.component.html',
   styleUrls: ['./writer-details.component.css']
 })
-export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestroy {
+export class WriterDetailsComponent implements OnInit, OnDestroy {
 
   writer: Writer;
   writer$Subscription: Subscription;
@@ -67,6 +67,12 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
             : this.writer.pricesDeatails.priceForTorahScroll.price,
         };
       }
+      if (this.writer?.coordinates) {
+        console.log(this.writer.coordinates);
+        setTimeout(() => {
+          this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
+        });
+      }
     });
   }
 
@@ -89,23 +95,6 @@ export class WriterDetailsComponent implements OnInit, AfterContentInit, OnDestr
     } else {
       // fallback
     }
-  }
-
-  ngAfterContentInit() {
-    // this.paramsSub = this.route.params.subscribe(params => {
-    //   this.stitchService.getWriter(params['id'])
-    //     .then((writer: Writer) => {
-    //       this.writer = writer;
-    //       setTimeout(() => {
-    //         if (!this.writer.coordinates) {
-
-    //         }
-    //         this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates)
-    //       }, 1000);
-
-    //     })
-    //     .catch(err => console.log(err))
-    //  });
   }
 
   editWriter() {

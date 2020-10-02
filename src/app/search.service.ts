@@ -6,7 +6,6 @@ import { State } from './reducers';
 import { StitchService } from './stitch-service.service';
 import { setAdvancedSearchResult } from './actions/writers.actions';
 import { LocationPath, SearchFor } from './enums';
-import { writer } from 'repl';
 
 
 @Injectable({ providedIn: 'root' })
@@ -29,27 +28,21 @@ export class SearchService implements OnDestroy {
     }
 
     advancedSearch(query: AdvancedSearchQuery, searchFor: SearchFor, location: LocationPath) {
-        if (query.highestPrice.toString() === '') {
-            query.highestPrice = 999999;
-        }
-        if (query.lowestPrice.toString() === '') {
-            query.lowestPrice = 0;
-        }
         const findInDbParms = {
             selector: {
                 $and: [
-                    {
-                        $or: this.isAppropriateQuery(query.isAppropriateLevels)
-                    },
-                    {
-                        $or: this.formatQuery(query.goesToKotel, 'goesToKotel')
-                    },
-                    {
-                        $or: this.formatQuery(query.voatsInElection, 'voatsInElection')
-                    },
-                    {
-                        $or: this.writingLevelQuery(query.writingLevel)
-                    },
+                    // {
+                    //     $or: this.isAppropriateQuery(query.isAppropriateLevels)
+                    // },
+                    // {
+                    //     $or: this.formatQuery(query.goesToKotel, 'goesToKotel')
+                    // },
+                    // {
+                    //     $or: this.formatQuery(query.voatsInElection, 'voatsInElection')
+                    // },
+                    // {
+                    //     $or: this.writingLevelQuery(query.writingLevel)
+                    // },
                     // {
                     //     $or: this.writingTypesQuery(query.writingTypes, location)
                     // },
@@ -60,7 +53,11 @@ export class SearchService implements OnDestroy {
             }
         };
 
+        console.log(JSON.stringify(findInDbParms));
         const jsQuery = item => {
+            if (query.lowestPrice.toString() === '' || query.highestPrice.toString() === '') {
+                return true;
+            }
             if (query.priceOf === 'priceForTorahScrollPerPage' && item.pricesDeatails.isPricePerPage === 'מחיר לספר תורה') {
                 const price = (item.pricesDeatails.priceForTorahScroll.price - 8700) / 245;
                 return price >= query.lowestPrice && price <= query.highestPrice;
@@ -93,24 +90,110 @@ export class SearchService implements OnDestroy {
 
         if (searchFor === SearchFor.WRITERS) {
             this.pouchDbService.localWritersDB.find(findInDbParms).then(result => {
-                const filter = result.docs.filter(item => {
-                    if (
-                        (query.writingTypes.ari === false)
-                        && (query.writingTypes.beitYosef === false)
-                        && (query.writingTypes.welish === false)
-                    ) {
+                console.log(result);
+                const filter = result.docs
+                    .filter(item => {
+                        if (
+                            (
+                                (query.writingTypes.ari === false)
+                                && (query.writingTypes.beitYosef === false)
+                                && (query.writingTypes.welish === false)
+                            )
+                            ||
+                            (
+                                (query.writingTypes.ari === true)
+                                && (query.writingTypes.beitYosef === true)
+                                && (query.writingTypes.welish === true)
+                            )
+                        ) {
+                            return true;
+                        }
+                        if (query.writingTypes.ari && item.writingDeatails.writingTypes.types.ari) {
+                            return true;
+                        }
+                        if (query.writingTypes.beitYosef && item.writingDeatails.writingTypes.types.beitYosef) {
+                            return true;
+                        }
+                        if (query.writingTypes.welish && item.writingDeatails.writingTypes.types.Welish) {
+                            return true;
+                        }
+                    })
+                    .filter(item => {
+                        if (
+                            (
+                                (query.writingLevel[1] === false)
+                                && (query.writingLevel[2] === false)
+                                && (query.writingLevel[3] === false)
+                                && (query.writingLevel[4] === false)
+                                && (query.writingLevel[5] === false)
+                            )
+                            ||
+                            (
+                                (query.writingLevel[1] === true)
+                                && (query.writingLevel[2] === true)
+                                && (query.writingLevel[3] === true)
+                                && (query.writingLevel[4] === true)
+                                && (query.writingLevel[5] === true)
+                            )
+                        ) {
+                            return true;
+                        }
+                        if (query.writingLevel[1] && item.writingDeatails.writingLevel.level === 'זול') {
+                            return true;
+                        }
+                        if (query.writingLevel[2] && item.writingDeatails.writingLevel.level === 'פחותה') {
+                            return true;
+                        }
+                        if (query.writingLevel[3] && item.writingDeatails.writingLevel.level === 'בינוני') {
+                            return true;
+                        }
+                        if (query.writingLevel[4] && item.writingDeatails.writingLevel.level === 'גבוהה') {
+                            return true;
+                        }
+                        if (query.writingLevel[5] && item.writingDeatails.writingLevel.level === 'מיוחד') {
+                            return true;
+                        }
+                    })
+                    .filter(item => {
+                        if (query.goesToKotel === 'false') {
+                            console.log(item.additionalDetails.goesToKotel.boolean);
+                            return item.additionalDetails.goesToKotel.boolean === 'false';
+                        }
                         return true;
-                    }
-                    if (query.writingTypes.ari && item.writingDeatails.writingTypes.types.ari) {
+                    })
+                    .filter(item => {
+                        if (
+                            (
+                                (query.isAppropriateLevels.bad === false)
+                                && (query.isAppropriateLevels.good === false)
+                                && (query.isAppropriateLevels.veryGood === false)
+                            )
+                            ||
+                            (
+                                (query.isAppropriateLevels.bad === true)
+                                && (query.isAppropriateLevels.good === true)
+                                && (query.isAppropriateLevels.veryGood === true)
+                            )
+                        ) {
+                            return true;
+                        }
+                        if (query.isAppropriateLevels.bad && item.isAppropriate.level === 'לא מתאים') {
+                            return true;
+                        }
+                        if (query.isAppropriateLevels.good && item.isAppropriate.level === 'מתאים') {
+                            return true;
+                        }
+                        if (query.isAppropriateLevels.veryGood && item.isAppropriate.level === 'כדאי מאוד') {
+                            return true;
+                        }
+                    })
+                    .filter(item => {
+                        if (query.voatsInElection === 'false') {
+                            return item.additionalDetails.voatsInElection.boolean === 'false';
+                        }
                         return true;
-                    }
-                    if (query.writingTypes.beitYosef && item.writingDeatails.writingTypes.types.beitYosef) {
-                        return true;
-                    }
-                    if (query.writingTypes.welish && item.writingDeatails.writingTypes.types.Welish) {
-                        return true;
-                    }
-                }).filter(jsQuery);
+                    })
+                    .filter(jsQuery);
                 this.store$.dispatch(setAdvancedSearchResult({ items: filter }));
             });
         } else if (searchFor === SearchFor.BOOKS) {
@@ -280,39 +363,39 @@ export class SearchService implements OnDestroy {
         location: LocationPath
     ): { [x: string]: { $eq: boolean | string } }[] {
         // all options are true or false.;
-        // const sameValueLetterSizesQuery = [...new Set(Object.values(letterSizes))].length;
+        const sameValueLetterSizesQuery = [...new Set(Object.values(letterSizes))].length;
         const letterSizesQuery: { [x: string]: { $eq: boolean | string } }[] = [];
 
-        // if (sameValueLetterSizesQuery === 1) {
-        //     letterSizesQuery.push(
-        //         ...Object
-        //             .keys(letterSizes)
-        //             .map(([key]) => {
-        //                 const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
-        //                 const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
-        //                 return {
-        //                     [path]: {
-        //                         $eq: isWriterSearch ? true : key
-        //                     }
-        //                 };
-        //             })
-        //     );
-        // } else {
-        letterSizesQuery.push(
-            ...Object
-                .entries(letterSizes)
-                .filter(([, booleanValue]) => booleanValue)
-                .map(([key]) => {
-                    const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
-                    const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
-                    return {
-                        [path]: {
-                            $eq: isWriterSearch ? true : key
-                        }
-                    };
-                })
-        );
-        // }
+        if (sameValueLetterSizesQuery === 1) {
+            letterSizesQuery.push(
+                ...Object
+                    .entries(letterSizes)
+                    .map(([key]) => {
+                        const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
+                        const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
+                        return {
+                            [path]: {
+                                $eq: isWriterSearch ? true : key
+                            }
+                        };
+                    })
+            );
+        } else {
+            letterSizesQuery.push(
+                ...Object
+                    .entries(letterSizes)
+                    .filter(([, booleanValue]) => booleanValue)
+                    .map(([key]) => {
+                        const isWriterSearch = location === LocationPath.WRITERS_ADVANCED_SEARCH;
+                        const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
+                        return {
+                            [path]: {
+                                $eq: isWriterSearch ? true : key
+                            }
+                        };
+                    })
+            );
+        }
         return letterSizesQuery;
     }
 

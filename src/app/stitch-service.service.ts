@@ -27,7 +27,7 @@ export class StitchService {
   communitiesFromDB = new Subject<string[]>();
 
   localWritersDB = new PouchDB<Writer>('writersLocal');
-  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers_remote');
+  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers__remote');
 
   localCommunitiesDB = new PouchDB('communitiesLocal');
   remoteCommunitiesDB = new PouchDB('https://ashuris.online:5985/communities_remote');
@@ -86,6 +86,9 @@ export class StitchService {
           this.store$.dispatch(actionToDispatch());
         }).on('error', (err) => {
           console.log(err);
+        }).on('active', () => {
+          console.log('event');
+          this.store$.dispatch(actionToDispatch());
         });
     });
   }

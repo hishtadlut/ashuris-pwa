@@ -1,5 +1,6 @@
 <app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
 </app-note-dialog-output>
+<div #mapContainer id="map"></div>
 <div class="page-wrapper">
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
@@ -157,7 +158,6 @@
                         <div class="detail">
                             {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
                         </div>
-                        <!-- <div class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div> -->
                     </div>
 
                 </div>
@@ -260,9 +260,8 @@
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>
                 </div>
-                <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
             </div>
-
+            
             <div class="section" (click)="closeMenus('recordings')">
                 <div class="section-title-btn">תזכורת קולית</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
@@ -272,7 +271,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
     </div>
