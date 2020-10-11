@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Injectable({ providedIn: 'root' })
 export class RecordingService {

@@ -364,7 +364,7 @@ export class SearchService implements OnDestroy {
     ): { [x: string]: { $eq: boolean | string } }[] {
         // all options are true or false.;
         const sameValueLetterSizesQuery = [...new Set(Object.values(letterSizes))].length;
-        const letterSizesQuery: { [x: string]: { $eq: boolean | string } }[] = [];
+        const letterSizesQuery = [];
 
         if (sameValueLetterSizesQuery === 1) {
             letterSizesQuery.push(
@@ -375,7 +375,7 @@ export class SearchService implements OnDestroy {
                         const path = isWriterSearch ? `writingDeatails.letterSizes.${key}` : 'writingDeatails.letterSize.size';
                         return {
                             [path]: {
-                                $eq: isWriterSearch ? true : key
+                                $exists: true
                             }
                         };
                     })

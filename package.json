@@ -31,7 +31,7 @@
     "@ngrx/schematics": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
-    "@types/googlemaps": "^3.39.6",
+    "@types/googlemaps": "^3.39.14",
     "@types/pouchdb": "^6.4.0",
     "@types/pouchdb-upsert": "^2.2.6",
     "bootstrap": "^4.4.0",
@@ -51,7 +51,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.3",
     "@angular/cli": "~10.0.1",
-    "@types/dom-mediacapture-record": "^1.0.6",
+    "@types/dom-mediacapture-record": "^1.0.7",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
