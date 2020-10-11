@@ -59,12 +59,22 @@ export class SearchService implements OnDestroy {
                 return true;
             }
             if (query.priceOf === 'priceForTorahScrollPerPage' && item.pricesDeatails.isPricePerPage === 'מחיר לספר תורה') {
-                const price = (item.pricesDeatails.priceForTorahScroll.price - 8700) / 245;
+                const price = (item.pricesDeatails.priceForTorahScroll.price * 245) + 8700;
+                return price >= query.lowestPrice && price <= query.highestPrice;
+            }
+
+            if (query.priceOf === 'priceForTorahScrollPerPage' && item.pricesDeatails.isPricePerPage === 'מחיר לעמוד') {
+                const price = item.pricesDeatails.priceForTorahScroll.price;
                 return price >= query.lowestPrice && price <= query.highestPrice;
             }
 
             if (query.priceOf === 'priceForTorahScroll' && item.pricesDeatails.isPricePerPage === 'מחיר לספר תורה') {
-                const price = (item.pricesDeatails.priceForTorahScroll.price * 245) + 8700;
+                const price = item.pricesDeatails.priceForTorahScroll.price;
+                return price >= query.lowestPrice && price <= query.highestPrice;
+            }
+
+            if (query.priceOf === 'priceForTorahScroll' && item.pricesDeatails.isPricePerPage === 'מחיר לעמוד') {
+                const price = (item.pricesDeatails.priceForTorahScroll.price - 8700) / 245;
                 return price >= query.lowestPrice && price <= query.highestPrice;
             }
 
