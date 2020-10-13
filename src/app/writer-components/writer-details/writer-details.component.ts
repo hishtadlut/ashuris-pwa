@@ -55,7 +55,7 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
+    this.writer$Subscription = this.writer$.subscribe(async (writer: Writer) => {
       this.writer = writer;
       if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
         this.priceForTorahScroll = {
@@ -72,6 +72,11 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
         });
+      } else if (this.writer) {
+        const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
+          { city: writer.city, street: writer.street, streetNumber: writer.streetNumber }
+        );
+        this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
       }
     });
   }
@@ -80,7 +85,6 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     event.preventDefault();
     if (navigator.share) {
-      console.log(event.target.parentElement.lastChild.src);
       base64ToBlob(event.target.parentElement.lastChild.src)
         .then(img => {
           navigator.share({

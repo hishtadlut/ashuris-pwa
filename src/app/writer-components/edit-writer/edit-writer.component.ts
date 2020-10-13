@@ -304,7 +304,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
 
     this.editMode$Subscription = this.editMode$.subscribe((editMode: boolean) => {
       this.editMode = editMode;
-      this.editOrCreatePage = (this.location.path() === LocationPath.EDIT_WRITER) || (this.location.path()  === LocationPath.CREATE_WRITER);
+      this.editOrCreatePage = (this.location.path() === LocationPath.EDIT_WRITER) || (this.location.path() === LocationPath.CREATE_WRITER);
       if (editMode && this.editOrCreatePage) {
         this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
           this.writer = writer;

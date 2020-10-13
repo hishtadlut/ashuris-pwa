@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Address } from './interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class GoogleMapsService {
@@ -12,7 +13,6 @@ export class GoogleMapsService {
             const currentCoordinates = new google.maps.LatLng(
               result.coords.latitude,
               result.coords.longitude,
-              // 32.0845933, 34.8412179
             );
             resolve(currentCoordinates);
           },
@@ -49,20 +49,14 @@ export class GoogleMapsService {
     });
   }
 
-
-
-  // setMapWithCurrentPosition(mapDiv, zoom: number = 16): Promise<google.maps.LatLng> {
-  //   return new Promise((resolve, reject) => {
-  //     this.getCurrentCoordinates()
-  //       .then((currentCoordinates: google.maps.LatLng) => {
-  //         this.setMapWithPosition(mapDiv, currentCoordinates)
-  //         resolve(currentCoordinates);
-  //       }).catch((err) => {
-  //         reject(err);
-  //       });
-  //   });
-
-  // }
+  geoCodeAddressToCoordinates(address: Address): Promise<google.maps.LatLng> {
+    const addreddString = `${address.city} + ${address.street} + ${address.streetNumber}`;
+    return new Promise(resolve => {
+      this.geocoder.geocode({ address: addreddString }, (result) => {
+        resolve(result[0].geometry.location);
+      });
+    });
+  }
 
   setMapWithPosition(mapDiv, position: google.maps.LatLng, zoom: number = 16) {
     // if (typeof (position) !== 'string') {
