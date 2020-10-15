@@ -5,8 +5,7 @@
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
             <img [src]="writer.profileImage" alt="" class="profile-img">
-            <div *ngIf="writer.note"
-                (click)="openDialog($event ,writer.note)" class="comment-icon-absolute">
+            <div *ngIf="writer.note" (click)="openDialog($event ,writer.note)" class="comment-icon-absolute">
                 <img src="assets/icons/Path 35.png" alt="">
             </div>
             <div class="name-wrapper">
@@ -34,7 +33,9 @@
             <div class="basic-detail .inner-grid" *ngIf="writer.city">
                 <img src="assets/icons/Location2.png" alt="">
                 <div>
-                    <div class="information">{{ writer.street }} {{ writer.streetNumber }} <span *ngIf="writer.apartmentNumber">דירה {{ writer.apartmentNumber }}</span> {{ writer.city }} </div>
+                    <div class="information">{{ writer.street }} {{ writer.streetNumber }} <span
+                            *ngIf="writer.apartmentNumber">דירה {{ writer.apartmentNumber }}</span> {{ writer.city }}
+                    </div>
                     <div class="description">כתובת</div>
                 </div>
             </div>
@@ -60,11 +61,10 @@
             </div>
         </div>
         <div class="extra-details-section">
-            <div class="section" (click)="closeMenus('pricesDeatails')"
-                *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
+            <div class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
-                    <div class="price-extra-detail">
+                    <div *ngIf="priceForTorahScroll?.priceForScroll !== 0" class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -75,7 +75,7 @@
                             (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
                             class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
-                    <div class="price-extra-detail">
+                    <div *ngIf="priceForTorahScroll?.priceForScroll !== 0" class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
                         <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -86,7 +86,7 @@
                             (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
                             class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
-                    <div class="price-extra-detail">
+                    <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForMezuzah.price">
                         <div class="detail-title description">מחיר למזוזה</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForMezuzah.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -97,7 +97,7 @@
                             (click)="openDialog($event ,writer.pricesDeatails.priceForMezuzah.note)"
                             class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
                     </div>
-                    <div class="price-extra-detail">
+                    <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForTefillin.price">
                         <div class="detail-title description">מחיר לתפילין</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForTefillin.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -261,7 +261,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="section" (click)="closeMenus('recordings')">
                 <div class="section-title-btn">תזכורת קולית</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
