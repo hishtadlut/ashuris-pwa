@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook, Address } from './interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 

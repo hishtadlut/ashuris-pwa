@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'edit-book', component: EditBookComponent, data: { 'nav-bar-title': 'עריכת ספר' } },
   { path: 'writers-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'סופרים: חיפוש מתקדם' } },
   { path: 'books-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'ספרים: חיפוש מתקדם' } },
-  { path: 'writers-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'סופרים: תוצאות חיפוש' }  },
+  { path: 'writers-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'סופרים: תוצאות חיפוש' } },
   { path: 'books-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'ספרים: תוצאות חיפוש' } },
   { path: 'create-new-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' } },
   { path: 'create-dealer-for-book', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' } },
@@ -35,14 +35,14 @@ const routes: Routes = [
   { path: 'book-list-screen', component: BookListScreenComponent, data: { 'nav-bar-title': 'רשימת ספרים' } },
   { path: 'dealer-book-list', component: BookListScreenComponent, data: { 'nav-bar-title': 'סוחר: רשימת סופרים' } },
   { path: 'writer-details', component: WriterDetailsComponent, data: { 'nav-bar-title': 'פרטי סופר' } },
-  { path: 'dealer-details', component: DealerDetailsComponent, data: { 'nav-bar-title': 'פרטי סוחר' }  },
-  { path: 'book-details', component: BookDetailsComponent, data: { 'nav-bar-title': 'פרטי ספר' }  },
-  { path: 'writer-reminders', component: RemindersListComponent, data: { 'nav-bar-title': 'תזכורות סופרים' }  },
+  { path: 'dealer-details', component: DealerDetailsComponent, data: { 'nav-bar-title': 'פרטי סוחר' } },
+  { path: 'book-details', component: BookDetailsComponent, data: { 'nav-bar-title': 'פרטי ספר' } },
+  { path: 'writer-reminders', component: RemindersListComponent, data: { 'nav-bar-title': 'תזכורות סופרים' } },
   { path: 'book-reminders', component: RemindersListComponent, data: { 'nav-bar-title': 'תזכורות ספרים' } },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
