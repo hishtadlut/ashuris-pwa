@@ -64,7 +64,7 @@
             <div class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
-                    <div *ngIf="priceForTorahScroll?.priceForScroll !== 0" class="price-extra-detail">
+                    <div *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0" class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
