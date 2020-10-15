@@ -31,7 +31,6 @@ export class DealerDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dealer$Subscription = this.dealer$.subscribe(dealer => {
-      console.log(dealer);
       this.dealer = dealer;
     });
   }

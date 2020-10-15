@@ -15,4 +15,23 @@
     direction: rtl;
     display: grid;
     margin: 0 4vw;
-  }
+}
+
+.grid {
+    display: grid;
+    align-items: center;
+}
+
+.count-section {
+    grid-template: auto / 1fr auto;
+    grid-gap: 10vw;
+    padding: 1vw 4vw;
+    align-items: end;
+}
+
+.count {
+    font-weight: normal;
+    font-size: 0.75rem;
+    font-family: Arial;
+    text-align: right;
+}

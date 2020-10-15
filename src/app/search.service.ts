@@ -53,7 +53,6 @@ export class SearchService implements OnDestroy {
             }
         };
 
-        console.log(JSON.stringify(findInDbParms));
         const jsQuery = item => {
             if (query.lowestPrice.toString() === '' || query.highestPrice.toString() === '') {
                 return true;
@@ -100,7 +99,6 @@ export class SearchService implements OnDestroy {
 
         if (searchFor === SearchFor.WRITERS) {
             this.pouchDbService.localWritersDB.find(findInDbParms).then(result => {
-                console.log(result);
                 const filter = result.docs
                     .filter(item => {
                         if (
@@ -166,7 +164,6 @@ export class SearchService implements OnDestroy {
                     })
                     .filter(item => {
                         if (query.goesToKotel === 'false') {
-                            console.log(item.additionalDetails.goesToKotel.boolean);
                             return item.additionalDetails.goesToKotel.boolean === 'false';
                         }
                         return true;
@@ -208,7 +205,6 @@ export class SearchService implements OnDestroy {
             });
         } else if (searchFor === SearchFor.BOOKS) {
             this.pouchDbService.localBooksDB.find(findInDbParms).then(result => {
-                console.log(result);
                 this.store$.dispatch(setAdvancedSearchResult({ items: result.docs.filter(jsQuery) }));
             });
         }

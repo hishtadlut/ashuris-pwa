@@ -87,7 +87,7 @@ export class StitchService {
         }).on('error', (err) => {
           console.log(err);
         }).on('active', () => {
-          console.log('event');
+          console.log('active');
           this.store$.dispatch(actionToDispatch());
         });
     });
@@ -295,7 +295,6 @@ export class StitchService {
         ...bookClone
       })
         .then(result => {
-          console.log(result);
           this.addBookToDealer(result.id, dealerId);
         })
         .catch(console.error);
