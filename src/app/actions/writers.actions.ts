@@ -1,21 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Writer, Dealer, Book } from '../interfaces';
 
-export const loadWriter = createAction(
-  '[Writer] load Writer',
-  props<{ writerId: string }>()
-);
-
-export const loadDealer = createAction(
-  '[Dealers] load Dealer',
-  props<{ dealerId: string }>()
-);
-
-export const loadBook = createAction(
-  '[Books] load Book',
-  props<{ bookId: string }>()
-);
-
 export const addToChangeUrgencyWritersList = createAction(
   '[Writer] Add To Change Urgency Writers List',
   props<{ writerId: string, levelOfUrgency: number }>()

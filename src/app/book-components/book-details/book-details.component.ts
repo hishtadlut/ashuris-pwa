@@ -1,24 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Book } from 'src/app/interfaces';
-import { State } from '../../reducers';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Store, select } from '@ngrx/store';
-import { Subscription, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+import { StitchService } from 'src/app/stitch-service.service';
 
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
 })
-export class BookDetailsComponent implements OnInit, OnDestroy {
+export class BookDetailsComponent implements OnInit {
   book: Book;
-  book$Subscription: Subscription;
-  book$: Observable<any> = this.store$.pipe(
-    select('writers', 'book')
-  );
-
   openMenuStatus = {
     pricesDeatails: false,
     writingDeatails: false,
@@ -32,29 +25,28 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
   constructor(
     public sanitizer: DomSanitizer,
-    private store$: Store<State>,
     private router: Router,
-
+    private activatedRoute: ActivatedRoute,
+    private pouchDbService: StitchService,
   ) { }
 
-  ngOnInit(): void {
-    this.book$Subscription = this.book$.subscribe((book: Book) => {
-      this.book = book;
-      if (this.book?.pricesDeatails?.priceForTorahScroll.price) {
-        this.priceForTorahScroll = {
-          pricePerPage: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-            ? this.book.pricesDeatails.priceForTorahScroll.price
-            : Math.round((this.book.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
-          priceForScroll: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-            ? Math.round((this.book.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
-            : this.book.pricesDeatails.priceForTorahScroll.price,
-        };
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    this.book = await this.pouchDbService.getBookById(id);
+    if (this.book?.pricesDeatails?.priceForTorahScroll.price) {
+      this.priceForTorahScroll = {
+        pricePerPage: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+          ? this.book.pricesDeatails.priceForTorahScroll.price
+          : Math.round((this.book.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+        priceForScroll: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+          ? Math.round((this.book.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
+          : this.book.pricesDeatails.priceForTorahScroll.price,
+      };
+    }
   }
 
   openDialog(event: Event, content: string) {
-    preventDefaultAndStopPropagation(event)
+    preventDefaultAndStopPropagation(event);
     this.dialogContent = content;
   }
 
@@ -79,15 +71,5 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
     this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
-
-  ngOnDestroy() {
-    this.book$Subscription.unsubscribe();
-  }
-
-}
-
-export class WriterDetailsComponent {
-
-
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
@@ -8,6 +8,7 @@ import { State } from '../../reducers';
 import { editWriter } from '../../actions/writers.actions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { base64ToBlob, preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+import { StitchService } from 'src/app/stitch-service.service';
 declare const navigator: Navigator;
 type ShareData = {
   title?: string;
@@ -50,35 +51,34 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private store$: Store<State>,
     private googleMapsService: GoogleMapsService,
-    private store: Store,
-    public sanitizer: DomSanitizer
+    private activatedRoute: ActivatedRoute,
+    private pouchDbService: StitchService,
+    public sanitizer: DomSanitizer,
   ) { }
 
-  ngOnInit(): void {
-    this.writer$Subscription = this.writer$.subscribe(async (writer: Writer) => {
-      this.writer = writer;
-      if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
-        this.priceForTorahScroll = {
-          pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-            ? this.writer.pricesDeatails.priceForTorahScroll.price
-            : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
-          priceForScroll: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-            ? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
-            : this.writer.pricesDeatails.priceForTorahScroll.price,
-        };
-      }
-      if (this.writer?.coordinates) {
-        console.log(this.writer.coordinates);
-        setTimeout(() => {
-          this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
-        });
-      } else if (this.writer) {
-        const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
-          { city: writer.city, street: writer.street, streetNumber: writer.streetNumber }
-        );
-        this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    this.writer = await this.pouchDbService.getWriter(id);
+    if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
+      this.priceForTorahScroll = {
+        pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+          ? this.writer.pricesDeatails.priceForTorahScroll.price
+          : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+        priceForScroll: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+          ? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
+          : this.writer.pricesDeatails.priceForTorahScroll.price,
+      };
+    }
+    if (this.writer?.coordinates) {
+      setTimeout(() => {
+        this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
+      });
+    } else if (this.writer) {
+      const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
+        { city: this.writer.city, street: this.writer.street, streetNumber: this.writer.streetNumber }
+      );
+      this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
+    }
   }
 
   shareButton(event) {
@@ -140,7 +140,6 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.writer$Subscription.unsubscribe();
     // this.paramsSub.unsubscribe()
   }
 

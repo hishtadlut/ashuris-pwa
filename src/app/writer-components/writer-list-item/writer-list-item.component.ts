@@ -3,7 +3,7 @@ import { Writer } from 'src/app/interfaces';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
-import { loadWriter, addToChangeUrgencyWritersList } from 'src/app/actions/writers.actions';
+import { addToChangeUrgencyWritersList } from 'src/app/actions/writers.actions';
 import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
 @Component({
@@ -23,8 +23,7 @@ export class WriterListItemComponent implements OnInit {
   }
 
   goToWriterDetails() {
-    this.store$.dispatch(loadWriter({ writerId: this.writer._id }));
-    this.router.navigate([`/writer-details`]);
+    this.router.navigate([`/writer-details`], { queryParams: { id: this.writer._id } });
   }
 
   changeUrgencyLevel(event: Event) {

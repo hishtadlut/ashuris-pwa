@@ -15,7 +15,8 @@ export enum LocationPath {
   CREATE_WRITER = '/create-writer',
   CREATE_BOOK = '/create-book',
   EDIT_WRITER = '/edit-writer',
-  CREATE_DEALER_FOR_BOOK = '/create-dealer-for-book'
+  CREATE_DEALER_FOR_BOOK = '/create-dealer-for-book',
+  WRITER_DETAILS = '/writer-details',
 }
 
 export enum SearchFor {

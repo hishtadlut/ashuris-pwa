@@ -19,7 +19,6 @@ import {
   setDealer,
   loadBookList,
   setBookList,
-  loadBook,
   setBook,
   putChangeUrgencyBookList,
   resetChangeUrgencyBookList,
@@ -48,42 +47,6 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
     this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
   }
-
-  loadWriter$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType('[Writer] load Writer'),
-      mergeMap((action: any) => from(this.stitchService.getWriter(action.writerId))
-        .pipe(
-          map(writer => setWriter({ writer: JSON.parse(JSON.stringify(writer)) })),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      ),
-    )
-  );
-
-  loadDealer$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType('[Dealers] load Dealer'),
-      mergeMap((action: any) => from(this.stitchService.getDealerById(action.dealerId))
-        .pipe(
-          map(dealer => setDealer({ dealer: JSON.parse(JSON.stringify(dealer)) })),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      ),
-    )
-  );
-
-  loadBook$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadBook),
-      mergeMap((action: any) => from(this.stitchService.getBookById(action.bookId))
-        .pipe(
-          map(book => setBook({ book: JSON.parse(JSON.stringify(book)) })),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      ),
-    )
-  );
 
   loadWritersList$ = createEffect(() =>
     this.actions$.pipe(

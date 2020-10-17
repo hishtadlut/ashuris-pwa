@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
-import { loadBook, addToChangeUrgencyBookList } from 'src/app/actions/writers.actions';
+import { addToChangeUrgencyBookList } from 'src/app/actions/writers.actions';
 import { Book } from 'src/app/interfaces';
 import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 
@@ -22,8 +22,7 @@ export class BookListItemComponent implements OnInit {
   }
 
   goToBookDetails() {
-    this.store$.dispatch(loadBook({ bookId: this.book._id }));
-    this.router.navigate([`/book-details`]);
+    this.router.navigate([`/book-details`], {queryParams: { id: this.book._id }});
   }
 
   changeUrgencyLevel(event) {

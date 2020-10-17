@@ -1,38 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { GoogleMapsService } from '../google-maps-service.service';
-import { State } from '../reducers';
 import { Dealer } from '../interfaces';
-import { Subscription, Observable } from 'rxjs';
 import { preventDefaultAndStopPropagation } from '../utils/utils';
+import { StitchService } from '../stitch-service.service';
 
 @Component({
   selector: 'app-dealer-details',
   templateUrl: './dealer-details.component.html',
   styleUrls: ['./dealer-details.component.css']
 })
-export class DealerDetailsComponent implements OnInit, OnDestroy {
+export class DealerDetailsComponent implements OnInit {
   dialogContent = null;
-
   dealer: Dealer;
-  dealer$Subscription: Subscription;
-  dealer$: Observable<any> = this.store$.pipe(
-    select('writers', 'dealer')
-  );
 
   constructor(
     private router: Router,
-    private store$: Store<State>,
+    private activatedRoute: ActivatedRoute,
+    private pouchDbService: StitchService,
     public sanitizer: DomSanitizer,
-    private googleMapsService: GoogleMapsService,
   ) { }
 
-  ngOnInit() {
-    this.dealer$Subscription = this.dealer$.subscribe(dealer => {
-      this.dealer = dealer;
-    });
+  async ngOnInit() {
+    const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    this.dealer = await this.pouchDbService.getDealerById(id);
   }
 
   openDialog(event: Event, content: string) {
@@ -48,7 +39,4 @@ export class DealerDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/edit-dealer']);
   }
 
-  ngOnDestroy() {
-    this.dealer$Subscription.unsubscribe();
-  }
 }
