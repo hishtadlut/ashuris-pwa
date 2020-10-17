@@ -8,6 +8,7 @@
         accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
       <label for="profileImage" class="bold-text inner-grid">
         <div>
+          <i *ngIf="!writerForm.controls.profileImage.value" class="icofont-user-alt-7"></i>
           <img *ngIf="writerForm.controls.profileImage.value" [src]="writerForm.controls.profileImage.value"
             class="profile-image">
         </div>
@@ -20,7 +21,7 @@
       <div class="section-title-w-note inner-grid-2">
         <div>פרטים אישיים</div>
         <div>
-          <p (click)="openDialog(writerForm)" class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+          <p (click)="openDialog(writerForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
 
@@ -79,7 +80,7 @@
       </div>
       <div>
         <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['isWritingRegularly'])))" class="note">
-          <img src="assets/icons/Edit.svg"></p>
+          <i class="icofont-pencil-alt-2"></i></p>
       </div>
     </div>
     <div formGroupName="pricesDeatails" class="price-deatail-section inner-grid">
@@ -110,21 +111,21 @@
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}"
               class="size-checkbox">
-              <img src="assets/icons/x.png" alt="">
+              <i class="icofont-close-line"></i>
               <input type="radio" formControlName="worthIt" value='false'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'true'}"
               class="size-checkbox">
-              <img src="assets/icons/v.png" alt="">
+              <i class="icofont-check-alt"></i>
               <input type="radio" formControlName="worthIt" value='true'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']))">
             </label>
 
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTorahScroll'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
           <input type="number" placeholder="מחיר למזוזה" formControlName="price">
@@ -132,21 +133,21 @@
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}"
               class="size-checkbox">
-              <img src="assets/icons/x.png" alt="">
+              <i class="icofont-close-line"></i>
               <input type="radio" formControlName="worthIt" value='false'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'true'}"
               class="size-checkbox">
-              <img src="assets/icons/v.png" alt="">
+              <i class="icofont-check-alt"></i>
               <input type="radio" formControlName="worthIt" value='true'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']))">
             </label>
 
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForMezuzah'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
           <input type="number" placeholder="מחיר לתפילין" formControlName="price">
@@ -154,21 +155,21 @@
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}"
               class="size-checkbox">
-              <img src="assets/icons/x.png" alt="">
+              <i class="icofont-close-line"></i>
               <input type="radio" formControlName="worthIt" value='false'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
             </label>
             <label
               [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'true'}"
               class="size-checkbox">
-              <img src="assets/icons/v.png" alt="">
+              <i class="icofont-check-alt"></i>
               <input type="radio" formControlName="worthIt" value='true'
                 (click)="isChecked($event, writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']))">
             </label>
 
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTefillin'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
     </div>
@@ -178,7 +179,7 @@
           <div class="section-title-w-note inner-grid-2">
             <div>דרגת כתיבה</div>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'writingLevel'])))"
-              class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+              class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
         </div>
         <div class="number-button-wrapper inner-grid-2">
@@ -226,7 +227,7 @@
             יציבות
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'stabilityLevel'])))"
-            ass="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            ass="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <div>
@@ -273,7 +274,7 @@
             מחיקה
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'eraseLevel'])))"
-            ass="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            ass="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <div>
@@ -322,7 +323,7 @@
               גודל הכתב
             </div>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['writingDeatails', 'letterSizes'])))"
-              class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+              class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
           <div class="sizes-row inner-grid-2">
 
@@ -402,7 +403,7 @@
           קהילה
         </div>
         <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['communityDeatails'])))" class="note">
-          <img src="assets/icons/Edit.svg" alt="">
+          <i class="icofont-pencil-alt-2"></i>
         </p>
       </div>
       <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
@@ -417,8 +418,8 @@
         מקום כתיבה
       </div>
       <div>
-        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['placeOfWriting'])))" class="note"><img
-            src="assets/icons/Edit.svg" alt="">
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['placeOfWriting'])))" class="note">
+          <i class="icofont-pencil-alt-2"></i>
         </p>
       </div>
 
@@ -449,19 +450,19 @@
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenBefore', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'hasWritenBefore', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenBefore', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'hasWritenBefore', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenBefore'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="hasWritenKabala" class="additional-detail inner-grid-2">
           <div class="description">
@@ -470,19 +471,19 @@
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenKabala', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'hasWritenKabala', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'hasWritenKabala', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'hasWritenKabala', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenBefore'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="voatsInElection" class="additional-detail inner-grid-2">
           <div class="description">
@@ -491,19 +492,19 @@
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'voatsInElection'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="goesToKotel" class="additional-detail inner-grid-2">
           <div class="description">
@@ -512,20 +513,20 @@
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'goesToKotel'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
         <div formGroupName="beginnerWriter" class="additional-detail inner-grid-2">
@@ -535,20 +536,20 @@
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'beginnerWriter', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'beginnerWriter', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': writerForm.get(['additionalDetails', 'beginnerWriter', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, writerForm.get(['additionalDetails', 'beginnerWriter', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'beginnerWriter'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
       </div>
@@ -563,7 +564,7 @@
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'writerLevel'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
           <div>
             <label [ngClass]="{'checked': writerForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}"

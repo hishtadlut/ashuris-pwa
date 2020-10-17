@@ -7,7 +7,7 @@
       <div class="section-title-w-note inner-grid-2">
         <div>פרטים כלליים</div>
         <div>
-          <p (click)="openDialog(bookForm)" class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+          <p (click)="openDialog(bookForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
       <input placeholder="שם" formControlName="name">
@@ -30,8 +30,8 @@
           <label class="section-title" for="is-sold">האם נמכר</label>
         </div>
         <div>
-          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note"><img
-              src="assets/icons/Edit.svg" alt=""></p>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note">
+            <i class="icofont-pencil-alt-2"></i>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
           <div class="section-title-w-note inner-grid-2">
             <div>דרגת כתיבה</div>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'writingLevel'])))"
-              class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+              class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
         </div>
         <div class="number-button-wrapper inner-grid-2">
@@ -122,7 +122,7 @@
             יציבות
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'stabilityLevel'])))"
-            ass="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            ass="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <div>
@@ -169,7 +169,7 @@
             מחיקה
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'eraseLevel'])))"
-            ass="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            ass="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <div>
@@ -215,7 +215,7 @@
             איכות הקלף
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentLevel'])))"
-            ass="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            ass="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div class="number-button-wrapper inner-grid-2">
           <div>
@@ -262,7 +262,7 @@
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentType', 'note'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
         <input list="parchmentTypes" placeholder="בחר סוג קלף" formControlName="type" class="full-width">
@@ -311,7 +311,7 @@
               גודל הכתב
             </div>
             <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'letterSize'])))"
-              class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+              class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
           <div class="sizes-row inner-grid-2">
 
@@ -359,7 +359,7 @@
           קהילה
         </div>
         <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['communityDeatails'])))" class="note">
-          <img src="assets/icons/Edit.svg" alt="">
+          <i class="icofont-pencil-alt-2"></i>
         </p>
       </div>
       <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
@@ -377,7 +377,7 @@
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'writerLevel'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
           <div>
             <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}"
@@ -454,7 +454,7 @@
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
           <input type="text" placeholder="משא ומתן" formControlName="negotiation">
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['pricesDeatails', 'priceForTorahScroll'])))"
-            class="note-absolute-position"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note-absolute-position"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
     </div>
@@ -470,19 +470,19 @@
           <label
             [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'hasWritenBefore'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="voatsInElection" class="additional-detail inner-grid-2 stroke">
           <div class="description">
@@ -491,19 +491,19 @@
           <label
             [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
           </label>
           <label
             [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'voatsInElection'])))"
-            class="note"><img src="assets/icons/Edit.svg" alt=""></p>
+            class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="goesToKotel" class="additional-detail inner-grid-2">
           <div class="description">
@@ -512,19 +512,19 @@
           <label
             [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'false'}"
             class="size-checkbox">
-            <img src="assets/icons/x.png" alt="">
+            <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
           </label>
           <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'true'}"
             class="size-checkbox">
-            <img src="assets/icons/v.png" alt="">
+            <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
           </label>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'goesToKotel'])))"
             class="note">
-            <img src="assets/icons/Edit.svg" alt="">
+            <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
       </div>

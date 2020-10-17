@@ -85,7 +85,7 @@ export class EditDealerComponent implements OnInit, OnDestroy {
       apartmentNumber: new FormControl('', [
         // Validators.required,
       ]),
-      profileImage: new FormControl('assets/icons/Symbol 216 – 5.png', [
+      profileImage: new FormControl('', [
         // Validators.required,
       ]),
     });

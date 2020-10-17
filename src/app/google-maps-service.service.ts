@@ -43,7 +43,7 @@ export class GoogleMapsService {
             window.alert('No results found');
           }
         } else {
-          window.alert('Geocoder failed due to: ' + status);
+          window.alert('גוגל מפות לא הצליח להתחבר לאינטרנט');
         }
       });
     });

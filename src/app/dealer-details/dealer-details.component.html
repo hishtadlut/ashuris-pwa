@@ -27,14 +27,14 @@
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="dealer.email">
-                <img src="assets/icons/2.png" alt="">
+                <i class="icofont-envelope"></i>
                 <div>
                     <div class="information">{{ dealer.email }}</div>
                     <div class="description">אימייל</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="dealer.city">
-                <img src="assets/icons/Location2.png" alt="">
+                <i class="icofont-location-pin"></i>
                 <div>
                     <div class="information">{{ dealer.street }} {{ dealer.streetNumber }} <span *ngIf="dealer.apartmentNumber">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }} </div>
                     <div class="description">כתובת</div>

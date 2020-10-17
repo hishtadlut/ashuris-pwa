@@ -6,7 +6,7 @@
         <div class="top-section">
             <img [src]="writer.profileImage" alt="" class="profile-img">
             <div *ngIf="writer.note" (click)="openDialog($event ,writer.note)" class="comment-icon-absolute">
-                <img src="assets/icons/Path 35.png" alt="">
+                <i class="icofont-exclamation-circle"></i>
             </div>
             <div class="name-wrapper">
                 <p class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</p>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.city">
-                <img src="assets/icons/Location2.png" alt="">
+                <i class="icofont-location-pin"></i>
                 <div>
                     <div class="information">{{ writer.street }} {{ writer.streetNumber }} <span
                             *ngIf="writer.apartmentNumber">דירה {{ writer.apartmentNumber }}</span> {{ writer.city }}
@@ -40,20 +40,20 @@
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.email">
-                <img src="assets/icons/2.png" alt="">
+                <i class="icofont-envelope"></i>
                 <div>
                     <div class="information">{{ writer.email }}</div>
                     <div class="description">אימייל</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.isAppropriate">
-                <img src="assets/icons/Yes.png" alt="">
+                <i class="icofont-check-alt"></i>
                 <div>
                     <div class="information">{{ writer.isAppropriate.level }}</div>
                 </div>
             </div>
             <div class="basic-detail .inner-grid" *ngIf="writer.startDate.hebrewDateInWords">
-                <img src="assets/icons/Calendar.png" alt="">
+                <i class="icofont-ui-calendar"></i>
                 <div>
                     <div class="description">תאריך התחלה</div>
                     <div class="information">{{ writer.startDate.hebrewDateInWords }}</div>
@@ -64,7 +64,8 @@
             <div class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
-                    <div *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0" class="price-extra-detail">
+                    <div *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0"
+                        class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -74,7 +75,7 @@
                         </div>
                         <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
                             (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div *ngIf="priceForTorahScroll?.priceForScroll !== 0" class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
@@ -86,7 +87,7 @@
                         </div>
                         <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
                             (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForMezuzah.price">
                         <div class="detail-title description">מחיר למזוזה</div>
@@ -98,7 +99,7 @@
                         </div>
                         <div *ngIf="writer.pricesDeatails.priceForMezuzah.note"
                             (click)="openDialog($event ,writer.pricesDeatails.priceForMezuzah.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForTefillin.price">
                         <div class="detail-title description">מחיר לתפילין</div>
@@ -110,7 +111,7 @@
                         </div>
                         <div *ngIf="writer.pricesDeatails.priceForTefillin.note"
                             (click)="openDialog($event ,writer.pricesDeatails.priceForTefillin.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                 </div>
             </div>
@@ -122,14 +123,14 @@
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
                         <div *ngIf="writer.writingDeatails.writingLevel.note"
                             (click)="openDialog($event ,writer.writingDeatails.writingLevel.note)" class="comment-icon">
-                            <img src="assets/icons/Path 35.png" alt=""></div>
+                            <i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="writing-extra-detail">
                         <div class="detail-title description">יציבות</div>
                         <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
                         <div *ngIf="writer.writingDeatails.stabilityLevel.note"
                             (click)="openDialog($event ,writer.writingDeatails.stabilityLevel.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -137,7 +138,7 @@
                         <div class="detail">{{ writer.writingDeatails.eraseLevel.level }}</div>
                         <div *ngIf="writer.writingDeatails.eraseLevel.note"
                             (click)="openDialog($event ,writer.writingDeatails.eraseLevel.note)" class="comment-icon">
-                            <img src="assets/icons/Path 35.png" alt=""></div>
+                            <i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -153,8 +154,9 @@
                             <span>{{ (writer.writingDeatails.letterSizes[48] ? ', 48' : '') }}</span>
                         </div>
                         <div *ngIf="writer.writingDeatails.note"
-                            (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon"><img
-                                src="assets/icons/Path 35.png" alt=""></div>
+                            (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon">
+                            <i class="icofont-exclamation-circle"></i>
+                        </div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -174,8 +176,8 @@
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
                         <div *ngIf="writer.communityDeatails.note"
-                            (click)="openDialog($event ,writer.communityDeatails.note)" class="comment-icon"><img
-                                src="assets/icons/Path 35.png" alt=""></div>
+                            (click)="openDialog($event ,writer.communityDeatails.note)" class="comment-icon"><i
+                                class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -186,7 +188,7 @@
                             <img src="assets/icons/people.png" alt="">
                         </div>
                         <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event ,writer.placeOfWriting.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -197,7 +199,7 @@
                         </div>
                         <div *ngIf="writer.additionalDetails.hasWritenBefore.note"
                             (click)="openDialog($event ,writer.additionalDetails.hasWritenBefore.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -208,7 +210,7 @@
                         </div>
                         <div *ngIf="writer.additionalDetails.hasWritenKabala.note"
                             (click)="openDialog($event ,writer.additionalDetails.hasWritenKabala.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -219,7 +221,7 @@
                         </div>
                         <div *ngIf="writer.additionalDetails.voatsInElection.note"
                             (click)="openDialog($event ,writer.additionalDetails.voatsInElection.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -230,7 +232,7 @@
                         </div>
                         <div *ngIf="writer.additionalDetails.goesToKotel.note"
                             (click)="openDialog($event ,writer.additionalDetails.goesToKotel.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -241,7 +243,7 @@
                         </div>
                         <div *ngIf="writer.additionalDetails.beginnerWriter.note"
                             (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail">
@@ -249,7 +251,7 @@
                         <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
                         <div *ngIf="writer.additionalDetails.writerLevel.note"
                             (click)="openDialog($event ,writer.additionalDetails.writerLevel.note)"
-                            class="comment-icon"><img src="assets/icons/Path 35.png" alt=""></div>
+                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                 </div>

@@ -1,4 +1,5 @@
 <div class="writer-list-item" (click)="goToWriterDetails()">
+    <i *ngIf="!writer.profileImage" class="icofont-user-alt-7"></i>
     <img *ngIf="writer.profileImage" [src]="writer.profileImage">
     <div class="writer-details">
         <div class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</div>
