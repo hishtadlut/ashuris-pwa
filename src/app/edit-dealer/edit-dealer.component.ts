@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { fileToBase64 } from '../utils/utils';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../stitch-service.service';
 import { Location } from '@angular/common';
 import { Address, Dealer } from '../interfaces';
@@ -18,7 +18,7 @@ import { LocationPath } from '../enums';
   templateUrl: './edit-dealer.component.html',
   styleUrls: ['./edit-dealer.component.css']
 })
-export class EditDealerComponent implements OnInit, OnDestroy {
+export class EditDealerComponent implements OnInit {
   editMode: boolean;
   dealerForm: FormGroup;
   dialogFormGroup: FormGroup = null;
@@ -31,21 +31,18 @@ export class EditDealerComponent implements OnInit, OnDestroy {
   textForSaveButton = 'הוסף סוחר למאגר';
 
   dealer: Dealer;
-  dealer$Subscription: Subscription;
-  dealer$: Observable<any> = this.store$.pipe(
-    select('writers', 'dealer')
-  );
 
   constructor(
     private store$: Store<State>,
     private router: Router,
     private stitchService: StitchService,
     private location: Location,
+    private activatedRoute: ActivatedRoute,
     private googleMapsService: GoogleMapsService,
   ) { }
 
-  ngOnInit(): void {
-    this.editMode = (this.location.path() === '/edit-dealer');
+  async ngOnInit(): Promise<void> {
+    this.editMode = (this.location.path().split('?')[0] === '/edit-dealer');
 
     this.dealerForm = new FormGroup({
 
@@ -95,10 +92,9 @@ export class EditDealerComponent implements OnInit, OnDestroy {
     );
 
     if (this.editMode) {
-      this.dealer$Subscription = this.dealer$.subscribe((dealer: Dealer) => {
-        this.dealer = dealer;
-        this.dealerForm.patchValue(dealer);
-      });
+      const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+      this.dealer = await this.stitchService.getDealerById(id);
+      this.dealerForm.patchValue(this.dealer);
       this.textForSaveButton = 'שמור שינויים';
     } else if (!this.editMode) {
       this.googleMapsService.setAddressThroghGoogleMaps()
@@ -144,12 +140,6 @@ export class EditDealerComponent implements OnInit, OnDestroy {
       }
     } else {
       alert('יש למלא שם פרטי ושם משפחה');
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.editMode) {
-      this.dealer$Subscription.unsubscribe();
     }
   }
 

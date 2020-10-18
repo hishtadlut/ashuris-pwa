@@ -27,25 +27,6 @@ export const resetChangeUrgencyBookList = createAction(
   '[Writer] Reset Change Urgency Book List',
 );
 
-
-
-export const setWriter = createAction(
-  '[Writer] Set Writer',
-  props<{ writer: Writer }>()
-);
-
-export const setDealer = createAction(
-  '[Dealers] Set Dealer',
-  props<{ dealer: Dealer }>()
-);
-
-export const setBook = createAction(
-  '[Dealers] Set Book',
-  props<{ book: Book }>()
-);
-
-
-
 export const loadWritersList = createAction(
   '[Writers] load Writers List',
 );
@@ -102,11 +83,6 @@ export const setCommunitiesList = createAction(
 export const setParchmentList = createAction(
   '[Writers] Set Parchments List',
   props<{ parchmentList: string[] }>()
-);
-
-export const editWriter = createAction(
-  '[Writers] Edit Writer',
-  props<{ editMode: boolean }>()
 );
 
 export const setAdvancedSearchResult = createAction(

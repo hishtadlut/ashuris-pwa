@@ -61,7 +61,8 @@
             </div>
         </div>
         <div class="extra-details-section">
-            <div class="section" (click)="closeMenus('pricesDeatails')">
+            <div *ngIf="!writer.pricesDeatails.priceForTorahScroll.price && !writer.pricesDeatails.priceForMezuzah.price && !writer.pricesDeatails.priceForTefillin.price"
+             class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
                     <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price"

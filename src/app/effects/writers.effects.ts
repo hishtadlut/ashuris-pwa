@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 import {
   resetChangeUrgencyWritersList,
-  setWriter,
   LoadSomeActions,
   loadWritersList,
   setWritersList,
@@ -16,10 +15,8 @@ import {
   putChangeUrgencyWritersList,
   loadDealerList,
   setDealerList,
-  setDealer,
   loadBookList,
   setBookList,
-  setBook,
   putChangeUrgencyBookList,
   resetChangeUrgencyBookList,
 } from '../actions/writers.actions';

@@ -1,9 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from '../interfaces';
 import {
-  setWriter,
   setWritersList,
-  editWriter,
   setAdvancedSearchResult,
   useAdvancedSearchParameters,
   setAdvancedSearchParameters,
@@ -12,16 +10,12 @@ import {
   setParchmentList,
   addToChangeUrgencyWritersList,
   resetChangeUrgencyWritersList,
-  setDealer,
   setDealerList,
   setBookList,
-  setBook,
   addToChangeUrgencyBookList,
   resetChangeUrgencyBookList
 } from '../actions/writers.actions';
 import { sortByLetters } from '../utils/utils';
-
-
 
 export const writersFeatureKey = 'writers';
 
@@ -63,18 +57,8 @@ export const initialState: State = {
   currentDealerId: null,
 };
 
-
 export const writerReducer = createReducer(
   initialState,
-  on(setWriter, (state, action) => {
-    return { ...state, writer: action.writer };
-  }),
-  on(setDealer, (state, action) => {
-    return { ...state, dealer: action.dealer };
-  }),
-  on(setBook, (state, action) => {
-    return { ...state, book: action.book };
-  }),
   on(setWritersList, (state, action) => {
     let sortedWriterList = action.writersList.slice();
     sortedWriterList = sortByLetters(sortedWriterList).filter(writer => writer.lastName);
@@ -104,9 +88,6 @@ export const writerReducer = createReducer(
   }),
   on(setParchmentList, (state, action) => {
     return { ...state, parchmentList: action.parchmentList };
-  }),
-  on(editWriter, (state, action) => {
-    return { ...state, editMode: action.editMode };
   }),
   on(setAdvancedSearchResult, (state, action) => {
     return { ...state, advancedSearchResult: action.items };

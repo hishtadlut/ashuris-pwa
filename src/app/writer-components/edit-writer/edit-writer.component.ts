@@ -4,13 +4,13 @@ import { StitchService } from '../../stitch-service.service';
 import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../../utils/utils';
 import { GoogleMapsService } from '../../google-maps-service.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RecordingService } from '../../recording.service';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
-import { editWriter, loadWritersList } from '../../actions/writers.actions';
+import { loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
 import { LocationPath } from 'src/app/enums';
 
@@ -22,10 +22,6 @@ import { LocationPath } from 'src/app/enums';
 export class EditWriterComponent implements OnInit, OnDestroy {
 
   writer: Writer;
-  writer$Subscription: Subscription;
-  writer$: Observable<any> = this.store$.pipe(
-    select('writers', 'writer')
-  );
 
   citiesFromDB: string[];
   citiesList$Subscription: Subscription;
@@ -46,6 +42,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   dialogFormGroup: FormGroup = null;
   textForSaveButton = 'הוסף סופר למאגר';
   editOrCreatePage: boolean;
+  locationWithoutParameters: string;
 
   constructor(
     private stitchService: StitchService,
@@ -53,11 +50,12 @@ export class EditWriterComponent implements OnInit, OnDestroy {
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer,
     private store$: Store<State>,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.writerForm = new FormGroup({
       note: new FormControl('', [
         // Validators.required,
@@ -297,22 +295,22 @@ export class EditWriterComponent implements OnInit, OnDestroy {
       recordings: new FormArray([]),
     });
 
+    this.locationWithoutParameters = this.location.path().split('?')[0];
+    this.editOrCreatePage =
+      (this.locationWithoutParameters === LocationPath.EDIT_WRITER) || (this.locationWithoutParameters === LocationPath.CREATE_WRITER);
+    if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
+      const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+      this.writer = await this.stitchService.getWriter(id);
 
-    this.editOrCreatePage = (this.location.path() === LocationPath.EDIT_WRITER) || (this.location.path() === LocationPath.CREATE_WRITER);
-    if (this.location.path() === LocationPath.EDIT_WRITER) {
-      this.writer$Subscription = this.writer$.subscribe((writer: Writer) => {
-        this.writer = writer;
+      const recordingsArray = this.writerForm.controls.recordings as FormArray;
+      this.writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
 
-        const recordingsArray = this.writerForm.controls.recordings as FormArray;
-        writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
+      const photosArray = this.writerForm.controls.photos as FormArray;
+      this.writer.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
-        const photosArray = this.writerForm.controls.photos as FormArray;
-        writer.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
-
-        this.writerForm.patchValue(writer);
-      });
+      this.writerForm.patchValue(this.writer);
       this.textForSaveButton = 'שמור שינויים';
-    } else if ((this.location.path() === LocationPath.CREATE_WRITER) && (this.textForSaveButton !== 'שמור שינויים')) {
+    } else if ((this.locationWithoutParameters === LocationPath.CREATE_WRITER) && (this.textForSaveButton !== 'שמור שינויים')) {
       this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
         this.writerForm.controls.city.setValue(address.city);
         this.writerForm.controls.street.setValue(address.street);
@@ -425,9 +423,9 @@ export class EditWriterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.writerForm.valid) {
-      if (this.location.path() === LocationPath.CREATE_WRITER) {
+      if (this.locationWithoutParameters === LocationPath.CREATE_WRITER) {
         this.stitchService.createWriter({ ...this.writerForm.value });
-      } else if (this.location.path() === LocationPath.EDIT_WRITER) {
+      } else if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
         this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
       }
       this.store$.dispatch(loadWritersList());
@@ -438,9 +436,6 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.location.path() === LocationPath.CREATE_WRITER) {
-      this.writer$Subscription.unsubscribe();
-    }
     this.citiesList$Subscription.unsubscribe();
     this.communitiesList$Subscription.unsubscribe();
   }

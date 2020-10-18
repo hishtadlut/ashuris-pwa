@@ -36,7 +36,7 @@ export class DealerDetailsComponent implements OnInit {
   }
 
   editDealer() {
-    this.router.navigate(['/edit-dealer']);
+    this.router.navigate(['/edit-dealer'], { queryParams: { id: this.dealer._id } });
   }
 
 }

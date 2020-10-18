@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../../utils/utils';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
 import { loadBookList } from '../../actions/writers.actions';
@@ -41,10 +41,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
   dealerList: { fullName: string; _id: string; }[];
 
   book: Book;
-  book$Subscription: Subscription;
-  book$: Observable<any> = this.store$.pipe(
-    select('writers', 'book')
-  );
 
   writingTypes = {
     ari: 'אר"י',
@@ -62,15 +58,17 @@ export class EditBookComponent implements OnInit, OnDestroy {
     public sanitizer: DomSanitizer,
     private router: Router,
     private stitchService: StitchService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.communitiesList$Subscription = this.communitiesList$.subscribe(
       (communities) => this.communities = communities
     );
 
     this.parchmentTypes$Subscription = this.parchmentTypes$.subscribe(
-      (parchmentTypes) => {this.parchmentTypes = parchmentTypes;
+      (parchmentTypes) => {
+        this.parchmentTypes = parchmentTypes;
       }
     );
 
@@ -237,18 +235,17 @@ export class EditBookComponent implements OnInit, OnDestroy {
       recordings: new FormArray([]),
     });
 
-    if (this.location.path() === '/edit-book') {
-      this.book$Subscription = this.book$.subscribe((book: Book) => {
-        this.book = book;
+    if (this.location.path().split('?')[0] === '/edit-book') {
+      const id = this.activatedRoute.snapshot.queryParamMap.get('id');
+      this.book = await this.stitchService.getBookById(id);
 
-        const recordingsArray = this.bookForm.controls.recordings as FormArray;
-        book.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
+      const recordingsArray = this.bookForm.controls.recordings as FormArray;
+      this.book.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
 
-        const photosArray = this.bookForm.controls.photos as FormArray;
-        book.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
+      const photosArray = this.bookForm.controls.photos as FormArray;
+      this.book.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
-        this.bookForm.patchValue(book);
-      });
+      this.bookForm.patchValue(this.book);
       this.textForSaveButton = 'שמור שינויים';
     }
   }

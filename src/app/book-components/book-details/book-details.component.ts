@@ -55,7 +55,7 @@ export class BookDetailsComponent implements OnInit {
   }
 
   editBook() {
-    this.router.navigate(['/edit-book']);
+    this.router.navigate(['/edit-book'], { queryParams: { id: this.book._id}});
   }
 
   closeMenus(menuToOpen: string) {

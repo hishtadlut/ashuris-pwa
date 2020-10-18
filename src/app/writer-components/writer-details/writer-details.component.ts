@@ -1,11 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
 import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
-import { Store, select } from '@ngrx/store';
-import { State } from '../../reducers';
-import { editWriter } from '../../actions/writers.actions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { base64ToBlob, preventDefaultAndStopPropagation } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
@@ -29,10 +25,6 @@ interface Navigator {
 export class WriterDetailsComponent implements OnInit, OnDestroy {
 
   writer: Writer;
-  writer$Subscription: Subscription;
-  writer$: Observable<any> = this.store$.pipe(
-    select('writers', 'writer')
-  );
   priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
   openMenuStatus = {
     pricesDeatails: false,
@@ -49,7 +41,6 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private store$: Store<State>,
     private googleMapsService: GoogleMapsService,
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
@@ -102,8 +93,7 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
   }
 
   editWriter() {
-    this.store$.dispatch(editWriter({ editMode: true }));
-    this.router.navigate(['/edit-writer']);
+    this.router.navigate(['/edit-writer'], { queryParams: { id: this.writer._id } });
   }
 
   closeMenus(menuToOpen: string) {
