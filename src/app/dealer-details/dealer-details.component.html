@@ -3,7 +3,8 @@
 <div class="page-wrapper">
     <div class="writer-details-wrapper page-grid" *ngIf="dealer">
         <div class="top-section">
-            <img [src]="dealer.profileImage" alt="" class="profile-img">
+            <i *ngIf="!dealer.profileImage" class="icofont-user-alt-7"></i>
+            <img *ngIf="dealer.profileImage" [src]="dealer.profileImage" alt="" class="profile-img">
             <div class="name-wrapper">
                 <p class="dealer-name">{{ dealer.lastName }} {{ dealer.firstName }}</p>
                 <p class="dealer-location" *ngIf="dealer.street && dealer.city">{{ dealer.street }}, {{ dealer.city }}
@@ -36,7 +37,9 @@
             <div class="basic-detail .inner-grid" *ngIf="dealer.city">
                 <i class="icofont-location-pin"></i>
                 <div>
-                    <div class="information">{{ dealer.street }} {{ dealer.streetNumber }} <span *ngIf="dealer.apartmentNumber">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }} </div>
+                    <div class="information">{{ dealer.street }} {{ dealer.streetNumber }} <span
+                            *ngIf="dealer.apartmentNumber">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}
+                    </div>
                     <div class="description">כתובת</div>
                 </div>
             </div>

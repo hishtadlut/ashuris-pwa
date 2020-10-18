@@ -4,7 +4,8 @@
 <div class="page-wrapper">
     <div class="writer-details-wrapper page-grid" *ngIf="writer">
         <div class="top-section">
-            <img [src]="writer.profileImage" alt="" class="profile-img">
+            <i *ngIf="!writer.profileImage" class="icofont-user-alt-7"></i>
+            <img *ngIf="writer.profileImage" [src]="writer.profileImage" alt="" class="profile-img">
             <div *ngIf="writer.note" (click)="openDialog($event ,writer.note)" class="comment-icon-absolute">
                 <i class="icofont-exclamation-circle"></i>
             </div>
