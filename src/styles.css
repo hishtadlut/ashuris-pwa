@@ -12,3 +12,14 @@ label {
 .ngb-dp-header {
   direction: ltr;
 }
+
+
+.icofont-check-alt {
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.icofont-close-line {
+  font-weight: 500;
+  font-size: 1.35rem;
+}

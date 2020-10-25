@@ -3,7 +3,9 @@
 }
 
 .home-page {
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 150vh;
+  padding-bottom: 5vw;
   background-image: url("../../assets/icons/background.png");
   /* background-position: center; */
   background-repeat: no-repeat;

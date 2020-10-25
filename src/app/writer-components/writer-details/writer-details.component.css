@@ -3,7 +3,7 @@
 }
 
 #map {
-  height: 500px;
+  height: 50vw;
   width: 100%;
 }
 
@@ -216,4 +216,8 @@ img {
   position: absolute;
   right: 76vw;
   top: 19vw;
+}
+
+.icofont-close-line {
+  
 }

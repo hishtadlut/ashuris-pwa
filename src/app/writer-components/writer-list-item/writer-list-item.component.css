@@ -45,3 +45,18 @@
 .highlight-ergent {
   background-color: #FF373E;
 }
+
+.icofont-wrapper {
+  background-color: #2A2E43;
+  border-radius: 50%;
+  height: 10vw;
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icofont-user-alt-7 {
+  color: #D4A75D;
+  font-size: 0.9rem;
+}
