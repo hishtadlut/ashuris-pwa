@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { base64ToBlob, preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+import { base64ToBlob, preventDefaultAndStopPropagation, thereAreDetailsInGivenObject } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
 declare const navigator: Navigator;
 type ShareData = {
@@ -22,8 +22,8 @@ interface Navigator {
   templateUrl: './writer-details.component.html',
   styleUrls: ['./writer-details.component.css']
 })
-export class WriterDetailsComponent implements OnInit, OnDestroy {
-
+export class WriterDetailsComponent implements OnInit {
+  thereAreDetailsInGivenObject = thereAreDetailsInGivenObject;
   writer: Writer;
   priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
   openMenuStatus = {
@@ -129,8 +129,16 @@ export class WriterDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['writers-in-room-list'], { queryParams: { city, street, streetNumber } });
   }
 
-  ngOnDestroy() {
-    // this.paramsSub.unsubscribe()
+  getLetterSizesString(
+    letterSizes: { 17: boolean; 24: boolean; 30: boolean; 36: boolean; 40: boolean; 42: boolean; 45: boolean; 48: boolean; }
+  ) {
+    const letterSizesArray = [];
+    Object.entries(letterSizes).forEach(letterSize => {
+      if (letterSize[1] === true) {
+        letterSizesArray.push(letterSize[0]);
+      }
+    });
+    return letterSizesArray.join(' ,');
   }
 
 }

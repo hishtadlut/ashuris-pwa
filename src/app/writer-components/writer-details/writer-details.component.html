@@ -63,11 +63,10 @@
         </div>
         <div class="extra-details-section">
             <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price || writer.pricesDeatails.priceForMezuzah.price || writer.pricesDeatails.priceForTefillin.price"
-             class="section" (click)="closeMenus('pricesDeatails')">
+                class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
-                    <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price"
-                        class="price-extra-detail">
+                    <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
@@ -120,7 +119,7 @@
             <div class="section" (click)="closeMenus('writingDeatails')">
                 <div class="section-title-btn">הכתב</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
-                    <div class="writing-extra-detail">
+                    <div *ngIf="writer.writingDeatails.writingLevel.level" class="writing-extra-detail">
                         <div class="detail-title description">דרגת כתיבה</div>
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
                         <div *ngIf="writer.writingDeatails.writingLevel.note"
@@ -135,7 +134,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div *ngIf="writer.writingDeatails.eraseLevel.level" class="writing-extra-detail">
                         <div class="detail-title description">מחיקה</div>
                         <div class="detail">{{ writer.writingDeatails.eraseLevel.level }}</div>
                         <div *ngIf="writer.writingDeatails.eraseLevel.note"
@@ -143,25 +142,18 @@
                             <i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="thereAreDetailsInGivenObject(writer.writingDeatails.letterSizes)">
                         <div class="detail-title description">גודל הכתב</div>
                         <div class="detail">
-                            <span>{{ (writer.writingDeatails.letterSizes[17] ? '17' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[24] ? ', 24' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[30] ? ', 30' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[36] ? ', 36' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[40] ? ', 40' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[42] ? ', 42' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[45] ? ', 45' : '') }}</span>
-                            <span>{{ (writer.writingDeatails.letterSizes[48] ? ', 48' : '') }}</span>
+                            {{ getLetterSizesString(writer.writingDeatails.letterSizes) }}
                         </div>
                         <div *ngIf="writer.writingDeatails.note"
                             (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon">
                             <i class="icofont-exclamation-circle"></i>
                         </div>
                     </div>
-
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail"
+                        *ngIf="thereAreDetailsInGivenObject(writer.writingDeatails.writingTypes.types)">
                         <div class="detail-title description">סוג הכתב</div>
                         <div class="detail">
                             {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
@@ -171,10 +163,12 @@
                 </div>
             </div>
 
-            <div class="section" (click)="closeMenus('additionalDeatails')">
+            <div class="section" (click)="closeMenus('additionalDeatails')"
+                *ngIf="writer.additionalDetails.writerLevel.level || writer.additionalDetails.beginnerWriter.boolean || writer.additionalDetails.goesToKotel.boolean || writer.additionalDetails.voatsInElection.boolean || writer.additionalDetails.hasWritenKabala.boolean || writer.additionalDetails.hasWritenBefore.boolean || writer.placeOfWriting.place || writer.communityDeatails.community">
                 <div class="section-title-btn">פרטים אישיים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
-                    <div class="writing-extra-detail">
+
+                    <div class="writing-extra-detail" *ngIf="writer.communityDeatails.community">
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
                         <div *ngIf="writer.communityDeatails.note"
@@ -182,7 +176,7 @@
                                 class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.placeOfWriting.place">
                         <div class="detail-title description">מקום כתיבה</div>
                         <div class="detail">{{ writer.placeOfWriting.place }}</div>
                         <div *ngIf="writer.placeOfWriting.place === 'אחר'" (click)="writersInRoomList($event)"
@@ -193,7 +187,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.hasWritenBefore.boolean">
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div>
                             <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenBefore.boolean === 'true'"
@@ -204,7 +198,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.hasWritenKabala.boolean">
                         <div class="detail-title description">כתב קבלה</div>
                         <div>
                             <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenKabala.boolean === 'true'"
@@ -215,7 +209,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.voatsInElection.boolean">
                         <div class="detail-title description">בחירות</div>
                         <div>
                             <i [class.icofont-check-alt]="writer.additionalDetails.voatsInElection.boolean === 'true'"
@@ -226,7 +220,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.goesToKotel.boolean">
                         <div class="detail-title description">הולך לכותל</div>
                         <div>
                             <i [class.icofont-check-alt]="writer.additionalDetails.goesToKotel.boolean === 'true'"
@@ -237,7 +231,7 @@
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
-                    <div class="writing-extra-detail">
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.beginnerWriter.boolean">
                         <div class="detail-title description">סופר מתחיל</div>
                         <div>
                             <i [class.icofont-check-alt]="writer.additionalDetails.beginnerWriter.boolean === 'true'"
@@ -247,8 +241,8 @@
                             (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)"
                             class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
-
-                    <div class="writing-extra-detail">
+                    <!--  -->
+                    <div class="writing-extra-detail" *ngIf="writer.additionalDetails.writerLevel.level">
                         <div class="detail-title description">דרגת סופר</div>
                         <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
                         <div *ngIf="writer.additionalDetails.writerLevel.note"
@@ -259,7 +253,7 @@
                 </div>
             </div>
 
-            <div class="section" (click)="closeMenus('images')">
+            <div class="section" (click)="closeMenus('images')" *ngIf="writer.photos.length">
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
                     <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos"
@@ -270,9 +264,10 @@
                 </div>
             </div>
 
-            <div class="section" (click)="closeMenus('recordings')">
+            <div class="section" (click)="closeMenus('recordings')" *ngIf="writer.recordings.length">
                 <div class="section-title-btn">תזכורת קולית</div>
-                <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+                <div (click)="preventDefaultAndStopPropagation($event)"
+                    [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
                     <div *ngFor="let recording of writer.recordings">
                         <audio controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)" class="img">
                         </audio>

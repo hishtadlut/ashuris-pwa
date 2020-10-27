@@ -34,3 +34,7 @@ export function preventDefaultAndStopPropagation(event: Event) {
   event.stopPropagation();
   event.preventDefault();
 }
+
+export function thereAreDetailsInGivenObject(object: { [x: string]: string | boolean }) {
+  return !(Object.values(object).join('').replaceAll('false', '') === '');
+}

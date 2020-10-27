@@ -436,7 +436,11 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.citiesList$Subscription.unsubscribe();
-    this.communitiesList$Subscription.unsubscribe();
+    if (this.citiesList$Subscription) {
+      this.citiesList$Subscription.unsubscribe();
+    }
+    if (this.communitiesList$Subscription) {
+      this.communitiesList$Subscription.unsubscribe();
+    }
   }
 }
