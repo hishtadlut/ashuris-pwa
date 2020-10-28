@@ -17,13 +17,13 @@
             <button type="button" (click)="editWriter()" class="edit-button">ערוך</button>
         </div>
         <div class="basic-details-section">
-            <div class="basic-detail .inner-grid" *ngIf="writer.telephone">
+            <a [href]="'tel:' + writer.telephone" class="basic-detail .inner-grid" *ngIf="writer.telephone">
                 <i class="icofont-phone"></i>
                 <div>
                     <div class="information">{{ writer.telephone }}</div>
                     <div class="description">טלפון</div>
                 </div>
-            </div>
+            </a>
             <div class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
                 <i class="icofont-phone"></i>
                 <div>
@@ -34,19 +34,18 @@
             <div class="basic-detail .inner-grid" *ngIf="writer.city">
                 <i class="icofont-location-pin"></i>
                 <div>
-                    <div class="information">{{ writer.street }} {{ writer.streetNumber }} <span
-                            *ngIf="writer.apartmentNumber">דירה {{ writer.apartmentNumber }}</span> {{ writer.city }}
+                    <div class="information">{{ writer.street }} {{ writer.streetNumber }} <span *ngIf="writer.apartmentNumber">דירה {{ writer.apartmentNumber }}</span> {{ writer.city }}
                     </div>
                     <div class="description">כתובת</div>
                 </div>
             </div>
-            <div class="basic-detail .inner-grid" *ngIf="writer.email">
+            <a href="mailto:{{writer.email}}" class="basic-detail .inner-grid" *ngIf="writer.email">
                 <i class="icofont-envelope"></i>
                 <div>
                     <div class="information">{{ writer.email }}</div>
                     <div class="description">אימייל</div>
                 </div>
-            </div>
+            </a>
             <div class="basic-detail .inner-grid" *ngIf="writer.isAppropriate">
                 <i class="icofont-check-alt"></i>
                 <div>
@@ -62,8 +61,7 @@
             </div>
         </div>
         <div class="extra-details-section">
-            <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price || writer.pricesDeatails.priceForMezuzah.price || writer.pricesDeatails.priceForTefillin.price"
-                class="section" (click)="closeMenus('pricesDeatails')">
+            <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price || writer.pricesDeatails.priceForMezuzah.price || writer.pricesDeatails.priceForTefillin.price" class="section" (click)="closeMenus('pricesDeatails')">
                 <div class="section-title-btn">מחירים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
                     <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
@@ -71,48 +69,36 @@
                         <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'"
-                                [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
-                            (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note" (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
                         <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'"
-                                [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note"
-                            (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTorahScroll.note" (click)="openDialog($event ,writer.pricesDeatails.priceForTorahScroll.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForMezuzah.price">
                         <div class="detail-title description">מחיר למזוזה</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForMezuzah.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'true'"
-                                [class.icofont-close-line]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.pricesDeatails.priceForMezuzah.note"
-                            (click)="openDialog($event ,writer.pricesDeatails.priceForMezuzah.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.pricesDeatails.priceForMezuzah.note" (click)="openDialog($event ,writer.pricesDeatails.priceForMezuzah.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForTefillin.price">
                         <div class="detail-title description">מחיר לתפילין</div>
                         <div class="detail">{{ writer.pricesDeatails.priceForTefillin.price }}</div>
                         <div class="shave description">שווה לדעתי</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'true'"
-                                [class.icofont-close-line]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.pricesDeatails.priceForTefillin.note"
-                            (click)="openDialog($event ,writer.pricesDeatails.priceForTefillin.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.pricesDeatails.priceForTefillin.note" (click)="openDialog($event ,writer.pricesDeatails.priceForTefillin.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                 </div>
             </div>
@@ -122,23 +108,19 @@
                     <div *ngIf="writer.writingDeatails.writingLevel.level" class="writing-extra-detail">
                         <div class="detail-title description">דרגת כתיבה</div>
                         <div class="detail">{{ writer.writingDeatails.writingLevel.level }}</div>
-                        <div *ngIf="writer.writingDeatails.writingLevel.note"
-                            (click)="openDialog($event ,writer.writingDeatails.writingLevel.note)" class="comment-icon">
+                        <div *ngIf="writer.writingDeatails.writingLevel.note" (click)="openDialog($event ,writer.writingDeatails.writingLevel.note)" class="comment-icon">
                             <i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <div class="writing-extra-detail">
                         <div class="detail-title description">יציבות</div>
                         <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
-                        <div *ngIf="writer.writingDeatails.stabilityLevel.note"
-                            (click)="openDialog($event ,writer.writingDeatails.stabilityLevel.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.writingDeatails.stabilityLevel.note" (click)="openDialog($event ,writer.writingDeatails.stabilityLevel.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div *ngIf="writer.writingDeatails.eraseLevel.level" class="writing-extra-detail">
                         <div class="detail-title description">מחיקה</div>
                         <div class="detail">{{ writer.writingDeatails.eraseLevel.level }}</div>
-                        <div *ngIf="writer.writingDeatails.eraseLevel.note"
-                            (click)="openDialog($event ,writer.writingDeatails.eraseLevel.note)" class="comment-icon">
+                        <div *ngIf="writer.writingDeatails.eraseLevel.note" (click)="openDialog($event ,writer.writingDeatails.eraseLevel.note)" class="comment-icon">
                             <i class="icofont-exclamation-circle"></i></div>
                     </div>
 
@@ -147,13 +129,11 @@
                         <div class="detail">
                             {{ getLetterSizesString(writer.writingDeatails.letterSizes) }}
                         </div>
-                        <div *ngIf="writer.writingDeatails.note"
-                            (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon">
+                        <div *ngIf="writer.writingDeatails.note" (click)="openDialog($event ,writer.writingDeatails.note)" class="comment-icon">
                             <i class="icofont-exclamation-circle"></i>
                         </div>
                     </div>
-                    <div class="writing-extra-detail"
-                        *ngIf="thereAreDetailsInGivenObject(writer.writingDeatails.writingTypes.types)">
+                    <div class="writing-extra-detail" *ngIf="thereAreDetailsInGivenObject(writer.writingDeatails.writingTypes.types)">
                         <div class="detail-title description">סוג הכתב</div>
                         <div class="detail">
                             {{ writer.writingDeatails.writingTypes.types.ari ? 'אר"י' : '' }}{{ writer.writingDeatails.writingTypes.types.Welish ? ', וועליש' : ''}}{{ writer.writingDeatails.writingTypes.types.beitYosef ? ', בית יוסף' : '' }}
@@ -163,91 +143,69 @@
                 </div>
             </div>
 
-            <div class="section" (click)="closeMenus('additionalDeatails')"
-                *ngIf="writer.additionalDetails.writerLevel.level || writer.additionalDetails.beginnerWriter.boolean || writer.additionalDetails.goesToKotel.boolean || writer.additionalDetails.voatsInElection.boolean || writer.additionalDetails.hasWritenKabala.boolean || writer.additionalDetails.hasWritenBefore.boolean || writer.placeOfWriting.place || writer.communityDeatails.community">
+            <div class="section" (click)="closeMenus('additionalDeatails')" *ngIf="writer.additionalDetails.writerLevel.level || writer.additionalDetails.beginnerWriter.boolean || writer.additionalDetails.goesToKotel.boolean || writer.additionalDetails.voatsInElection.boolean || writer.additionalDetails.hasWritenKabala.boolean || writer.additionalDetails.hasWritenBefore.boolean || writer.placeOfWriting.place || writer.communityDeatails.community">
                 <div class="section-title-btn">פרטים אישיים</div>
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
 
                     <div class="writing-extra-detail" *ngIf="writer.communityDeatails.community">
                         <div class="detail-title description">קהילה</div>
                         <div class="detail">{{ writer.communityDeatails.community }}</div>
-                        <div *ngIf="writer.communityDeatails.note"
-                            (click)="openDialog($event ,writer.communityDeatails.note)" class="comment-icon"><i
-                                class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.communityDeatails.note" (click)="openDialog($event ,writer.communityDeatails.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.placeOfWriting.place">
                         <div class="detail-title description">מקום כתיבה</div>
                         <div class="detail">{{ writer.placeOfWriting.place }}</div>
-                        <div *ngIf="writer.placeOfWriting.place === 'אחר'" (click)="writersInRoomList($event)"
-                            class="people-icon">
+                        <div *ngIf="writer.placeOfWriting.place === 'אחר'" (click)="writersInRoomList($event)" class="people-icon">
                             <img src="assets/icons/people.png" alt="">
                         </div>
-                        <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event ,writer.placeOfWriting.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event ,writer.placeOfWriting.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.hasWritenBefore.boolean">
                         <div class="detail-title description">כתב ספרים בעבר</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenBefore.boolean === 'true'"
-                                [class.icofont-close-line]="writer.additionalDetails.hasWritenBefore.boolean === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenBefore.boolean === 'true'" [class.icofont-close-line]="writer.additionalDetails.hasWritenBefore.boolean === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.additionalDetails.hasWritenBefore.note"
-                            (click)="openDialog($event ,writer.additionalDetails.hasWritenBefore.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.hasWritenBefore.note" (click)="openDialog($event ,writer.additionalDetails.hasWritenBefore.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.hasWritenKabala.boolean">
                         <div class="detail-title description">כתב קבלה</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenKabala.boolean === 'true'"
-                                [class.icofont-close-line]="writer.additionalDetails.hasWritenKabala.boolean === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.additionalDetails.hasWritenKabala.boolean === 'true'" [class.icofont-close-line]="writer.additionalDetails.hasWritenKabala.boolean === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.additionalDetails.hasWritenKabala.note"
-                            (click)="openDialog($event ,writer.additionalDetails.hasWritenKabala.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.hasWritenKabala.note" (click)="openDialog($event ,writer.additionalDetails.hasWritenKabala.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.voatsInElection.boolean">
                         <div class="detail-title description">בחירות</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.additionalDetails.voatsInElection.boolean === 'true'"
-                                [class.icofont-close-line]="writer.additionalDetails.voatsInElection.boolean === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.additionalDetails.voatsInElection.boolean === 'true'" [class.icofont-close-line]="writer.additionalDetails.voatsInElection.boolean === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.additionalDetails.voatsInElection.note"
-                            (click)="openDialog($event ,writer.additionalDetails.voatsInElection.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.voatsInElection.note" (click)="openDialog($event ,writer.additionalDetails.voatsInElection.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.goesToKotel.boolean">
                         <div class="detail-title description">הולך לכותל</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.additionalDetails.goesToKotel.boolean === 'true'"
-                                [class.icofont-close-line]="writer.additionalDetails.goesToKotel.boolean === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.additionalDetails.goesToKotel.boolean === 'true'" [class.icofont-close-line]="writer.additionalDetails.goesToKotel.boolean === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.additionalDetails.goesToKotel.note"
-                            (click)="openDialog($event ,writer.additionalDetails.goesToKotel.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.goesToKotel.note" (click)="openDialog($event ,writer.additionalDetails.goesToKotel.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.beginnerWriter.boolean">
                         <div class="detail-title description">סופר מתחיל</div>
                         <div>
-                            <i [class.icofont-check-alt]="writer.additionalDetails.beginnerWriter.boolean === 'true'"
-                                [class.icofont-close-line]="writer.additionalDetails.beginnerWriter.boolean === 'false'"></i>
+                            <i [class.icofont-check-alt]="writer.additionalDetails.beginnerWriter.boolean === 'true'" [class.icofont-close-line]="writer.additionalDetails.beginnerWriter.boolean === 'false'"></i>
                         </div>
-                        <div *ngIf="writer.additionalDetails.beginnerWriter.note"
-                            (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.beginnerWriter.note" (click)="openDialog($event ,writer.additionalDetails.beginnerWriter.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
                     <!--  -->
                     <div class="writing-extra-detail" *ngIf="writer.additionalDetails.writerLevel.level">
                         <div class="detail-title description">דרגת סופר</div>
                         <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
-                        <div *ngIf="writer.additionalDetails.writerLevel.note"
-                            (click)="openDialog($event ,writer.additionalDetails.writerLevel.note)"
-                            class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+                        <div *ngIf="writer.additionalDetails.writerLevel.note" (click)="openDialog($event ,writer.additionalDetails.writerLevel.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
                     </div>
 
                 </div>
@@ -256,8 +214,7 @@
             <div class="section" (click)="closeMenus('images')" *ngIf="writer.photos.length">
                 <div class="section-title-btn">תמונות</div>
                 <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
-                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos"
-                        class="photo-wrapper">
+                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos" class="photo-wrapper">
                         <img class="icon-share" src="assets/icons/share.png" (click)="shareButton($event)" alt="">
                         <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
                     </div>
@@ -266,8 +223,7 @@
 
             <div class="section" (click)="closeMenus('recordings')" *ngIf="writer.recordings.length">
                 <div class="section-title-btn">תזכורת קולית</div>
-                <div (click)="preventDefaultAndStopPropagation($event)"
-                    [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+                <div (click)="preventDefaultAndStopPropagation($event)" [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
                     <div *ngFor="let recording of writer.recordings">
                         <audio controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)" class="img">
                         </audio>

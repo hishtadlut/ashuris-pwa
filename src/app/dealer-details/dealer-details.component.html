@@ -13,13 +13,13 @@
             <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
         </div>
         <div class="basic-details-section">
-            <div class="basic-detail .inner-grid" *ngIf="dealer.telephone">
+            <a [href]="'tel:' + dealer.telephone" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
                 <i class="icofont-phone"></i>
                 <div>
                     <div class="information">{{ dealer.telephone }}</div>
                     <div class="description">טלפון</div>
                 </div>
-            </div>
+            </a>
             <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
                 <i class="icofont-phone"></i>
                 <div>
@@ -27,20 +27,19 @@
                     <div class="description">טלפון נוסף</div>
                 </div>
             </div>
-            <div class="basic-detail .inner-grid" *ngIf="dealer.email">
-                <i class="icofont-envelope"></i>
+            <a href="mailto:{{dealer.email}}" class="basic-detail .inner-grid " *ngIf="dealer.email ">
+                <i class="icofont-envelope "></i>
                 <div>
-                    <div class="information">{{ dealer.email }}</div>
-                    <div class="description">אימייל</div>
+                    <div class="information ">{{ dealer.email }}</div>
+                    <div class="description ">אימייל</div>
                 </div>
-            </div>
-            <div class="basic-detail .inner-grid" *ngIf="dealer.city">
-                <i class="icofont-location-pin"></i>
+            </a>
+            <div class="basic-detail .inner-grid " *ngIf="dealer.city ">
+                <i class="icofont-location-pin "></i>
                 <div>
-                    <div class="information">{{ dealer.street }} {{ dealer.streetNumber }} <span
-                            *ngIf="dealer.apartmentNumber">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}
+                    <div class="information ">{{ dealer.street }} {{ dealer.streetNumber }} <span *ngIf="dealer.apartmentNumber ">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}
                     </div>
-                    <div class="description">כתובת</div>
+                    <div class="description ">כתובת</div>
                 </div>
             </div>
         </div>
