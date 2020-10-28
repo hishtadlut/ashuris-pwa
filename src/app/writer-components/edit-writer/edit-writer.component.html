@@ -32,7 +32,7 @@
       <input type="email" placeholder="אימייל" formControlName="email">
       <input list="cities" placeholder="עיר" formControlName="city">
       <datalist id="cities">
-        <option *ngFor="let city of citiesFromDB" [value]="city">
+        <option *ngFor="let city of citiesList" [value]="city">
       </datalist>
       <input placeholder="רחוב" formControlName="street">
       <input placeholder="מספר בנין" formControlName="streetNumber">
@@ -408,7 +408,7 @@
       </div>
       <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
       <datalist id="communities">
-        <option *ngFor="let community of communitiesFromDB" [value]="community">
+        <option *ngFor="let community of communitiesList" [value]="community">
       </datalist>
     </div>
     <div formGroupName="placeOfWriting" class="writing-location-section inner-grid">

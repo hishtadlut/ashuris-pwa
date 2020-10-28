@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Subject, Subscription, Observable } from 'rxjs';
-import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook } from './interfaces';
+import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook, GeneralDB } from './interfaces';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ PouchDB.plugin(PouchDBFind);
 import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
-import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList, loadBookList, loadParchmentList } from './actions/writers.actions';
+import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -23,26 +23,18 @@ import { loadWritersList, loadCitiesList, loadCommunitiesList, loadDealerList, l
 export class StitchService {
 
   writersFromDB = new Subject<Writer[]>();
-  citiesFromDB = new Subject<{ city: string }[]>();
-  communitiesFromDB = new Subject<string[]>();
 
   localWritersDB = new PouchDB<Writer>('writersLocal');
   remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers__remote');
-
-  localCommunitiesDB = new PouchDB('communitiesLocal');
-  remoteCommunitiesDB = new PouchDB('https://ashuris.online:5985/communities_remote');
-
-  localParchmentsDB = new PouchDB('parchmentsLocal');
-  remoteParchmentsDB = new PouchDB('https://ashuris.online:5985/parchments_remote');
-
-  localCitiesDB = new PouchDB('citiesLocal');
-  remoteSitiesDB = new PouchDB('https://ashuris.online:5985/cities_remote');
 
   localDealersDB = new PouchDB<Dealer>('dealersLocal');
   remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online:5985/dealers_remote');
 
   localBooksDB = new PouchDB<Book>('booksLocal');
   remoteBooksDB = new PouchDB<Book>('https://ashuris.online:5985/books_remote');
+
+  localGeneralDB = new PouchDB<GeneralDB>('generalLocal');
+  remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online:5985/general_remote');
 
   urgencyWritersList: ChangeUrgencyWriter[];
   urgencyWritersList$Subscription: Subscription;
@@ -72,58 +64,34 @@ export class StitchService {
     });
 
     this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
-    this.syncDb(this.localCommunitiesDB, this.remoteCommunitiesDB, loadCommunitiesList);
-    this.syncDb(this.localParchmentsDB, this.remoteParchmentsDB, loadParchmentList);
-    this.syncDb(this.localCitiesDB, this.remoteSitiesDB, loadCitiesList);
     this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
     this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
+    this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
   }
 
-  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch: any) {
+  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
     remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
       localDb.sync(remoteDb, { live: true, retry: true })
         .on('change', (change) => {
-          this.store$.dispatch(actionToDispatch());
+          console.log(change);
+          if (actionToDispatch) {
+            this.store$.dispatch(actionToDispatch());
+          }
         }).on('error', (err) => {
           console.log(err);
         }).on('active', () => {
           console.log('active');
-          this.store$.dispatch(actionToDispatch());
+          if (actionToDispatch) {
+            this.store$.dispatch(actionToDispatch());
+          }
         });
     });
   }
 
   createWriter(writer: Writer) {
-    this.localCitiesDB.allDocs({ include_docs: true })
-      .then(result => {
-        // tslint:disable-next-line: no-unused-expression max-line-length
-        !result.rows.some((document: any) => document.doc.city === writer.city) && this.localCitiesDB.put({ city: writer.city, _id: new Date().getMilliseconds().toString() });
-      });
-    this.localCommunitiesDB.get<{ communities: string[] }>('communities')
-      .then((communities) => {
-        const communitiesSet = new Set(communities.communities || []);
-        communitiesSet.add(writer.communityDeatails.community);
-        communities.communities = Array.from(communitiesSet);
-        this.localCommunitiesDB.put(communities)
-          .then(result => {
-            console.log(result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        if (err.name === 'not_found') {
-          return this.localCommunitiesDB.put({
-            _id: 'communities',
-            communities: []
-          });
-        } else { // hm, some other error
-          console.log(err + 'boom');
-        }
-      });
+    this.createCity(writer.city);
+    this.createCommunity(writer.communityDeatails.community);
 
-    // writer.coordinates = JSON.parse(JSON.stringify(writer.coordinates));
     const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
     if (writer._id) {
       this.localWritersDB.upsert(writer._id, () => {
@@ -142,6 +110,39 @@ export class StitchService {
     }
   }
 
+  createCity(city: string) {
+    this.localGeneralDB.find({
+      selector: { type: 'city' },
+      fields: ['itemName'],
+    })
+      .then(result => {
+        // tslint:disable-next-line: no-unused-expression max-line-length
+        !result.docs.some((document) => document.itemName === city) && this.localGeneralDB.put({ itemName: city, _id: new Date().getMilliseconds().toString(), type: 'city' });
+      });
+  }
+
+  createCommunity(community: string) {
+    this.localGeneralDB.find({
+      selector: { type: 'community' },
+      fields: ['itemName'],
+    })
+      .then(result => {
+        // tslint:disable-next-line: no-unused-expression max-line-length
+        !result.docs.some((document) => document.itemName === community) && this.localGeneralDB.put({ itemName: community, _id: new Date().getMilliseconds().toString(), type: 'community' });
+      });
+  }
+
+  createParchment(parchment: string) {
+    this.localGeneralDB.find({
+      selector: { type: 'parchment' },
+      fields: ['itemName'],
+    })
+      .then(result => {
+        // tslint:disable-next-line: no-unused-expression max-line-length
+        !result.docs.some((document) => document.itemName === parchment) && this.localGeneralDB.put({ itemName: parchment, _id: new Date().getMilliseconds().toString(), type: 'parchment' });
+      });
+  }
+
   getWriters(): Promise<Writer[]> {
     return this.localWritersDB.allDocs<Writer>({ include_docs: true })
       .then((result) => {
@@ -155,12 +156,6 @@ export class StitchService {
     return new Promise(resolve => {
       resolve(this.localWritersDB.get(id));
     });
-  }
-
-  async getCities() {
-    const result = await this.localCitiesDB.allDocs<{ city: string; }>({ include_docs: true });
-    const cities = result.rows.map(row => row.doc.city);
-    return cities;
   }
 
   updateDBFromUrgencyWritersList(writersList: ChangeUrgencyWriter[]): Promise<void> {
@@ -190,11 +185,24 @@ export class StitchService {
   }
 
   async getCommunities() {
-    return await this.localCommunitiesDB.get<{ communities: string[] }>('communities');
+    return await this.localGeneralDB.find({
+      selector: { type: 'community' },
+      fields: ['itemName'],
+    });
   }
 
   async getParchments() {
-    return await this.localParchmentsDB.get<{ parchments: string[] }>('parchments');
+    return await this.localGeneralDB.find({
+      selector: { type: 'parchment' },
+      fields: ['itemName'],
+    });
+  }
+
+  async getCities() {
+    return await this.localGeneralDB.find({
+      selector: { type: 'city' },
+      fields: ['itemName'],
+    });
   }
 
   async getSoferReminders(levelOfUrgency: number) {
@@ -282,7 +290,7 @@ export class StitchService {
   }
 
   createBook(book: Book, dealerId: string) {
-    this.upsertParchmentTypeToDB(book.writingDeatails.parchmentType.type);
+    this.createParchment(book.writingDeatails.parchmentType.type);
     const bookClone = JSON.parse(JSON.stringify(book)) as Book;
     if (book._id) {
       this.localBooksDB.upsert(book._id, () => {
@@ -336,32 +344,6 @@ export class StitchService {
       fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
     });
     return writerList.docs.map(writer => writer);
-  }
-
-  upsertParchmentTypeToDB(parchmentType: string) {
-    this.localParchmentsDB.get<{ parchments: string[] }>('parchments')
-      .then((parchments) => {
-        const parchmentsSet = new Set(parchments.parchments || []);
-        parchmentsSet.add(parchmentType);
-        parchments.parchments = Array.from(parchmentsSet);
-        this.localParchmentsDB.put(parchments)
-          .then(result => {
-            console.log(result);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        if (err.name === 'not_found') {
-          return this.localParchmentsDB.put({
-            _id: 'parchments',
-            parchments: []
-          });
-        } else { // hm, some other error
-          console.log(err + 'boom');
-        }
-      });
   }
 
 }

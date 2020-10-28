@@ -6,7 +6,6 @@ import {
   useAdvancedSearchParameters,
   setAdvancedSearchParameters,
   setCitiesList,
-  setCommunitiesList,
   setParchmentList,
   addToChangeUrgencyWritersList,
   resetChangeUrgencyWritersList,
@@ -82,9 +81,6 @@ export const writerReducer = createReducer(
   }),
   on(setCitiesList, (state, action) => {
     return { ...state, citiesList: action.citiesList };
-  }),
-  on(setCommunitiesList, (state, action) => {
-    return { ...state, communitiesList: action.communitiesList };
   }),
   on(setParchmentList, (state, action) => {
     return { ...state, parchmentList: action.parchmentList };

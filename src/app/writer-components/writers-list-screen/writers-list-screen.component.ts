@@ -25,16 +25,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   );
 
   citiesList: string[];
-  citiesList$Subscription: Subscription;
-  citiesList$: Observable<string[]> = this.store$.pipe(
-    select('writers', 'citiesList')
-  );
 
   communitiesList: string[];
-  communitiesList$Subscription: Subscription;
-  communitiesList$: Observable<string[]> = this.store$.pipe(
-    select('writers', 'communitiesList')
-  );
 
   searchForm: FormGroup;
   searchFormInitialValue: any;
@@ -58,8 +50,15 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
       this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
     }
-    this.citiesList$Subscription = this.citiesList$.subscribe((citiesList) => this.citiesList = citiesList);
-    this.communitiesList$Subscription = this.communitiesList$.subscribe((communitiesList) => this.communitiesList = communitiesList);
+    this.pouchDbService.getCities()
+      .then(citiesDoc => {
+        this.citiesList = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
+      });
+
+    this.pouchDbService.getCommunities()
+      .then(communitiesDoc => {
+        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
+      });
 
     this.searchForm = new FormGroup({
       city: new FormControl(''),

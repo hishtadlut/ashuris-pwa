@@ -6,12 +6,6 @@ import {
   LoadSomeActions,
   loadWritersList,
   setWritersList,
-  loadCitiesList,
-  setCitiesList,
-  loadCommunitiesList,
-  loadParchmentList,
-  setCommunitiesList,
-  setParchmentList,
   putChangeUrgencyWritersList,
   loadDealerList,
   setDealerList,
@@ -52,9 +46,6 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
         .pipe(
           mergeMap(writersList => [
             setWritersList({ writersList: JSON.parse(JSON.stringify(writersList)) }),
-            loadCitiesList(),
-            loadCommunitiesList(),
-            loadParchmentList(),
           ]),
           // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
@@ -83,48 +74,6 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
           mergeMap(bookList => [
             setBookList({ bookList: JSON.parse(JSON.stringify(bookList)) }),
           ]),
-        )
-      ),
-    )
-  );
-
-  loadCitiesList$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCitiesList),
-      mergeMap((action: any) => from(this.stitchService.getCities())
-        .pipe(
-          mergeMap(cities => [
-            setCitiesList({ citiesList: cities }),
-          ]),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      ),
-    )
-  );
-
-  loadCommunitiesList$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCommunitiesList),
-      mergeMap((action: any) => from(this.stitchService.getCommunities())
-        .pipe(
-          mergeMap(communities => [
-            setCommunitiesList({ communitiesList: communities.communities }),
-          ]),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
-        )
-      ),
-    )
-  );
-
-  loadParchmentList$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadParchmentList),
-      mergeMap((action: any) => from(this.stitchService.getParchments())
-        .pipe(
-          mergeMap(parchments => [
-            setParchmentList({ parchmentList: parchments.parchments }),
-          ]),
-          // catchError(() => of({ type: '[Movies API] Movies Loaded Error' }))
         )
       ),
     )
@@ -167,7 +116,6 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
             loadWritersList(),
             loadDealerList(),
             loadBookList(),
-            loadParchmentList(),
           ]),
         )
       ),
@@ -184,9 +132,5 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
     this.urgencyWritersList$Subscription.unsubscribe();
     this.urgencyBookList$Subscription.unsubscribe();
   }
-  // loadWritersListIntervals$ = createEffect(() =>
-  //   interval(300000).pipe(
-  //     map(_ => loadWritersList())
-  //   )
-  // )
+
 }

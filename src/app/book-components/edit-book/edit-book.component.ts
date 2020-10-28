@@ -4,13 +4,11 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { RecordingService } from '../../recording.service';
 import { Location } from '@angular/common';
-import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../../utils/utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
-import { loadBookList } from '../../actions/writers.actions';
 import { LocationPath } from 'src/app/enums';
 
 @Component({
@@ -18,24 +16,16 @@ import { LocationPath } from 'src/app/enums';
   templateUrl: './edit-book.component.html',
   styleUrls: ['./edit-book.component.css']
 })
-export class EditBookComponent implements OnInit, OnDestroy {
+export class EditBookComponent implements OnInit {
   bookForm: FormGroup;
   dialogFormGroup: FormGroup = null;
 
   isRecording = false;
   hasRecord: boolean;
 
-  communities: string[];
-  communitiesList$Subscription: Subscription;
-  communitiesList$: Observable<any> = this.store$.pipe(
-    select('writers', 'communitiesList')
-  );
+  communitiesList: string[];
 
   parchmentTypes: string[];
-  parchmentTypes$Subscription: Subscription;
-  parchmentTypes$: Observable<any> = this.store$.pipe(
-    select('writers', 'parchmentList')
-  );
 
   writersFullNameList: string[];
   dealerList: { fullName: string; _id: string; }[];
@@ -57,27 +47,27 @@ export class EditBookComponent implements OnInit, OnDestroy {
     private location: Location,
     public sanitizer: DomSanitizer,
     private router: Router,
-    private stitchService: StitchService,
+    private pouchDbService: StitchService,
     private activatedRoute: ActivatedRoute
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.communitiesList$Subscription = this.communitiesList$.subscribe(
-      (communities) => this.communities = communities
-    );
+    this.pouchDbService.getParchments()
+      .then(citiesDoc => {
+        this.parchmentTypes = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
+      });
 
-    this.parchmentTypes$Subscription = this.parchmentTypes$.subscribe(
-      (parchmentTypes) => {
-        this.parchmentTypes = parchmentTypes;
-      }
-    );
+    this.pouchDbService.getCommunities()
+      .then(communitiesDoc => {
+        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
+      });
 
-    this.stitchService.getWritersFullName()
+    this.pouchDbService.getWritersFullName()
       .then((writersFullNameList => {
         this.writersFullNameList = writersFullNameList;
       }));
 
-    this.stitchService.getDealersFullNameAndId()
+    this.pouchDbService.getDealersFullNameAndId()
       .then((dealerList => {
         this.dealerList = dealerList;
       }));
@@ -237,7 +227,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
     if (this.location.path().split('?')[0] === '/edit-book') {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-      this.book = await this.stitchService.getBookById(id);
+      this.book = await this.pouchDbService.getBookById(id);
 
       const recordingsArray = this.bookForm.controls.recordings as FormArray;
       this.book.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
@@ -326,8 +316,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.bookForm.valid) {
-      this.stitchService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
-      this.store$.dispatch(loadBookList());
+      this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.router.navigate(['/book-list-screen']);
     } else {
       alert('יש למלא שם לספר');
@@ -337,10 +326,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   routeToCreateNewDealer() {
     this.router.navigate([LocationPath.CREATE_DEALER_FOR_BOOK]);
-  }
-
-  ngOnDestroy() {
-    this.communitiesList$Subscription.unsubscribe();
   }
 
 }

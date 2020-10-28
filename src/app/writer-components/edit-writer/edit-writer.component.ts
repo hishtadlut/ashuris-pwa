@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../../stitch-service.service';
-import { Subscription, Observable } from 'rxjs';
 import { fileToBase64 } from '../../utils/utils';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,21 +18,13 @@ import { LocationPath } from 'src/app/enums';
   templateUrl: './edit-writer.component.html',
   styleUrls: ['./edit-writer.component.css']
 })
-export class EditWriterComponent implements OnInit, OnDestroy {
+export class EditWriterComponent implements OnInit {
 
   writer: Writer;
 
-  citiesFromDB: string[];
-  citiesList$Subscription: Subscription;
-  citiesList$: Observable<any> = this.store$.pipe(
-    select('writers', 'citiesList')
-  );
+  citiesList: string[];
 
-  communitiesFromDB: string[];
-  communitiesList$Subscription: Subscription;
-  communitiesList$: Observable<any> = this.store$.pipe(
-    select('writers', 'communitiesList')
-  );
+  communitiesList: string[];
 
   writerForm: FormGroup;
   map: google.maps.Map;
@@ -45,7 +36,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   locationWithoutParameters: string;
 
   constructor(
-    private stitchService: StitchService,
+    private pouchDbService: StitchService,
     private googleMapsService: GoogleMapsService,
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer,
@@ -300,7 +291,7 @@ export class EditWriterComponent implements OnInit, OnDestroy {
       (this.locationWithoutParameters === LocationPath.EDIT_WRITER) || (this.locationWithoutParameters === LocationPath.CREATE_WRITER);
     if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-      this.writer = await this.stitchService.getWriter(id);
+      this.writer = await this.pouchDbService.getWriter(id);
 
       const recordingsArray = this.writerForm.controls.recordings as FormArray;
       this.writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
@@ -319,13 +310,16 @@ export class EditWriterComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.citiesList$Subscription = this.citiesList$.subscribe(
-      (cities) => this.citiesFromDB = cities
-    );
+    this.pouchDbService.getCities()
+      .then(citiesDoc => {
+        this.citiesList = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
+      });
 
-    this.communitiesList$Subscription = this.communitiesList$.subscribe(
-      (communities) => this.communitiesFromDB = communities
-    );
+    this.pouchDbService.getCommunities()
+      .then(communitiesDoc => {
+        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
+      });
+
   }
 
   openDialog(formGroup: FormGroup) {
@@ -424,9 +418,9 @@ export class EditWriterComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.writerForm.valid) {
       if (this.locationWithoutParameters === LocationPath.CREATE_WRITER) {
-        this.stitchService.createWriter({ ...this.writerForm.value });
+        this.pouchDbService.createWriter({ ...this.writerForm.value });
       } else if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
-        this.stitchService.createWriter({ ...this.writer, ...this.writerForm.value });
+        this.pouchDbService.createWriter({ ...this.writer, ...this.writerForm.value });
       }
       this.store$.dispatch(loadWritersList());
       this.router.navigate(['/writers-list-screen']);
@@ -435,12 +429,4 @@ export class EditWriterComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    if (this.citiesList$Subscription) {
-      this.citiesList$Subscription.unsubscribe();
-    }
-    if (this.communitiesList$Subscription) {
-      this.communitiesList$Subscription.unsubscribe();
-    }
-  }
 }

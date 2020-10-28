@@ -364,7 +364,7 @@
       </div>
       <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
       <datalist id="communities">
-        <option *ngFor="let community of communities" [value]="community">
+        <option *ngFor="let community of communitiesList" [value]="community">
       </datalist>
     </div>
     <div formGroupName="additionalDetails">

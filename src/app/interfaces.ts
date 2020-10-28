@@ -186,6 +186,13 @@ export interface ChangeUrgencyBook {
   levelOfUrgency: number;
 }
 
+export interface GeneralDB {
+  _id?: any;
+  _rev?: string;
+  type: string;
+  itemName: string;
+}
+
 export interface Address {
   city: string;
   street: string;
