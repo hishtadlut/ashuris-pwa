@@ -5,6 +5,7 @@ import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { base64ToBlob, preventDefaultAndStopPropagation, thereAreDetailsInGivenObject } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
+import { writer } from 'repl';
 declare const navigator: Navigator;
 type ShareData = {
   title?: string;
@@ -139,6 +140,12 @@ export class WriterDetailsComponent implements OnInit {
       }
     });
     return letterSizesArray.join(' ,');
+  }
+
+  playRecording(index) {
+    const audio = new Audio(this.writer.recordings[index]);
+    audio.load();
+    audio.play();
   }
 
 }

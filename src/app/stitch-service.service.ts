@@ -16,334 +16,365 @@ import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
+import { start } from 'repl';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StitchService {
 
-  writersFromDB = new Subject<Writer[]>();
+    writersFromDB = new Subject<Writer[]>();
 
-  localWritersDB = new PouchDB<Writer>('writersLocal');
-  remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers__remote');
+    localWritersDB = new PouchDB<Writer>('writersLocal');
+    remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers__remote');
 
-  localDealersDB = new PouchDB<Dealer>('dealersLocal');
-  remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online:5985/dealers_remote');
+    localDealersDB = new PouchDB<Dealer>('dealersLocal');
+    remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online:5985/dealers_remote');
 
-  localBooksDB = new PouchDB<Book>('booksLocal');
-  remoteBooksDB = new PouchDB<Book>('https://ashuris.online:5985/books_remote');
+    localBooksDB = new PouchDB<Book>('booksLocal');
+    remoteBooksDB = new PouchDB<Book>('https://ashuris.online:5985/books_remote');
 
-  localGeneralDB = new PouchDB<GeneralDB>('generalLocal');
-  remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online:5985/general_remote');
+    localGeneralDB = new PouchDB<GeneralDB>('generalLocal');
+    remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online:5985/general_remote');
 
-  urgencyWritersList: ChangeUrgencyWriter[];
-  urgencyWritersList$Subscription: Subscription;
-  urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this.store$.pipe(
-    select('writers', 'urgencyWritersList')
-  );
+    urgencyWritersList: ChangeUrgencyWriter[];
+    urgencyWritersList$Subscription: Subscription;
+    urgencyWritersList$: Observable<ChangeUrgencyWriter[]> = this.store$.pipe(
+        select('writers', 'urgencyWritersList')
+    );
 
-  urgencyBookList: ChangeUrgencyBook[];
-  urgencyBookList$Subscription: Subscription;
-  urgencyBookList$: Observable<ChangeUrgencyBook[]> = this.store$.pipe(
-    select('writers', 'urgencyBookList')
-  );
+    urgencyBookList: ChangeUrgencyBook[];
+    urgencyBookList$Subscription: Subscription;
+    urgencyBookList$: Observable<ChangeUrgencyBook[]> = this.store$.pipe(
+        select('writers', 'urgencyBookList')
+    );
 
-  constructor(private store$: Store<State>) {
-    this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
-    this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
+    constructor(private store$: Store<State>) {
+        this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
+        this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
 
-    this.localWritersDB.createIndex({
-      index: {
-        fields: ['levelOfUrgency'],
-        name: 'levelOfUrgency',
-      }
-    }).then((result) => {
-      console.log(result);
-    }).catch((err) => {
-      console.log(err);
-    });
+        // this.localWritersDB.createIndex({
+        //   index: {
+        //     fields: ['levelOfUrgency'],
+        //     name: 'levelOfUrgency',
+        //   }
+        // }).then((result) => {
+        //   console.log(result);
+        // }).catch((err) => {
+        //   console.log(err);
+        // });
 
-    this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
-    this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
-    this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
-    this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
-  }
-
-  syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
-    remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
-      localDb.sync(remoteDb, { live: true, retry: true })
-        .on('change', (change) => {
-          console.log(change);
-          if (actionToDispatch) {
-            this.store$.dispatch(actionToDispatch());
-          }
-        }).on('error', (err) => {
-          console.log(err);
-        }).on('active', () => {
-          console.log('active');
-          if (actionToDispatch) {
-            this.store$.dispatch(actionToDispatch());
-          }
-        });
-    });
-  }
-
-  createWriter(writer: Writer) {
-    this.createCity(writer.city);
-    this.createCommunity(writer.communityDeatails.community);
-
-    const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
-    if (writer._id) {
-      this.localWritersDB.upsert(writer._id, () => {
-        return { ...writerClone };
-      });
-    } else {
-      this.localWritersDB.put({
-        // add unike id
-        _id: uuidv4(),
-        ...writerClone, levelOfUrgency: 1
-      })
-        .then(result => {
-          console.log(result);
-        })
-        .catch(console.error);
+        this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
+        this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
+        this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
+        this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
     }
-  }
 
-  createCity(city: string) {
-    this.localGeneralDB.find({
-      selector: { type: 'city' },
-      fields: ['itemName'],
-    })
-      .then(result => {
-        // tslint:disable-next-line: no-unused-expression max-line-length
-        !result.docs.some((document) => document.itemName === city) && this.localGeneralDB.put({ itemName: city, _id: new Date().getMilliseconds().toString(), type: 'city' });
-      });
-  }
+    syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
+        let syncHandler: PouchDB.Replication.Sync<{}>;
+        const startSync = () => {
+            try {
+                syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
+                remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
+                    syncHandler.on('change', (change) => {
+                        console.log(change);
+                        if (actionToDispatch) {
+                            this.store$.dispatch(actionToDispatch());
+                        }
+                    });
+                    syncHandler.on('error', (err) => {
+                        console.log(err);
+                    });
+                    syncHandler.on('active', () => {
+                        console.log('active');
+                        if (actionToDispatch) {
+                            this.store$.dispatch(actionToDispatch());
+                        }
+                    });
+                    syncHandler.on('complete', () => {
+                        // console.log('sync complete ' + localDb.name);
+                        stopSync();
+                    });
+                });
+            } catch (error) {
+                console.log(error);
+                stopSync();
+            }
+        };
+        const stopSync = () => {
+            try {
+                syncHandler.cancel();
+                syncHandler.removeAllListeners();
+                setTimeout(() => {
+                    // console.log('sync canceled ' + localDb.name);
+                    startSync();
+                }, 10000);
+            } catch (error) {
+                console.log(error);
+                stopSync();
+            }
 
-  createCommunity(community: string) {
-    this.localGeneralDB.find({
-      selector: { type: 'community' },
-      fields: ['itemName'],
-    })
-      .then(result => {
-        // tslint:disable-next-line: no-unused-expression max-line-length
-        !result.docs.some((document) => document.itemName === community) && this.localGeneralDB.put({ itemName: community, _id: new Date().getMilliseconds().toString(), type: 'community' });
-      });
-  }
+        };
+        startSync();
+        setInterval(startSync, 60000);
+    }
 
-  createParchment(parchment: string) {
-    this.localGeneralDB.find({
-      selector: { type: 'parchment' },
-      fields: ['itemName'],
-    })
-      .then(result => {
-        // tslint:disable-next-line: no-unused-expression max-line-length
-        !result.docs.some((document) => document.itemName === parchment) && this.localGeneralDB.put({ itemName: parchment, _id: new Date().getMilliseconds().toString(), type: 'parchment' });
-      });
-  }
+    createWriter(writer: Writer) {
+        this.createCity(writer.city);
+        this.createCommunity(writer.communityDeatails.community);
 
-  getWriters(): Promise<Writer[]> {
-    return this.localWritersDB.allDocs<Writer>({ include_docs: true })
-      .then((result) => {
+        const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
+        if (writer._id) {
+            this.localWritersDB.upsert(writer._id, () => {
+                return { ...writerClone };
+            });
+        } else {
+            this.localWritersDB.put({
+                // add unike id
+                _id: uuidv4(),
+                ...writerClone, levelOfUrgency: 1
+            })
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(console.error);
+        }
+    }
+
+    createCity(city: string) {
+        this.localGeneralDB.find({
+            selector: { type: 'city' },
+            fields: ['itemName'],
+        })
+            .then(result => {
+                // tslint:disable-next-line: no-unused-expression max-line-length
+                !result.docs.some((document) => document.itemName === city) && this.localGeneralDB.put({ itemName: city, _id: new Date().getMilliseconds().toString(), type: 'city' });
+            });
+    }
+
+    createCommunity(community: string) {
+        this.localGeneralDB.find({
+            selector: { type: 'community' },
+            fields: ['itemName'],
+        })
+            .then(result => {
+                // tslint:disable-next-line: no-unused-expression max-line-length
+                !result.docs.some((document) => document.itemName === community) && this.localGeneralDB.put({ itemName: community, _id: new Date().getMilliseconds().toString(), type: 'community' });
+            });
+    }
+
+    createParchment(parchment: string) {
+        this.localGeneralDB.find({
+            selector: { type: 'parchment' },
+            fields: ['itemName'],
+        })
+            .then(result => {
+                // tslint:disable-next-line: no-unused-expression max-line-length
+                !result.docs.some((document) => document.itemName === parchment) && this.localGeneralDB.put({ itemName: parchment, _id: new Date().getMilliseconds().toString(), type: 'parchment' });
+            });
+    }
+
+    getWriters(): Promise<Writer[]> {
+        return this.localWritersDB.allDocs<Writer>({ include_docs: true })
+            .then((result) => {
+                return new Promise(resolve => {
+                    resolve(result.rows.map(row => row.doc));
+                });
+            });
+    }
+
+    getWriter(id: string): Promise<Writer> {
         return new Promise(resolve => {
-          resolve(result.rows.map(row => row.doc));
+            resolve(this.localWritersDB.get(id));
         });
-      });
-  }
+    }
 
-  getWriter(id: string): Promise<Writer> {
-    return new Promise(resolve => {
-      resolve(this.localWritersDB.get(id));
-    });
-  }
-
-  updateDBFromUrgencyWritersList(writersList: ChangeUrgencyWriter[]): Promise<void> {
-    return new Promise(resolve => {
-      writersList.map(writerToChange => {
-        this.localWritersDB.get<Writer>(writerToChange.writerId).then(writer => {
-          writer.levelOfUrgency = writerToChange.levelOfUrgency;
-          this.localWritersDB.put(writer).then(_ => {
-            resolve();
-          });
-        });
-      });
-    });
-  }
-
-  updateDBFromUrgencyBookList(bookList: ChangeUrgencyBook[]): Promise<void> {
-    return new Promise(resolve => {
-      bookList.map(bookToChange => {
-        this.localBooksDB.get<Writer>(bookToChange.bookId).then(book => {
-          book.levelOfUrgency = bookToChange.levelOfUrgency;
-          this.localBooksDB.put(book).then(_ => {
-            resolve();
-          });
-        });
-      });
-    });
-  }
-
-  async getCommunities() {
-    return await this.localGeneralDB.find({
-      selector: { type: 'community' },
-      fields: ['itemName'],
-    });
-  }
-
-  async getParchments() {
-    return await this.localGeneralDB.find({
-      selector: { type: 'parchment' },
-      fields: ['itemName'],
-    });
-  }
-
-  async getCities() {
-    return await this.localGeneralDB.find({
-      selector: { type: 'city' },
-      fields: ['itemName'],
-    });
-  }
-
-  async getSoferReminders(levelOfUrgency: number) {
-    return await this.localWritersDB.find({
-      selector: { levelOfUrgency },
-      fields: ['_id', 'firstName', 'lastName', 'city', 'street', 'profileImage', 'levelOfUrgency'],
-    });
-  }
-
-  async getBookReminders(levelOfUrgency: number) {
-    return await this.localBooksDB.find({
-      selector: { levelOfUrgency },
-      fields: ['_id', 'name', 'levelOfUrgency'],
-    });
-  }
-
-  async getBooksBySoldCondition(isSold: boolean) {
-    return await this.localBooksDB.find({
-      selector: { 'isSold.boolean': isSold },
-      fields: ['_id', 'name', 'levelOfUrgency'],
-    });
-  }
-
-  async getWritersFullName() {
-    const writersList = await this.localWritersDB.find({
-      selector: {},
-      fields: ['firstName', 'lastName'],
-    });
-    return writersList.docs.map((writerResponse) => {
-      return `${writerResponse.lastName} ${writerResponse.firstName}`;
-    });
-  }
-
-  async getDealersFullNameAndId(): Promise<{ fullName: string, _id: string }[]> {
-    const dealersList = await this.localDealersDB.find({
-      selector: {},
-      fields: ['_id', 'firstName', 'lastName'],
-    });
-    return dealersList.docs.map((dealerResponse) => {
-      return { fullName: `${dealerResponse.lastName} ${dealerResponse.firstName}`, _id: dealerResponse._id };
-    });
-  }
-
-  getDealerById(id: string) {
-    return this.localDealersDB.get<Dealer>(id);
-  }
-
-  getBookById(id: string) {
-    return this.localBooksDB.get<Book>(id);
-  }
-
-  getDealers() {
-    return this.localDealersDB.allDocs<Dealer>({ include_docs: true })
-      .then((result) => {
+    updateDBFromUrgencyWritersList(writersList: ChangeUrgencyWriter[]): Promise<void> {
         return new Promise(resolve => {
-          resolve(result.rows.map(row => row.doc));
+            writersList.map(writerToChange => {
+                this.localWritersDB.get<Writer>(writerToChange.writerId).then(writer => {
+                    writer.levelOfUrgency = writerToChange.levelOfUrgency;
+                    this.localWritersDB.put(writer).then(_ => {
+                        resolve();
+                    });
+                });
+            });
         });
-      });
-  }
-
-  async getBooks(): Promise<unknown> {
-    const result = await this.localBooksDB.allDocs<Book>({ include_docs: true });
-    return new Promise(resolve => {
-      resolve(result.rows.map(row => row.doc));
-    });
-  }
-
-  createDealer(dealer: Dealer) {
-    const dealerClone = JSON.parse(JSON.stringify(dealer)) as Dealer;
-    if (dealer._id) {
-      this.localDealersDB.put({
-        ...dealerClone
-      });
-    } else {
-      this.localDealersDB.put({
-        // add unike id
-        _id: uuidv4(),
-        ...dealerClone
-      })
-        .then(result => {
-          console.log(result);
-        })
-        .catch(console.error);
     }
-  }
 
-  createBook(book: Book, dealerId: string) {
-    this.createParchment(book.writingDeatails.parchmentType.type);
-    const bookClone = JSON.parse(JSON.stringify(book)) as Book;
-    if (book._id) {
-      this.localBooksDB.upsert(book._id, () => {
-        return { ...bookClone };
-      });
-    } else {
-      this.localBooksDB.put({
-        // add unike id
-        _id: uuidv4(),
-        ...bookClone
-      })
-        .then(result => {
-          this.addBookToDealer(result.id, dealerId);
-        })
-        .catch(console.error);
+    updateDBFromUrgencyBookList(bookList: ChangeUrgencyBook[]): Promise<void> {
+        return new Promise(resolve => {
+            bookList.map(bookToChange => {
+                this.localBooksDB.get<Writer>(bookToChange.bookId).then(book => {
+                    book.levelOfUrgency = bookToChange.levelOfUrgency;
+                    this.localBooksDB.put(book).then(_ => {
+                        resolve();
+                    });
+                });
+            });
+        });
     }
-  }
 
-  addBookToDealer(bookId: string, dealerId: string) {
-    this.localDealersDB.get(dealerId).then(dealer => {
-      const bookArray = dealer.books ? dealer.books : [];
-      bookArray.push(bookId);
-      this.localDealersDB.put({ ...dealer, books: bookArray });
-    }).catch(console.log);
-  }
+    async getCommunities() {
+        return await this.localGeneralDB.find({
+            selector: { type: 'community' },
+            fields: ['itemName'],
+        });
+    }
 
-  async getDealerBookIds(dealerId: string): Promise<string[]> {
-    const dealerList = await this.localDealersDB.find({
-      selector: { _id: dealerId },
-      fields: ['books']
-    });
-    return dealerList.docs.map(dealer => dealer.books)[0];
-  }
+    async getParchments() {
+        return await this.localGeneralDB.find({
+            selector: { type: 'parchment' },
+            fields: ['itemName'],
+        });
+    }
 
-  async getDealerBooks(dealerId: string) {
-    const bookIds = await this.getDealerBookIds(dealerId);
-    const bookList = bookIds.map(async bookId => {
-      const bookList = await this.localBooksDB.find({
-        selector: { _id: bookId },
-        fields: ['_id', 'levelOfUrgency', 'name'],
-        limit: 1
-      });
-      return bookList.docs[0];
-    });
-    return await Promise.all(bookList);
-  }
+    async getCities() {
+        return await this.localGeneralDB.find({
+            selector: { type: 'city' },
+            fields: ['itemName'],
+        });
+    }
 
-  async getWritersInRoom(city: string, street: string, streetNumber: string): Promise<Writer[]> {
-    const writerList = await this.localWritersDB.find({
-      selector: { city, street, streetNumber },
-      fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
-    });
-    return writerList.docs.map(writer => writer);
-  }
+    async getSoferReminders(levelOfUrgency: number) {
+        return await this.localWritersDB.find({
+            selector: { levelOfUrgency },
+            fields: ['_id', 'firstName', 'lastName', 'city', 'street', 'profileImage', 'levelOfUrgency'],
+        });
+    }
+
+    async getBookReminders(levelOfUrgency: number) {
+        return await this.localBooksDB.find({
+            selector: { levelOfUrgency },
+            fields: ['_id', 'name', 'levelOfUrgency'],
+        });
+    }
+
+    async getBooksBySoldCondition(isSold: boolean) {
+        return await this.localBooksDB.find({
+            selector: { 'isSold.boolean': isSold },
+            fields: ['_id', 'name', 'levelOfUrgency'],
+        });
+    }
+
+    async getWritersFullName() {
+        const writersList = await this.localWritersDB.find({
+            selector: {},
+            fields: ['firstName', 'lastName'],
+        });
+        return writersList.docs.map((writerResponse) => {
+            return `${writerResponse.lastName} ${writerResponse.firstName}`;
+        });
+    }
+
+    async getDealersFullNameAndId(): Promise<{ fullName: string, _id: string }[]> {
+        const dealersList = await this.localDealersDB.find({
+            selector: {},
+            fields: ['_id', 'firstName', 'lastName'],
+        });
+        return dealersList.docs.map((dealerResponse) => {
+            return { fullName: `${dealerResponse.lastName} ${dealerResponse.firstName}`, _id: dealerResponse._id };
+        });
+    }
+
+    getDealerById(id: string) {
+        return this.localDealersDB.get<Dealer>(id);
+    }
+
+    getBookById(id: string) {
+        return this.localBooksDB.get<Book>(id);
+    }
+
+    getDealers() {
+        return this.localDealersDB.allDocs<Dealer>({ include_docs: true })
+            .then((result) => {
+                return new Promise(resolve => {
+                    resolve(result.rows.map(row => row.doc));
+                });
+            });
+    }
+
+    async getBooks(): Promise<unknown> {
+        const result = await this.localBooksDB.allDocs<Book>({ include_docs: true });
+        return new Promise(resolve => {
+            resolve(result.rows.map(row => row.doc));
+        });
+    }
+
+    createDealer(dealer: Dealer) {
+        const dealerClone = JSON.parse(JSON.stringify(dealer)) as Dealer;
+        if (dealer._id) {
+            this.localDealersDB.put({
+                ...dealerClone
+            });
+        } else {
+            this.localDealersDB.put({
+                // add unike id
+                _id: uuidv4(),
+                ...dealerClone
+            })
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(console.error);
+        }
+    }
+
+    createBook(book: Book, dealerId: string) {
+        this.createParchment(book.writingDeatails.parchmentType.type);
+        const bookClone = JSON.parse(JSON.stringify(book)) as Book;
+        if (book._id) {
+            this.localBooksDB.upsert(book._id, () => {
+                return { ...bookClone };
+            });
+        } else {
+            this.localBooksDB.put({
+                // add unike id
+                _id: uuidv4(),
+                ...bookClone
+            })
+                .then(result => {
+                    this.addBookToDealer(result.id, dealerId);
+                })
+                .catch(console.error);
+        }
+    }
+
+    addBookToDealer(bookId: string, dealerId: string) {
+        this.localDealersDB.get(dealerId).then(dealer => {
+            const bookArray = dealer.books ? dealer.books : [];
+            bookArray.push(bookId);
+            this.localDealersDB.put({ ...dealer, books: bookArray });
+        }).catch(console.log);
+    }
+
+    async getDealerBookIds(dealerId: string): Promise<string[]> {
+        const dealerList = await this.localDealersDB.find({
+            selector: { _id: dealerId },
+            fields: ['books']
+        });
+        return dealerList.docs.map(dealer => dealer.books)[0];
+    }
+
+    async getDealerBooks(dealerId: string) {
+        const bookIds = await this.getDealerBookIds(dealerId);
+        const bookList = bookIds.map(async bookId => {
+            const bookList = await this.localBooksDB.find({
+                selector: { _id: bookId },
+                fields: ['_id', 'levelOfUrgency', 'name'],
+                limit: 1
+            });
+            return bookList.docs[0];
+        });
+        return await Promise.all(bookList);
+    }
+
+    async getWritersInRoom(city: string, street: string, streetNumber: string): Promise<Writer[]> {
+        const writerList = await this.localWritersDB.find({
+            selector: { city, street, streetNumber },
+            fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
+        });
+        return writerList.docs.map(writer => writer);
+    }
 
 }

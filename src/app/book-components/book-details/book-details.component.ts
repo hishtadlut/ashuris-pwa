@@ -72,4 +72,10 @@ export class BookDetailsComponent implements OnInit {
     this.openMenuStatus[menuToOpen] = !menuToOpenStatus;
   }
 
+  playRecording(index) {
+    const audio = new Audio(this.book.recordings[index]);
+    audio.load();
+    audio.play();
+  }
+
 }
