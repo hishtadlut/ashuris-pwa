@@ -13,6 +13,7 @@ import { StitchService } from '../stitch-service.service';
 export class DealerDetailsComponent implements OnInit {
   dialogContent = null;
   dealer: Dealer;
+  dealerAddress: string;
 
   constructor(
     private router: Router,
@@ -24,6 +25,7 @@ export class DealerDetailsComponent implements OnInit {
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
     this.dealer = await this.pouchDbService.getDealerById(id);
+    this.dealerAddress = `${this.dealer.city}+${this.dealer.street}+${this.dealer.streetNumber}`;
   }
 
   openDialog(event: Event, content: string) {
