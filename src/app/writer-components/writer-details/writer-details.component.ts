@@ -86,9 +86,9 @@ export class WriterDetailsComponent implements OnInit {
             .then(() => {
               console.log('Thanks for sharing!');
               // alert(newVariable.canShare())
-            })
-            .catch(console.error);
-        });
+            }).catch((error => console.log(error)));
+        })
+        .catch((error => console.log(error)));
     } else {
       // fallback
     }
