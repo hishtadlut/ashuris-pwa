@@ -120,7 +120,7 @@
               <i class="icofont-exclamation-circle"></i>
             </div>
           </div>
-          <div class="writing-extra-detail">
+          <div class="writing-extra-detail" *ngIf="writer.writingDeatails.stabilityLevel.level">
             <div class="detail-title description">יציבות</div>
             <div class="detail">{{ writer.writingDeatails.stabilityLevel.level }}</div>
             <div *ngIf="writer.writingDeatails.stabilityLevel.note" (click)="openDialog($event, writer.writingDeatails.stabilityLevel.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
