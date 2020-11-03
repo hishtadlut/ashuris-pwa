@@ -3,6 +3,14 @@ export enum BooksOrDealers {
   dealers = 'dealers',
 }
 
+export enum RemoveItem {
+  book = 'ספר',
+  dealer = 'סוחר',
+  writer = 'סופר',
+  img = 'תמונה',
+  recording = 'הקלטה',
+}
+
 export enum LocationPath {
   BOOKS_ADVANCED_SEARCH = '/books-advanced-search',
   BOOKS_ADVANCED_SEARCH_RESULT = '/books-search-result',

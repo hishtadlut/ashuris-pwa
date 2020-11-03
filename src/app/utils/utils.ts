@@ -1,3 +1,5 @@
+import { RemoveItem } from '../enums';
+
 declare const navigator: Navigator;
 
 type ShareData = {
@@ -63,11 +65,14 @@ export function shareButton(event) {
         })
           .then(() => {
             console.log('Thanks for sharing!');
-            // alert(newVariable.canShare())
           }).catch((error => console.log(error)));
       })
       .catch((error => console.log(error)));
   } else {
     // fallback
   }
+}
+
+export function areYouSureYouWantToRemove(item: RemoveItem) {
+  return confirm(`האם אתה בטוח שברצונך למחוק את ה${item}?`);
 }

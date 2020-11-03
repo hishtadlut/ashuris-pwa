@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../../stitch-service.service';
-import { fileToBase64 } from '../../utils/utils';
+import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,7 +11,7 @@ import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
 import { loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
-import { LocationPath } from 'src/app/enums';
+import { LocationPath, RemoveItem } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-writer',
@@ -397,13 +397,17 @@ export class EditWriterComponent implements OnInit {
   }
 
   deleteRecording(index: number) {
-    const recordingsArray = this.writerForm.controls.recordings as FormArray;
-    recordingsArray.removeAt(index);
+    if (areYouSureYouWantToRemove(RemoveItem.recording)) {
+      const recordingsArray = this.writerForm.controls.recordings as FormArray;
+      recordingsArray.removeAt(index);
+    }
   }
 
   deletePhoto(index: number) {
-    const photosArray = this.writerForm.controls.photos as FormArray;
-    photosArray.removeAt(index);
+    if (areYouSureYouWantToRemove(RemoveItem.img)) {
+      const photosArray = this.writerForm.controls.photos as FormArray;
+      photosArray.removeAt(index);
+    }
   }
   // playRecord() {
   //   this.record.play();

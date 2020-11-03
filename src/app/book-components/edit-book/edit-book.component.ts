@@ -4,12 +4,12 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { RecordingService } from '../../recording.service';
 import { Location } from '@angular/common';
-import { fileToBase64 } from '../../utils/utils';
+import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
-import { LocationPath } from 'src/app/enums';
+import { LocationPath, RemoveItem } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-book',
@@ -305,13 +305,17 @@ export class EditBookComponent implements OnInit {
   }
 
   deletePhoto(index: number) {
-    const photosArray = this.bookForm.controls.photos as FormArray;
-    photosArray.removeAt(index);
+    if (areYouSureYouWantToRemove(RemoveItem.img)) {
+      const photosArray = this.bookForm.controls.photos as FormArray;
+      photosArray.removeAt(index);
+    }
   }
 
   deleteRecording(index: number) {
-    const recordingsArray = this.bookForm.controls.recordings as FormArray;
-    recordingsArray.removeAt(index);
+    if (areYouSureYouWantToRemove(RemoveItem.recording)) {
+      const recordingsArray = this.bookForm.controls.recordings as FormArray;
+      recordingsArray.removeAt(index);
+    }
   }
 
   onSubmit() {
