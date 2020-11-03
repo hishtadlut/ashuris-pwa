@@ -16,14 +16,14 @@
       <a [href]="'tel:' + dealer.telephone" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
         <i class="icofont-phone"></i>
         <div>
-          <div class="information">{{ dealer.telephone | phone}}</div>
+          <div class="information">{{ dealer.telephone | phone }}</div>
           <div class="description">טלפון</div>
         </div>
       </a>
       <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
-          <div class="information">{{ dealer.secondTelephone | phone}}</div>
+          <div class="information">{{ dealer.secondTelephone | phone }}</div>
           <div class="description">טלפון נוסף</div>
         </div>
       </div>
