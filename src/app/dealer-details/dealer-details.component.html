@@ -20,13 +20,13 @@
           <div class="description">טלפון</div>
         </div>
       </a>
-      <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
+      <a [href]="'tel:' + dealer.secondTelephone" class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ dealer.secondTelephone | phone }}</div>
           <div class="description">טלפון נוסף</div>
         </div>
-      </div>
+      </a>
       <a href="mailto:{{dealer.email}}" class="basic-detail .inner-grid " *ngIf="dealer.email ">
         <i class="icofont-envelope "></i>
         <div>

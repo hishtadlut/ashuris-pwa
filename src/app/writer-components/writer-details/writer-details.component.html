@@ -23,13 +23,13 @@
           <div class="description">טלפון</div>
         </div>
       </a>
-      <div class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
+      <a [href]="'tel:' + writer.secondTelephone" class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ writer.secondTelephone | phone }}</div>
           <div class="description">טלפון נוסף</div>
         </div>
-      </div>
+      </a>
       <div class="basic-detail .inner-grid" *ngIf="writer.city">
         <i class="icofont-location-pin"></i>
         <div>
