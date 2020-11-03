@@ -253,8 +253,8 @@
 
       <div class="section" (click)="closeMenus('recordings')" *ngIf="writer.recordings.length">
         <div class="section-title-btn">תזכורת קולית</div>
-        <div (click)="preventDefaultAndStopPropagation($event)" [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
-          <div *ngFor="let recording of writer.recordings; let i = index">
+        <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of writer.recordings; let i = index">
             <div>
               <button type="button" (click)="playRecording(i)">השמעת הקלטה</button>
             </div>
