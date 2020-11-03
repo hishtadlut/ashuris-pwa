@@ -40,147 +40,147 @@
         </div>
 
       </div>
-    
 
 
-    <div class="writing-types inner-grid" formGroupName="writingTypes">
-      <div class="section-title">
-        סוג הכתב
-      </div>
-      <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'ari']).value}" class="box-checkbox">
+
+      <div class="writing-types inner-grid" formGroupName="writingTypes">
+        <div class="section-title">
+          סוג הכתב
+        </div>
+        <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'ari']).value}" class="box-checkbox">
         <input class="display-none" type="checkbox" formControlName="ari">
         אר"י
       </label>
-      <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'beitYosef']).value}" class="box-checkbox">
+        <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'beitYosef']).value}" class="box-checkbox">
         <input class="display-none" type="checkbox" formControlName="beitYosef">
         בית יוסף
       </label>
-      <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'welish']).value}" class="box-checkbox">
+        <label [ngClass]="{'checked': advancedSearch.get(['writingTypes', 'welish']).value}" class="box-checkbox">
         <input class="display-none" type="checkbox" formControlName="welish">
         וועליש
       </label>
-    </div>
+      </div>
 
-    <div class="sizes-section inner-grid" formGroupName="letterSizes">
-      <div class="section-title">גודל הכתב</div>
-      <div class="sizes-row inner-grid-2">
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '17']).value}" class="size-checkbox">
+      <div class="sizes-section inner-grid" formGroupName="letterSizes">
+        <div class="section-title">גודל הכתב</div>
+        <div class="sizes-row inner-grid-2">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '17']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="17">
           17
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '24']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '24']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="24">
           24
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '30']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '30']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="30">
           30
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '36']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '36']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="36">
           36
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '40']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '40']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="40">
           40
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '42']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '42']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="42">
           42
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '45']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '45']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="45">
           45
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '48']).value}" class="size-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['letterSizes', '48']).value}" class="size-checkbox">
           <input class="display-none" type="checkbox" formControlName="48">
           48
         </label>
+        </div>
       </div>
-    </div>
 
-    <div class="writing-level inner-grid" formGroupName="writingLevel">
-      <div class="section-title">דרגת כתיבה</div>
-      <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '1']).value}">
+      <div class="writing-level inner-grid" formGroupName="writingLevel">
+        <div class="section-title">דרגת כתיבה</div>
+        <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '1']).value}">
         <input type="checkbox" formControlName="1">
         1
       </label>
-      <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '2']).value}">
+        <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '2']).value}">
         <input type="checkbox" formControlName="2">
         2
       </label>
-      <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '3']).value}">
+        <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '3']).value}">
         <input type="checkbox" formControlName="3">
         3
       </label>
-      <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '4']).value}">
+        <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '4']).value}">
         <input type="checkbox" formControlName="4">
         4
       </label>
-      <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '5']).value}">
+        <label class="level-checkbox" [ngClass]="{'checked': advancedSearch.get(['writingLevel', '5']).value}">
         <input type="checkbox" formControlName="5">
         5
       </label>
-    </div>
+      </div>
 
-    <div class="is-appropriate inner-grid" formGroupName="isAppropriateLevels">
-      <div class="section-title">התאמה</div>
-      <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'bad']).value}" class="box-checkbox">
+      <div class="is-appropriate inner-grid" formGroupName="isAppropriateLevels">
+        <div class="section-title">התאמה</div>
+        <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'bad']).value}" class="box-checkbox">
         <input type="checkbox" formControlName="bad">
         לא מתאים
       </label>
-      <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'good']).value}" class="box-checkbox">
+        <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'good']).value}" class="box-checkbox">
         <input type="checkbox" formControlName="good">
         מתאים
       </label>
-      <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'veryGood']).value}" class="box-checkbox">
+        <label [ngClass]="{'checked': advancedSearch.get(['isAppropriateLevels', 'veryGood']).value}" class="box-checkbox">
         <input type="checkbox" formControlName="veryGood">
         כדאי מאד
       </label>
-    </div>
+      </div>
 
-    <div class="allect-and-kotel-section inner-grid">
+      <div class="allect-and-kotel-section inner-grid">
 
-      <div class="allections inner-grid-2">
-        <div class="section-title-a">בחירות</div>
-        <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'true'}" class="box-checkbox">
+        <div class="allections inner-grid-2">
+          <div class="section-title-a">בחירות</div>
+          <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'true'}" class="box-checkbox">
           <input formControlName="voatsInElection" type="radio" value="true">
           כן
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'false'}" class="box-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'false'}" class="box-checkbox">
           <input formControlName="voatsInElection" type="radio" value="false">
           לא
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'any'}" class="box-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['voatsInElection']).value === 'any'}" class="box-checkbox">
           <input formControlName="voatsInElection" type="radio" value="any">
           לא משנה
         </label>
-      </div>
+        </div>
 
-      <div class="allections inner-grid-2">
-        <div class="section-title-a">הולך לכותל</div>
-        <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'true'}" class="box-checkbox">
+        <div class="allections inner-grid-2">
+          <div class="section-title-a">הולך לכותל</div>
+          <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'true'}" class="box-checkbox">
           <input formControlName="goesToKotel" type="radio" value="true">
           כן
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'false'}" class="box-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'false'}" class="box-checkbox">
           <input formControlName="goesToKotel" type="radio" value="false">
           לא
         </label>
-        <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'any'}" class="box-checkbox">
+          <label [ngClass]="{'checked': advancedSearch.get(['goesToKotel']).value === 'any'}" class="box-checkbox">
           <input formControlName="goesToKotel" type="radio" value="any">
           לא משנה
         </label>
+        </div>
+
       </div>
 
+
+      <section class="add-section inner-grid-2">
+        <button type="button" class="add-sofer-button" (click)="search()">חפש</button>
+        <button type="button" class="add-sofer-button-2" (click)="advancedSearch.reset(advancedSearchInitialValues)">אפס</button>
+      </section>
+
     </div>
-  
-
-    <section class="add-section inner-grid-2">
-      <button type="button" class="add-sofer-button" (click)="search()">חפש</button>
-      <button type="button" class="add-sofer-button-2" (click)="advancedSearch.reset(advancedSearchInitialValues)">אפס</button>
-    </section>
-
   </div>
-</div>
 </form>

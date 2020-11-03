@@ -1,469 +1,469 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-book-wrapper">
-    <form [formGroup]="bookForm" class="page-grid">
-        <div class="personal-detail-section inner-grid">
-            <div class="section-title-w-note inner-grid-2">
-                <div>פרטים כלליים</div>
-                <div>
-                    <p (click)="openDialog(bookForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-            </div>
-            <input placeholder="שם" formControlName="name">
-            <input list="writers" placeholder="סופר" formControlName="writer" class="full-width">
-            <datalist id="writers">
+  <form [formGroup]="bookForm" class="page-grid">
+    <div class="personal-detail-section inner-grid">
+      <div class="section-title-w-note inner-grid-2">
+        <div>פרטים כלליים</div>
+        <div>
+          <p (click)="openDialog(bookForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+      </div>
+      <input placeholder="שם" formControlName="name">
+      <input list="writers" placeholder="סופר" formControlName="writer" class="full-width">
+      <datalist id="writers">
         <option *ngFor="let writer of writersFullNameList" [value]="writer">
       </datalist>
-            <input (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
-            <datalist id="dealers">
+      <input (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
+      <datalist id="dealers">
         <option *ngFor="let dealer of dealerList" [value]="dealer.fullName" [id]="dealer._id">
       </datalist>
-            <div class="margin-top-bottom" (click)="routeToCreateNewDealer()"> + הוספת סוחר חדש למאגר</div>
+      <div class="margin-top-bottom" (click)="routeToCreateNewDealer()"> + הוספת סוחר חדש למאגר</div>
 
-            <div formGroupName="isSold" class="inner-grid-2 is-sold-section">
-                <div class="align-center">
-                    <input id="is-sold" class="visible-input" type="checkbox" formControlName="boolean">
-                </div>
-                <div>
-                    <label class="section-title" for="is-sold">האם נמכר</label>
-                </div>
-                <div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note">
-                        <i class="icofont-pencil-alt-2"></i>
-                </div>
-            </div>
+      <div formGroupName="isSold" class="inner-grid-2 is-sold-section">
+        <div class="align-center">
+          <input id="is-sold" class="visible-input" type="checkbox" formControlName="boolean">
+        </div>
+        <div>
+          <label class="section-title" for="is-sold">האם נמכר</label>
+        </div>
+        <div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['isSold'])))" class="note">
+            <i class="icofont-pencil-alt-2"></i>
+        </div>
+      </div>
 
+    </div>
+    <div class="end-date-section">
+      <app-hebrew-date-form-control [parentForm]="bookForm" formGroupName="endDate" sectionTitle="תאריך סיום">
+      </app-hebrew-date-form-control>
+    </div>
+    <div formGroupName="isAppropriate" class="is-appropriate-section">
+      <div class="is-appropriate-radio-buttons-wraper inner-grid">
+        <div class="section-title">
+          מידת התאמה
         </div>
-        <div class="end-date-section">
-            <app-hebrew-date-form-control [parentForm]="bookForm" formGroupName="endDate" sectionTitle="תאריך סיום">
-            </app-hebrew-date-form-control>
-        </div>
-        <div formGroupName="isAppropriate" class="is-appropriate-section">
-            <div class="is-appropriate-radio-buttons-wraper inner-grid">
-                <div class="section-title">
-                    מידת התאמה
-                </div>
-                <div>
-                    <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
+        <div>
+          <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
             <input type="radio" formControlName="level" value="לא מתאים">
             1
           </label>
-                </div>
-                <div>
-                    <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'מתאים'}">
+        </div>
+        <div>
+          <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'מתאים'}">
             <input type="radio" formControlName="level" value="מתאים">
             2
           </label>
-                </div>
-                <div>
-                    <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'כדאי מאוד'}">
+        </div>
+        <div>
+          <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['isAppropriate', 'level']).value === 'כדאי מאוד'}">
             <input type="radio" formControlName="level" value="כדאי מאוד">
             3
           </label>
-                </div>
-            </div>
         </div>
-        <div formGroupName="writingDeatails" class="writing-detail-section inner-grid">
-            <div formGroupName="writingLevel" class="writing-level inner-grid-2">
-                <div>
-                    <div class="section-title-w-note inner-grid-2">
-                        <div>דרגת כתיבה</div>
-                        <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'writingLevel'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                    </div>
-                </div>
-                <div class="number-button-wrapper inner-grid-2">
+      </div>
+    </div>
+    <div formGroupName="writingDeatails" class="writing-detail-section inner-grid">
+      <div formGroupName="writingLevel" class="writing-level inner-grid-2">
+        <div>
+          <div class="section-title-w-note inner-grid-2">
+            <div>דרגת כתיבה</div>
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'writingLevel'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
+          </div>
+        </div>
+        <div class="number-button-wrapper inner-grid-2">
 
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'זול'}">
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'זול'}">
               <input type="radio" formControlName="level" value="זול">
               1
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'פחותה'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'פחותה'}">
               <input type="radio" formControlName="level" value="פחותה">
               2
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'בינוני'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'בינוני'}">
               <input type="radio" formControlName="level" value="בינוני">
               3
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'גבוהה'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'גבוהה'}">
               <input type="radio" formControlName="level" value="גבוהה">
               4
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'מיוחד'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingLevel', 'level']).value === 'מיוחד'}">
               <input type="radio" formControlName="level" value="מיוחד">
               5
             </label>
-                    </div>
-                </div>
-            </div>
-            <div formGroupName="stabilityLevel" class="stability-level inner-grid-2">
-                <div class="section-title-w-note inner-grid-2">
-                    <div>
-                        יציבות
-                    </div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'stabilityLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-                <div class="number-button-wrapper inner-grid-2">
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '1'}">
+          </div>
+        </div>
+      </div>
+      <div formGroupName="stabilityLevel" class="stability-level inner-grid-2">
+        <div class="section-title-w-note inner-grid-2">
+          <div>
+            יציבות
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'stabilityLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+        <div class="number-button-wrapper inner-grid-2">
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '1'}">
               <input type="radio" formControlName="level" value="1">
               1
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '2'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '2'}">
               <input type="radio" formControlName="level" value="2">
               2
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '3'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '3'}">
               <input type="radio" formControlName="level" value="3">
               3
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '4'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '4'}">
               <input type="radio" formControlName="level" value="4">
               4
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '5'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'stabilityLevel', 'level']).value === '5'}">
               <input type="radio" formControlName="level" value="5">
               5
             </label>
-                    </div>
-                </div>
-            </div>
-            <div formGroupName="eraseLevel" class="erase-level inner-grid-2">
+          </div>
+        </div>
+      </div>
+      <div formGroupName="eraseLevel" class="erase-level inner-grid-2">
 
-                <div class="section-title-w-note inner-grid-2">
-                    <div>
-                        מחיקה
-                    </div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'eraseLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-                <div class="number-button-wrapper inner-grid-2">
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '1'}">
+        <div class="section-title-w-note inner-grid-2">
+          <div>
+            מחיקה
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'eraseLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+        <div class="number-button-wrapper inner-grid-2">
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '1'}">
               <input type="radio" formControlName="level" value="1">
               1
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '2'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '2'}">
               <input type="radio" formControlName="level" value="2">
               2
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '3'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '3'}">
               <input type="radio" formControlName="level" value="3">
               3
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '4'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '4'}">
               <input type="radio" formControlName="level" value="4">
               4
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '5'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'eraseLevel', 'level']).value === '5'}">
               <input type="radio" formControlName="level" value="5">
               5
             </label>
-                    </div>
-                </div>
-            </div>
-            <div formGroupName="parchmentLevel" class="erase-level inner-grid-2">
-                <div class="section-title-w-note inner-grid-2">
-                    <div>
-                        איכות הקלף
-                    </div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-                <div class="number-button-wrapper inner-grid-2">
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '1'}">
+          </div>
+        </div>
+      </div>
+      <div formGroupName="parchmentLevel" class="erase-level inner-grid-2">
+        <div class="section-title-w-note inner-grid-2">
+          <div>
+            איכות הקלף
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentLevel'])))" ass="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+        <div class="number-button-wrapper inner-grid-2">
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '1'}">
               <input type="radio" formControlName="level" value="1">
               1
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '2'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '2'}">
               <input type="radio" formControlName="level" value="2">
               2
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '3'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '3'}">
               <input type="radio" formControlName="level" value="3">
               3
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '4'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '4'}">
               <input type="radio" formControlName="level" value="4">
               4
             </label>
-                    </div>
-                    <div>
-                        <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '5'}">
+          </div>
+          <div>
+            <label class="level-checkbox" [ngClass]="{'checked': bookForm.get(['writingDeatails', 'parchmentLevel', 'level']).value === '5'}">
               <input type="radio" formControlName="level" value="5">
               5
             </label>
-                    </div>
-                </div>
-            </div>
-            <div formGroupName="parchmentType" class="parchment-section">
-                <div class="section-title-w-note inner-grid-2">
-                    <div>
-                        סוג הקלף
-                    </div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentType', 'note'])))" class="note">
-                        <i class="icofont-pencil-alt-2"></i>
-                    </p>
-                </div>
-                <input list="parchmentTypes" placeholder="בחר סוג קלף" formControlName="type" class="full-width">
-                <datalist id="parchmentTypes">
+          </div>
+        </div>
+      </div>
+      <div formGroupName="parchmentType" class="parchment-section">
+        <div class="section-title-w-note inner-grid-2">
+          <div>
+            סוג הקלף
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentType', 'note'])))" class="note">
+            <i class="icofont-pencil-alt-2"></i>
+          </p>
+        </div>
+        <input list="parchmentTypes" placeholder="בחר סוג קלף" formControlName="type" class="full-width">
+        <datalist id="parchmentTypes">
           <option *ngFor="let parchmentType of parchmentTypes" [value]="parchmentType">
         </datalist>
-            </div>
-        </div>
-        <div formGroupName="writingDeatails" class="writing-type-section inner-grid">
-            <div>
-                <div class="writing-types inner-grid-2">
-                    <div class="section-title">
-                        סוג הכתב
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.ari}" class="box-checkbox">
+      </div>
+    </div>
+    <div formGroupName="writingDeatails" class="writing-type-section inner-grid">
+      <div>
+        <div class="writing-types inner-grid-2">
+          <div class="section-title">
+            סוג הכתב
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.ari}" class="box-checkbox">
               אר"י
               <input type="radio" [value]="writingTypes.ari" formControlName="writingType">
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.beitYosef}" class="box-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.beitYosef}" class="box-checkbox">
               בית יוסף
               <input type="radio" [value]="writingTypes.beitYosef" formControlName="writingType">
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.welish}" class="box-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'writingType']).value === writingTypes.welish}" class="box-checkbox">
               וועליש
               <input type="radio" [value]="writingTypes.welish" formControlName="writingType">
             </label>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <div formGroupName="writingDeatails" class="sizes-section inner-grid">
-            <div formGroupName="letterSize" class="letter-sizes-wrapper">
-                <div class="inner-grid-2">
-                    <div class="section-title-w-note inner-grid-2">
-                        <div>
-                            גודל הכתב
-                        </div>
-                        <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'letterSize'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                    </div>
-                    <div class="sizes-row inner-grid-2">
+      </div>
+    </div>
+    <div formGroupName="writingDeatails" class="sizes-section inner-grid">
+      <div formGroupName="letterSize" class="letter-sizes-wrapper">
+        <div class="inner-grid-2">
+          <div class="section-title-w-note inner-grid-2">
+            <div>
+              גודל הכתב
+            </div>
+            <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'letterSize'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
+          </div>
+          <div class="sizes-row inner-grid-2">
 
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '17'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '17'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="17"> 17
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '24'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '24'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="24"> 24
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '30'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '30'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="30"> 30
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '36'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '36'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="36"> 36
             </label>
-                    </div>
-                    <div class="sizes-row inner-grid-2">
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '40'}" class="size-checkbox">
+          </div>
+          <div class="sizes-row inner-grid-2">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '40'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="40"> 40
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '42'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '42'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="42"> 42
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '45'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '45'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="45"> 45
             </label>
-                        <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '48'}" class="size-checkbox">
+            <label [ngClass]="{'checked': bookForm.get(['writingDeatails', 'letterSize', 'size']).value === '48'}" class="size-checkbox">
               <input type="radio" formControlName="size" value="48"> 48
             </label>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <div formGroupName="communityDeatails" class="community-section inner-grid">
-            <div class="section-title-w-note inner-grid-2">
-                <div>
-                    קהילה
-                </div>
-                <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['communityDeatails'])))" class="note">
-                    <i class="icofont-pencil-alt-2"></i>
-                </p>
-            </div>
-            <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
-            <datalist id="communities">
+      </div>
+    </div>
+    <div formGroupName="communityDeatails" class="community-section inner-grid">
+      <div class="section-title-w-note inner-grid-2">
+        <div>
+          קהילה
+        </div>
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['communityDeatails'])))" class="note">
+          <i class="icofont-pencil-alt-2"></i>
+        </p>
+      </div>
+      <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
+      <datalist id="communities">
         <option *ngFor="let community of communitiesList" [value]="community">
       </datalist>
-        </div>
-        <div formGroupName="additionalDetails">
+    </div>
+    <div formGroupName="additionalDetails">
+      <div>
+        <div formGroupName="writerLevel" class="writer-level-section inner-grid">
+          <div class="section-title span-title">
             <div>
-                <div formGroupName="writerLevel" class="writer-level-section inner-grid">
-                    <div class="section-title span-title">
-                        <div>
-                            דרגת סופר
-                        </div>
-                    </div>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'writerLevel'])))" class="note">
-                        <i class="icofont-pencil-alt-2"></i>
-                    </p>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}" class="level-checkbox">
+              דרגת סופר
+            </div>
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'writerLevel'])))" class="note">
+            <i class="icofont-pencil-alt-2"></i>
+          </p>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '1'}" class="level-checkbox">
               <input type="radio" formControlName="level" value="1">
               1
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '2'}" class="level-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '2'}" class="level-checkbox">
               <input type="radio" formControlName="level" value="2">
               2
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '3'}" class="level-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '3'}" class="level-checkbox">
               <input type="radio" formControlName="level" value="3">
               3
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '4'}" class="level-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '4'}" class="level-checkbox">
               <input type="radio" formControlName="level" value="4">
               4
             </label>
-                    </div>
-                    <div>
-                        <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '5'}" class="level-checkbox">
+          </div>
+          <div>
+            <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'writerLevel', 'level']).value === '5'}" class="level-checkbox">
               <input type="radio" formControlName="level" value="5">
               5
             </label>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <div formGroupName="pricesDeatails" class="price-deatail-section inner-grid">
-            <div class="section-title">
-                מחיר
-            </div>
-            <div class="type-of-price-selection-wrapper inner-grid-2">
-                <div>
-                    <label class="box-checkbox" [ngClass]="{'checked-blue': bookForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לעמוד'}">
+      </div>
+    </div>
+    <div formGroupName="pricesDeatails" class="price-deatail-section inner-grid">
+      <div class="section-title">
+        מחיר
+      </div>
+      <div class="type-of-price-selection-wrapper inner-grid-2">
+        <div>
+          <label class="box-checkbox" [ngClass]="{'checked-blue': bookForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לעמוד'}">
             <input type="radio" formControlName="isPricePerPage" value='מחיר לעמוד'>
             מחיר לעמוד
           </label>
-                </div>
-                <div>
-                    <label class="box-checkbox" [ngClass]="{'checked-blue': bookForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לספר תורה'}">
+        </div>
+        <div>
+          <label class="box-checkbox" [ngClass]="{'checked-blue': bookForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לספר תורה'}">
             <input type="radio" formControlName="isPricePerPage" value='מחיר לספר תורה'>
             מחיר לס"ת
           </label>
-                </div>
-            </div>
-            <div class="prices-input-wrapper">
-                <div>
-                    <div formGroupName="priceForTorahScroll" class="gap inner-grid-2">
-                        <input type="number" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
-                    </div>
-                </div>
-                <div>
-                    <div formGroupName="priceForTorahScroll" class="inner-grid-2">
-                        <input type="number" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
-                    </div>
-                </div>
-            </div>
-            <div class=" inner-grid-2">
-                <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
-                    <input type="text" placeholder="משא ומתן" formControlName="negotiation">
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note-absolute-position"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-            </div>
         </div>
-        <div formGroupName="additionalDetails" class="additional-details-section inner-grid">
-            <div class="section-title">
-                פרטים נוספים
-            </div>
-            <div>
-                <div formGroupName="hasKtavKabala" class="additional-detail inner-grid-2 stroke">
-                    <div class="description">
-                        כתב קבלה
-                    </div>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'false'}" class="size-checkbox">
+      </div>
+      <div class="prices-input-wrapper">
+        <div>
+          <div formGroupName="priceForTorahScroll" class="gap inner-grid-2">
+            <input type="number" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+          </div>
+        </div>
+        <div>
+          <div formGroupName="priceForTorahScroll" class="inner-grid-2">
+            <input type="number" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
+          </div>
+        </div>
+      </div>
+      <div class=" inner-grid-2">
+        <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
+          <input type="text" placeholder="משא ומתן" formControlName="negotiation">
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note-absolute-position"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+      </div>
+    </div>
+    <div formGroupName="additionalDetails" class="additional-details-section inner-grid">
+      <div class="section-title">
+        פרטים נוספים
+      </div>
+      <div>
+        <div formGroupName="hasKtavKabala" class="additional-detail inner-grid-2 stroke">
+          <div class="description">
+            כתב קבלה
+          </div>
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'false'}" class="size-checkbox">
             <i class="icofont-close-line"></i>
             <input type="radio" formControlName="boolean" value='false'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']))">
           </label>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'true'}" class="size-checkbox">
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']).value === 'true'}" class="size-checkbox">
             <i class="icofont-check-alt"></i>
             <input type="radio" formControlName="boolean" value='true'
               (click)="isChecked($event, bookForm.get(['additionalDetails', 'hasKtavKabala', 'boolean']))">
           </label>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'hasKtavKabala'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-                <div formGroupName="voatsInElection" class="additional-detail inner-grid-2 stroke">
-                    <div class="description">
-                        בחירות
-                    </div>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'false'}" class="size-checkbox">
-            <i class="icofont-close-line"></i>
-            <input type="radio" formControlName="boolean" value='false'
-              (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
-          </label>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'true'}" class="size-checkbox">
-            <i class="icofont-check-alt"></i>
-            <input type="radio" formControlName="boolean" value='true'
-              (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
-          </label>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'voatsInElection'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                </div>
-                <div formGroupName="goesToKotel" class="additional-detail inner-grid-2">
-                    <div class="description">
-                        הולך לכותל
-                    </div>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'false'}" class="size-checkbox">
-            <i class="icofont-close-line"></i>
-            <input type="radio" formControlName="boolean" value='false'
-              (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
-          </label>
-                    <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'true'}" class="size-checkbox">
-            <i class="icofont-check-alt"></i>
-            <input type="radio" formControlName="boolean" value='true'
-              (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
-          </label>
-                    <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'goesToKotel'])))" class="note">
-                        <i class="icofont-pencil-alt-2"></i>
-                    </p>
-                </div>
-            </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'hasKtavKabala'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
+        <div formGroupName="voatsInElection" class="additional-detail inner-grid-2 stroke">
+          <div class="description">
+            בחירות
+          </div>
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'false'}" class="size-checkbox">
+            <i class="icofont-close-line"></i>
+            <input type="radio" formControlName="boolean" value='false'
+              (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
+          </label>
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']).value === 'true'}" class="size-checkbox">
+            <i class="icofont-check-alt"></i>
+            <input type="radio" formControlName="boolean" value='true'
+              (click)="isChecked($event, bookForm.get(['additionalDetails', 'voatsInElection', 'boolean']))">
+          </label>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'voatsInElection'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
+        <div formGroupName="goesToKotel" class="additional-detail inner-grid-2">
+          <div class="description">
+            הולך לכותל
+          </div>
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'false'}" class="size-checkbox">
+            <i class="icofont-close-line"></i>
+            <input type="radio" formControlName="boolean" value='false'
+              (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
+          </label>
+          <label [ngClass]="{'checked': bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']).value === 'true'}" class="size-checkbox">
+            <i class="icofont-check-alt"></i>
+            <input type="radio" formControlName="boolean" value='true'
+              (click)="isChecked($event, bookForm.get(['additionalDetails', 'goesToKotel', 'boolean']))">
+          </label>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['additionalDetails', 'goesToKotel'])))" class="note">
+            <i class="icofont-pencil-alt-2"></i>
+          </p>
+        </div>
+      </div>
+    </div>
 
-        <div formArrayName="photos" class="photo-section inner-grid">
-            <label for="addPhoto" class="second-title">
+    <div formArrayName="photos" class="photo-section inner-grid">
+      <label for="addPhoto" class="second-title">
         <div class="inner-grid-2 add-section">
           <img src="assets/icons/Add.png" alt="">
           <div>
@@ -473,13 +473,13 @@
             accept="image/*">
         </div>
       </label>
-            <div *ngFor="let photo of bookForm.controls.photos['controls']; let i = index;">
-                <div (click)="deletePhoto(i)">מחק תמונה</div>
-                <img *ngIf="photo.value" [src]="photo.value" class="img">
-            </div>
-        </div>
-        <div class="inner-grid">
-            <label *ngIf="!isRecording" for="click" (click)="startRecording()">
+      <div *ngFor="let photo of bookForm.controls.photos['controls']; let i = index;">
+        <div (click)="deletePhoto(i)">מחק תמונה</div>
+        <img *ngIf="photo.value" [src]="photo.value" class="img">
+      </div>
+    </div>
+    <div class="inner-grid">
+      <label *ngIf="!isRecording" for="click" (click)="startRecording()">
         <div class="inner-grid-2 add-section">
           <div>
             <img src="assets/icons/Add.png" alt="">
@@ -487,17 +487,17 @@
           <div class="second-title">הוסף תזכורת קולית</div>
         </div>
       </label>
-            <div *ngIf="isRecording" (click)="stopRecording()">
-                עצור הקלטה
-            </div>
-            <div>
-                <div *ngFor="let recording of bookForm.controls.recordings['controls']; let i = index;">
-                    <div (click)="deleteRecording(i)">מחק הקלטה</div>
-                    <audio controls *ngIf="recording.value" [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value)" class="img">
+      <div *ngIf="isRecording" (click)="stopRecording()">
+        עצור הקלטה
+      </div>
+      <div>
+        <div *ngFor="let recording of bookForm.controls.recordings['controls']; let i = index;">
+          <div (click)="deleteRecording(i)">מחק הקלטה</div>
+          <audio controls *ngIf="recording.value" [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value)" class="img">
           </audio>
-                </div>
-            </div>
         </div>
-        <button (click)="onSubmit()" class="add-book-button">{{ textForSaveButton }}</button>
-    </form>
+      </div>
+    </div>
+    <button (click)="onSubmit()" class="add-book-button">{{ textForSaveButton }}</button>
+  </form>
 </div>

@@ -1,86 +1,85 @@
 <form [formGroup]="searchForm">
-    <div class="simple-search-section">
+  <div class="simple-search-section">
 
-        <div class="inputs-search-section grid">
+    <div class="inputs-search-section grid">
 
-            <div class="city-section">
-                <div class="title-and-icon grid">
-                    <div><i class="icofont-location-pin"></i></div>
-                    <div class="title">עיר מגורים</div>
-                </div>
-                <div>
-                    <input list="cities" formControlName="city" class="narrow-input" type="text">
-                    <datalist id="cities">
+      <div class="city-section">
+        <div class="title-and-icon grid">
+          <div><i class="icofont-location-pin"></i></div>
+          <div class="title">עיר מגורים</div>
+        </div>
+        <div>
+          <input list="cities" formControlName="city" class="narrow-input" type="text">
+          <datalist id="cities">
                         <option *ngFor="let city of citiesList" [value]="city">
                     </datalist>
-                </div>
-            </div>
+        </div>
+      </div>
 
-            <div class="community-section">
-                <div class="title-and-icon grid">
-                    <div><i class="icofont-user-alt-7"></i></div>
-                    <div class="title">קהילה</div>
-                </div>
-                <div>
-                    <input list="communities" formControlName="community" class="narrow-input" type="text">
-                    <datalist id="communities">
+      <div class="community-section">
+        <div class="title-and-icon grid">
+          <div><i class="icofont-user-alt-7"></i></div>
+          <div class="title">קהילה</div>
+        </div>
+        <div>
+          <input list="communities" formControlName="community" class="narrow-input" type="text">
+          <datalist id="communities">
                         <option *ngFor="let community of communitiesList" [value]="community">
                     </datalist>
-                </div>
-            </div>
-
         </div>
+      </div>
 
-        <div class="two-button-section grid">
-            <label [ngClass]="{'checked': searchForm.get(['hasNotWritenBefore']).value}" class="button">
+    </div>
+
+    <div class="two-button-section grid">
+      <label [ngClass]="{'checked': searchForm.get(['hasNotWritenBefore']).value}" class="button">
                 <input formControlName="hasNotWritenBefore" type="checkbox">
                 סופר מתחיל
             </label>
-            <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value}" class="button">
+      <label [ngClass]="{'checked': searchForm.get(['hasWritenBefore']).value}" class="button">
                 <input formControlName="hasWritenBefore" type="checkbox">
                 סופר עם נסיון
             </label>
-        </div>
+    </div>
 
-        <div class="three-button-section grid" formGroupName="isAppropriate">
-            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'bad']).value}" class="button">
+    <div class="three-button-section grid" formGroupName="isAppropriate">
+      <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'bad']).value}" class="button">
                 <input type="checkbox" formControlName="bad">
                 לא מתאים
             </label>
-            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'good']).value}" class="button">
+      <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'good']).value}" class="button">
                 <input type="checkbox" formControlName="good">
                 מתאים
             </label>
-            <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'veryGood']).value}" class="button">
+      <label [ngClass]="{'checked': searchForm.get(['isAppropriate', 'veryGood']).value}" class="button">
                 <input type="checkbox" formControlName="veryGood">
                 כדאי מאד
             </label>
-        </div>
+    </div>
 
-        <div class="two-button-section grid" formGroupName="isWritingRegularly">
-            <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'writingRegularly']).value}" class="button">
+    <div class="two-button-section grid" formGroupName="isWritingRegularly">
+      <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'writingRegularly']).value}" class="button">
                 <input type="checkbox" formControlName="writingRegularly">
                 סופר קבוע
             </label>
-            <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'notWritingRegularly']).value}" class="button">
+      <label [ngClass]="{'checked': searchForm.get(['isWritingRegularly', 'notWritingRegularly']).value}" class="button">
                 <input type="checkbox" formControlName="notWritingRegularly">
                 סופר כללי
             </label>
-        </div>
-
-        <div (click)="search()" class="search-button">חפש סופר</div>
-
     </div>
 
-    <div class="name-search grid">
-        <!-- <div class="img"><img src="assets/icons/searchs.png" alt=""></div> -->
-        <input formControlName="quickSearch" (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text"
-            placeholder="חפש לפי שם / שם משפחה">
-    </div>
+    <div (click)="search()" class="search-button">חפש סופר</div>
 
-    <div class="count-section grid">
-        <div *ngIf="writersToDisplay" class="count">סופרים ברשימה {{ writersToDisplay.length }}</div>
-        <div (click)="resetSearch()" class="display-all-btn button">הצג רשימה מלאה</div>
-    </div>
+  </div>
+
+  <div class="name-search grid">
+    <!-- <div class="img"><img src="assets/icons/searchs.png" alt=""></div> -->
+    <input formControlName="quickSearch" (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם / שם משפחה">
+  </div>
+
+  <div class="count-section grid">
+    <div *ngIf="writersToDisplay" class="count">סופרים ברשימה {{ writersToDisplay.length }}</div>
+    <div (click)="resetSearch()" class="display-all-btn button">הצג רשימה מלאה</div>
+  </div>
 </form>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

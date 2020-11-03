@@ -1,14 +1,14 @@
 <div class="button-wrapper">
-    <div>
-        <button [ngClass]="{'checked': levelOfUrgency === 3}" (click)="getReminders(3)">דחוף</button>
-    </div>
-    <div>
-        <button [ngClass]="{'checked': levelOfUrgency === 2}" (click)="getReminders(2)">רגיל</button>
-    </div>
+  <div>
+    <button [ngClass]="{'checked': levelOfUrgency === 3}" (click)="getReminders(3)">דחוף</button>
+  </div>
+  <div>
+    <button [ngClass]="{'checked': levelOfUrgency === 2}" (click)="getReminders(2)">רגיל</button>
+  </div>
 </div>
 <div *ngIf="this.booksOrDealersPage === 'dealers'">
-    <app-writer-list-item *ngFor="let writer of listToDisplay" [writer]="writer"></app-writer-list-item>
+  <app-writer-list-item *ngFor="let writer of listToDisplay" [writer]="writer"></app-writer-list-item>
 </div>
 <div *ngIf="this.booksOrDealersPage === 'books'">
-    <app-book-list-item *ngFor="let book of listToDisplay" [book]="book"></app-book-list-item>
+  <app-book-list-item *ngFor="let book of listToDisplay" [book]="book"></app-book-list-item>
 </div>

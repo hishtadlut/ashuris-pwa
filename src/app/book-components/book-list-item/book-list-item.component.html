@@ -1,6 +1,6 @@
 <div class="book-list-item" (click)="goToBookDetails()">
-    <div class="book-details">
-        <div class="book-name">{{ book.name }}</div>
-    </div>
-    <div class="reminder" [ngClass]="{'highlight-regular': levelOfUrgency === 2, 'highlight-ergent': levelOfUrgency === 3 }" (click)="changeUrgencyLevel($event)"></div>
+  <div class="book-details">
+    <div class="book-name">{{ book.name }}</div>
+  </div>
+  <div class="reminder" [ngClass]="{'highlight-regular': levelOfUrgency === 2, 'highlight-ergent': levelOfUrgency === 3 }" (click)="changeUrgencyLevel($event)"></div>
 </div>

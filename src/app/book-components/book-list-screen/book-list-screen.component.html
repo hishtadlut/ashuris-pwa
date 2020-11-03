@@ -1,15 +1,15 @@
 <div *ngIf="this.locationWithoutParameters === locationPath.BOOK_LIST_SCREEN" class="button-wrapper">
-    <div (click)="showOnlySoldedBooks = true" >
-        <button [ngClass]="{'checked': showOnlySoldedBooks}" (click)="getBooksBySoldCondition(true)">ספרים שנמכרו</button>
-    </div>
-    <div (click)="showOnlySoldedBooks = false" >
-        <button [ngClass]="{'checked': !showOnlySoldedBooks}" (click)="getBooksBySoldCondition(false)">ספרים למכירה</button>
-    </div>
+  <div (click)="showOnlySoldedBooks = true">
+    <button [ngClass]="{'checked': showOnlySoldedBooks}" (click)="getBooksBySoldCondition(true)">ספרים שנמכרו</button>
+  </div>
+  <div (click)="showOnlySoldedBooks = false">
+    <button [ngClass]="{'checked': !showOnlySoldedBooks}" (click)="getBooksBySoldCondition(false)">ספרים למכירה</button>
+  </div>
 </div>
 <div class="name-search grid">
-    <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם">
+  <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם">
 </div>
 <div class="count-section grid">
-    <div *ngIf="booksToDisplay" class="count">ספרים ברשימה {{ booksToDisplay.length }}</div>
+  <div *ngIf="booksToDisplay" class="count">ספרים ברשימה {{ booksToDisplay.length }}</div>
 </div>
 <app-book-list-item *ngFor="let book of booksToDisplay" [book]="book"></app-book-list-item>

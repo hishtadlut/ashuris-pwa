@@ -1,52 +1,52 @@
 <app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
 </app-note-dialog-output>
 <div class="page-wrapper">
-    <div class="book-details-wrapper page-grid" *ngIf="book">
-        <div class="top-section">
-            <div>
-                <p class="book-name">{{ book.name }}</p>
-            </div>
-            <!-- <div class="reminder"
+  <div class="book-details-wrapper page-grid" *ngIf="book">
+    <div class="top-section">
+      <div>
+        <p class="book-name">{{ book.name }}</p>
+      </div>
+      <!-- <div class="reminder"
                 [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
             </div> -->
-            <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
+      <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
+    </div>
+    <div class="basic-details-section">
+      <div class="basic-detail .inner-grid" *ngIf="book.writer">
+        <i class="icofont-user-alt-7"></i>
+        <div>
+          <div class="information">{{ book.writer }}</div>
+          <div class="description">סופר</div>
         </div>
-        <div class="basic-details-section">
-            <div class="basic-detail .inner-grid" *ngIf="book.writer">
-                <i class="icofont-user-alt-7"></i>
-                <div>
-                    <div class="information">{{ book.writer }}</div>
-                    <div class="description">סופר</div>
-                </div>
-            </div>
-            <div class="basic-detail .inner-grid" *ngIf="book.dealer">
-                <i class="icofont-user-alt-7"></i>
-                <div>
-                    <div class="information">{{ book.dealer }}</div>
-                    <div class="description">סוחר</div>
-                </div>
-            </div>
-            <div class="basic-detail .inner-grid">
-                <i class="icofont-envelope"></i>
-                <div>
-                    <div class="information">{{ book.isSold.boolean ? 'נמכר' : 'לא נמכר' }}</div>
-                </div>
-            </div>
-            <div class="basic-detail .inner-grid" *ngIf="book.isAppropriate">
-                <i class="icofont-check-alt"></i>
-                <div>
-                    <div class="information">{{ book.isAppropriate.level }}</div>
-                </div>
-            </div>
-            <div class="basic-detail .inner-grid" *ngIf="book.endDate.hebrewDateInWords">
-                <i class="icofont-ui-calendar"></i>
-                <div>
-                    <div class="description">תאריך סיום</div>
-                    <div class="information">{{ book.endDate.hebrewDateInWords }}</div>
-                </div>
-            </div>
+      </div>
+      <div class="basic-detail .inner-grid" *ngIf="book.dealer">
+        <i class="icofont-user-alt-7"></i>
+        <div>
+          <div class="information">{{ book.dealer }}</div>
+          <div class="description">סוחר</div>
         </div>
-        <div *ngIf="book.writingDeatails.writingLevel.level ||
+      </div>
+      <div class="basic-detail .inner-grid">
+        <i class="icofont-envelope"></i>
+        <div>
+          <div class="information">{{ book.isSold.boolean ? 'נמכר' : 'לא נמכר' }}</div>
+        </div>
+      </div>
+      <div class="basic-detail .inner-grid" *ngIf="book.isAppropriate">
+        <i class="icofont-check-alt"></i>
+        <div>
+          <div class="information">{{ book.isAppropriate.level }}</div>
+        </div>
+      </div>
+      <div class="basic-detail .inner-grid" *ngIf="book.endDate.hebrewDateInWords">
+        <i class="icofont-ui-calendar"></i>
+        <div>
+          <div class="description">תאריך סיום</div>
+          <div class="information">{{ book.endDate.hebrewDateInWords }}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="book.writingDeatails.writingLevel.level ||
             book.writingDeatails.stabilityLevel.level ||
             book.writingDeatails.eraseLevel.level ||
             book.writingDeatails.parchmentLevel.level ||
@@ -56,155 +56,155 @@
             book.additionalDetails.hasKtavKabala.boolean ||
             book.additionalDetails.voatsInElection.boolean ||
             book.additionalDetails.goesToKotel.boolean" class="extra-details-section">
-            <div class="section" (click)="closeMenus('writingDeatails')">
-                <div class="section-title-btn">הכתב</div>
-                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
-                    <div *ngIf="book.writingDeatails.writingLevel.level" class="writing-extra-detail">
-                        <div class="detail-title description">דרגת כתיבה</div>
-                        <div class="detail">{{ book.writingDeatails.writingLevel.level }}</div>
-                        <div *ngIf="book.writingDeatails.writingLevel.note" (click)="openDialog($event ,book.writingDeatails.writingLevel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
+      <div class="section" (click)="closeMenus('writingDeatails')">
+        <div class="section-title-btn">הכתב</div>
+        <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
+          <div *ngIf="book.writingDeatails.writingLevel.level" class="writing-extra-detail">
+            <div class="detail-title description">דרגת כתיבה</div>
+            <div class="detail">{{ book.writingDeatails.writingLevel.level }}</div>
+            <div *ngIf="book.writingDeatails.writingLevel.note" (click)="openDialog($event ,book.writingDeatails.writingLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-                    <div *ngIf="book.writingDeatails.stabilityLevel.level" class="writing-extra-detail">
-                        <div class="detail-title description">יציבות</div>
-                        <div class="detail">{{ book.writingDeatails.stabilityLevel.level }}</div>
-                        <div *ngIf="book.writingDeatails.stabilityLevel.note" (click)="openDialog($event ,book.writingDeatails.stabilityLevel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
+          <div *ngIf="book.writingDeatails.stabilityLevel.level" class="writing-extra-detail">
+            <div class="detail-title description">יציבות</div>
+            <div class="detail">{{ book.writingDeatails.stabilityLevel.level }}</div>
+            <div *ngIf="book.writingDeatails.stabilityLevel.note" (click)="openDialog($event ,book.writingDeatails.stabilityLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-                    <div *ngIf="book.writingDeatails.eraseLevel.level" class="writing-extra-detail">
-                        <div class="detail-title description">מחיקה</div>
-                        <div class="detail">{{ book.writingDeatails.eraseLevel.level }}</div>
-                        <div *ngIf="book.writingDeatails.eraseLevel.note" (click)="openDialog($event ,book.writingDeatails.eraseLevel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
+          <div *ngIf="book.writingDeatails.eraseLevel.level" class="writing-extra-detail">
+            <div class="detail-title description">מחיקה</div>
+            <div class="detail">{{ book.writingDeatails.eraseLevel.level }}</div>
+            <div *ngIf="book.writingDeatails.eraseLevel.note" (click)="openDialog($event ,book.writingDeatails.eraseLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-                    <div *ngIf="book.writingDeatails.parchmentLevel.level" class="writing-extra-detail">
-                        <div class="detail-title description">איכות הקלף</div>
-                        <div class="detail">{{ book.writingDeatails.parchmentLevel.level }}</div>
-                        <div *ngIf="book.writingDeatails.parchmentLevel.note" (click)="openDialog($event ,book.writingDeatails.parchmentLevel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
+          <div *ngIf="book.writingDeatails.parchmentLevel.level" class="writing-extra-detail">
+            <div class="detail-title description">איכות הקלף</div>
+            <div class="detail">{{ book.writingDeatails.parchmentLevel.level }}</div>
+            <div *ngIf="book.writingDeatails.parchmentLevel.note" (click)="openDialog($event ,book.writingDeatails.parchmentLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-                    <div *ngIf="book.writingDeatails.parchmentType.type" class="writing-extra-detail">
-                        <div class="detail-title description">סוג הקלף</div>
-                        <div class="detail">{{ book.writingDeatails.parchmentType.type }}</div>
-                        <div *ngIf="book.writingDeatails.parchmentType.note" (click)="openDialog($event ,book.writingDeatails.parchmentType.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
+          <div *ngIf="book.writingDeatails.parchmentType.type" class="writing-extra-detail">
+            <div class="detail-title description">סוג הקלף</div>
+            <div class="detail">{{ book.writingDeatails.parchmentType.type }}</div>
+            <div *ngIf="book.writingDeatails.parchmentType.note" (click)="openDialog($event ,book.writingDeatails.parchmentType.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-                    <div *ngIf="book.writingDeatails.letterSize.size" class="writing-extra-detail">
-                        <div class="detail-title description">גודל הכתב</div>
-                        <div class="detail">
-                            <span>{{ (book.writingDeatails.letterSize.size) }}</span>
-                        </div>
-                        <div *ngIf="book.writingDeatails.letterSize.note" (click)="openDialog($event ,book.writingDeatails.letterSize.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i>
-                        </div>
-                    </div>
-
-                    <div *ngIf="book.writingDeatails.writingType" class="writing-extra-detail">
-                        <div class="detail-title description">סוג הכתב</div>
-                        <div class="detail">
-                            {{ book.writingDeatails.writingType }}
-                        </div>
-                    </div>
-
-                    <div *ngIf="book.additionalDetails.hasKtavKabala.boolean" class="writing-extra-detail">
-                        <div class="detail-title description">כתב קבלה</div>
-                        <div>
-                            <i [class.icofont-check-alt]="book.additionalDetails.hasKtavKabala.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.hasKtavKabala.boolean.toString() === 'false'"></i>
-                        </div>
-                        <div *ngIf="book.additionalDetails.hasKtavKabala.note" (click)="openDialog($event ,book.additionalDetails.hasKtavKabala.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
-                    </div>
-
-                    <div *ngIf="book.additionalDetails.voatsInElection.boolean" class="writing-extra-detail">
-                        <div class="detail-title description">בחירות</div>
-                        <div>
-                            <i [class.icofont-check-alt]="book.additionalDetails.voatsInElection.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.voatsInElection.boolean.toString() === 'false'"></i>
-                        </div>
-                        <div *ngIf="book.additionalDetails.voatsInElection.note" (click)="openDialog($event ,book.additionalDetails.voatsInElection.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
-                    </div>
-
-                    <div *ngIf="book.additionalDetails.goesToKotel.boolean" class="writing-extra-detail">
-                        <div class="detail-title description">הולך לכותל</div>
-                        <div>
-                            <i [class.icofont-check-alt]="book.additionalDetails.goesToKotel.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.goesToKotel.boolean.toString() === 'false'"></i>
-                        </div>
-                        <div *ngIf="book.additionalDetails.goesToKotel.note" (click)="openDialog($event ,book.additionalDetails.goesToKotel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
-
-                </div>
+          <div *ngIf="book.writingDeatails.letterSize.size" class="writing-extra-detail">
+            <div class="detail-title description">גודל הכתב</div>
+            <div class="detail">
+              <span>{{ (book.writingDeatails.letterSize.size) }}</span>
             </div>
-
-            <div class="section" (click)="closeMenus('pricesDeatails')" *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
-                <div class="section-title-btn">מחיר</div>
-                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
-                    <div *ngIf="priceForTorahScroll.pricePerPage" class="price-extra-detail">
-                        <div class="detail-title description">מחיר לעמוד</div>
-                        <div class="detail">{{ priceForTorahScroll.pricePerPage | currency:'USD':true:'1.0-0' }}</div>
-                    </div>
-                    <div *ngIf="priceForTorahScroll.priceForScroll" class="price-extra-detail">
-                        <div class="detail-title description">מחיר לספר תורה</div>
-                        <div class="detail">{{ priceForTorahScroll.priceForScroll | currency:'USD':true:'1.0-0' }}</div>
-                    </div>
-                    <div *ngIf="book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth" class="price-extra-detail">
-                        <div class="detail-title description">כמה שווה</div>
-                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth | currency:'USD':true:'1.0-0' }}</div>
-                    </div>
-                    <div *ngIf="book.pricesDeatails.priceForTorahScroll.negotiation || book.pricesDeatails.priceForTorahScroll.note" class="price-extra-detail">
-                        <div class="detail-title description">משא ומתן</div>
-                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.negotiation }}</div>
-                        <div class="shave description"></div>
-                        <div *ngIf="book.pricesDeatails.priceForTorahScroll.note" (click)="openDialog($event ,book.pricesDeatails.priceForTorahScroll.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
-                    </div>
-                </div>
+            <div *ngIf="book.writingDeatails.letterSize.note" (click)="openDialog($event ,book.writingDeatails.letterSize.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i>
             </div>
+          </div>
 
-            <div class="section" (click)="closeMenus('additionalDeatails')">
-                <div class="section-title-btn">הסופר</div>
-                <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
-                    <div *ngIf="book.communityDeatails.community || book.communityDeatails.note" class="writing-extra-detail">
-                        <div class="detail-title description">קהילה</div>
-                        <div class="detail">{{ book.communityDeatails.community }}</div>
-                        <div *ngIf="book.communityDeatails.note" (click)="openDialog($event ,book.communityDeatails.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i>
-                        </div>
-                    </div>
-                    <div *ngIf="book.additionalDetails.writerLevel.level || book.additionalDetails.writerLevel.note" class="writing-extra-detail">
-                        <div class="detail-title description">דרגת סופר</div>
-                        <div class="detail">{{ book.additionalDetails.writerLevel.level }}</div>
-                        <div *ngIf="book.additionalDetails.writerLevel.note" (click)="openDialog($event ,book.additionalDetails.writerLevel.note)" class="comment-icon">
-                            <i class="icofont-exclamation-circle"></i></div>
-                    </div>
-                </div>
+          <div *ngIf="book.writingDeatails.writingType" class="writing-extra-detail">
+            <div class="detail-title description">סוג הכתב</div>
+            <div class="detail">
+              {{ book.writingDeatails.writingType }}
             </div>
+          </div>
 
-            <div class="section" (click)="closeMenus('images')" *ngIf="book.photos.length">
-                <div class="section-title-btn">תמונות</div>
-                <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
-                    <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos" class="photo-wrapper">
-                        <img class="icon-share" src="assets/icons/share.png" alt="">
-                        <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
-                    </div>
-                </div>
-                <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
+          <div *ngIf="book.additionalDetails.hasKtavKabala.boolean" class="writing-extra-detail">
+            <div class="detail-title description">כתב קבלה</div>
+            <div>
+              <i [class.icofont-check-alt]="book.additionalDetails.hasKtavKabala.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.hasKtavKabala.boolean.toString() === 'false'"></i>
             </div>
+            <div *ngIf="book.additionalDetails.hasKtavKabala.note" (click)="openDialog($event ,book.additionalDetails.hasKtavKabala.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+          </div>
 
-            <div class="section" (click)="closeMenus('recordings')" *ngIf="book.recordings.length">
-                <div class="section-title-btn">תזכורת קולית</div>
-                <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
-                    <div *ngFor="let recording of book.recordings; let i = index">
-                        <div>
-                            <button type="button" (click)="playRecording(i)">השמעת הקלטה</button>
-                        </div>
-                    </div>
-                </div>
+          <div *ngIf="book.additionalDetails.voatsInElection.boolean" class="writing-extra-detail">
+            <div class="detail-title description">בחירות</div>
+            <div>
+              <i [class.icofont-check-alt]="book.additionalDetails.voatsInElection.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.voatsInElection.boolean.toString() === 'false'"></i>
             </div>
+            <div *ngIf="book.additionalDetails.voatsInElection.note" (click)="openDialog($event ,book.additionalDetails.voatsInElection.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+          </div>
 
+          <div *ngIf="book.additionalDetails.goesToKotel.boolean" class="writing-extra-detail">
+            <div class="detail-title description">הולך לכותל</div>
+            <div>
+              <i [class.icofont-check-alt]="book.additionalDetails.goesToKotel.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.goesToKotel.boolean.toString() === 'false'"></i>
+            </div>
+            <div *ngIf="book.additionalDetails.goesToKotel.note" (click)="openDialog($event ,book.additionalDetails.goesToKotel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
 
         </div>
+      </div>
+
+      <div class="section" (click)="closeMenus('pricesDeatails')" *ngIf="priceForTorahScroll?.priceForScroll && priceForTorahScroll.priceForScroll !== 0">
+        <div class="section-title-btn">מחיר</div>
+        <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
+          <div *ngIf="priceForTorahScroll.pricePerPage" class="price-extra-detail">
+            <div class="detail-title description">מחיר לעמוד</div>
+            <div class="detail">{{ priceForTorahScroll.pricePerPage | currency:'USD':true:'1.0-0' }}</div>
+          </div>
+          <div *ngIf="priceForTorahScroll.priceForScroll" class="price-extra-detail">
+            <div class="detail-title description">מחיר לספר תורה</div>
+            <div class="detail">{{ priceForTorahScroll.priceForScroll | currency:'USD':true:'1.0-0' }}</div>
+          </div>
+          <div *ngIf="book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth" class="price-extra-detail">
+            <div class="detail-title description">כמה שווה</div>
+            <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth | currency:'USD':true:'1.0-0' }}</div>
+          </div>
+          <div *ngIf="book.pricesDeatails.priceForTorahScroll.negotiation || book.pricesDeatails.priceForTorahScroll.note" class="price-extra-detail">
+            <div class="detail-title description">משא ומתן</div>
+            <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.negotiation }}</div>
+            <div class="shave description"></div>
+            <div *ngIf="book.pricesDeatails.priceForTorahScroll.note" (click)="openDialog($event ,book.pricesDeatails.priceForTorahScroll.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" (click)="closeMenus('additionalDeatails')">
+        <div class="section-title-btn">הסופר</div>
+        <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
+          <div *ngIf="book.communityDeatails.community || book.communityDeatails.note" class="writing-extra-detail">
+            <div class="detail-title description">קהילה</div>
+            <div class="detail">{{ book.communityDeatails.community }}</div>
+            <div *ngIf="book.communityDeatails.note" (click)="openDialog($event ,book.communityDeatails.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i>
+            </div>
+          </div>
+          <div *ngIf="book.additionalDetails.writerLevel.level || book.additionalDetails.writerLevel.note" class="writing-extra-detail">
+            <div class="detail-title description">דרגת סופר</div>
+            <div class="detail">{{ book.additionalDetails.writerLevel.level }}</div>
+            <div *ngIf="book.additionalDetails.writerLevel.note" (click)="openDialog($event ,book.additionalDetails.writerLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" (click)="closeMenus('images')" *ngIf="book.photos.length">
+        <div class="section-title-btn">תמונות</div>
+        <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
+          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos" class="photo-wrapper">
+            <img class="icon-share" src="assets/icons/share.png" alt="">
+            <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
+          </div>
+        </div>
+        <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
+      </div>
+
+      <div class="section" (click)="closeMenus('recordings')" *ngIf="book.recordings.length">
+        <div class="section-title-btn">תזכורת קולית</div>
+        <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+          <div *ngFor="let recording of book.recordings; let i = index">
+            <div>
+              <button type="button" (click)="playRecording(i)">השמעת הקלטה</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
+  </div>
 </div>

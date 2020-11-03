@@ -1,13 +1,11 @@
-<app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null"
-    (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
+<app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
-    <form [formGroup]="dealerForm">
-        <div class="page-grid">
-            <div class="profile-image-section">
-                <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;"
-                    type="file" accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
-                <label for="profileImage" class="bold-text inner-grid">
+  <form [formGroup]="dealerForm">
+    <div class="page-grid">
+      <div class="profile-image-section">
+        <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file" accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
+        <label for="profileImage" class="bold-text inner-grid">
                     <div>
                         <i *ngIf="!dealerForm.controls.profileImage.value" class="icofont-user-alt-7"></i>
                         <img *ngIf="dealerForm.controls.profileImage.value" [src]="dealerForm.controls.profileImage.value"
@@ -17,37 +15,36 @@
                         הוסף תמונת פרופיל
                     </div>
                 </label>
-            </div>
-            <div class="personal-detail-section inner-grid">
-                <div class="section-title-w-note inner-grid-2">
-                    <div>פרטים אישיים</div>
-                    <div>
-                        <p (click)="openDialog(dealerForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
-                    </div>
-                </div>
-    
-                <input placeholder="שם פרטי" formControlName="firstName">
-                <input placeholder="שם משפחה" formControlName="lastName">
-                <input placeholder="טלפון" formControlName="telephone">
-                <input placeholder="טלפון נוסף" formControlName="secondTelephone">
-                <input type="email" placeholder="אימייל" formControlName="email">
-                <input list="cities" placeholder="עיר" formControlName="city">
-                <datalist id="cities">
-                    <option *ngFor="let city of citiesList" [value]="city">
-                </datalist>
-                <input placeholder="רחוב" formControlName="street">
-                <input placeholder="מספר בנין" formControlName="streetNumber">
-                <input placeholder="מספר בית" formControlName="apartmentNumber">
-            </div>
-        </div>
-        <div class="button-wrapper inner-grid">
-            <div>
-                <button (click)="onSubmit()"
-              class="add-sofer-button">{{ textForSaveButton }}</button>
-            </div>
+      </div>
+      <div class="personal-detail-section inner-grid">
+        <div class="section-title-w-note inner-grid-2">
+          <div>פרטים אישיים</div>
           <div>
-              <button class="add-sofer-button">ביטול</button>
+            <p (click)="openDialog(dealerForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
         </div>
-    </form>
+
+        <input placeholder="שם פרטי" formControlName="firstName">
+        <input placeholder="שם משפחה" formControlName="lastName">
+        <input placeholder="טלפון" formControlName="telephone">
+        <input placeholder="טלפון נוסף" formControlName="secondTelephone">
+        <input type="email" placeholder="אימייל" formControlName="email">
+        <input list="cities" placeholder="עיר" formControlName="city">
+        <datalist id="cities">
+                    <option *ngFor="let city of citiesList" [value]="city">
+                </datalist>
+        <input placeholder="רחוב" formControlName="street">
+        <input placeholder="מספר בנין" formControlName="streetNumber">
+        <input placeholder="מספר בית" formControlName="apartmentNumber">
+      </div>
+    </div>
+    <div class="button-wrapper inner-grid">
+      <div>
+        <button (click)="onSubmit()" class="add-sofer-button">{{ textForSaveButton }}</button>
+      </div>
+      <div>
+        <button class="add-sofer-button">ביטול</button>
+      </div>
+    </div>
+  </form>
 </div>
