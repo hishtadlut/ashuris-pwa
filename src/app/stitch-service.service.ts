@@ -301,6 +301,7 @@ export class StitchService {
     }
 
     createDealer(dealer: Dealer) {
+        this.createCity(dealer.city);
         const dealerClone = JSON.parse(JSON.stringify(dealer)) as Dealer;
         if (dealer._id) {
             this.localDealersDB.put({
@@ -320,7 +321,6 @@ export class StitchService {
     }
 
     createBook(book: Book, dealerId: string) {
-        this.createCity(book.city);
         this.createCommunity(book.communityDeatails.community);
         this.createParchment(book.writingDeatails.parchmentType.type);
         const bookClone = JSON.parse(JSON.stringify(book)) as Book;
