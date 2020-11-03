@@ -28,7 +28,7 @@
     ],
     "dataGroups": [{
         "name": "api-performance",
-        "urls": ["https://ashuris.online:5985/"],
+        "urls": ["https://ashuris.online/couch/"],
         "cacheConfig": {
             "strategy": "freshness",
             "maxAge": "0s",

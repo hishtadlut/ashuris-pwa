@@ -1,4 +1,4 @@
-.date-inner-grid{
+.date-inner-grid {
   display: grid;
   grid-gap: 1vh;
   padding: 5vw;
@@ -14,7 +14,7 @@
   grid-row: 1 / 2;
   height: 12vw;
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding-right: 15vw;
   margin-bottom: 2vw;
   color: #000000;
@@ -23,7 +23,6 @@
 .date-input:focus {
   outline: none;
   border: 2px solid #D4A75D;
-
 }
 
 .input-container {
@@ -57,14 +56,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin: 3vw; */
 }
 
 .input-wrapper {
   display: grid;
   grid-template: auto / 1fr;
   position: relative;
-
 }
 
 .icofont-ui-calendar {

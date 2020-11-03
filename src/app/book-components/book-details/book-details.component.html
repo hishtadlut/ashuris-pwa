@@ -144,15 +144,15 @@
                 <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
                     <div *ngIf="priceForTorahScroll.pricePerPage" class="price-extra-detail">
                         <div class="detail-title description">מחיר לעמוד</div>
-                        <div class="detail">{{ priceForTorahScroll.pricePerPage }}</div>
+                        <div class="detail">{{ priceForTorahScroll.pricePerPage | currency:'USD':true:'1.0-0' }}</div>
                     </div>
                     <div *ngIf="priceForTorahScroll.priceForScroll" class="price-extra-detail">
                         <div class="detail-title description">מחיר לספר תורה</div>
-                        <div class="detail">{{ priceForTorahScroll.priceForScroll }}</div>
+                        <div class="detail">{{ priceForTorahScroll.priceForScroll | currency:'USD':true:'1.0-0' }}</div>
                     </div>
                     <div *ngIf="book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth" class="price-extra-detail">
                         <div class="detail-title description">כמה שווה</div>
-                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth }}</div>
+                        <div class="detail">{{ book.pricesDeatails.priceForTorahScroll.howMuchIsItWorth | currency:'USD':true:'1.0-0' }}</div>
                     </div>
                     <div *ngIf="book.pricesDeatails.priceForTorahScroll.negotiation || book.pricesDeatails.priceForTorahScroll.note" class="price-extra-detail">
                         <div class="detail-title description">משא ומתן</div>

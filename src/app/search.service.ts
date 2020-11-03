@@ -100,6 +100,7 @@ export class SearchService implements OnDestroy {
         if (searchFor === SearchFor.WRITERS) {
             this.pouchDbService.localWritersDB.find(findInDbParms).then(result => {
                 const filter = result.docs
+                    .filter(jsQuery)
                     .filter(item => {
                         if (
                             (
@@ -306,7 +307,7 @@ export class SearchService implements OnDestroy {
                         return true;
                     }
                 });
-                this.store$.dispatch(setAdvancedSearchResult({ items: result.docs.filter(jsQuery) }));
+                this.store$.dispatch(setAdvancedSearchResult({ items: filter }));
             });
         }
     }

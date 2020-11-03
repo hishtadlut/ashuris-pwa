@@ -38,7 +38,7 @@
 .inner-grid input {
   height: 11vw;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding-right: 5vw;
   /* margin-bottom: 2vw; */
   color: #000000;
@@ -145,8 +145,7 @@ label input {
   align-content: center;
 }
 
-.price-deatail-section {
-}
+.price-deatail-section {}
 
 .type-of-price-selection-wrapper {
   grid-template: auto / 1fr 1fr;
@@ -192,7 +191,8 @@ label input {
   grid-row-gap: 4vw;
 }
 
-.community-section, .parchment-section {
+.community-section,
+.parchment-section {
   grid-row-gap: 4vw;
 }
 
@@ -250,11 +250,13 @@ label.level-checkbox {
   align-items: center;
 }
 
-.box-checkbox.checked, .checked {
+.box-checkbox.checked,
+.checked {
   background-color: #C89C5B;
 }
 
-.box-checkbox.checked-blue, .checked-blue {
+.box-checkbox.checked-blue,
+.checked-blue {
   background-color: #2A2E43;
 }
 
@@ -298,6 +300,7 @@ label.level-checkbox {
 .price-deatail-section .box-checkbox {
   margin-bottom: 4vw;
 }
+
 
 /* .box-checkbox .checked {
     background-color: blue;

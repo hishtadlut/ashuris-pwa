@@ -5,7 +5,6 @@ import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { base64ToBlob, preventDefaultAndStopPropagation, thereAreDetailsInGivenObject } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
-import { writer } from 'repl';
 declare const navigator: Navigator;
 type ShareData = {
   title?: string;
@@ -27,6 +26,7 @@ export class WriterDetailsComponent implements OnInit {
   thereAreDetailsInGivenObject = thereAreDetailsInGivenObject;
   writer: Writer;
   priceForTorahScroll: { pricePerPage: number, priceForScroll: number };
+  writerAddress: string;
   openMenuStatus = {
     pricesDeatails: false,
     writingDeatails: false,
@@ -42,7 +42,7 @@ export class WriterDetailsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private googleMapsService: GoogleMapsService,
+    // private googleMapsService: GoogleMapsService,
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     public sanitizer: DomSanitizer,
@@ -51,6 +51,7 @@ export class WriterDetailsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
     this.writer = await this.pouchDbService.getWriter(id);
+    this.writerAddress = `${this.writer.city}+${this.writer.street}+${this.writer.streetNumber}`;
     if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
       this.priceForTorahScroll = {
         pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
@@ -61,16 +62,16 @@ export class WriterDetailsComponent implements OnInit {
           : this.writer.pricesDeatails.priceForTorahScroll.price,
       };
     }
-    if (this.writer?.coordinates) {
-      setTimeout(() => {
-        this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
-      });
-    } else if (this.writer) {
-      const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
-        { city: this.writer.city, street: this.writer.street, streetNumber: this.writer.streetNumber }
-      );
-      this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
-    }
+    // if (this.writer?.coordinates) {
+    //   setTimeout(() => {
+    //     this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
+    //   });
+    // } else if (this.writer) {
+    //   const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
+    //     { city: this.writer.city, street: this.writer.street, streetNumber: this.writer.streetNumber }
+    //   );
+    //   this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
+    // }
   }
 
   shareButton(event) {

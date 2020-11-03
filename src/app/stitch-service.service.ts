@@ -16,7 +16,6 @@ import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
-import { start } from 'repl';
 
 @Injectable({
     providedIn: 'root'
@@ -26,16 +25,16 @@ export class StitchService {
     writersFromDB = new Subject<Writer[]>();
 
     localWritersDB = new PouchDB<Writer>('writersLocal');
-    remoteWritersDB = new PouchDB<Writer>('https://ashuris.online:5985/writers__remote');
+    remoteWritersDB = new PouchDB<Writer>('https://ashuris.online/couch/writers__remote');
 
     localDealersDB = new PouchDB<Dealer>('dealersLocal');
-    remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online:5985/dealers_remote');
+    remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online/couch/dealers_remote');
 
     localBooksDB = new PouchDB<Book>('booksLocal');
-    remoteBooksDB = new PouchDB<Book>('https://ashuris.online:5985/books_remote');
+    remoteBooksDB = new PouchDB<Book>('https://ashuris.online/couch/books_remote');
 
     localGeneralDB = new PouchDB<GeneralDB>('generalLocal');
-    remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online:5985/general_remote');
+    remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online/couch/general_remote');
 
     urgencyWritersList: ChangeUrgencyWriter[];
     urgencyWritersList$Subscription: Subscription;
@@ -321,6 +320,8 @@ export class StitchService {
     }
 
     createBook(book: Book, dealerId: string) {
+        this.createCity(book.city);
+        this.createCommunity(book.communityDeatails.community);
         this.createParchment(book.writingDeatails.parchmentType.type);
         const bookClone = JSON.parse(JSON.stringify(book)) as Book;
         if (book._id) {

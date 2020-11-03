@@ -37,9 +37,8 @@
 .inner-grid input {
   height: 11vw;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding-right: 5vw;
-  /* margin-bottom: 2vw; */
   color: #000000;
 }
 
@@ -117,7 +116,6 @@ label input {
 }
 
 .profile-image-section {
-  /* grid-row: 1 / span 1; */
   align-items: center;
   grid-gap: 5vw;
   margin-top: 10vw;
@@ -132,18 +130,6 @@ label input {
   border-radius: 100%;
 }
 
-.personal-detail-section {
-  /* grid-row: 2 / span 1; */
-}
-
-.start-date-section {
-  /* grid-row: 3 / span 1; */
-}
-
-.is-appropriate-section {
-  /* grid-row: 4 / span 1; */
-}
-
 .is-appropriate-radio-buttons-wraper {
   grid-row: 2 / span 1;
   grid-template: auto auto / 1fr 1fr 1fr;
@@ -155,10 +141,6 @@ label input {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   grid-gap: 5vw;
-}
-
-.price-deatail-section {
-  /* grid-row: 5 / span 1; */
 }
 
 .type-of-price-selection-wrapper {
@@ -189,22 +171,18 @@ label input {
 }
 
 .writing-detail-section {
-  /* grid-row: 6 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .sizes-section {
-  /* grid-row: 7 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .writing-type-section {
-  /* grid-row: 8 / span 1; */
   grid-row-gap: 4vw;
 }
 
 .community-section {
-  /* grid-row: 9 / span 1; */
   grid-row-gap: 4vw;
 }
 
@@ -229,7 +207,6 @@ label input {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .sizes-row label input {
@@ -237,9 +214,6 @@ label input {
 }
 
 .size-checkbox {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   height: 10vw;
   width: 10vw;
   background-color: #b4b4b4;
@@ -262,7 +236,6 @@ label.level-checkbox {
   display: grid;
   align-items: center;
 }
-
 
 .box-checkbox.checked,
 .checked {
@@ -313,12 +286,7 @@ label.level-checkbox {
   margin-bottom: 4vw;
 }
 
-/* .box-checkbox .checked {
-  background-color: blue;
-} */
-
 .writing-location-section {
-  /* grid-row: 10 / span 1; */
   grid: auto auto / auto 1fr;
   column-gap: 6vw;
   justify-items: right;
@@ -330,11 +298,6 @@ label.level-checkbox {
 
 .number-button-wrapper {
   grid-template: auto / repeat(5, 1fr);
-  /* justify-items: center; */
-}
-
-.additional-details-section {
-  /* grid-row: 11 / span 1; */
 }
 
 .additional-details-section input {
@@ -349,8 +312,7 @@ label.level-checkbox {
   border-bottom: 1px solid #2A2E43;
 }
 
-.writer-level-section{
-  /* grid-row: 12 / span 1; */
+.writer-level-section {
   grid-template: auto / 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -363,14 +325,9 @@ label.level-checkbox {
 }
 
 .photo-section {
-  /* grid-row: 13 / span 1; */
   grid-template: auto / auto;
   grid-gap: 5vw;
   align-items: center;
-}
-
-.recording-section {
-  /* grid-row: 14 / span 1; */
 }
 
 .add-sofer-button {
@@ -388,9 +345,8 @@ label.level-checkbox {
 
 .img {
   width: 20vw;
-  /* margin-left: 4vw;
-  margin-bottom: 4vw; */
 }
+
 .add-section {
   grid-template: 1fr / auto 1fr;
   grid-gap: 5vw;
@@ -400,7 +356,6 @@ label.level-checkbox {
 .second-title {
   color: #2A2E43;
   font-weight: bold;
-  /* margin-bottom: 2vw; */
   font-size: 0.95rem;
   font-family: Arial;
 }

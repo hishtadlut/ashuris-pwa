@@ -1,9 +1,7 @@
-
 .search-page-wrapper {
   background-color: #F7F7FA;
   padding-top: 6vw;
 }
-
 
 .page-grid {
   direction: rtl;
@@ -34,7 +32,7 @@
 .inner-grid input {
   height: 11vw;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 1rem;
   margin-bottom: 2vw;
   color: #000000;
 }
@@ -52,7 +50,6 @@
 .full-width {
   width: 100%;
 }
-
 
 label input {
   display: none;
@@ -89,8 +86,6 @@ label {
   background-color: rgb(255, 255, 255);
 }
 
-
-
 .type-of-price-selection-wrapper {
   grid-template: auto / 1fr 1fr;
 }
@@ -117,9 +112,6 @@ label {
 .worth-it-buttons-wrapper label input {
   display: none;
 }
-
-
-
 
 .sizes-row {
   grid-template: auto / 1fr 1fr 1fr 1fr;
@@ -176,7 +168,6 @@ label.level-checkbox {
   align-items: center;
 }
 
-
 .box-checkbox.checked,
 .checked {
   background-color: #C89C5B;
@@ -191,7 +182,6 @@ label.level-checkbox {
   padding-bottom: 6vw;
   grid-template: auto / 1fr 1fr 1fr 1fr 1fr;
 }
-
 
 .writing-types {
   grid-template: auto auto / auto auto auto;
@@ -224,12 +214,9 @@ label.level-checkbox {
   margin-bottom: 4vw;
 }
 
-
 .number-button-wrapper {
   grid-template: auto / repeat(5, 1fr);
 }
-
-
 
 .allections {
   grid-template: auto / auto 12vw 12vw 27vw;
@@ -245,7 +232,7 @@ label.level-checkbox {
   font-family: Arial;
 }
 
-.writer-level-section{
+.writer-level-section {
   grid-template: auto / 1fr 1fr 1fr 1fr 1fr;
 }
 
@@ -257,7 +244,6 @@ label.level-checkbox {
   font-size: 0.85rem;
   font-family: Arial;
 }
-
 
 .add-sofer-button {
   background-color: #2A2E43;
@@ -281,9 +267,7 @@ label.level-checkbox {
   margin-bottom: 5vw;
   border: solid 2px #C89C5B;
   box-shadow: 0pt 3pt 6pt #00000029;
-  
 }
-
 
 .add-section {
   grid-template: 1fr / 1fr 1fr;
@@ -328,7 +312,7 @@ input {
 
 .input-wrapper input {
   width: 25vw;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .gold-text {

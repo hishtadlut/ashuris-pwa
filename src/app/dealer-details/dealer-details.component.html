@@ -1,47 +1,48 @@
 <app-note-dialog-output *ngIf="dialogContent !== null" (closeDialog)="closeDialog()" [content]="dialogContent">
 </app-note-dialog-output>
 <div class="page-wrapper">
-    <div class="writer-details-wrapper page-grid" *ngIf="dealer">
-        <div class="top-section">
-            <i *ngIf="!dealer.profileImage" class="icofont-user-alt-7"></i>
-            <img *ngIf="dealer.profileImage" [src]="dealer.profileImage" alt="" class="profile-img">
-            <div class="name-wrapper">
-                <p class="dealer-name">{{ dealer.lastName }} {{ dealer.firstName }}</p>
-                <p class="dealer-location" *ngIf="dealer.street && dealer.city">{{ dealer.street }}, {{ dealer.city }}
-                </p>
-            </div>
-            <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
-        </div>
-        <div class="basic-details-section">
-            <a [href]="'tel:' + dealer.telephone" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
-                <i class="icofont-phone"></i>
-                <div>
-                    <div class="information">{{ dealer.telephone }}</div>
-                    <div class="description">טלפון</div>
-                </div>
-            </a>
-            <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
-                <i class="icofont-phone"></i>
-                <div>
-                    <div class="information">{{ dealer.secondTelephone }}</div>
-                    <div class="description">טלפון נוסף</div>
-                </div>
-            </div>
-            <a href="mailto:{{dealer.email}}" class="basic-detail .inner-grid " *ngIf="dealer.email ">
-                <i class="icofont-envelope "></i>
-                <div>
-                    <div class="information ">{{ dealer.email }}</div>
-                    <div class="description ">אימייל</div>
-                </div>
-            </a>
-            <div class="basic-detail .inner-grid " *ngIf="dealer.city ">
-                <i class="icofont-location-pin "></i>
-                <div>
-                    <div class="information ">{{ dealer.street }} {{ dealer.streetNumber }} <span *ngIf="dealer.apartmentNumber ">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}
-                    </div>
-                    <div class="description ">כתובת</div>
-                </div>
-            </div>
-        </div>
+  <div class="writer-details-wrapper page-grid" *ngIf="dealer">
+    <div class="top-section">
+      <i *ngIf="!dealer.profileImage" class="icofont-user-alt-7"></i>
+      <img *ngIf="dealer.profileImage" [src]="dealer.profileImage" alt="" class="profile-img">
+      <div class="name-wrapper">
+        <p class="dealer-name">{{ dealer.lastName }} {{ dealer.firstName }}</p>
+        <p class="dealer-location" *ngIf="dealer.street && dealer.city">{{ dealer.street }}, {{ dealer.city }}
+        </p>
+      </div>
+      <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
     </div>
+    <div class="basic-details-section">
+      <a [href]="'tel:' + dealer.telephone" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
+        <i class="icofont-phone"></i>
+        <div>
+          <div class="information">{{ dealer.telephone | phone}}</div>
+          <div class="description">טלפון</div>
+        </div>
+      </a>
+      <div class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
+        <i class="icofont-phone"></i>
+        <div>
+          <div class="information">{{ dealer.secondTelephone | phone}}</div>
+          <div class="description">טלפון נוסף</div>
+        </div>
+      </div>
+      <a href="mailto:{{dealer.email}}" class="basic-detail .inner-grid " *ngIf="dealer.email ">
+        <i class="icofont-envelope "></i>
+        <div>
+          <div class="information ">{{ dealer.email }}</div>
+          <div class="description ">אימייל</div>
+        </div>
+      </a>
+      <div class="basic-detail .inner-grid " *ngIf="dealer.city ">
+        <i class="icofont-location-pin "></i>
+        <div>
+          <div class="information ">{{ dealer.street }} {{ dealer.streetNumber }} <span
+              *ngIf="dealer.apartmentNumber ">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}
+          </div>
+          <div class="description ">כתובת</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

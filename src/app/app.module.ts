@@ -37,6 +37,7 @@ import { BookDetailsComponent } from './book-components/book-details/book-detail
 import { BookListScreenComponent } from './book-components/book-list-screen/book-list-screen.component';
 import { BookListItemComponent } from './book-components/book-list-item/book-list-item.component';
 import { EditBookComponent } from './book-components/edit-book/edit-book.component';
+import { PhonePipe } from './pipes/Phone/phone.pipe';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { EditBookComponent } from './book-components/edit-book/edit-book.compone
     BookListScreenComponent,
     BookListItemComponent,
     EditBookComponent,
+    PhonePipe,
   ],
   imports: [
     BrowserModule,
