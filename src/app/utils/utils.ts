@@ -1,3 +1,17 @@
+declare const navigator: Navigator;
+
+type ShareData = {
+  title?: string;
+  text?: string;
+  url?: string;
+  files?: ReadonlyArray<File>;
+};
+
+interface Navigator {
+  share?: (data?: ShareData) => Promise<void>;
+  canShare?: (data?: ShareData) => boolean;
+}
+
 export function fileToBase64(file: File) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -6,7 +20,6 @@ export function fileToBase64(file: File) {
     reader.onerror = error => reject(error);
   });
 }
-
 export function base64ToBlob(url: string): Promise<Blob> {
   return new Promise(resolve => {
     fetch(url)
@@ -37,4 +50,24 @@ export function preventDefaultAndStopPropagation(event: Event) {
 
 export function thereAreDetailsInGivenObject(object: { [x: string]: string | boolean }) {
   return !(Object.values(object).join('').replaceAll('false', '') === '');
+}
+
+export function shareButton(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  if (navigator.share) {
+    base64ToBlob(event.target.parentElement.lastChild.src)
+      .then(img => {
+        navigator.share({
+          files: [new File([img], 'img.jpg')]
+        })
+          .then(() => {
+            console.log('Thanks for sharing!');
+            // alert(newVariable.canShare())
+          }).catch((error => console.log(error)));
+      })
+      .catch((error => console.log(error)));
+  } else {
+    // fallback
+  }
 }

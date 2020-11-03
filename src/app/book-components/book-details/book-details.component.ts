@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { preventDefaultAndStopPropagation } from 'src/app/utils/utils';
+import { preventDefaultAndStopPropagation, shareButton } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { StitchService } from 'src/app/stitch-service.service';
 })
 export class BookDetailsComponent implements OnInit {
   book: Book;
+  shareButton = shareButton;
   openMenuStatus = {
     pricesDeatails: false,
     writingDeatails: false,

@@ -3,20 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { base64ToBlob, preventDefaultAndStopPropagation, thereAreDetailsInGivenObject } from 'src/app/utils/utils';
+import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
-declare const navigator: Navigator;
-type ShareData = {
-  title?: string;
-  text?: string;
-  url?: string;
-  files?: ReadonlyArray<File>;
-};
 
-interface Navigator {
-  share?: (data?: ShareData) => Promise<void>;
-  canShare?: (data?: ShareData) => boolean;
-}
 @Component({
   selector: 'app-writer-details',
   templateUrl: './writer-details.component.html',
@@ -34,6 +23,7 @@ export class WriterDetailsComponent implements OnInit {
     images: false,
     recordings: false,
   };
+  shareButton = shareButton;
 
   dialogContent = null;
   preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
@@ -74,25 +64,6 @@ export class WriterDetailsComponent implements OnInit {
     // }
   }
 
-  shareButton(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (navigator.share) {
-      base64ToBlob(event.target.parentElement.lastChild.src)
-        .then(img => {
-          navigator.share({
-            files: [new File([img], 'img.jpg')]
-          })
-            .then(() => {
-              console.log('Thanks for sharing!');
-              // alert(newVariable.canShare())
-            }).catch((error => console.log(error)));
-        })
-        .catch((error => console.log(error)));
-    } else {
-      // fallback
-    }
-  }
 
   editWriter() {
     this.router.navigate(['/edit-writer'], { queryParams: { id: this.writer._id } });
