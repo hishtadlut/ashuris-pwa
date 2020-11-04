@@ -76,7 +76,8 @@ export class StitchService {
                 syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
                 remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
                     syncHandler.on('change', (change) => {
-                        console.log(`${change} ${localDb.name}`);
+                        console.log(localDb.name);
+                        console.log(change);
                         if (actionToDispatch) {
                             this.store$.dispatch(actionToDispatch());
                         }
