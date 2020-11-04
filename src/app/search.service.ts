@@ -53,7 +53,7 @@ export class SearchService implements OnDestroy {
             }
         };
 
-        const jsQuery = item => {
+        const jsQuery = (item) => {
             if (query.lowestPrice.toString() === '' || query.highestPrice.toString() === '') {
                 return true;
             }
@@ -200,8 +200,7 @@ export class SearchService implements OnDestroy {
                             return item.additionalDetails.voatsInElection.boolean === 'false';
                         }
                         return true;
-                    })
-                    .filter(jsQuery);
+                    });
                 this.store$.dispatch(setAdvancedSearchResult({ items: filter }));
             });
         } else if (searchFor === SearchFor.BOOKS) {
@@ -211,12 +210,15 @@ export class SearchService implements OnDestroy {
                 welish: 'וועליש',
             };
             this.pouchDbService.localBooksDB.find(findInDbParms).then(result => {
-                const filter = result.docs.filter(item => {
+                const filter = result.docs
+                .filter(jsQuery)
+                .filter(item => {
                     if (query.voatsInElection === 'false') {
                         return item.additionalDetails.voatsInElection.boolean === 'false';
                     }
                     return true;
-                }).filter(item => {
+                })
+                .filter(item => {
                     if (query.goesToKotel === 'false') {
                         return item.additionalDetails.voatsInElection.boolean === 'false';
                     }

@@ -103,7 +103,7 @@ export class EditBookComponent implements OnInit {
       }),
       isAppropriate: new FormGroup({
         level: new FormControl('', [
-          // Validators.required
+          Validators.required
         ]),
         note: new FormControl('', [
           // Validators.required,
@@ -323,7 +323,7 @@ export class EditBookComponent implements OnInit {
       this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.router.navigate(['/book-list-screen']);
     } else {
-      alert('יש למלא שם לספר');
+      alert('יש למלא שם לספר ומידת התאמה');
     }
 
   }
