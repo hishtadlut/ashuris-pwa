@@ -69,7 +69,7 @@
           <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
             <div class="detail-title description">מחיר לעמוד</div>
             <div class="detail">{{ priceForTorahScroll.pricePerPage | currency: "USD":true:"1.0-1" }}</div>
-            <div class="shave description">שווה לדעתי</div>
+            <div *ngIf="writer.pricesDeatails.priceForTorahScroll.worthIt.toString()" class="shave description">שווה לדעתי</div>
             <div>
               <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
             </div>
@@ -80,7 +80,7 @@
           <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
             <div class="detail-title description">מחיר לספר תורה</div>
             <div class="detail">{{ priceForTorahScroll.priceForScroll | currency: "USD":true:"1.0-1" }}</div>
-            <div class="shave description">שווה לדעתי</div>
+            <div *ngIf="writer.pricesDeatails.priceForTorahScroll.worthIt.toString()" class="shave description">שווה לדעתי</div>
             <div>
               <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTorahScroll.worthIt.toString() === 'false'"></i>
             </div>
@@ -93,7 +93,7 @@
             <div class="detail">
               {{ writer.pricesDeatails.priceForMezuzah.price | currency: "USD":true:"1.0-0" }}
             </div>
-            <div class="shave description">שווה לדעתי</div>
+            <div *ngIf="writer.pricesDeatails.priceForMezuzah.worthIt.toString()" class="shave description">שווה לדעתי</div>
             <div>
               <i [class.icofont-check-alt]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForMezuzah.worthIt.toString() === 'false'"></i>
             </div>
@@ -102,7 +102,7 @@
           <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForTefillin.price">
             <div class="detail-title description">מחיר לתפילין</div>
             <div class="detail">{{ writer.pricesDeatails.priceForTefillin.price | currency: "USD":true:"1.0-1" }}</div>
-            <div class="shave description">שווה לדעתי</div>
+            <div *ngIf="writer.pricesDeatails.priceForTefillin.worthIt.toString()" class="shave description">שווה לדעתי</div>
             <div>
               <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'false'"></i>
             </div>
