@@ -5,7 +5,7 @@ import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook, GeneralDB
 
 import { v4 as uuidv4 } from 'uuid';
 
-import PouchDB from 'pouchdb';
+import PouchDB, { removeListener } from 'pouchdb';
 import PouchdbUpsert from 'pouchdb-upsert';
 import PouchdbAuthentication from 'pouchdb-authentication';
 PouchDB.plugin(PouchdbUpsert);
@@ -83,6 +83,8 @@ export class StitchService {
                     });
                     syncHandler.on('error', (err) => {
                         console.log(err);
+                        console.log('sync stopped ' + localDb.name);
+                        stopSync(syncHandler);
                     });
                     syncHandler.on('active', () => {
                         console.log('active');
@@ -91,31 +93,34 @@ export class StitchService {
                         }
                     });
                     syncHandler.on('complete', () => {
-                        // console.log('sync complete ' + localDb.name);
-                        stopSync();
+                        console.log('sync complete ' + localDb.name);
+                        stopSync(syncHandler);
                     });
                 });
             } catch (error) {
                 console.log(error);
-                stopSync();
+                console.log('sync stopped ' + localDb.name);
+                stopSync(syncHandler);
             }
         };
-        const stopSync = () => {
+        const stopSync = (DBS: PouchDB.Replication.Sync<{}>) => {
             try {
-                syncHandler.cancel();
-                syncHandler.removeAllListeners();
-                setTimeout(() => {
-                    // console.log('sync canceled ' + localDb.name);
-                    startSync();
-                }, 10000);
+                console.log('sync stopped ' + localDb.name);
+                removeListeners(DBS);
             } catch (error) {
                 console.log(error);
-                stopSync();
+                console.log('sync stopped ' + localDb.name);
+                stopSync(DBS);
             }
 
         };
+        const removeListeners = (DBS: PouchDB.Replication.Sync<{}>) => {
+            DBS.cancel();
+            DBS.removeAllListeners();
+        };
+
         startSync();
-        setInterval(startSync, 60000);
+        setInterval(startSync, 600000);
     }
 
     createWriter(writer: Writer) {
