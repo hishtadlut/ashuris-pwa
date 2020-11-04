@@ -1,8 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, Event, NavigationEnd, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationEnd } from '@angular/router';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
-import { putChangeUrgencyWritersList, putChangeUrgencyBookList, setAdvancedSearchParameters, useAdvancedSearchParameters, setAdvancedSearchResult } from './actions/writers.actions';
+import {
+  putChangeUrgencyWritersList,
+  putChangeUrgencyBookList,
+  setAdvancedSearchParameters,
+  useAdvancedSearchParameters,
+  setAdvancedSearchResult
+} from './actions/writers.actions';
 import { LocationPath } from './enums';
 import { Subscription } from 'rxjs';
 
@@ -33,9 +39,9 @@ export class AppComponent implements OnInit {
         ) {
           this.store.dispatch(putChangeUrgencyBookList());
         } else if ((this.previousUrl === '/books-search-result') && (event.urlAfterRedirects !== '/books-advanced-search')) {
-            this.store.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: null }));
-            this.store.dispatch(useAdvancedSearchParameters({ boolean: false }));
-            this.store.dispatch(setAdvancedSearchResult({ items: null }));
+          this.store.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: null }));
+          this.store.dispatch(useAdvancedSearchParameters({ boolean: false }));
+          this.store.dispatch(setAdvancedSearchResult({ items: null }));
         }
         this.previousUrl = event.urlAfterRedirects;
       }
