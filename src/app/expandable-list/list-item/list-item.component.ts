@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ListItem } from 'src/app/interfaces';
 
@@ -7,13 +7,10 @@ import { ListItem } from 'src/app/interfaces';
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.css']
 })
-export class ListItemComponent implements OnInit {
+export class ListItemComponent {
   @Input() listIsClose = false;
   @Input() listItem: ListItem;
   constructor(private router: Router) { }
-
-  ngOnInit(): void {
-  }
 
   onItemClicked() {
     this.router.navigate([`/${this.listItem.listItemLink}`]);
