@@ -63,9 +63,25 @@ export class StitchService {
         //   console.log(err);
         // });
 
+        this.syncWritersDBS();
+        this.syncDealersDBS();
+        this.syncBooksDBS();
+        this.syncGeneralDBS();
+    }
+
+    syncWritersDBS() {
         this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
+    }
+
+    syncDealersDBS() {
         this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
+    }
+
+    syncBooksDBS() {
         this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
+    }
+
+    syncGeneralDBS() {
         this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
     }
 

@@ -8,15 +8,15 @@ import { ListItem } from 'src/app/interfaces';
   styleUrls: ['./list-item.component.css']
 })
 export class ListItemComponent implements OnInit {
-    @Input() listIsClose = false;
-    @Input() listItem: ListItem;
-    constructor(private router: Router) { }
+  @Input() listIsClose = false;
+  @Input() listItem: ListItem;
+  constructor(private router: Router) { }
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+  }
 
-    onItemClicked() {
-        this.router.navigate([`/${this.listItem.listItemLink}`]);
-    }
+  onItemClicked() {
+    this.router.navigate([`/${this.listItem.listItemLink}`]);
+  }
 
 }
