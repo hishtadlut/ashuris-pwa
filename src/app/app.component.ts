@@ -11,6 +11,7 @@ import {
 } from './actions/writers.actions';
 import { LocationPath } from './enums';
 import { Subscription } from 'rxjs';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit {
   routerNavigation$Subscription: Subscription;
   previousUrl: string;
-  constructor(private router: Router, private store: Store<State>) { }
+  constructor(private router: Router, private store: Store<State>, private searchService: SearchService) { }
 
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
@@ -38,11 +39,22 @@ export class AppComponent implements OnInit {
           this.previousUrl === LocationPath.DEALER_BOOK_LIST
         ) {
           this.store.dispatch(putChangeUrgencyBookList());
-        } else if ((this.previousUrl === '/books-search-result') && (event.urlAfterRedirects !== '/books-advanced-search')) {
-          this.store.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: null }));
-          this.store.dispatch(useAdvancedSearchParameters({ boolean: false }));
-          this.store.dispatch(setAdvancedSearchResult({ items: null }));
         }
+        if ((event.urlAfterRedirects === '/writers-advanced-search') && (this.previousUrl === '/search-result')) {
+          this.store.dispatch(useAdvancedSearchParameters({ boolean: true }));
+        }
+        if (
+          (
+            (event.urlAfterRedirects === LocationPath.WRITERS_ADVANCED_SEARCH)
+            ||
+            (event.urlAfterRedirects === LocationPath.BOOKS_ADVANCED_SEARCH)
+          )
+          &&
+          (this.previousUrl === '/')
+        ) {
+          this.searchService.clearAdvancedSearchParameters();
+        }
+        this.previousUrl = event.urlAfterRedirects;
         this.previousUrl = event.urlAfterRedirects;
       }
     });

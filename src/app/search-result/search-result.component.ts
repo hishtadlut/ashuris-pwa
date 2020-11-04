@@ -3,11 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { Book, Writer } from '../interfaces';
 import { State } from '../reducers';
-import { setAdvancedSearchParameters, setAdvancedSearchResult, useAdvancedSearchParameters } from '../actions/writers.actions';
-import { Location, ɵBrowserPlatformLocation } from '@angular/common';
+import { Location } from '@angular/common';
 import { LocationPath } from '../enums';
-import { StitchService } from '../stitch-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-search-result',
@@ -23,6 +21,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   locationPath: typeof LocationPath = LocationPath;
   constructor(
     private store$: Store<State>,
+    private searchService: SearchService,
     public location: Location,
   ) { }
 
@@ -31,9 +30,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   }
 
   newSearch() {
-    this.store$.dispatch(setAdvancedSearchParameters({ advancedSearchParameters: null }));
-    this.store$.dispatch(useAdvancedSearchParameters({ boolean: false }));
-    this.store$.dispatch(setAdvancedSearchResult({ items: null }));
+    this.searchService.clearAdvancedSearchParameters();
     this.location.back();
   }
 
