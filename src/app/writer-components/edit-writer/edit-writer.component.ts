@@ -6,7 +6,7 @@ import { GoogleMapsService } from '../../google-maps-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RecordingService } from '../../recording.service';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
 import { loadWritersList } from '../../actions/writers.actions';
@@ -19,6 +19,7 @@ import { LocationPath, RemoveItem } from 'src/app/enums';
   styleUrls: ['./edit-writer.component.css']
 })
 export class EditWriterComponent implements OnInit {
+  locationPath: typeof LocationPath = LocationPath;
 
   writer: Writer;
 
@@ -416,6 +417,12 @@ export class EditWriterComponent implements OnInit {
   isChecked(event, formControl: AbstractControl) {
     if (event.target.value === formControl.value) {
       formControl.setValue('');
+    }
+  }
+
+  onRemove() {
+    if (areYouSureYouWantToRemove(RemoveItem.writer)) {
+      
     }
   }
 
