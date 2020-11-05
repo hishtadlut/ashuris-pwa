@@ -5,6 +5,7 @@ import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
+import { RecordingService } from 'src/app/recording.service';
 
 @Component({
   selector: 'app-writer-details',
@@ -36,6 +37,7 @@ export class WriterDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     public sanitizer: DomSanitizer,
+    private recordingService: RecordingService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -114,10 +116,8 @@ export class WriterDetailsComponent implements OnInit {
     return letterSizesArray.join(' ,');
   }
 
-  playRecording(index) {
-    const audio = new Audio(this.writer.recordings[index]);
-    audio.load();
-    audio.play();
+  getSrc(index: number) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.writer.recordings[index]);
   }
 
 }

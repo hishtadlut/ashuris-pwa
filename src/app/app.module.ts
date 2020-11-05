@@ -38,6 +38,7 @@ import { BookListScreenComponent } from './book-components/book-list-screen/book
 import { BookListItemComponent } from './book-components/book-list-item/book-list-item.component';
 import { EditBookComponent } from './book-components/edit-book/edit-book.component';
 import { PhonePipe } from './pipes/Phone/phone.pipe';
+import { AudioHTML5Component } from './audio-html5/audio-html5.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { PhonePipe } from './pipes/Phone/phone.pipe';
     BookListItemComponent,
     EditBookComponent,
     PhonePipe,
+    AudioHTML5Component,
   ],
   imports: [
     BrowserModule,

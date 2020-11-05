@@ -63,10 +63,7 @@ export class StitchService {
         //   console.log(err);
         // });
 
-        this.syncWritersDBS();
-        this.syncDealersDBS();
-        this.syncBooksDBS();
-        this.syncGeneralDBS();
+        this.syncAllDBS();
     }
 
     syncWritersDBS() {
@@ -83,6 +80,13 @@ export class StitchService {
 
     syncGeneralDBS() {
         this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
+    }
+
+    syncAllDBS() {
+        this.syncWritersDBS();
+        this.syncDealersDBS();
+        this.syncBooksDBS();
+        this.syncGeneralDBS();
     }
 
     syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
@@ -111,7 +115,7 @@ export class StitchService {
                     });
                     syncHandler.on('complete', () => {
                         console.log('sync complete ' + localDb.name);
-                        stopSync(syncHandler);
+                        // stopSync(syncHandler);
                     });
                 });
             } catch (error) {

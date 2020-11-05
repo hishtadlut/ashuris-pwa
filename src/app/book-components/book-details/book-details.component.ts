@@ -79,4 +79,8 @@ export class BookDetailsComponent implements OnInit {
     audio.play();
   }
 
+  getSrc(index: number) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.book.recordings[index]);
+  }
+
 }

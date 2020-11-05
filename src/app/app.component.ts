@@ -12,6 +12,7 @@ import {
 import { LocationPath } from './enums';
 import { Subscription } from 'rxjs';
 import { SearchService } from './search.service';
+import { StitchService } from './stitch-service.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ import { SearchService } from './search.service';
 export class AppComponent implements OnInit {
   routerNavigation$Subscription: Subscription;
   previousUrl: string;
-  constructor(private router: Router, private store: Store<State>, private searchService: SearchService) { }
+  constructor(private router: Router, private store: Store<State>, private searchService: SearchService, private pouchDbService: StitchService) { }
 
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
@@ -58,6 +59,10 @@ export class AppComponent implements OnInit {
         this.previousUrl = event.urlAfterRedirects;
       }
     });
+  }
+
+  syncAllDBS() {
+    this.pouchDbService.syncAllDBS();
   }
 
 }
