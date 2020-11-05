@@ -20,7 +20,12 @@ import { StitchService } from './stitch-service.service';
 export class AppComponent implements OnInit {
   routerNavigation$Subscription: Subscription;
   previousUrl: string;
-  constructor(private router: Router, private store: Store<State>, private searchService: SearchService, private pouchDbService: StitchService) { }
+  constructor(
+    private router: Router,
+    private store: Store<State>,
+    private searchService: SearchService,
+    private pouchDbService: StitchService,
+  ) { }
 
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
