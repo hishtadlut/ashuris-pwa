@@ -5,7 +5,7 @@ import { Writer, ChangeUrgencyWriter, Dealer, Book, ChangeUrgencyBook, GeneralDB
 
 import { v4 as uuidv4 } from 'uuid';
 
-import PouchDB, { removeListener } from 'pouchdb';
+import PouchDB from 'pouchdb';
 import PouchdbUpsert from 'pouchdb-upsert';
 import PouchdbAuthentication from 'pouchdb-authentication';
 PouchDB.plugin(PouchdbUpsert);
@@ -16,6 +16,7 @@ import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
+import { LocalDbNames, RemoteDbNames } from './enums';
 
 @Injectable({
     providedIn: 'root'
@@ -24,17 +25,17 @@ export class StitchService {
 
     writersFromDB = new Subject<Writer[]>();
 
-    localWritersDB = new PouchDB<Writer>('writersLocal');
-    remoteWritersDB = new PouchDB<Writer>('https://ashuris.online/couch/writers__remote');
+    localWritersDB = new PouchDB<Writer>(LocalDbNames.WRITERS);
+    remoteWritersDB = new PouchDB<Writer>(RemoteDbNames.WRITERS);
 
-    localDealersDB = new PouchDB<Dealer>('dealersLocal');
-    remoteDealersDB = new PouchDB<Dealer>('https://ashuris.online/couch/dealers_remote');
+    localDealersDB = new PouchDB<Dealer>(LocalDbNames.DEALERS);
+    remoteDealersDB = new PouchDB<Dealer>(RemoteDbNames.DEALERS);
 
-    localBooksDB = new PouchDB<Book>('booksLocal');
-    remoteBooksDB = new PouchDB<Book>('https://ashuris.online/couch/books_remote');
+    localBooksDB = new PouchDB<Book>(LocalDbNames.BOOKS);
+    remoteBooksDB = new PouchDB<Book>(RemoteDbNames.BOOKS);
 
-    localGeneralDB = new PouchDB<GeneralDB>('generalLocal');
-    remoteGeneralDB = new PouchDB<GeneralDB>('https://ashuris.online/couch/general_remote');
+    localGeneralDB = new PouchDB<GeneralDB>(LocalDbNames.GENERAL);
+    remoteGeneralDB = new PouchDB<GeneralDB>(RemoteDbNames.GENERAL);
 
     urgencyWritersList: ChangeUrgencyWriter[];
     urgencyWritersList$Subscription: Subscription;
@@ -142,7 +143,7 @@ export class StitchService {
             DBS.cancel();
             DBS.removeAllListeners();
         };
-        
+        startSync();
     }
 
     createWriter(writer: Writer) {
