@@ -62,8 +62,10 @@ export class StitchService {
         // }).catch((err) => {
         //   console.log(err);
         // });
-
         this.syncAllDBS();
+        setInterval(() => {
+            this.syncAllDBS();
+        }, 30000);
     }
 
     syncWritersDBS() {
@@ -115,6 +117,7 @@ export class StitchService {
                     });
                     syncHandler.on('complete', () => {
                         console.log('sync complete ' + localDb.name);
+                        stopSync(syncHandler);
                         // stopSync(syncHandler);
                     });
                 });
