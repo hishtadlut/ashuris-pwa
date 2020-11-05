@@ -5,9 +5,7 @@ import { Store } from '@ngrx/store';
 import {
   putChangeUrgencyWritersList,
   putChangeUrgencyBookList,
-  setAdvancedSearchParameters,
   useAdvancedSearchParameters,
-  setAdvancedSearchResult
 } from './actions/writers.actions';
 import { LocationPath } from './enums';
 import { Subscription } from 'rxjs';
