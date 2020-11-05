@@ -142,9 +142,7 @@ export class StitchService {
             DBS.cancel();
             DBS.removeAllListeners();
         };
-
-        startSync();
-        setInterval(startSync, 600000);
+        
     }
 
     createWriter(writer: Writer) {
