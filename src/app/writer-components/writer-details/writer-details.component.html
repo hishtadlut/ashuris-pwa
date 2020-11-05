@@ -19,14 +19,14 @@
       <a [href]="'tel:' + addAreaCodeForIsraliNumbers(writer.telephone)" class="basic-detail .inner-grid" *ngIf="writer.telephone">
         <i class="icofont-phone"></i>
         <div>
-          <div class="information">{{ writer.telephone | phone }}</div>
+          <div dir="ltr" class="information">{{ writer.telephone | phone }}</div>
           <div class="description">טלפון</div>
         </div>
       </a>
       <a [href]="'tel:' + addAreaCodeForIsraliNumbers(writer.secondTelephone)" class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
-          <div class="information">{{ writer.secondTelephone | phone }}</div>
+          <div dir="ltr" class="information">{{ writer.secondTelephone | phone }}</div>
           <div class="description">טלפון נוסף</div>
         </div>
       </a>

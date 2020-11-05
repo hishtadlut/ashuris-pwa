@@ -8,7 +8,8 @@ export class PhonePipe implements PipeTransform {
 
   transform(phoneValue: string | number): string {
     const stringPhone = phoneValue + '';
-    const phoneNumber = parsePhoneNumber(stringPhone, 'IL');
+    const isIsraliNumber = phoneValue[0] === '0';
+    const phoneNumber = isIsraliNumber ? parsePhoneNumber(stringPhone, 'IL') : parsePhoneNumber(stringPhone, 'US');
     const formatted = phoneNumber.formatNational();
     return formatted;
   }
