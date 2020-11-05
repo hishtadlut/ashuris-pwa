@@ -18,7 +18,7 @@
       </div>
       <div class="personal-detail-section inner-grid">
         <div class="section-title-w-note inner-grid-2">
-          <div>פרטים אישיים</div>
+          <div>פרטים נוספים</div>
           <div>
             <p (click)="openDialog(dealerForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
@@ -26,8 +26,8 @@
 
         <input placeholder="שם פרטי" formControlName="firstName">
         <input placeholder="שם משפחה" formControlName="lastName">
-        <input placeholder="טלפון" formControlName="telephone">
-        <input placeholder="טלפון נוסף" formControlName="secondTelephone">
+        <input type="number" placeholder="טלפון" formControlName="telephone">
+        <input type="number" placeholder="טלפון נוסף" formControlName="secondTelephone">
         <input type="email" placeholder="אימייל" formControlName="email">
         <input list="cities" placeholder="עיר" formControlName="city">
         <datalist id="cities">

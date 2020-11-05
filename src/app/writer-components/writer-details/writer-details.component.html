@@ -16,14 +16,14 @@
       <button type="button" (click)="editWriter()" class="edit-button">ערוך</button>
     </div>
     <div class="basic-details-section">
-      <a [href]="'tel:' + writer.telephone" class="basic-detail .inner-grid" *ngIf="writer.telephone">
+      <a [href]="'tel:' + addAreaCodeForIsraliNumbers(writer.telephone)" class="basic-detail .inner-grid" *ngIf="writer.telephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ writer.telephone | phone }}</div>
           <div class="description">טלפון</div>
         </div>
       </a>
-      <a [href]="'tel:' + writer.secondTelephone" class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
+      <a [href]="'tel:' + addAreaCodeForIsraliNumbers(writer.secondTelephone)" class="basic-detail .inner-grid" *ngIf="writer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ writer.secondTelephone | phone }}</div>
@@ -162,7 +162,7 @@
               writer.placeOfWriting.place ||
               writer.communityDeatails.community
             ">
-        <div class="section-title-btn">פרטים אישיים</div>
+        <div class="section-title-btn">פרטים נוספים</div>
         <div class="internal-details-wrapper" [ngClass]="{ closedMenu: !openMenuStatus.additionalDeatails }">
           <div class="writing-extra-detail" *ngIf="writer.communityDeatails.community">
             <div class="detail-title description">קהילה</div>

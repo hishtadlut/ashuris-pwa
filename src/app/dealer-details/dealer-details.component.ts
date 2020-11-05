@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Dealer } from '../interfaces';
-import { preventDefaultAndStopPropagation } from '../utils/utils';
+import { addAreaCodeForIsraliNumbers, preventDefaultAndStopPropagation } from '../utils/utils';
 import { StitchService } from '../stitch-service.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class DealerDetailsComponent implements OnInit {
   dialogContent = null;
   dealer: Dealer;
   dealerAddress: string;
-
+  addAreaCodeForIsraliNumbers = addAreaCodeForIsraliNumbers;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,

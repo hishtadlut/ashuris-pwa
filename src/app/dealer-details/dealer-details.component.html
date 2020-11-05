@@ -13,14 +13,14 @@
       <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
     </div>
     <div class="basic-details-section">
-      <a [href]="'tel:' + dealer.telephone" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
+      <a [href]="'tel:' + addAreaCodeForIsraliNumbers(dealer.telephone)" class="basic-detail .inner-grid" *ngIf="dealer.telephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ dealer.telephone | phone }}</div>
           <div class="description">טלפון</div>
         </div>
       </a>
-      <a [href]="'tel:' + dealer.secondTelephone" class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
+      <a [href]="'tel:' + addAreaCodeForIsraliNumbers(dealer.secondTelephone)" class="basic-detail .inner-grid" *ngIf="dealer.secondTelephone">
         <i class="icofont-phone"></i>
         <div>
           <div class="information">{{ dealer.secondTelephone | phone }}</div>

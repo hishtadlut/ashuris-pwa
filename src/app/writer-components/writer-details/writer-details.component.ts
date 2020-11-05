@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton } from 'src/app/utils/utils';
+import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton, addAreaCodeForIsraliNumbers } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
 import { RecordingService } from 'src/app/recording.service';
 
@@ -25,6 +25,7 @@ export class WriterDetailsComponent implements OnInit {
     recordings: false,
   };
   shareButton = shareButton;
+  addAreaCodeForIsraliNumbers = addAreaCodeForIsraliNumbers;
 
   dialogContent = null;
   preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;

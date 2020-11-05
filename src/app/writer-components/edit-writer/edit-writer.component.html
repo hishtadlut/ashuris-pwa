@@ -25,8 +25,8 @@
 
       <input placeholder="שם פרטי" formControlName="firstName">
       <input placeholder="שם משפחה" formControlName="lastName">
-      <input placeholder="טלפון" formControlName="telephone">
-      <input placeholder="טלפון נוסף" formControlName="secondTelephone">
+      <input type="number" placeholder="טלפון" formControlName="telephone">
+      <input type="number" placeholder="טלפון נוסף" formControlName="secondTelephone">
       <input type="email" placeholder="אימייל" formControlName="email">
       <input list="cities" placeholder="עיר" formControlName="city">
       <datalist id="cities">
@@ -556,6 +556,7 @@
         </div>
       </div>
     </div>
+    <button *ngIf="this.locationWithoutParameters === locationPath.EDIT_WRITER" (click)="onRemove()" class="add-sofer-button">מחק סופר</button>
     <button (click)="onSubmit()" class="add-sofer-button">{{ textForSaveButton }}</button>
   </form>
   <!-- <div>{{ writerForm.valid }}</div> -->
