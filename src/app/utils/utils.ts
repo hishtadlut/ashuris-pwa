@@ -34,11 +34,12 @@ export function blobToObjectUrl(blob: Blob): string {
 }
 
 export function sortByLetters(arrayToSort): any[] {
+  const fieldToCheck = arrayToSort[0].lastName ? 'lastName' : 'name';
   return arrayToSort.sort((a, b) => {
-    if (a.lastName < b.lastName) {
+    if (a[fieldToCheck] < b[fieldToCheck]) {
       return -1;
     }
-    if (a.lastName > b.lastName) {
+    if (a[fieldToCheck] > b[fieldToCheck]) {
       return 1;
     }
     return 0;

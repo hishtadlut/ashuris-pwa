@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { LocationPath } from 'src/app/enums';
 import { ActivatedRoute } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
+import { sortByLetters } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-book-list-screen',
@@ -42,7 +43,7 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
       this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
         .then(books => {
-          this.booksToDisplay = books;
+          this.booksToDisplay = sortByLetters(books);
         });
     }
   }
@@ -50,7 +51,7 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
   getBooksBySoldCondition(isSold: boolean) {
     this.pouchDbService.getBooksBySoldCondition(isSold)
       .then(books => {
-        this.bookList = this.booksToDisplay = books.docs;
+        this.bookList = this.booksToDisplay = sortByLetters(books.docs);
       });
   }
 
