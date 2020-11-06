@@ -48,7 +48,7 @@ export class RemindersListComponent implements OnInit {
     this.levelOfUrgency = levelOfUrgency;
     this.pouchDbService.getBookReminders(levelOfUrgency)
       .then((booksResponse) => {
-        this.listToDisplay = sortByLetters(booksResponse.docs) as Book[];
+        this.listToDisplay = sortByLetters(booksResponse.docs.filter((book => book.isSold.boolean === false))) as Book[];
       });
   }
 
