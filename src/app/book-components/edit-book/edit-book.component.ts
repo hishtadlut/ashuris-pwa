@@ -1,7 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { State } from '../../reducers';
 import { RecordingService } from '../../recording.service';
 import { Location } from '@angular/common';
 import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
@@ -9,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
-import { LocationPath, RemoveItem } from 'src/app/enums';
+import { LocalDbNames, LocationPath, RemoveItem } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-book',
@@ -22,7 +20,7 @@ export class EditBookComponent implements OnInit {
 
   isRecording = false;
   hasRecord: boolean;
-
+  locationWithoutParameters = this.location.path().split('?')[0];
   communitiesList: string[];
 
   parchmentTypes: string[];
@@ -40,10 +38,10 @@ export class EditBookComponent implements OnInit {
 
   textForSaveButton = 'הוסף ספר למאגר';
   dealerId = '';
+  locationPath: typeof LocationPath = LocationPath;
 
   constructor(
     public recordingService: RecordingService,
-    private store$: Store<State>,
     private location: Location,
     public sanitizer: DomSanitizer,
     private router: Router,
@@ -330,6 +328,12 @@ export class EditBookComponent implements OnInit {
 
   routeToCreateNewDealer() {
     this.router.navigate([LocationPath.CREATE_DEALER_FOR_BOOK]);
+  }
+
+  onRemove() {
+    if (areYouSureYouWantToRemove(RemoveItem.book)) {
+      this.pouchDbService.removeItem(LocalDbNames.BOOKS, this.book);
+    }
   }
 
 }

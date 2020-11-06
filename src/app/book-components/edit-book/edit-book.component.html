@@ -498,6 +498,7 @@
         </div>
       </div>
     </div>
+    <button *ngIf="this.locationWithoutParameters === locationPath.EDIT_BOOK" (click)="onRemove()" class="add-book-button">מחק ספר</button>
     <button (click)="onSubmit()" class="add-book-button">{{ textForSaveButton }}</button>
   </form>
 </div>

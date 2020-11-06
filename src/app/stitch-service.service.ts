@@ -17,6 +17,7 @@ import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
 import { LocalDbNames, RemoteDbNames } from './enums';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +50,7 @@ export class StitchService {
         select('writers', 'urgencyBookList')
     );
 
-    constructor(private store$: Store<State>) {
+    constructor(private store$: Store<State>, private router: Router) {
         this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
         this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
 
@@ -404,6 +405,11 @@ export class StitchService {
             fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
         });
         return writerList.docs.map(writer => writer);
+    }
+
+    removeItem(localDbName: LocalDbNames, item: Writer | Book | Dealer) {
+        this[localDbName].remove((item as any));
+        this.router.navigate(['/']);
     }
 
 }

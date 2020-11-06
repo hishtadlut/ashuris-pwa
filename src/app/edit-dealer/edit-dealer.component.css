@@ -363,6 +363,7 @@ label.level-checkbox {
 
 .button-wrapper {
   grid-template: auto / 1fr 1fr;
+  grid-template-areas: "... ..." "eventArena eventArena";
   grid-gap: 5vw;
   direction: rtl;
 }

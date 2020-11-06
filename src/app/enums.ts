@@ -23,6 +23,8 @@ export enum LocationPath {
   CREATE_WRITER = '/create-writer',
   CREATE_BOOK = '/create-book',
   EDIT_WRITER = '/edit-writer',
+  EDIT_DEALER = '/edit-dealer',
+  EDIT_BOOK = '/edit-book',
   CREATE_DEALER_FOR_BOOK = '/create-dealer-for-book',
   WRITER_DETAILS = '/writer-details',
 }
@@ -33,10 +35,10 @@ export enum SearchFor {
 }
 
 export enum LocalDbNames {
-  WRITERS = 'writersLocal',
-  DEALERS = 'dealersLocal',
-  BOOKS = 'booksLocal',
-  GENERAL = 'generalLocal',
+  WRITERS = 'localWritersDB',
+  DEALERS = 'localDealersDB',
+  BOOKS = 'localBooksDB',
+  GENERAL = 'localGeneralDB',
 }
 
 export enum RemoteDbNames {

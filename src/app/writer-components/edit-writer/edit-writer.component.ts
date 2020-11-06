@@ -11,7 +11,7 @@ import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
 import { loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
-import { LocationPath, RemoveItem } from 'src/app/enums';
+import { LocalDbNames, LocationPath, RemoveItem } from 'src/app/enums';
 
 @Component({
   selector: 'app-edit-writer',
@@ -422,7 +422,7 @@ export class EditWriterComponent implements OnInit {
 
   onRemove() {
     if (areYouSureYouWantToRemove(RemoveItem.writer)) {
-      
+      this.pouchDbService.removeItem(LocalDbNames.WRITERS, this.writer);
     }
   }
 

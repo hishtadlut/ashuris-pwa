@@ -3,14 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { fileToBase64 } from '../utils/utils';
+import { areYouSureYouWantToRemove, fileToBase64 } from '../utils/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../stitch-service.service';
 import { Location } from '@angular/common';
 import { Address, Dealer } from '../interfaces';
 import { loadDealerList } from '../actions/writers.actions';
 import { GoogleMapsService } from '../google-maps-service.service';
-import { LocationPath } from '../enums';
+import { LocalDbNames, LocationPath, RemoveItem } from '../enums';
 
 
 @Component({
@@ -22,6 +22,8 @@ export class EditDealerComponent implements OnInit {
   editMode: boolean;
   dealerForm: FormGroup;
   dialogFormGroup: FormGroup = null;
+  locationWithoutParameters = this.location.path().split('?')[0];
+  locationPath: typeof LocationPath = LocationPath;
 
   citiesList: string[];
   citiesList$Subscription: Subscription;
@@ -35,7 +37,7 @@ export class EditDealerComponent implements OnInit {
   constructor(
     private store$: Store<State>,
     private router: Router,
-    private stitchService: StitchService,
+    private pouchDbService: StitchService,
     private location: Location,
     private activatedRoute: ActivatedRoute,
     private googleMapsService: GoogleMapsService,
@@ -93,7 +95,7 @@ export class EditDealerComponent implements OnInit {
 
     if (this.editMode) {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-      this.dealer = await this.stitchService.getDealerById(id);
+      this.dealer = await this.pouchDbService.getDealerById(id);
       this.dealerForm.patchValue(this.dealer);
       this.textForSaveButton = 'שמור שינויים';
     } else if (!this.editMode) {
@@ -129,9 +131,15 @@ export class EditDealerComponent implements OnInit {
       });
   }
 
+  onRemove() {
+    if (areYouSureYouWantToRemove(RemoveItem.dealer)) {
+      this.pouchDbService.removeItem(LocalDbNames.DEALERS, this.dealer);
+    }
+  }
+
   onSubmit() {
     if (this.dealerForm.valid) {
-      this.stitchService.createDealer({ ...this.dealer, ...this.dealerForm.value });
+      this.pouchDbService.createDealer({ ...this.dealer, ...this.dealerForm.value });
       this.store$.dispatch(loadDealerList());
       if (this.location.path() === LocationPath.CREATE_DEALER_FOR_BOOK) {
         this.router.navigate([LocationPath.CREATE_BOOK]);
