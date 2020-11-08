@@ -274,14 +274,14 @@ export class StitchService {
     async getBookReminders(levelOfUrgency: number) {
         return await this.localBooksDB.find({
             selector: { levelOfUrgency },
-            fields: ['_id', 'name', 'levelOfUrgency', 'isSold'],
+            fields: ['_id', 'name', 'levelOfUrgency', 'isSold', 'writingDeatails'],
         });
     }
 
     async getBooksBySoldCondition(isSold: boolean) {
         return await this.localBooksDB.find({
             selector: { 'isSold.boolean': isSold },
-            fields: ['_id', 'name', 'levelOfUrgency'],
+            fields: ['_id', 'name', 'levelOfUrgency', 'writingDeatails'],
         });
     }
 
@@ -391,7 +391,7 @@ export class StitchService {
         const bookList = bookIds.map(async bookId => {
             const bookList = await this.localBooksDB.find({
                 selector: { _id: bookId },
-                fields: ['_id', 'levelOfUrgency', 'name'],
+                fields: ['_id', 'levelOfUrgency', 'name', 'writingDeatails'],
                 limit: 1
             });
             return bookList.docs[0];
