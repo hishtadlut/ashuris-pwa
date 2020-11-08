@@ -274,7 +274,7 @@ export class StitchService {
     async getBookReminders(levelOfUrgency: number) {
         return await this.localBooksDB.find({
             selector: { levelOfUrgency },
-            fields: ['_id', 'name', 'levelOfUrgency'],
+            fields: ['_id', 'name', 'levelOfUrgency', 'isSold'],
         });
     }
 
