@@ -78,6 +78,9 @@ export function areYouSureYouWantToRemove(item: RemoveItem) {
   return confirm(`האם אתה בטוח שברצונך למחוק את ה${item}?`);
 }
 
+export function areYouSureYouWantToLeaveThePage(): boolean {
+  return confirm(`האם אתה בטוח שברצונך לעזוב את העמוד?`);
+}
 
 export function addAreaCodeForIsraliNumbers(phoneNumber: number): string {
   return phoneNumber[0] === '0' ? '+972' + phoneNumber.toString().substring(1) : phoneNumber.toString();

@@ -16,7 +16,7 @@ import PouchDBFind from 'pouchdb-find';
 import { State } from './reducers';
 import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
-import { LocalDbNames, RemoteDbNames } from './enums';
+import { LocalDbNames, LocationPath, RemoteDbNames } from './enums';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -409,7 +409,7 @@ export class StitchService {
 
     removeItem(localDbName: LocalDbNames, item: Writer | Book | Dealer) {
         this[localDbName].remove((item as any));
-        this.router.navigate(['/']);
+        this.router.navigate([LocationPath.REMOVE_ITEM]);
     }
 
 }

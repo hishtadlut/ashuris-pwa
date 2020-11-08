@@ -1,4 +1,4 @@
-<div *ngIf="!(this.location.path() == '')">
+<div *ngIf="!(this.location.path() === '' || this.location.path() === locationPath.REMOVE_ITEM)">
   <div class="nav">
     <div routerLink="/">
       <i class="icofont-home"></i>

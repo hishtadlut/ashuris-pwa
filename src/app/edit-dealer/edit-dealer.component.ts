@@ -142,7 +142,7 @@ export class EditDealerComponent implements OnInit {
       this.pouchDbService.createDealer({ ...this.dealer, ...this.dealerForm.value });
       this.store$.dispatch(loadDealerList());
       if (this.location.path() === LocationPath.CREATE_DEALER_FOR_BOOK) {
-        this.router.navigate([LocationPath.CREATE_BOOK]);
+        this.router.navigate([LocationPath.SAVE_ITEM]);
       } else {
         this.router.navigate(['/dealer-list-screen']);
       }

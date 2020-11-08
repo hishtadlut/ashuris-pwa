@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { EditWriterComponent } from './writer-components/edit-writer/edit-writer.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { WritersListScreenComponent } from './writer-components/writers-list-screen/writers-list-screen.component';
@@ -13,22 +13,26 @@ import { DealerDetailsComponent } from './dealer-details/dealer-details.componen
 import { EditBookComponent } from './book-components/edit-book/edit-book.component';
 import { BookListScreenComponent } from './book-components/book-list-screen/book-list-screen.component';
 import { BookDetailsComponent } from './book-components/book-details/book-details.component';
+import { areYouSureYouWantToLeaveThePage } from './utils/utils';
+import { LocationPath } from './enums';
 
 
 const routes: Routes = [
   // { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
-  { path: 'edit-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'עריכת סופר' } },
-  { path: 'create-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'הוספת סופר חדש' } },
-  { path: 'edit-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'עריכת סוחר' } },
-  { path: 'edit-book', component: EditBookComponent, data: { 'nav-bar-title': 'עריכת ספר' } },
+  { path: 'home-page-remove-item', component: HomePageComponent, pathMatch: 'full' },
+  { path: 'edit-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'עריכת סופר' }, canDeactivate: ['LeavePageGourd'] },
+  { path: 'create-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'הוספת סופר חדש' }, canDeactivate: ['LeavePageGourd'] },
+  { path: 'edit-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'עריכת סוחר' }, canDeactivate: ['LeavePageGourd'] },
+  { path: 'edit-book', component: EditBookComponent, data: { 'nav-bar-title': 'עריכת ספר' }, canDeactivate: ['LeavePageGourd'] },
   { path: 'writers-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'סופרים: חיפוש מתקדם' } },
   { path: 'books-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'ספרים: חיפוש מתקדם' } },
   { path: 'writers-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'סופרים: תוצאות חיפוש' } },
   { path: 'books-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'ספרים: תוצאות חיפוש' } },
-  { path: 'create-new-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' } },
-  { path: 'create-dealer-for-book', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' } },
-  { path: 'create-book', component: EditBookComponent, data: { 'nav-bar-title': 'הוספת ספר חדש' } },
+  { path: 'create-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' }, canDeactivate: ['LeavePageGourd'] },
+  { path: 'create-dealer-for-book', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' }, canDeactivate: ['LeavePageGourd'] },
+  { path: 'save-dealer-for-book', redirectTo: LocationPath.CREATE_BOOK, pathMatch: 'full' },
+  { path: 'create-book', component: EditBookComponent, data: { 'nav-bar-title': 'הוספת ספר חדש' }, canDeactivate: ['LeavePageGourd'] },
   { path: 'writers-in-room-list', component: WritersListScreenComponent, data: { 'nav-bar-title': 'סופרים בחדר' } },
   { path: 'writers-list-screen', component: WritersListScreenComponent, data: { 'nav-bar-title': 'רשימת סופרים' } },
   { path: 'dealer-list-screen', component: DealerListScreenComponent, data: { 'nav-bar-title': 'רשימת סוחרים' } },
@@ -43,6 +47,29 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: 'LeavePageGourd',
+      useValue: (
+        component: EditBookComponent | EditWriterComponent | EditDealerComponent,
+        currentRoute: ActivatedRouteSnapshot,
+        currentState: RouterStateSnapshot,
+        nextState: RouterStateSnapshot
+      ) => {
+        const allowedPaths = [
+          LocationPath.WRITERS_LIST_SCREEN,
+          LocationPath.BOOK_LIST_SCREEN,
+          '/dealer-list-screen',
+          LocationPath.SAVE_ITEM,
+          LocationPath.REMOVE_ITEM,
+        ];
+        if (allowedPaths.includes(nextState.url)) {
+          return true;
+        }
+        return areYouSureYouWantToLeaveThePage();
+      }
+    }
+  ]
 })
 export class AppRoutingModule { }

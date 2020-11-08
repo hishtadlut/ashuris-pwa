@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { Router, RoutesRecognized } from '@angular/router';
+import { LocationPath } from '../enums';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,6 +10,7 @@ import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   navBarTitle: string;
+  locationPath: typeof LocationPath = LocationPath;
   constructor(public location: Location, private router: Router) { }
 
   ngOnInit() {
