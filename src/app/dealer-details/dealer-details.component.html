@@ -10,6 +10,9 @@
         <p class="dealer-location" *ngIf="dealer.street && dealer.city">{{ dealer.street }}, {{ dealer.city }}
         </p>
       </div>
+      <div *ngIf="dealer.note" (click)="openDialog($event, dealer.note)">
+        <i class="icofont-exclamation-circle"></i>
+      </div>
       <button type="button" (click)="editDealer()" class="edit-button">ערוך</button>
     </div>
     <div class="basic-details-section">

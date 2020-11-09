@@ -207,6 +207,7 @@ export interface Dealer {
   lastName: string;
   telephone: number;
   email: string;
+  note: string;
   secondTelephone: number;
   city: string;
   street: string;

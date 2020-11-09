@@ -6,9 +6,9 @@
       <div>
         <p class="book-name">ס"ת {{ book.name }}</p>
       </div>
-      <!-- <div class="reminder"
-                [ngClass]="{'highlight-regular': book.levelOfUrgency === 2, 'highlight-ergent': book.levelOfUrgency === 3 }">
-            </div> -->
+      <div *ngIf="book.note" (click)="openDialog($event, book.note)">
+        <i class="icofont-exclamation-circle"></i>
+      </div>
       <button type="button" (click)="editBook()" class="edit-button">ערוך</button>
     </div>
     <div class="basic-details-section">

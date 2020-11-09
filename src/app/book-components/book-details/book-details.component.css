@@ -1,218 +1,218 @@
 :host {
-    direction: rtl;
+  direction: rtl;
 }
 
 #map {
-    height: 500px;
-    width: 100%;
+  height: 500px;
+  width: 100%;
 }
 
 .closedMenu div {
-    display: none;
+  display: none;
 }
 
 .page-wrapper {
-    background-color: #F7F7FA;
+  background-color: #F7F7FA;
 }
 
 .page-grid {
-    direction: rtl;
-    text-align: right;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: repeat(11, auto);
-    grid-gap: 3vh;
-    margin: 0 4vw;
+  direction: rtl;
+  text-align: right;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(11, auto);
+  grid-gap: 3vh;
+  margin: 0 4vw;
 }
 
 .inner-grid {
-    display: grid;
-    grid-gap: 1vh;
-    padding: 5vw;
+  display: grid;
+  grid-gap: 1vh;
+  padding: 5vw;
 }
 
 .inner-grid-2 {
-    display: grid;
-    grid-gap: 3vw;
+  display: grid;
+  grid-gap: 3vw;
 }
 
 .top-section {
-    display: grid;
-    grid-template: auto / auto auto;
-    grid-row: 1 / 2;
-    margin-bottom: 6vw;
-    padding-top: 9vw;
-    align-items: center;
+  display: grid;
+  grid-template: auto / auto auto auto;
+  grid-row: 1 / 2;
+  margin-bottom: 6vw;
+  padding-top: 9vw;
+  align-items: center;
 }
 
 .profile-img {
-    height: 10vw;
-    width: 10vw;
-    border-radius: 50%;
-    object-fit: cover;
+  height: 10vw;
+  width: 10vw;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 img {
-    grid-column: 1 / 2;
+  grid-column: 1 / 2;
 }
 
 .book-name {
-    color: #2A2E43;
-    font-weight: bold;
-    font-size: 0.95rem;
-    font-family: Arial;
-    margin-bottom: 0;
-    margin-right: 3vw;
+  color: #2A2E43;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  margin-bottom: 0;
+  margin-right: 3vw;
 }
 
 .edit-button {
-    background-color: #425B9E;
-    border: none;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 0.95rem;
-    font-family: Arial;
-    border-radius: 4px;
-    height: 10vw;
+  background-color: #425B9E;
+  border: none;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  border-radius: 4px;
+  height: 10vw;
 }
 
 .basic-details-section {
-    background-color: white;
-    grid-template-rows: repeat(5, auto);
+  background-color: white;
+  grid-template-rows: repeat(5, auto);
 }
 
 .basic-detail {
-    display: grid;
-    grid-template: auto / 13vw auto;
-    border-bottom: solid 1px #D9D9D9;
-    padding-right: 8vw;
-    align-items: center;
-    padding-top: 2vw;
-    padding-bottom: 2vw;
+  display: grid;
+  grid-template: auto / 13vw auto;
+  border-bottom: solid 1px #D9D9D9;
+  padding-right: 8vw;
+  align-items: center;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
 }
 
 .information {
-    color: #2A2E43;
-    font-weight: normal;
-    font-size: 0.95rem;
-    font-family: Arial;
+  color: #2A2E43;
+  font-weight: normal;
+  font-size: 0.95rem;
+  font-family: Arial;
 }
 
 .description {
-    color: #2A2E43;
-    font-weight: normal;
-    font-size: 0.75rem;
-    font-family: Arial;
+  color: #2A2E43;
+  font-weight: normal;
+  font-size: 0.75rem;
+  font-family: Arial;
 }
 
 .section-title-btn {
-    background-color: #425B9E;
-    color: #D4A75D;
-    font-weight: bold;
-    font-size: 1.1rem;
-    font-family: Arial;
-    padding: 2vw;
-    text-align: center;
-    border: solid 3px #D4A75D;
+  background-color: #425B9E;
+  color: #D4A75D;
+  font-weight: bold;
+  font-size: 1.1rem;
+  font-family: Arial;
+  padding: 2vw;
+  text-align: center;
+  border: solid 3px #D4A75D;
 }
 
 .internal-details-wrapper {
-    background-color: white;
-    border-right: solid 1.5px #D4A75D;
-    border-left: solid 1.5px #D4A75D;
+  background-color: white;
+  border-right: solid 1.5px #D4A75D;
+  border-left: solid 1.5px #D4A75D;
 }
 
 .price-extra-detail {
-    border-bottom: solid 1.5px #D4A75D;
-    display: grid;
-    grid-template-columns: 30vw 20vw 20vw 10vw 5vw;
-    align-items: center;
-    padding: 1.3vw 3.5vw;
+  border-bottom: solid 1.5px #D4A75D;
+  display: grid;
+  grid-template-columns: 30vw 20vw 20vw 10vw 5vw;
+  align-items: center;
+  padding: 1.3vw 3.5vw;
 }
 
 .writing-extra-detail {
-    border-bottom: solid 1.5px #D4A75D;
-    display: grid;
-    position: relative;
-    grid-template-columns: 30vw auto 5vw;
-    align-items: center;
-    padding: 1.3vw 3.5vw;
+  border-bottom: solid 1.5px #D4A75D;
+  display: grid;
+  position: relative;
+  grid-template-columns: 30vw auto 5vw;
+  align-items: center;
+  padding: 1.3vw 3.5vw;
 }
 
 .detail {
-    color: #2A2E43;
-    font-weight: bold;
-    font-size: 0.95rem;
-    font-family: Arial;
-    /* margin-right: 4vw;
+  color: #2A2E43;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  /* margin-right: 4vw;
     margin-left: 10vw; */
 }
 
 .comment-icon {
-    justify-self: end;
+  justify-self: end;
 }
 
 .people-icon {
-    position: absolute;
-    grid-column: 2 /3;
-    justify-self: left;
-    padding-left: 5vw;
-    align-self: center;
+  position: absolute;
+  grid-column: 2 /3;
+  justify-self: left;
+  padding-left: 5vw;
+  align-self: center;
 }
 
 .section {
-    margin-bottom: 5vw;
+  margin-bottom: 5vw;
 }
 
 .add-photo-btn {
-    background-color: #D4A75D;
-    color: #2A2E43;
-    font-weight: bold;
-    font-size: 0.9rem;
-    font-family: Arial;
-    padding: 2vw;
-    text-align: center;
-    border: solid 1px #2A2E43;
-    margin: 4vw 3.5vw 0 3.5vw;
-    border-radius: 13px;
+  background-color: #D4A75D;
+  color: #2A2E43;
+  font-weight: bold;
+  font-size: 0.9rem;
+  font-family: Arial;
+  padding: 2vw;
+  text-align: center;
+  border: solid 1px #2A2E43;
+  margin: 4vw 3.5vw 0 3.5vw;
+  border-radius: 13px;
 }
 
 .photo-wrapper {
-    display: grid;
-    position: relative;
+  display: grid;
+  position: relative;
 }
 
 .photo-of-writing {
-    width: 80vw;
-    margin: 5vw;
-    display: block;
+  width: 80vw;
+  margin: 5vw;
+  display: block;
 }
 
 .icon-share {
-    position: absolute;
-    right: 76vw;
-    top: 10vw;
+  position: absolute;
+  right: 76vw;
+  top: 10vw;
 }
 
 .icon-delete {
-    position: absolute;
-    right: 76vw;
-    top: 19vw;
+  position: absolute;
+  right: 76vw;
+  top: 19vw;
 }
 
 .reminder {
-    height: 5vw;
-    width: 5vw;
-    background-color: #A2A2A2;
-    border-radius: 50%;
-    justify-self: left;
-    margin-left: 6vw;
-  }
-  
-  .highlight-regular {
-    background-color: #D4A75D;
-  }
-  
-  .highlight-ergent {
-    background-color: #FF373E;
-  }
+  height: 5vw;
+  width: 5vw;
+  background-color: #A2A2A2;
+  border-radius: 50%;
+  justify-self: left;
+  margin-left: 6vw;
+}
+
+.highlight-regular {
+  background-color: #D4A75D;
+}
+
+.highlight-ergent {
+  background-color: #FF373E;
+}
