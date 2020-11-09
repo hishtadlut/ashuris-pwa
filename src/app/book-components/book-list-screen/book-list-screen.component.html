@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="name-search grid">
-  <input (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם">
+  <input appCurserSideByLanguaga (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם">
 </div>
 <div class="count-section grid">
   <div *ngIf="booksToDisplay" class="count">ספרים ברשימה {{ booksToDisplay.length }}</div>

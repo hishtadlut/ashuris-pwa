@@ -9,12 +9,12 @@
           <p (click)="openDialog(bookForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
-      <input placeholder="שם" formControlName="name">
-      <input list="writers" placeholder="סופר" formControlName="writer" class="full-width">
+      <input appCurserSideByLanguaga placeholder="שם" formControlName="name">
+      <input appCurserSideByLanguaga list="writers" placeholder="סופר" formControlName="writer" class="full-width">
       <datalist id="writers">
         <option *ngFor="let writer of writersFullNameList" [value]="writer">
       </datalist>
-      <input (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
+      <input appCurserSideByLanguaga (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
       <datalist id="dealers">
         <option *ngFor="let dealer of dealerList" [value]="dealer.fullName" [id]="dealer._id">
       </datalist>
@@ -235,7 +235,7 @@
             <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
-        <input list="parchmentTypes" placeholder="בחר סוג קלף" formControlName="type" class="full-width">
+        <input appCurserSideByLanguaga list="parchmentTypes" placeholder="בחר סוג קלף" formControlName="type" class="full-width">
         <datalist id="parchmentTypes">
           <option *ngFor="let parchmentType of parchmentTypes" [value]="parchmentType">
         </datalist>
@@ -318,7 +318,7 @@
           <i class="icofont-pencil-alt-2"></i>
         </p>
       </div>
-      <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
+      <input appCurserSideByLanguaga list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
       <datalist id="communities">
         <option *ngFor="let community of communitiesList" [value]="community">
       </datalist>

@@ -9,7 +9,7 @@
           <div class="title">עיר מגורים</div>
         </div>
         <div>
-          <input list="cities" formControlName="city" class="narrow-input" type="text">
+          <input appCurserSideByLanguaga list="cities" formControlName="city" class="narrow-input" type="text">
           <datalist id="cities">
                         <option *ngFor="let city of citiesList" [value]="city">
                     </datalist>
@@ -22,7 +22,7 @@
           <div class="title">קהילה</div>
         </div>
         <div>
-          <input list="communities" formControlName="community" class="narrow-input" type="text">
+          <input appCurserSideByLanguaga list="communities" formControlName="community" class="narrow-input" type="text">
           <datalist id="communities">
                         <option *ngFor="let community of communitiesList" [value]="community">
                     </datalist>
@@ -74,7 +74,7 @@
 
   <div class="name-search grid">
     <!-- <div class="img"><img src="assets/icons/searchs.png" alt=""></div> -->
-    <input formControlName="quickSearch" (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם / שם משפחה">
+    <input appCurserSideByLanguaga formControlName="quickSearch" (keyup)="onKeyUpSearchByName($event)" class="name-input" type="text" placeholder="חפש לפי שם / שם משפחה">
   </div>
 
   <div class="count-section grid">

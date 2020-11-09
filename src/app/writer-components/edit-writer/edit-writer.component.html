@@ -23,18 +23,18 @@
         </div>
       </div>
 
-      <input placeholder="שם פרטי" formControlName="firstName">
-      <input placeholder="שם משפחה" formControlName="lastName">
+      <input appCurserSideByLanguaga placeholder="שם פרטי" formControlName="firstName">
+      <input appCurserSideByLanguaga placeholder="שם משפחה" formControlName="lastName">
       <input type="number" placeholder="טלפון" formControlName="telephone">
       <input type="number" placeholder="טלפון נוסף" formControlName="secondTelephone">
-      <input type="email" placeholder="אימייל" formControlName="email">
-      <input list="cities" placeholder="עיר" formControlName="city">
+      <input appCurserSideByLanguaga type="email" placeholder="אימייל" formControlName="email">
+      <input appCurserSideByLanguaga list="cities" placeholder="עיר" formControlName="city">
       <datalist id="cities">
                 <option *ngFor="let city of citiesList" [value]="city">
             </datalist>
-      <input placeholder="רחוב" formControlName="street">
-      <input placeholder="מספר בנין" formControlName="streetNumber">
-      <input placeholder="מספר בית" formControlName="apartmentNumber">
+      <input appCurserSideByLanguaga placeholder="רחוב" formControlName="street">
+      <input appCurserSideByLanguaga placeholder="מספר בנין" formControlName="streetNumber">
+      <input appCurserSideByLanguaga placeholder="מספר בית" formControlName="apartmentNumber">
     </div>
     <div class="start-date-section">
       <app-hebrew-date-form-control [parentForm]="writerForm" formGroupName="startDate" sectionTitle="תאריך התחלה">
@@ -352,7 +352,7 @@
           <i class="icofont-pencil-alt-2"></i>
         </p>
       </div>
-      <input list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
+      <input appCurserSideByLanguaga list="communities" placeholder="התחל להקליד קהילה" formControlName="community" class="full-width">
       <datalist id="communities">
                 <option *ngFor="let community of communitiesList" [value]="community">
             </datalist>

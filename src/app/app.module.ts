@@ -40,6 +40,7 @@ import { EditBookComponent } from './book-components/edit-book/edit-book.compone
 import { PhonePipe } from './pipes/Phone/phone.pipe';
 import { AudioHTML5Component } from './audio-html5/audio-html5.component';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+import { CurserSideByLanguagaDirective } from './directives/curser-side-by-languaga/curser-side-by-languaga.directive';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -78,6 +79,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     EditBookComponent,
     PhonePipe,
     AudioHTML5Component,
+    CurserSideByLanguagaDirective,
   ],
   imports: [
     BrowserModule,
