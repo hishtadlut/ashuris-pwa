@@ -39,6 +39,17 @@ import { BookListItemComponent } from './book-components/book-list-item/book-lis
 import { EditBookComponent } from './book-components/edit-book/edit-book.component';
 import { PhonePipe } from './pipes/Phone/phone.pipe';
 import { AudioHTML5Component } from './audio-html5/audio-html5.component';
+import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: 'right',
+  allowNegative: false,
+  decimal: '.',
+  precision: 0,
+  prefix: '$ ',
+  suffix: '',
+  thousands: '.'
+};
 
 @NgModule({
   declarations: [
@@ -84,10 +95,13 @@ import { AudioHTML5Component } from './audio-html5/audio-html5.component';
         strictActionImmutability: true,
       }
     }),
+    CurrencyMaskModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([WritersEffects]),
   ],
-  providers: [],
+  providers: [
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

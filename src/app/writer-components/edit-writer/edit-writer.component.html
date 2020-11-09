@@ -98,7 +98,7 @@
       </div>
       <div class="prices-input-wrapper inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
-          <input type="number" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+          <input currencyMask type="tel" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>
@@ -115,7 +115,7 @@
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
-          <input type="number" placeholder="מחיר למזוזה" formControlName="price">
+          <input currencyMask type="tel" placeholder="מחיר למזוזה" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>
@@ -132,7 +132,7 @@
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForMezuzah'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
-          <input type="number" placeholder="מחיר לתפילין" formControlName="price">
+          <input currencyMask type="tel" placeholder="מחיר לתפילין" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>

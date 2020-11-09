@@ -388,18 +388,18 @@
       <div class="prices-input-wrapper">
         <div>
           <div formGroupName="priceForTorahScroll" class="gap inner-grid-2">
-            <input type="number" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+            <input currencyMask type="tel" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           </div>
         </div>
         <div>
           <div formGroupName="priceForTorahScroll" class="inner-grid-2">
-            <input type="number" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
+            <input currencyMask type="tel" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
           </div>
         </div>
       </div>
       <div class=" inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
-          <input type="text" placeholder="משא ומתן" formControlName="negotiation">
+          <input currencyMask type="tel" placeholder="משא ומתן" formControlName="negotiation">
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note-absolute-position"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
