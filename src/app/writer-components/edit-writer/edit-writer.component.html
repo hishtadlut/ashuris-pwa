@@ -1,6 +1,10 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
+      <div class="fill-location">
+        <!-- <i class="icofont-location-pin"></i> -->
+        מיקום אוטומטי
+      </div>
   <form [formGroup]="writerForm" class="page-grid">
     <div class="profile-image-section">
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file" accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
@@ -83,21 +87,23 @@
         מחירים
       </div>
       <div class="type-of-price-selection-wrapper inner-grid-2">
+        
         <div>
           <label class="box-checkbox" [ngClass]="{'checked-blue': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לעמוד'}">
                         <input type="radio" formControlName="isPricePerPage" value='מחיר לעמוד'>
-                        מחיר לעמוד
+                        עמוד
                     </label>
         </div>
         <div>
           <label class="box-checkbox" [ngClass]="{'checked-blue': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לספר תורה'}">
                         <input type="radio" formControlName="isPricePerPage" value='מחיר לספר תורה'>
-                        מחיר לס"ת
+                        ס"ת
                     </label>
         </div>
       </div>
       <div class="prices-input-wrapper inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
+          <div class="book-desc">ספר</div>
           <input currencyMask type="tel" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}" class="size-checkbox">
@@ -115,6 +121,7 @@
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
+          <div class="book-desc">מזוזה</div>
           <input currencyMask type="tel" placeholder="מחיר למזוזה" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}" class="size-checkbox">
@@ -132,6 +139,7 @@
           <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['pricesDeatails', 'priceForMezuzah'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
+          <div class="book-desc">תפילין</div>
           <input currencyMask type="tel" placeholder="מחיר לתפילין" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}" class="size-checkbox">

@@ -17,6 +17,11 @@
     font-weight: bold;
 }
 
+.book-desk{
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
 .reminder {
     height: 5vw;
     width: 5vw;
@@ -31,3 +36,5 @@
   .highlight-ergent {
     background-color: #FF373E;
   }
+
+  
