@@ -1,10 +1,9 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
-      <div class="fill-location">
-        <!-- <i class="icofont-location-pin"></i> -->
-        מיקום אוטומטי
-      </div>
+  <div class="fill-location">
+    מיקום אוטומטי
+  </div>
   <form [formGroup]="writerForm" class="page-grid">
     <div class="profile-image-section">
       <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file" accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
@@ -87,7 +86,7 @@
         מחירים
       </div>
       <div class="type-of-price-selection-wrapper inner-grid-2">
-        
+
         <div>
           <label class="box-checkbox" [ngClass]="{'checked-blue': writerForm.get(['pricesDeatails','isPricePerPage']).value === 'מחיר לעמוד'}">
                         <input type="radio" formControlName="isPricePerPage" value='מחיר לעמוד'>
@@ -384,9 +383,9 @@
                 </label>
       </div>
       <div>
-        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'אחר'}" class="box-checkbox">
+        <label [ngClass]="{'checked': writerForm.get(['placeOfWriting', 'place']).value === 'חדר'}" class="box-checkbox">
                     חדר
-                    <input type="radio" formControlName="place" value='אחר'>
+                    <input type="radio" formControlName="place" value='חדר'>
                 </label>
       </div>
     </div>

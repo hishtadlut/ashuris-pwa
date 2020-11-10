@@ -174,7 +174,7 @@
           <div class="writing-extra-detail" *ngIf="writer.placeOfWriting.place">
             <div class="detail-title description">מקום כתיבה</div>
             <div class="detail">{{ writer.placeOfWriting.place }}</div>
-            <div *ngIf="writer.placeOfWriting.place === 'אחר'" (click)="writersInRoomList($event)" class="people-icon">
+            <div *ngIf="writer.placeOfWriting.place === 'חדר'" (click)="writersInRoomList($event)" class="people-icon">
               <img src="assets/icons/people.png" alt="" />
             </div>
             <div *ngIf="writer.placeOfWriting.note" (click)="openDialog($event, writer.placeOfWriting.note)" class="comment-icon">
@@ -253,9 +253,9 @@
 
       <div class="section" (click)="closeMenus('recordings')" *ngIf="writer.recordings.length">
         <div class="section-title-btn">תזכורת קולית</div>
-        <div *ngIf="recordingsBoolean" [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
-          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of recordings; let i = index">
-            <audio style="width:100%;" type=" audio/wav " controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)">
+        <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
+          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of writer.recordings; let i = index">
+            <audio style="width:100%;" type="audio/wav" controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)">
             </audio>
             <!-- <app-audio-html5 [src]="getSrc(i) "></app-audio-html5> -->
           </div>
