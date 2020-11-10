@@ -89,3 +89,11 @@ export function areYouSureYouWantToLeaveThePage(): boolean {
 export function addAreaCodeForIsraliNumbers(phoneNumber: number): string {
   return phoneNumber[0] === '0' ? '+972' + phoneNumber.toString().substring(1) : phoneNumber.toString();
 }
+
+export function getDuration(audio: HTMLAudioElement): Promise<number> {
+  return new Promise((resolve) => {
+      audio.addEventListener('loadedmetadata', () => {
+          resolve(audio.duration);
+      });
+  });
+}

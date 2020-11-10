@@ -254,18 +254,11 @@
       <div class="section" (click)="closeMenus('recordings')" *ngIf="writer.recordings.length">
         <div class="section-title-btn">תזכורת קולית</div>
         <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
-          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of writer.recordings; let i = index">
-            <audio style="width:100%;" type="audio/wav" controls [src]="sanitizer.bypassSecurityTrustResourceUrl(recording)">
-            </audio>
-            <!-- <app-audio-html5 [src]="getSrc(i) "></app-audio-html5> -->
+          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of writer.recordings">
+            <app-audio-html5 [base64Recording]="recording"></app-audio-html5>
           </div>
         </div>
       </div>
-      <!-- <div *ngFor="let recording of writerForm.controls.recordings[ 'controls']; let i=i ndex; ">
-        <div (click)="deleteRecording(i) ">מחק הקלטה</div>
-        <audio controls *ngIf="recording.value " [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value) ">
-                  </audio>
-      </div> -->
     </div>
   </div>
 </div>

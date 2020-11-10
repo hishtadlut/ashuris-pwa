@@ -40,11 +40,10 @@ export class RecordingService {
     });
   }
 
-  convertBase64ToBypassSecurityTrustAudioUrl(audioBlob: Blob) {
+  convertBase64ToAudio(audioBlob: Blob): Promise<HTMLAudioElement> {
     return new Promise(resolve => {
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
-      // resolve(this.sanitizer.bypassSecurityTrustResourceUrl(audioUrl));
       resolve(audio);
     });
   }

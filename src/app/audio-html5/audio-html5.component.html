@@ -1,1 +1,5 @@
-<audio controls [src]="src"></audio>
+<div *ngIf="recordingState">
+  <button [style.backgroundColor]="recordingState.isListening ? 'red' : '#425B9E'" (click)="playRecording()" type="button"> {{ recordingState.isListening ? 'עצור הקלטה' : 'השמעת הקלטה' }} </button>
+  <span> זמן נוכחי {{ recordingState.currentTime }} </span>
+  <span> משך ההקלטה {{ recordingState.duration }} </span>
+</div>
