@@ -55,20 +55,24 @@ export function thereAreDetailsInGivenObject(object: { [x: string]: string | boo
   return !(Object.values(object).join('').replaceAll('false', '') === '');
 }
 
-export function shareButton(event) {
-  event.stopPropagation();
-  event.preventDefault();
+export function shareButton(photo: string) {
   if (navigator.share) {
-    base64ToBlob(event.target.parentElement.lastChild.src)
+    base64ToBlob(photo)
       .then(img => {
         navigator.share({
           files: [new File([img], 'img.jpg')]
         })
           .then(() => {
             console.log('Thanks for sharing!');
-          }).catch((error => console.log(error)));
+          }).catch((error => {
+            // TODO fix in ios 14.02
+            window.location.reload(true);
+          }));
       })
-      .catch((error => console.log(error)));
+      .catch((error => {
+        // TODO fix in ios 14.02
+        window.location.reload(true);
+      }));
   } else {
     // fallback
   }

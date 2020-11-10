@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
 body,
 html {
   margin: 0 auto;
   padding: 0;
+}
+
+body {
+  touch-action: pan-x pan-y;
 }
 
 label {
@@ -12,7 +17,6 @@ label {
 .ngb-dp-header {
   direction: ltr;
 }
-
 
 .icofont-check-alt {
   font-weight: 500;

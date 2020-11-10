@@ -41,6 +41,7 @@ import { PhonePipe } from './pipes/Phone/phone.pipe';
 import { AudioHTML5Component } from './audio-html5/audio-html5.component';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 import { CurserSideByLanguagaDirective } from './directives/curser-side-by-languaga/curser-side-by-languaga.directive';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -97,6 +98,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
         strictActionImmutability: true,
       }
     }),
+    PinchZoomModule,
     CurrencyMaskModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([WritersEffects]),
