@@ -1,7 +1,7 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
-  <div class="fill-location">
+  <div class="fill-location" (click)="fillLocation()">
     מיקום אוטומטי
   </div>
   <form [formGroup]="writerForm" class="page-grid">
@@ -540,8 +540,8 @@
             </label>
       <div *ngFor="let photo of writerForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
-          <img *ngIf="photo.value" [src]="photo.value" class="img">
+        <pinch-zoom *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
+          <img [src]="photo.value" class="img">
         </pinch-zoom>
       </div>
     </div>

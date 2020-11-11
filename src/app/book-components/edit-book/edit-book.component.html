@@ -479,16 +479,16 @@
       </label>
       <div *ngFor="let photo of bookForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img *ngIf="photo.value" [src]="photo.value" class="img">
+        <pinch-zoom *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
+          <img [src]="photo.value" class="img">
+        </pinch-zoom>
       </div>
     </div>
     <div class="inner-grid">
       <label *ngIf="!isRecording" for="click" (click)="startRecording()">
         <div class="inner-grid-2 add-section">
-          <div>
-            <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
-              <img src="assets/icons/Add.png" alt="">
-            </pinch-zoom>
+          <div>         
+              <img src="assets/icons/Add.png" alt="">    
           </div>
           <div class="second-title">הוסף תזכורת קולית</div>
         </div>

@@ -245,7 +245,7 @@
         <div class="section-title-btn">תמונות</div>
         <div [ngClass]="{ closedMenu: !openMenuStatus.images }">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos" class="photo-wrapper">
-            <img class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
+            <img style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
             <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
               <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
             </pinch-zoom>

@@ -302,13 +302,6 @@ export class EditWriterComponent implements OnInit {
 
       this.writerForm.patchValue(this.writer);
       this.textForSaveButton = 'שמור שינויים';
-    } else if ((this.locationWithoutParameters === LocationPath.CREATE_WRITER) && (this.textForSaveButton !== 'שמור שינויים')) {
-      this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
-        this.writerForm.controls.city.setValue(address.city);
-        this.writerForm.controls.street.setValue(address.street);
-        this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-        this.writerForm.controls.coordinates.setValue(address.coordinates);
-      });
     }
 
     this.pouchDbService.getCities()
@@ -438,6 +431,15 @@ export class EditWriterComponent implements OnInit {
     } else {
       alert('יש למלא שם פרטי, שם משפחה ומידת התאמה');
     }
+  }
+
+  fillLocation() {
+    this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
+      this.writerForm.controls.city.setValue(address.city);
+      this.writerForm.controls.street.setValue(address.street);
+      this.writerForm.controls.streetNumber.setValue(address.streetNumber);
+      this.writerForm.controls.coordinates.setValue(address.coordinates);
+    });
   }
 
 }
