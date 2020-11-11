@@ -119,9 +119,7 @@ label input {
 .profile-image-section {
   align-items: center;
   grid-gap: 5vw;
-  
 }
-
 
 .profile-image-section img {
   width: 12vw;
@@ -161,8 +159,6 @@ label input {
 .type-of-price-selection-wrapper {
   grid-template: auto / 1fr 1fr 1fr;
 }
-
-
 
 .prices-input-wrapper {
   grid-template: auto auto auto / 1fr;
@@ -370,7 +366,9 @@ label.level-checkbox {
 }
 
 .img {
-  width: 20vw;
+  margin: 10px;
+  width: 80vw;
+  height: 80vw;
 }
 
 .add-section {

@@ -182,7 +182,6 @@ label input {
   margin-top: 2vw;
 }
 
-
 .worth-it-buttons-wrapper {
   grid-column: 4 / span 2;
   grid-template: auto / 1fr 1fr;
@@ -382,9 +381,9 @@ label.level-checkbox {
 }
 
 .img {
-  width: 20vw;
-  /* margin-left: 4vw;
-    margin-bottom: 4vw; */
+  margin: 10px;
+  width: 80vw;
+  height: 80vw;
 }
 
 .add-section {

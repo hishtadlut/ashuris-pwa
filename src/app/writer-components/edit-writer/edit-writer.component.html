@@ -540,7 +540,9 @@
             </label>
       <div *ngFor="let photo of writerForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img *ngIf="photo.value" [src]="photo.value" class="img">
+        <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
+          <img *ngIf="photo.value" [src]="photo.value" class="img">
+        </pinch-zoom>
       </div>
     </div>
     <div class="recording-section inner-grid">

@@ -400,7 +400,7 @@
         </div>
       </div>
       <div class=" inner-grid-2">
-        
+
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
           <div class="book-desc">מו"מ</div>
           <input currencyMask type="tel" placeholder="משא ומתן" formControlName="negotiation">
@@ -486,7 +486,9 @@
       <label *ngIf="!isRecording" for="click" (click)="startRecording()">
         <div class="inner-grid-2 add-section">
           <div>
-            <img src="assets/icons/Add.png" alt="">
+            <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
+              <img src="assets/icons/Add.png" alt="">
+            </pinch-zoom>
           </div>
           <div class="second-title">הוסף תזכורת קולית</div>
         </div>
