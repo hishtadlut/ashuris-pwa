@@ -32,7 +32,7 @@
 .inner-grid input {
   height: 11vw;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 2vw;
   color: #000000;
 }
@@ -312,7 +312,7 @@ input {
 
 .input-wrapper input {
   width: 25vw;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .gold-text {

@@ -77,8 +77,6 @@
         <label class="section-title" for="isWritingRegularly">סופר קבוע</label>
       </div>
       <div>
-        <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['isWritingRegularly'])))" class="note">
-          <i class="icofont-pencil-alt-2"></i></p>
       </div>
     </div>
     <div formGroupName="pricesDeatails" class="price-deatail-section inner-grid">
@@ -424,7 +422,7 @@
                         <input type="radio" formControlName="boolean" value='true'
                             (click)="isChecked($event, writerForm.get(['additionalDetails', 'hasWritenKabala', 'boolean']))">
                     </label>
-          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenBefore'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(writerForm.get(['additionalDetails', 'hasWritenKabala'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
         <div formGroupName="voatsInElection" class="additional-detail inner-grid-2">
           <div class="description">
@@ -540,7 +538,7 @@
             </label>
       <div *ngFor="let photo of writerForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <pinch-zoom *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
+        <pinch-zoom [transition-duration]="1000" *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
           <img [src]="photo.value" class="img">
         </pinch-zoom>
       </div>

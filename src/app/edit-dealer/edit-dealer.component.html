@@ -1,6 +1,9 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
+  <div class="fill-location" (click)="fillLocation()">
+    מיקום אוטומטי
+  </div>
   <form [formGroup]="dealerForm">
     <div class="page-grid">
       <div class="profile-image-section">

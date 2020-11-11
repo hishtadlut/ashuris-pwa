@@ -3,7 +3,7 @@
   <div [formGroup]="formGroup" class="dialog">
     <div class="box">
       <div class="title">הוסף הערה</div>
-      <textarea rows="4" formControlName="note" [value]="formGroup.controls.note.value"></textarea>
+      <textarea appCurserSideByLanguaga rows="4" formControlName="note" [value]="formGroup.controls.note.value"></textarea>
       <div (click)="closeDialog.emit()" class="button">שמור הערה</div>
     </div>
   </div>

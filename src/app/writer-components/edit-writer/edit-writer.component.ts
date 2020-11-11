@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../../stitch-service.service';
 import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
@@ -279,9 +279,6 @@ export class EditWriterComponent implements OnInit {
       }),
       isWritingRegularly: new FormGroup({
         boolean: new FormControl(false),
-        note: new FormControl('', [
-          // Validators.required,
-        ]),
       }),
       photos: new FormArray([]),
       recordings: new FormArray([]),

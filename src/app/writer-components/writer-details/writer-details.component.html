@@ -139,7 +139,7 @@
             <div class="detail">
               {{ getLetterSizesString(writer.writingDeatails.letterSizes) }}
             </div>
-            <div *ngIf="writer.writingDeatails.note" (click)="openDialog($event, writer.writingDeatails.note)" class="comment-icon">
+            <div *ngIf="writer.writingDeatails.letterSizes.note" (click)="openDialog($event, writer.writingDeatails.letterSizes.note)" class="comment-icon">
               <i class="icofont-exclamation-circle"></i>
             </div>
           </div>
@@ -246,9 +246,7 @@
         <div [ngClass]="{ closedMenu: !openMenuStatus.images }">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of writer.photos" class="photo-wrapper">
             <img style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
-            <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
-              <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
-            </pinch-zoom>
+            <img (dblclick)="openImg(photo)" [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing">
           </div>
         </div>
       </div>

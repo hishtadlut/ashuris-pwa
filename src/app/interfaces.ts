@@ -34,8 +34,8 @@ export interface Writer {
       42: boolean;
       45: boolean;
       48: boolean;
+      note: string;
     };
-    note: string;
     writingLevel: {
       level: string,
       note: string
@@ -115,7 +115,6 @@ export interface Writer {
   };
   isWritingRegularly: {
     boolean: string,
-    note: string
   };
   photos: string[];
   recordings: string[];

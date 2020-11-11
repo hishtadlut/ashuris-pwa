@@ -27,3 +27,11 @@ label {
   font-weight: 500;
   font-size: 1.35rem;
 }
+
+input[currencyMask] {
+  direction: ltr;
+}
+
+input[type=tel] {
+  font-size: 0.8rem;
+}

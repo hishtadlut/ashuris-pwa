@@ -231,7 +231,7 @@
           <div>
             סוג הקלף
           </div>
-          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentType', 'note'])))" class="note">
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['writingDeatails', 'parchmentType'])))" class="note">
             <i class="icofont-pencil-alt-2"></i>
           </p>
         </div>
@@ -403,7 +403,7 @@
 
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
           <div class="book-desc">מו"מ</div>
-          <input currencyMask type="tel" placeholder="משא ומתן" formControlName="negotiation">
+          <input type="text" placeholder="משא ומתן" formControlName="negotiation">
           <p (click)="openDialog(HelperAbstractControlToFormGroup(bookForm.get(['pricesDeatails', 'priceForTorahScroll'])))" class="note-absolute-position"><i class="icofont-pencil-alt-2"></i></p>
         </div>
       </div>
@@ -479,7 +479,7 @@
       </label>
       <div *ngFor="let photo of bookForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <pinch-zoom *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
+        <pinch-zoom [transition-duration]="1000" *ngIf="photo.value" [limit-zoom]="10" [auto-zoom-out]="false">
           <img [src]="photo.value" class="img">
         </pinch-zoom>
       </div>

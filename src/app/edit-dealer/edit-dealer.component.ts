@@ -98,14 +98,6 @@ export class EditDealerComponent implements OnInit {
       this.dealer = await this.pouchDbService.getDealerById(id);
       this.dealerForm.patchValue(this.dealer);
       this.textForSaveButton = 'שמור שינויים';
-    } else if (!this.editMode) {
-      this.googleMapsService.setAddressThroghGoogleMaps()
-        .then((address: Address) => {
-          this.dealerForm.controls.city.setValue(address.city);
-          this.dealerForm.controls.street.setValue(address.street);
-          this.dealerForm.controls.streetNumber.setValue(address.streetNumber);
-          this.dealerForm.controls.coordinates.setValue(address.coordinates);
-        });
     }
   }
 
@@ -151,4 +143,13 @@ export class EditDealerComponent implements OnInit {
     }
   }
 
+  fillLocation() {
+    this.googleMapsService.setAddressThroghGoogleMaps()
+      .then((address: Address) => {
+        this.dealerForm.controls.city.setValue(address.city);
+        this.dealerForm.controls.street.setValue(address.street);
+        this.dealerForm.controls.streetNumber.setValue(address.streetNumber);
+        this.dealerForm.controls.coordinates.setValue(address.coordinates);
+      });
+  }
 }
