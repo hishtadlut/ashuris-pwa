@@ -187,10 +187,7 @@
         <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos" class="photo-wrapper">
             <img style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
-            <!-- <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" alt="" class="photo-of-writing"> -->
-            <pinch-zoom [limit-zoom]="10" [auto-zoom-out]="false">
-              <img [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" />
-            </pinch-zoom>
+            <img appDoubleTapOpenImg [base64Img]="photo" [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" />
           </div>
         </div>
         <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
