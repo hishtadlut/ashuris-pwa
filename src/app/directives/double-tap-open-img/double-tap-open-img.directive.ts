@@ -8,7 +8,7 @@ export class DoubleTapOpenImgDirective {
   tapedTwice = false;
   constructor() { }
 
-  @HostListener('click') tapHandler(event) {
+  @HostListener('click') tapHandler() {
     if (!this.tapedTwice) {
       this.tapedTwice = true;
       setTimeout(() => {
@@ -16,7 +16,6 @@ export class DoubleTapOpenImgDirective {
       }, 300);
       return false;
     }
-    event.preventDefault();
     this.openImgInOterPage();
   }
 

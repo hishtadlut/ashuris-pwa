@@ -34,16 +34,19 @@ export function blobToObjectUrl(blob: Blob): string {
 }
 
 export function sortByLetters(arrayToSort): any[] {
-  const fieldToCheck = arrayToSort[0].lastName ? 'lastName' : 'name';
-  return arrayToSort.sort((a, b) => {
-    if (a[fieldToCheck] < b[fieldToCheck]) {
-      return -1;
-    }
-    if (a[fieldToCheck] > b[fieldToCheck]) {
-      return 1;
-    }
-    return 0;
-  });
+  if (arrayToSort.length) {
+    const fieldToCheck = arrayToSort[0].lastName ? 'lastName' : 'name';
+    return arrayToSort.sort((a, b) => {
+      if (a[fieldToCheck] < b[fieldToCheck]) {
+        return -1;
+      }
+      if (a[fieldToCheck] > b[fieldToCheck]) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+  return [];
 }
 
 export function preventDefaultAndStopPropagation(event: Event) {

@@ -556,8 +556,7 @@
       <div>
         <div *ngFor="let recording of writerForm.controls.recordings['controls']; let i = index;">
           <div (click)="deleteRecording(i)">מחק הקלטה</div>
-          <audio controls *ngIf="recording.value" [src]="sanitizer.bypassSecurityTrustResourceUrl(recording.value)">
-                    </audio>
+          <app-audio-html5 [base64Recording]="recording"></app-audio-html5>
         </div>
       </div>
     </div>

@@ -37,15 +37,15 @@ export enum SearchFor {
 }
 
 export enum LocalDbNames {
-  WRITERS = 'localWritersDB',
-  DEALERS = 'localDealersDB',
-  BOOKS = 'localBooksDB',
-  GENERAL = 'localGeneralDB',
+  WRITERS = 'localWriters_DB',
+  DEALERS = 'localDealers_DB',
+  BOOKS = 'localBooks_DB',
+  GENERAL = 'localGeneral_DB',
 }
 
 export enum RemoteDbNames {
-  WRITERS = 'https://ashuris.online/couch/writers__remote',
-  DEALERS = 'https://ashuris.online/couch/dealers_remote',
-  BOOKS = 'https://ashuris.online/couch/books_remote',
-  GENERAL = 'https://ashuris.online/couch/general_remote',
+  WRITERS = 'https://ashuris.online/couch/writers___remote',
+  DEALERS = 'https://ashuris.online/couch/dealers___remote',
+  BOOKS = 'https://ashuris.online/couch/books___remote',
+  GENERAL = 'https://ashuris.online/couch/general___remote',
 }
