@@ -64,8 +64,4 @@ export class AppComponent implements OnInit {
     });
   }
 
-  syncAllDBS() {
-    this.pouchDbService.syncAllDBS();
-  }
-
 }

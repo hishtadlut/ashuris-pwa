@@ -3,7 +3,7 @@
     <div routerLink="/">
       <i class="icofont-home"></i>
     </div>
-    <div>{{ navBarTitle }}</div>
+    <div (click)="syncAllDBS($event)">{{ navBarTitle }}</div>
     <div (click)="goBack()">
       <i class="icofont-arrow-left"></i>
     </div>
