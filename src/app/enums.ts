@@ -27,7 +27,7 @@ export enum LocationPath {
   EDIT_BOOK = '/edit-book',
   CREATE_DEALER_FOR_BOOK = '/create-dealer-for-book',
   WRITER_DETAILS = '/writer-details',
-  SAVE_ITEM = '/save-item',
+  SAVE_DEALER_FOR_BOOK = '/save-dealer-for-book',
   REMOVE_ITEM = '/home-page-remove-item',
 }
 

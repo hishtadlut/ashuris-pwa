@@ -67,7 +67,7 @@ export class StitchService {
         this.syncAllDBS();
         setInterval(() => {
             this.syncAllDBS();
-        }, 30000);
+        }, 120000);
     }
 
     syncWritersDBS() {
@@ -356,7 +356,10 @@ export class StitchService {
         if (book._id) {
             this.localBooksDB.upsert(book._id, () => {
                 return { ...bookClone };
-            });
+            }).then(result => {
+                this.addBookToDealer(result.id, dealerId);
+            })
+                .catch(console.error);
         } else {
             this.localBooksDB.put({
                 // add unike id
@@ -371,11 +374,17 @@ export class StitchService {
     }
 
     addBookToDealer(bookId: string, dealerId: string) {
-        this.localDealersDB.get(dealerId).then(dealer => {
-            const bookArray = dealer.books ? dealer.books : [];
-            bookArray.push(bookId);
-            this.localDealersDB.put({ ...dealer, books: bookArray });
-        }).catch(console.log);
+        console.log(dealerId + + ' dealerId');
+        console.log(bookId + ' bookId');
+
+        this.localDealersDB.get(dealerId)
+            .then(dealer => {
+                console.log(dealer + ' dealer');
+                let bookArray = dealer.books ? dealer.books : [];
+                bookArray.push(bookId);
+                bookArray = [...new Set(Object.values(bookArray))];
+                this.localDealersDB.put({ ...dealer, books: bookArray });
+            }).catch(console.log);
     }
 
     async getDealerBookIds(dealerId: string): Promise<string[]> {
@@ -386,17 +395,22 @@ export class StitchService {
         return dealerList.docs.map(dealer => dealer.books)[0];
     }
 
-    async getDealerBooks(dealerId: string) {
+    async getDealerBooks(dealerId: string): Promise<PouchDB.Core.ExistingDocument<Book>[]> {
         const bookIds = await this.getDealerBookIds(dealerId);
-        const bookList = bookIds.map(async bookId => {
-            const bookList = await this.localBooksDB.find({
-                selector: { _id: bookId },
-                fields: ['_id', 'levelOfUrgency', 'name', 'writingDeatails'],
-                limit: 1
+        if (bookIds) {
+            const bookList = bookIds.map(async bookId => {
+                const bookList = await this.localBooksDB.find({
+                    selector: { _id: bookId },
+                    fields: ['_id', 'levelOfUrgency', 'name', 'writingDeatails'],
+                    limit: 1
+                });
+                // there is just one there "limit: 1"
+                return bookList.docs[0];
             });
-            return bookList.docs[0];
-        });
-        return await Promise.all(bookList);
+            return await Promise.all(bookList);
+        } else {
+            return [];
+        }
     }
 
     async getWritersInRoom(city: string, street: string, streetNumber: string): Promise<Writer[]> {
@@ -408,7 +422,8 @@ export class StitchService {
     }
 
     removeItem(localDbName: LocalDbNames, item: Writer | Book | Dealer) {
-        this[localDbName].remove((item as any));
+        const formatLocalDbName = localDbName.split('_').join('');
+        this[formatLocalDbName].remove((item as any));
         this.router.navigate([LocationPath.REMOVE_ITEM]);
     }
 

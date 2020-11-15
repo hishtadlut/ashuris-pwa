@@ -12,7 +12,8 @@ import {
   setDealerList,
   setBookList,
   addToChangeUrgencyBookList,
-  resetChangeUrgencyBookList
+  resetChangeUrgencyBookList,
+  setBookFormValues
 } from '../actions/writers.actions';
 import { sortByLetters } from '../utils/utils';
 
@@ -22,6 +23,7 @@ export interface State {
   writer: Writer;
   dealer: Dealer;
   book: Book;
+  bookFormValues: any;
   writersList: Writer[];
   dealerList: Dealer[];
   bookList: Book[];
@@ -41,6 +43,7 @@ export const initialState: State = {
   writer: null,
   dealer: null,
   book: null,
+  bookFormValues: null,
   writersList: null,
   dealerList: null,
   bookList: null,
@@ -119,6 +122,9 @@ export const writerReducer = createReducer(
   }),
   on(resetChangeUrgencyBookList, (state) => {
     return { ...state, urgencBbookList: [] };
+  }),
+  on(setBookFormValues, (state, action) => {
+    return { ...state, bookFormValues: action.form };
   }),
 );
 

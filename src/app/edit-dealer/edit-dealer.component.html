@@ -44,7 +44,7 @@
     <div class="button-wrapper inner-grid">
       <button style="grid-area: eventArena" *ngIf="this.locationWithoutParameters === locationPath.EDIT_DEALER" (click)="onRemove()" class="add-sofer-button">מחק סוחר</button>
       <div>
-        <button (click)="onSubmit()" class="add-sofer-button">{{ textForSaveButton }}</button>
+        <button (click)="onSubmit($event)" class="add-sofer-button">{{ textForSaveButton }}</button>
       </div>
       <div>
         <button class="add-sofer-button">ביטול</button>

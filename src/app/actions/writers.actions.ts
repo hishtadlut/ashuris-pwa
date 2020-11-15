@@ -74,7 +74,7 @@ export const setAdvancedSearchResult = createAction(
 );
 
 export const setAdvancedSearchParameters = createAction(
-  '[Writers] Set Sdvanced Dearch Parameters',
+  '[Writers] Set Sdvanced Search Parameters',
   props<{ advancedSearchParameters: any }>()
 );
 
@@ -83,9 +83,10 @@ export const useAdvancedSearchParameters = createAction(
   props<{ boolean: any }>()
 );
 
-
-
-
+export const setBookFormValues = createAction(
+  '[Book] Set Book Form Values',
+  props<{ form: any }>()
+);
 
 // export const loadWritersSuccess = createAction(
 //   '[Writer] Load Writers Success',

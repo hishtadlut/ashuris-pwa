@@ -561,7 +561,7 @@
       </div>
     </div>
     <button *ngIf="this.locationWithoutParameters === locationPath.EDIT_WRITER" (click)="onRemove()" class="add-sofer-button">מחק סופר</button>
-    <button (click)="onSubmit()" class="add-sofer-button">{{ textForSaveButton }}</button>
+    <button (click)="onSubmit($event)" class="add-sofer-button">{{ textForSaveButton }}</button>
   </form>
   <!-- <div>{{ writerForm.valid }}</div> -->
 </div>

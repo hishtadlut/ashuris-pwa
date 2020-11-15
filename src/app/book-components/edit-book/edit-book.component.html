@@ -14,7 +14,7 @@
       <datalist id="writers">
         <option *ngFor="let writer of writersFullNameList" [value]="writer">
       </datalist>
-      <input appCurserSideByLanguaga (change)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
+      <input appCurserSideByLanguaga (keyup)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
       <datalist id="dealers">
         <option *ngFor="let dealer of dealerList" [value]="dealer.fullName" [id]="dealer._id">
       </datalist>
@@ -502,6 +502,6 @@
       </div>
     </div>
     <button *ngIf="this.locationWithoutParameters === locationPath.EDIT_BOOK" (click)="onRemove()" class="add-book-button">מחק ספר</button>
-    <button (click)="onSubmit()" class="add-book-button">{{ textForSaveButton }}</button>
+    <button (click)="onSubmit($event)" class="add-book-button">{{ textForSaveButton }}</button>
   </form>
 </div>

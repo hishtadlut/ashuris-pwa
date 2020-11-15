@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { RecordingService } from '../../recording.service';
 import { Location } from '@angular/common';
@@ -8,13 +8,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
 import { Book } from '../../interfaces';
 import { LocalDbNames, LocationPath, RemoveItem } from 'src/app/enums';
+import { setBookFormValues } from 'src/app/actions/writers.actions';
+import { Store, select } from '@ngrx/store';
+import { State } from '../../reducers';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-book',
   templateUrl: './edit-book.component.html',
   styleUrls: ['./edit-book.component.css']
 })
-export class EditBookComponent implements OnInit {
+export class EditBookComponent implements OnInit, OnDestroy {
   bookForm: FormGroup;
   dialogFormGroup: FormGroup = null;
 
@@ -40,13 +44,20 @@ export class EditBookComponent implements OnInit {
   dealerId = '';
   locationPath: typeof LocationPath = LocationPath;
 
+  formValues: FormGroup;
+  formValues$Subscription: Subscription;
+  formValues$: Observable<any> = this.store.pipe(
+    select('writers', 'bookFormValues')
+  );
+
   constructor(
     public recordingService: RecordingService,
     private location: Location,
     public sanitizer: DomSanitizer,
     private router: Router,
     private pouchDbService: StitchService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private store: Store<State>
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -223,6 +234,12 @@ export class EditBookComponent implements OnInit {
       recordings: new FormArray([]),
     });
 
+    this.formValues$Subscription = this.formValues$.subscribe(formValue => {
+      if (formValue) {
+        this.bookForm.patchValue(formValue);
+      }
+    });
+
     if (this.location.path().split('?')[0] === '/edit-book') {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
       this.book = await this.pouchDbService.getBookById(id);
@@ -316,8 +333,13 @@ export class EditBookComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
     if (this.bookForm.valid) {
+      const div = (event.target as HTMLDivElement);
+      div.classList.add('mirror-rotate');
+      setTimeout(() => {
+        div.classList.remove('mirror-rotate');
+      }, 2000);
       this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.router.navigate(['/book-list-screen']);
     } else {
@@ -327,6 +349,7 @@ export class EditBookComponent implements OnInit {
   }
 
   routeToCreateNewDealer() {
+    this.store.dispatch(setBookFormValues({ form: this.bookForm.value }));
     this.router.navigate([LocationPath.CREATE_DEALER_FOR_BOOK]);
   }
 
@@ -334,6 +357,10 @@ export class EditBookComponent implements OnInit {
     if (areYouSureYouWantToRemove(RemoveItem.book)) {
       this.pouchDbService.removeItem(LocalDbNames.BOOKS, this.book);
     }
+  }
+
+  ngOnDestroy() {
+    this.formValues$Subscription.unsubscribe();
   }
 
 }

@@ -129,12 +129,17 @@ export class EditDealerComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
     if (this.dealerForm.valid) {
+      const div = (event.target as HTMLDivElement);
+      div.classList.add('mirror-rotate');
+      setTimeout(() => {
+        div.classList.remove('mirror-rotate');
+      }, 2000);
       this.pouchDbService.createDealer({ ...this.dealer, ...this.dealerForm.value });
       this.store$.dispatch(loadDealerList());
       if (this.location.path() === LocationPath.CREATE_DEALER_FOR_BOOK) {
-        this.router.navigate([LocationPath.SAVE_ITEM]);
+        this.router.navigate([LocationPath.SAVE_DEALER_FOR_BOOK]);
       } else {
         this.router.navigate(['/dealer-list-screen']);
       }

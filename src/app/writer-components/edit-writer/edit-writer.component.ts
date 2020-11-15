@@ -416,8 +416,13 @@ export class EditWriterComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
     if (this.writerForm.valid) {
+      const div = (event.target as HTMLDivElement);
+      div.classList.add('mirror-rotate');
+      setTimeout(() => {
+        div.classList.remove('mirror-rotate');
+      }, 2000);
       if (this.locationWithoutParameters === LocationPath.CREATE_WRITER) {
         this.pouchDbService.createWriter({ ...this.writerForm.value });
       } else if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {

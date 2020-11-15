@@ -182,8 +182,9 @@ const routes: Routes = [
           LocationPath.WRITERS_LIST_SCREEN,
           LocationPath.BOOK_LIST_SCREEN,
           '/dealer-list-screen',
-          LocationPath.SAVE_ITEM,
+          LocationPath.CREATE_BOOK,
           LocationPath.REMOVE_ITEM,
+          LocationPath.CREATE_DEALER_FOR_BOOK,
         ];
         if (allowedPaths.includes(nextState.url)) {
           return true;
