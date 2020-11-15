@@ -42,6 +42,9 @@ import { AudioHTML5Component } from './audio-html5/audio-html5.component';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 import { CurserSideByLanguagaDirective } from './directives/curser-side-by-languaga/curser-side-by-languaga.directive';
 import { DoubleTapOpenImgDirective } from './directives/double-tap-open-img/double-tap-open-img.directive';
+import { CookieModule } from 'ngx-cookie';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -82,6 +85,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     AudioHTML5Component,
     CurserSideByLanguagaDirective,
     DoubleTapOpenImgDirective,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +93,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     RouterModule,
+    HttpClientModule,
     GoogleMapsModule,
     NgbModule,
     FormsModule,
@@ -99,6 +104,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
         strictActionImmutability: true,
       }
     }),
+    CookieModule.forRoot(),
     CurrencyMaskModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([WritersEffects]),

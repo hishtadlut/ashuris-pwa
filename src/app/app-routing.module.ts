@@ -15,34 +15,155 @@ import { BookListScreenComponent } from './book-components/book-list-screen/book
 import { BookDetailsComponent } from './book-components/book-details/book-details.component';
 import { areYouSureYouWantToLeaveThePage } from './utils/utils';
 import { LocationPath } from './enums';
+import { LoginPageComponent } from './login-page/login-page.component';
 
+import { LoginGuard } from './guards/login-guard/login-guard.guard';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: HomePageComponent, pathMatch: 'full' },
+  { path: 'login-page', component: LoginPageComponent },
+  {
+    path: '', component: HomePageComponent, pathMatch: 'full', canActivate: [LoginGuard],
+  },
   { path: 'home-page-remove-item', component: HomePageComponent, pathMatch: 'full' },
-  { path: 'edit-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'עריכת סופר' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'create-writer', component: EditWriterComponent, data: { 'nav-bar-title': 'הוספת סופר חדש' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'edit-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'עריכת סוחר' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'edit-book', component: EditBookComponent, data: { 'nav-bar-title': 'עריכת ספר' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'writers-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'סופרים: חיפוש מתקדם' } },
-  { path: 'books-advanced-search', component: AdvancedSearchComponent, data: { 'nav-bar-title': 'ספרים: חיפוש מתקדם' } },
-  { path: 'writers-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'סופרים: תוצאות חיפוש' } },
-  { path: 'books-search-result', component: SearchResultComponent, data: { 'nav-bar-title': 'ספרים: תוצאות חיפוש' } },
-  { path: 'create-dealer', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'create-dealer-for-book', component: EditDealerComponent, data: { 'nav-bar-title': 'הוספת סוחר חדש' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'save-dealer-for-book', redirectTo: LocationPath.CREATE_BOOK, pathMatch: 'full' },
-  { path: 'create-book', component: EditBookComponent, data: { 'nav-bar-title': 'הוספת ספר חדש' }, canDeactivate: ['LeavePageGourd'] },
-  { path: 'writers-in-room-list', component: WritersListScreenComponent, data: { 'nav-bar-title': 'סופרים בחדר' } },
-  { path: 'writers-list-screen', component: WritersListScreenComponent, data: { 'nav-bar-title': 'רשימת סופרים' } },
-  { path: 'dealer-list-screen', component: DealerListScreenComponent, data: { 'nav-bar-title': 'רשימת סוחרים' } },
-  { path: 'book-list-screen', component: BookListScreenComponent, data: { 'nav-bar-title': 'רשימת ספרים' } },
-  { path: 'dealer-book-list', component: BookListScreenComponent, data: { 'nav-bar-title': 'סוחר: רשימת סופרים' } },
-  { path: 'writer-details', component: WriterDetailsComponent, data: { 'nav-bar-title': 'פרטי סופר' } },
-  { path: 'dealer-details', component: DealerDetailsComponent, data: { 'nav-bar-title': 'פרטי סוחר' } },
-  { path: 'book-details', component: BookDetailsComponent, data: { 'nav-bar-title': 'פרטי ספר' } },
-  { path: 'writer-reminders', component: RemindersListComponent, data: { 'nav-bar-title': 'תזכורות סופרים' } },
-  { path: 'book-reminders', component: RemindersListComponent, data: { 'nav-bar-title': 'תזכורות ספרים' } },
+  {
+    path: 'edit-writer',
+    component: EditWriterComponent,
+    data: { 'nav-bar-title': 'עריכת סופר' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'create-writer',
+    component: EditWriterComponent,
+    data: { 'nav-bar-title': 'הוספת סופר חדש' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'edit-dealer',
+    component: EditDealerComponent,
+    data: { 'nav-bar-title': 'עריכת סוחר' },
+    canActivate: [LoginGuard],
+    canDeactivate: ['LeavePageGourd']
+  },
+  {
+    path: 'edit-book',
+    component: EditBookComponent,
+    data: { 'nav-bar-title': 'עריכת ספר' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'writers-advanced-search',
+    component: AdvancedSearchComponent,
+    data: { 'nav-bar-title': 'סופרים: חיפוש מתקדם' },
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'books-advanced-search',
+    component: AdvancedSearchComponent,
+    data: { 'nav-bar-title': 'ספרים: חיפוש מתקדם' },
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'writers-search-result',
+    component: SearchResultComponent,
+    data: { 'nav-bar-title': 'סופרים: תוצאות חיפוש' },
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'books-search-result',
+    component: SearchResultComponent,
+    data: { 'nav-bar-title': 'ספרים: תוצאות חיפוש' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'create-dealer',
+    component: EditDealerComponent,
+    data: { 'nav-bar-title': 'הוספת סוחר חדש' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'create-dealer-for-book',
+    component: EditDealerComponent,
+    data: { 'nav-bar-title': 'הוספת סוחר חדש' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'save-dealer-for-book',
+    redirectTo: LocationPath.CREATE_BOOK,
+    pathMatch: 'full',
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'create-book',
+    component: EditBookComponent,
+    data: { 'nav-bar-title': 'הוספת ספר חדש' },
+    canDeactivate: ['LeavePageGourd'],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'writers-in-room-list',
+    component: WritersListScreenComponent,
+    data: { 'nav-bar-title': 'סופרים בחדר' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'writers-list-screen',
+    component: WritersListScreenComponent,
+    data: { 'nav-bar-title': 'רשימת סופרים' },
+    canActivate: [LoginGuard]
+  },
+  {
+    path: 'dealer-list-screen',
+    component: DealerListScreenComponent,
+    data: { 'nav-bar-title': 'רשימת סוחרים' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'book-list-screen',
+    component: BookListScreenComponent,
+    data: { 'nav-bar-title': 'רשימת ספרים' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'dealer-book-list',
+    component: BookListScreenComponent,
+    data: { 'nav-bar-title': 'סוחר: רשימת סופרים' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'writer-details',
+    component: WriterDetailsComponent,
+    data: { 'nav-bar-title': 'פרטי סופר' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'dealer-details',
+    component: DealerDetailsComponent,
+    data: { 'nav-bar-title': 'פרטי סוחר' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'book-details',
+    component: BookDetailsComponent,
+    data: { 'nav-bar-title': 'פרטי ספר' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'writer-reminders',
+    component: RemindersListComponent,
+    data: { 'nav-bar-title': 'תזכורות סופרים' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'book-reminders',
+    component: RemindersListComponent,
+    data: { 'nav-bar-title': 'תזכורות ספרים' },
+    canActivate: [LoginGuard],
+  },
 ];
 
 @NgModule({
