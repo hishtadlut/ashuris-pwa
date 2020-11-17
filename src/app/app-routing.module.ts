@@ -131,7 +131,7 @@ const routes: Routes = [
   {
     path: 'dealer-book-list',
     component: BookListScreenComponent,
-    data: { 'nav-bar-title': 'סוחר: רשימת סופרים' },
+    data: { 'nav-bar-title': 'סוחר: רשימת ספרים' },
     canActivate: [LoginGuard],
   },
   {
