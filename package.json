@@ -47,6 +47,7 @@
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^8.3.0",
+    "vconsole": "^3.3.4",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -60,6 +61,7 @@
     "@types/node": "^12.11.1",
     "@types/pouchdb": "^6.4.0",
     "@types/pouchdb-upsert": "^2.2.6",
+    "@types/uuid": "^8.3.0",
     "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",

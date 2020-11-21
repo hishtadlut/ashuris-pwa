@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
-import { GoogleMapsService } from '../../google-maps-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton, addAreaCodeForIsraliNumbers } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
-import { RecordingService } from 'src/app/recording.service';
 
 @Component({
   selector: 'app-writer-details',
@@ -34,38 +32,28 @@ export class WriterDetailsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    // private googleMapsService: GoogleMapsService,
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     public sanitizer: DomSanitizer,
-    private recordingService: RecordingService,
   ) { }
 
   async ngOnInit(): Promise<void> {
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-    this.writer = await this.pouchDbService.getWriter(id);
-    this.writerAddress = `${this.writer.city}+${this.writer.street}+${this.writer.streetNumber}`;
-    if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
-      this.priceForTorahScroll = {
-        pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-          ? this.writer.pricesDeatails.priceForTorahScroll.price
-          : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
-        priceForScroll: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-          ? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
-          : this.writer.pricesDeatails.priceForTorahScroll.price,
-      };
-    }
-    // if (this.writer?.coordinates) {
-    //   setTimeout(() => {
-    //     this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, this.writer.coordinates);
-    //   });
-    // } else if (this.writer) {
-    //   const coordinates = await this.googleMapsService.geoCodeAddressToCoordinates(
-    //     { city: this.writer.city, street: this.writer.street, streetNumber: this.writer.streetNumber }
-    //   );
-    //   this.googleMapsService.setMapWithPosition(this.gmap.nativeElement, coordinates);
-    // }
-  }
+    this.pouchDbService.getWriter(id).then(writer => {
+      this.writer = writer;
+      this.writerAddress = `${this.writer.city}+${this.writer.street}+${this.writer.streetNumber}`;
+      if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
+        this.priceForTorahScroll = {
+          pricePerPage: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? this.writer.pricesDeatails.priceForTorahScroll.price
+            : Math.round((this.writer.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+          priceForScroll: this.writer.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? Math.round((this.writer.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
+            : this.writer.pricesDeatails.priceForTorahScroll.price,
+        };
+      }
+    });
+}
 
 
   editWriter() {

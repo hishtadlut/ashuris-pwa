@@ -31,19 +31,21 @@ export class BookDetailsComponent implements OnInit {
     private pouchDbService: StitchService,
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-    this.book = await this.pouchDbService.getBookById(id);
-    if (this.book?.pricesDeatails?.priceForTorahScroll.price) {
-      this.priceForTorahScroll = {
-        pricePerPage: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-          ? this.book.pricesDeatails.priceForTorahScroll.price
-          : Math.round((this.book.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
-        priceForScroll: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
-          ? Math.round((this.book.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
-          : this.book.pricesDeatails.priceForTorahScroll.price,
-      };
-    }
+    this.pouchDbService.getBookById(id).then(book => {
+      this.book = book;
+      if (this.book?.pricesDeatails?.priceForTorahScroll.price) {
+        this.priceForTorahScroll = {
+          pricePerPage: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? this.book.pricesDeatails.priceForTorahScroll.price
+            : Math.round((this.book.pricesDeatails.priceForTorahScroll.price - 8700) / 245),
+          priceForScroll: this.book.pricesDeatails.isPricePerPage !== 'מחיר לספר תורה'
+            ? Math.round((this.book.pricesDeatails.priceForTorahScroll.price * 245) + 8700)
+            : this.book.pricesDeatails.priceForTorahScroll.price,
+        };
+      }
+    });
   }
 
   openDialog(event: Event, content: string) {
@@ -56,7 +58,7 @@ export class BookDetailsComponent implements OnInit {
   }
 
   editBook() {
-    this.router.navigate(['/edit-book'], { queryParams: { id: this.book._id}});
+    this.router.navigate(['/edit-book'], { queryParams: { id: this.book._id } });
   }
 
   closeMenus(menuToOpen: string) {

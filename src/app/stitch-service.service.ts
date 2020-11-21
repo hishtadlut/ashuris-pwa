@@ -97,30 +97,30 @@ export class StitchService {
         let syncHandler: PouchDB.Replication.Sync<{}>;
         const startSync = () => {
             try {
-                syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
                 remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
+                    syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
                     syncHandler.on('change', (change) => {
                         console.log(localDb.name);
                         console.log(change);
                         if (actionToDispatch) {
-                            this.store$.dispatch(actionToDispatch());
+                            // this.store$.dispatch(actionToDispatch());
                         }
                     });
                     syncHandler.on('error', (err) => {
                         console.log(err);
-                        console.log('sync stopped ' + localDb.name);
+                        console.log('sync err stopped ' + localDb.name);
                         stopSync(syncHandler);
                     });
                     syncHandler.on('active', () => {
                         console.log('active');
-                        if (actionToDispatch) {
-                            this.store$.dispatch(actionToDispatch());
-                        }
                     });
                     syncHandler.on('complete', () => {
                         console.log('sync complete ' + localDb.name);
+                        if (actionToDispatch) {
+                            this.store$.dispatch(actionToDispatch());
+                        }
+
                         stopSync(syncHandler);
-                        // stopSync(syncHandler);
                     });
                 });
             } catch (error) {
@@ -374,9 +374,6 @@ export class StitchService {
     }
 
     addBookToDealer(bookId: string, dealerId: string) {
-        console.log(dealerId + + ' dealerId');
-        console.log(bookId + ' bookId');
-
         this.localDealersDB.get(dealerId)
             .then(dealer => {
                 console.log(dealer + ' dealer');

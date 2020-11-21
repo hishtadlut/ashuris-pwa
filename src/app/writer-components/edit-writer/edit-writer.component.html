@@ -536,9 +536,9 @@
                         accept="image/*">
                 </div>
             </label>
-      <div *ngFor="let photo of writerForm.controls.photos['controls']; let i = index;">
+      <div *ngFor="let photoControl of writerForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img appDoubleTapOpenImg [base64Img]="photo" [src]="photo.value" class="img">
+        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="photoControl.value" class="img">
       </div>
     </div>
     <div class="recording-section inner-grid">

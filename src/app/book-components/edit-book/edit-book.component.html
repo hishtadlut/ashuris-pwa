@@ -14,7 +14,7 @@
       <datalist id="writers">
         <option *ngFor="let writer of writersFullNameList" [value]="writer">
       </datalist>
-      <input appCurserSideByLanguaga (keyup)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
+      <input appCurserSideByLanguaga (focusout)="setDealerId($event)" list="dealers" placeholder="סוחר" formControlName="dealer" class="full-width">
       <datalist id="dealers">
         <option *ngFor="let dealer of dealerList" [value]="dealer.fullName" [id]="dealer._id">
       </datalist>
@@ -477,9 +477,9 @@
             accept="image/*">
         </div>
       </label>
-      <div *ngFor="let photo of bookForm.controls.photos['controls']; let i = index;">
+      <div *ngFor="let photoControl of bookForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img appDoubleTapOpenImg [base64Img]="photo" [src]="photo.value" class="img">
+        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="photoControl.value" class="img">
       </div>
     </div>
     <div class="inner-grid">
