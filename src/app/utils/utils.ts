@@ -33,8 +33,9 @@ export function blobToObjectUrl(blob: Blob): string {
   return window.URL.createObjectURL(blob);
 }
 
-export function sortByLetters(arrayToSort): any[] {
-  if (arrayToSort.length) {
+export function sortByLetters(arrayToSort: any[]): any[] {
+  arrayToSort = arrayToSort.filter(item => item);
+  if (arrayToSort.length && arrayToSort[0] !== undefined) {
     const fieldToCheck = arrayToSort[0].lastName ? 'lastName' : 'name';
     return arrayToSort.sort((a, b) => {
       if (a[fieldToCheck] < b[fieldToCheck]) {
@@ -95,8 +96,8 @@ export function addAreaCodeForIsraliNumbers(phoneNumber: number): string {
 
 export function getDuration(audio: HTMLAudioElement): Promise<number> {
   return new Promise((resolve) => {
-      audio.addEventListener('loadedmetadata', () => {
-          resolve(audio.duration);
-      });
+    audio.addEventListener('loadedmetadata', () => {
+      resolve(audio.duration);
+    });
   });
 }

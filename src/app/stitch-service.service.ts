@@ -352,14 +352,21 @@ export class StitchService {
     createBook(book: Book, dealerId: string) {
         this.createCommunity(book.communityDeatails.community);
         this.createParchment(book.writingDeatails.parchmentType.type);
+
         const bookClone = JSON.parse(JSON.stringify(book)) as Book;
+
         if (book._id) {
-            this.localBooksDB.upsert(book._id, () => {
-                return { ...bookClone };
-            }).then(result => {
-                this.addBookToDealer(result.id, dealerId);
-            })
-                .catch(console.error);
+            this.getBookById(book._id)
+                .then(oldBook => {
+                    this.localBooksDB.put({ ...oldBook, ...book })
+                        .then(result => {
+                            if (oldBook.dealer) {
+                                this.removeBookFromDealer(oldBook.dealer, book._id);
+                            }
+                            this.addBookToDealer(result.id, dealerId);
+                        })
+                        .catch(console.error);
+                });
         } else {
             this.localBooksDB.put({
                 // add unike id
@@ -416,6 +423,23 @@ export class StitchService {
             fields: ['_id', 'levelOfUrgency', 'firstName', 'lastName', 'profileImage']
         });
         return writerList.docs.map(writer => writer);
+    }
+
+    removeBookFromDealer(dealerFullName: string, bookId: string) {
+        this.getDealersFullNameAndId()
+            .then((dealerList => {
+                const dealerId = dealerList.find(dealer => dealer.fullName === dealerFullName)._id;
+                this.getDealerById(dealerId)
+                    .then(dealer => {
+                        const booksArray: string[] = dealer.books;
+                        const index = booksArray.indexOf(bookId);
+                        if (index > -1) {
+                            booksArray.splice(index, 1);
+                        }
+                        this.localDealersDB.put({ ...dealer, books: booksArray });
+                    })
+                    .catch(console.error);
+            }));
     }
 
     removeItem(localDbName: LocalDbNames, item: Writer | Book | Dealer) {
