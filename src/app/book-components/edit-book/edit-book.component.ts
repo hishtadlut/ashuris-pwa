@@ -61,26 +61,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.pouchDbService.getParchments()
-      .then(citiesDoc => {
-        this.parchmentTypes = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
-      });
-
-    this.pouchDbService.getCommunities()
-      .then(communitiesDoc => {
-        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
-      });
-
-    this.pouchDbService.getWritersFullName()
-      .then((writersFullNameList => {
-        this.writersFullNameList = writersFullNameList;
-      }));
-
-    this.pouchDbService.getDealersFullNameAndId()
-      .then((dealerList => {
-        this.dealerList = dealerList;
-      }));
-
     this.bookForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
@@ -234,6 +214,24 @@ export class EditBookComponent implements OnInit, OnDestroy {
       recordings: new FormArray([]),
     });
 
+    this.pouchDbService.getParchments()
+      .then(citiesDoc => {
+        this.parchmentTypes = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
+      });
+
+    this.pouchDbService.getCommunities()
+      .then(communitiesDoc => {
+        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
+      });
+
+    this.pouchDbService.getWritersFullName()
+      .then((writersFullNameList => {
+        this.writersFullNameList = writersFullNameList;
+      }));
+
+    const dealerList = await this.pouchDbService.getDealersFullNameAndId();
+    this.dealerList = dealerList;
+
     this.formValues$Subscription = this.formValues$.subscribe(formValue => {
       if (formValue) {
         this.bookForm.patchValue(formValue);
@@ -251,6 +249,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       this.book.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
       this.bookForm.patchValue(this.book);
+      this.dealerId = this.dealerList.find(dealer => dealer.fullName === this.bookForm.get('dealer').value)?._id;
       this.textForSaveButton = 'שמור שינויים';
     }
   }

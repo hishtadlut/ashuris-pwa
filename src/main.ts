@@ -1,5 +1,5 @@
 /// <reference path="global.d.ts" />
-// import 'node_modules/vconsole/dist/vconsole.min.js';
+import 'node_modules/vconsole/dist/vconsole.min.js';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -7,15 +7,15 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import 'hammerjs';
-// import VConsole from 'vconsole';
+import VConsole from 'vconsole';
 
 if (environment.production) {
   enableProdMode();
 }
 
 
-// const vConsole = new VConsole();
-// console.log('new version');
+const vConsole = new VConsole();
+console.log('version 0.1.5');
 
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -18,6 +18,8 @@ import { Store, select } from '@ngrx/store';
 import { loadWritersList, loadDealerList, loadBookList } from './actions/writers.actions';
 import { LocalDbNames, LocationPath, RemoteDbNames } from './enums';
 import { Router } from '@angular/router';
+import { FirebaseService } from './firebase.service';
+import { base64ToBlob } from './utils/utils';
 
 @Injectable({
     providedIn: 'root'
@@ -50,10 +52,9 @@ export class StitchService {
         select('writers', 'urgencyBookList')
     );
 
-    constructor(private store$: Store<State>, private router: Router) {
+    constructor(private store$: Store<State>, private router: Router, private firebaseService: FirebaseService) {
         this.urgencyWritersList$Subscription = this.urgencyWritersList$.subscribe((writersList) => this.urgencyWritersList = writersList);
         this.urgencyBookList$Subscription = this.urgencyBookList$.subscribe((bookList) => this.urgencyBookList = bookList);
-
         // this.localWritersDB.createIndex({
         //   index: {
         //     fields: ['levelOfUrgency'],
@@ -94,6 +95,7 @@ export class StitchService {
     }
 
     syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
+        localDb.compact();
         let syncHandler: PouchDB.Replication.Sync<{}>;
         const startSync = () => {
             try {
@@ -147,19 +149,39 @@ export class StitchService {
         startSync();
     }
 
-    createWriter(writer: Writer) {
+    async uploadeBase64(images: string[], name: string, idAndExtention: string) {
+        return await Promise.all(images.map(async (photo) => {
+            if (photo.indexOf('http') === 0) {
+                return photo;
+            } else {
+                const imgBlob = await base64ToBlob(photo);
+                return this.firebaseService.addImagesToQueueOfUploades(imgBlob, `${name}_${idAndExtention}`);
+            }
+        }));
+    }
+
+    async createWriter(writer: Writer) {
         this.createCity(writer.city);
         this.createCommunity(writer.communityDeatails.community);
 
         const writerClone = JSON.parse(JSON.stringify(writer)) as Writer;
-        if (writer._id) {
-            this.localWritersDB.upsert(writer._id, () => {
+        const fullName = `${writerClone.firstName}_${writerClone.lastName}`;
+
+        if (writerClone._id) {
+            const photos = await this.uploadeBase64(writerClone.photos, fullName, `${writerClone._id}`);
+            writerClone.photos = photos;
+            const recordings = await this.uploadeBase64(writerClone.recordings, fullName, `${writerClone._id}`);
+            writerClone.recordings = recordings;
+            this.localWritersDB.upsert(writerClone._id, () => {
                 return { ...writerClone };
             });
         } else {
+            writerClone._id = uuidv4();
+            const photos = await this.uploadeBase64(writerClone.photos, fullName, `${writerClone._id}`);
+            writerClone.photos = photos;
+            const recordings = await this.uploadeBase64(writerClone.recordings, fullName, `${writerClone._id}`);
+            writerClone.recordings = recordings;
             this.localWritersDB.put({
-                // add unike id
-                _id: uuidv4(),
                 ...writerClone, levelOfUrgency: 1
             })
                 .then(result => {
@@ -349,34 +371,33 @@ export class StitchService {
         }
     }
 
-    createBook(book: Book, dealerId: string) {
+    async createBook(book: Book, dealerId: string) {
         this.createCommunity(book.communityDeatails.community);
         this.createParchment(book.writingDeatails.parchmentType.type);
 
         const bookClone = JSON.parse(JSON.stringify(book)) as Book;
 
-        if (book._id) {
-            this.getBookById(book._id)
-                .then(oldBook => {
-                    this.localBooksDB.put({ ...oldBook, ...book })
-                        .then(result => {
-                            if (oldBook.dealer) {
-                                this.removeBookFromDealer(oldBook.dealer, book._id);
-                            }
-                            this.addBookToDealer(result.id, dealerId);
-                        })
-                        .catch(console.error);
-                });
+        if (bookClone._id) {
+            const photos = await this.uploadeBase64(bookClone.photos, bookClone.name, `${bookClone._id}`);
+            bookClone.photos = photos;
+            const recordings = await this.uploadeBase64(bookClone.recordings, bookClone.name, `${bookClone._id}`);
+            bookClone.recordings = recordings;
+            const oldBook = await this.getBookById(bookClone._id);
+            const putResult = await this.localBooksDB.put({ ...oldBook, ...bookClone });
+            if (oldBook.dealer) {
+                this.removeBookFromDealer(oldBook.dealer, bookClone._id);
+            }
+            if (dealerId) {
+                this.addBookToDealer(putResult.id, dealerId);
+            }
         } else {
-            this.localBooksDB.put({
-                // add unike id
-                _id: uuidv4(),
-                ...bookClone
-            })
-                .then(result => {
-                    this.addBookToDealer(result.id, dealerId);
-                })
-                .catch(console.error);
+            bookClone._id = uuidv4();
+            const photos = await this.uploadeBase64(bookClone.photos, bookClone.name, `${bookClone._id}`);
+            bookClone.photos = photos;
+            const recordings = await this.uploadeBase64(bookClone.recordings, bookClone.name, `${bookClone._id}`);
+            bookClone.recordings = recordings;
+            const putResult = await this.localBooksDB.put({ ...bookClone });
+            this.addBookToDealer(putResult.id, dealerId);
         }
     }
 

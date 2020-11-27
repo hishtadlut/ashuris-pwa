@@ -37,6 +37,7 @@ export enum SearchFor {
 }
 
 export enum LocalDbNames {
+  IMAGES_TO_UPLOAD_DB = 'sync_DB_v0.1',
   WRITERS = 'localWriters_DB',
   DEALERS = 'localDealers_DB',
   BOOKS = 'localBooks_DB',

@@ -110,7 +110,7 @@ export class WritersEffects implements OnInitEffects, OnDestroy {
   loadSomeActions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoadSomeActions),
-      mergeMap((action: any) => from(new Promise(resolve => { resolve(); }))
+      mergeMap((action: any) => from(new Promise<void>(resolve => { resolve(); }))
         .pipe(
           mergeMap(_ => [
             loadWritersList(),

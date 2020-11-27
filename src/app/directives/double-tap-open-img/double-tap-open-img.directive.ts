@@ -23,14 +23,15 @@ export class DoubleTapOpenImgDirective {
 
   openImgInOterPage() {
     console.log('tapped');
+    const win = window.open(this.base64Img);
     // const img = new Image();
     // img.src = this.base64Img;
     // img.style.width = '100%';
     // const newPage = window.open(this.base64Img).document.body.appendChild(img);
-    base64ToBlob(this.base64Img)
-      .then(img => {
-        this.openBlob(img);
-      });
+    // base64ToBlob(this.base64Img)
+    //   .then(img => {
+    //     this.openBlob(img);
+    //   });
   }
 
   openBlob(base64URL: Blob) {

@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { preventDefaultAndStopPropagation, shareButton } from 'src/app/utils/utils';
+import { blobToObjectUrl, preventDefaultAndStopPropagation, shareButton } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
+import { FirebaseService } from 'src/app/firebase.service';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-details',
@@ -13,6 +16,9 @@ import { StitchService } from 'src/app/stitch-service.service';
 export class BookDetailsComponent implements OnInit {
   book: Book;
   shareButton = shareButton;
+
+  errorEvent$ = new Subject<{ idUrl: string, index: number }>();
+
   openMenuStatus = {
     pricesDeatails: false,
     writingDeatails: false,
@@ -29,9 +35,14 @@ export class BookDetailsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
+    private firebaseService: FirebaseService,
   ) { }
 
   ngOnInit() {
+    this.errorEvent$.pipe(take(1)).subscribe((imageDetails) => {
+      this.getImgFromUploadQueue(imageDetails.idUrl, imageDetails.index);
+    });
+
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
     this.pouchDbService.getBookById(id).then(book => {
       this.book = book;
@@ -83,6 +94,17 @@ export class BookDetailsComponent implements OnInit {
 
   getSrc(index: number) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.book.recordings[index]);
+  }
+
+  errorEventCall(idUrl: string, index: number) {
+    this.errorEvent$.next({ idUrl, index });
+  }
+
+  getImgFromUploadQueue(idUrl: string, i: number) {
+    this.firebaseService.getImageFromQueue(idUrl)
+      .then(img => {
+        this.book.photos[i] = blobToObjectUrl(img.img);
+      });
   }
 
 }

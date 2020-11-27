@@ -46,17 +46,18 @@
         </div>
       </div>
     </div>
-    <div *ngIf="book.writingDeatails.writingLevel.level ||
-            book.writingDeatails.stabilityLevel.level ||
-            book.writingDeatails.eraseLevel.level ||
-            book.writingDeatails.parchmentLevel.level ||
-            book.writingDeatails.parchmentType.type ||
-            book.writingDeatails.letterSize.size ||
-            book.writingDeatails.writingType||
-            book.additionalDetails.hasKtavKabala.boolean ||
-            book.additionalDetails.voatsInElection.boolean ||
-            book.additionalDetails.goesToKotel.boolean" class="extra-details-section">
-      <div class="section" (click)="closeMenus('writingDeatails')">
+    <div class="extra-details-section">
+      <div *ngIf="
+        book.writingDeatails.writingLevel.level ||
+        book.writingDeatails.stabilityLevel.level ||
+        book.writingDeatails.eraseLevel.level ||
+        book.writingDeatails.parchmentLevel.level ||
+        book.writingDeatails.parchmentType.type ||
+        book.writingDeatails.letterSize.size ||
+        book.writingDeatails.writingType||
+        book.additionalDetails.hasKtavKabala.boolean ||
+        book.additionalDetails.voatsInElection.boolean ||
+        book.additionalDetails.goesToKotel.boolean" class="section" (click)="closeMenus('writingDeatails')">
         <div class="section-title-btn">הכתב</div>
         <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.writingDeatails}">
           <div *ngIf="book.writingDeatails.writingLevel.level" class="writing-extra-detail">
@@ -163,7 +164,7 @@
         </div>
       </div>
 
-      <div class="section" (click)="closeMenus('additionalDeatails')">
+      <div class="section" (click)="closeMenus('additionalDeatails')" *ngIf="book.communityDeatails.community || book.communityDeatails.note || book.additionalDetails.writerLevel.level || book.additionalDetails.writerLevel.note ">
         <div class="section-title-btn">הסופר</div>
         <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.additionalDeatails}">
           <div *ngIf="book.communityDeatails.community || book.communityDeatails.note" class="writing-extra-detail">
@@ -187,7 +188,7 @@
         <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos; trackBy: let i = index" class="photo-wrapper">
             <img style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
-            <img appDoubleTapOpenImg [base64Img]="photo" loading="lazy" [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" class="photo-of-writing" />
+            <img appDoubleTapOpenImg [base64Img]="photo" [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" (error)="errorEventCall(photo, i)" class="photo-of-writing" />
           </div>
         </div>
         <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
@@ -197,7 +198,7 @@
         <div class="section-title-btn">תזכורת קולית</div>
         <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of book.recordings; trackBy: let i = index">
-            <app-audio-html5 [base64Recording]="recording"></app-audio-html5>
+            <app-audio-html5 [recordingUrl]="recording"></app-audio-html5>
           </div>
         </div>
       </div>

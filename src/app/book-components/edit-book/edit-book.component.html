@@ -497,7 +497,7 @@
       <div>
         <div *ngFor="let recording of bookForm.controls.recordings['controls']; let i = index;">
           <div (click)="deleteRecording(i)">מחק הקלטה</div>
-          <app-audio-html5 [base64Recording]="recording"></app-audio-html5>
+          <app-audio-html5 [recordingUrl]="recording"></app-audio-html5>
         </div>
       </div>
     </div>
