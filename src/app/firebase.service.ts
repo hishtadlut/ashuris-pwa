@@ -71,7 +71,7 @@ export class FirebaseService {
   }
 
   uploadeImgToFirebase(img: Blob, folderName: string, filename: string) {
-    const imgPath = `images/${folderName}/${filename}.jpg`;
+    const imgPath = `images/${folderName}/${filename}`;
     const storageRef = this.firebaseRef.storage().ref(imgPath);
     return storageRef.put(img);
   }
