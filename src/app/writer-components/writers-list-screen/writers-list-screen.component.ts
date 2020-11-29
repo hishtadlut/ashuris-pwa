@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
 import { LocationPath } from 'src/app/enums';
 import { Location } from '@angular/common';
+import { sortByLetters } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -39,27 +40,6 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
-      const city = this.activatedRoute.snapshot.queryParamMap.get('city');
-      const street = this.activatedRoute.snapshot.queryParamMap.get('street');
-      const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
-      this.pouchDbService.getWritersInRoom(city, street, streetNumber)
-        .then(writers => {
-          this.writersList = this.writersToDisplay = writers;
-        });
-    } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
-      this.writersList$Subscription = this.writersList$.subscribe((writersList) => this.writersList = this.writersToDisplay = writersList);
-    }
-    this.pouchDbService.getCities()
-      .then(citiesDoc => {
-        this.citiesList = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
-      });
-
-    this.pouchDbService.getCommunities()
-      .then(communitiesDoc => {
-        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
-      });
-
     this.searchForm = new FormGroup({
       city: new FormControl(''),
       community: new FormControl(''),
@@ -76,6 +56,31 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       }),
       quickSearch: new FormControl(''),
     });
+
+    this.pouchDbService.getCities()
+      .then(citiesDoc => {
+        this.citiesList = citiesDoc.docs.map(cityDoc => cityDoc.itemName);
+      });
+
+    this.pouchDbService.getCommunities()
+      .then(communitiesDoc => {
+        this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
+      });
+
+    if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
+      const city = this.activatedRoute.snapshot.queryParamMap.get('city');
+      const street = this.activatedRoute.snapshot.queryParamMap.get('street');
+      const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
+      this.pouchDbService.getWritersInRoom(city, street, streetNumber)
+        .then(writers => {
+          this.writersList = this.writersToDisplay = writers;
+        });
+    } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
+      setTimeout(async () => {
+        const writers = await this.pouchDbService.getWriters();
+        this.writersList = this.writersToDisplay = sortByLetters(writers);
+      }, 100);
+    }
 
     this.searchFormInitialValue = this.searchForm.value;
   }

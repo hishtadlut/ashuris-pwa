@@ -12,6 +12,7 @@ interface ImgDocument {
   img: Blob;
   folderName: string;
   fileName: string;
+  extension: string;
   _deleted?: boolean;
 }
 @Injectable({
@@ -38,15 +39,17 @@ export class FirebaseService {
     }, 60000);
   }
 
-  addImagesToQueueOfUploades(img: Blob, folderName: string) {
+  addImagesToQueueOfUploades(img: Blob, folderName: string, extension: string) {
     const fileName = uuidv4();
+    const imgUrl = this.getUrlOfImage(folderName, fileName, extension);
     this.imagesToUploadDB.put({
-      _id: this.getUrlOfImage(folderName, fileName),
+      _id: imgUrl,
       img,
       folderName,
       fileName,
+      extension,
     });
-    return this.getUrlOfImage(folderName, fileName);
+    return imgUrl;
   }
 
   async removeImagesFromQueueOfUploades(id: string) {
@@ -61,7 +64,7 @@ export class FirebaseService {
     this.imagesToUploadDB.allDocs<ImgDocument>({ include_docs: true })
       .then(documents => {
         documents.rows.forEach(document => {
-          this.uploadeImgToFirebase(document.doc.img, document.doc.folderName, document.doc.fileName)
+          this.uploadeImgToFirebase(document.doc.img, document.doc.folderName, document.doc.fileName, document.doc.extension)
             .then(() => {
               this.removeImagesFromQueueOfUploades(document.doc._id);
             });
@@ -70,14 +73,14 @@ export class FirebaseService {
       .catch(console.error);
   }
 
-  uploadeImgToFirebase(img: Blob, folderName: string, filename: string) {
-    const imgPath = `images/${folderName}/${filename}`;
+  uploadeImgToFirebase(img: Blob, folderName: string, filename: string, extension: string) {
+    const imgPath = `${folderName}/${filename}.${extension}`;
     const storageRef = this.firebaseRef.storage().ref(imgPath);
     return storageRef.put(img);
   }
 
-  getUrlOfImage(folderName: string, fileName: string) {
-    return `https://firebasestorage.googleapis.com/v0/b/ashuris.appspot.com/o/images%2F${folderName}%2F${fileName}?alt=media`;
+  getUrlOfImage(folderName: string, fileName: string, extension: string) {
+    return `https://firebasestorage.googleapis.com/v0/b/ashuris.appspot.com/o/${folderName}%2F${fileName}.${extension}?alt=media`;
   }
 
   getImageFromQueue(idUrl: string) {

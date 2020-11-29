@@ -14,7 +14,7 @@ interface Navigator {
   canShare?: (data?: ShareData) => boolean;
 }
 
-export function fileToBase64(file: File) {
+export function fileToBase64(file: Blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

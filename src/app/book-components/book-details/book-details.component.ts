@@ -16,7 +16,6 @@ import { take } from 'rxjs/operators';
 export class BookDetailsComponent implements OnInit {
   book: Book;
   shareButton = shareButton;
-
   errorEvent$ = new Subject<{ idUrl: string, index: number }>();
 
   openMenuStatus = {

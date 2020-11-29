@@ -1,8 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book } from '../../interfaces';
-import { State } from '../../reducers';
-import { Store, select } from '@ngrx/store';
-import { Subscription, Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { LocationPath } from 'src/app/enums';
 import { ActivatedRoute } from '@angular/router';
@@ -14,22 +11,14 @@ import { sortByLetters } from 'src/app/utils/utils';
   templateUrl: './book-list-screen.component.html',
   styleUrls: ['./book-list-screen.component.css']
 })
-export class BookListScreenComponent implements OnInit, OnDestroy {
+export class BookListScreenComponent implements OnInit {
   locationPath: typeof LocationPath = LocationPath;
-
-  booksToDisplay: Book[] = [];
-
-  bookList: Book[];
-  bookList$Subscription: Subscription;
-  bookList$: Observable<Book[]> = this.store$.pipe(
-    select('writers', 'bookList')
-  );
-
   locationWithoutParameters: string;
+  bookList: Book[];
+  booksToDisplay: Book[] = [];
   showOnlySoldedBooks: boolean;
 
   constructor(
-    private store$: Store<State>,
     private location: Location,
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService
@@ -39,7 +28,9 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
     this.showOnlySoldedBooks = false;
     this.locationWithoutParameters = this.location.path().split('?')[0];
     if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
-      this.getBooksBySoldCondition(false);
+      setTimeout(async () => {
+        this.getBooksBySoldCondition(false);
+      }, 100);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
       this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
         .then(books => {
@@ -59,12 +50,6 @@ export class BookListScreenComponent implements OnInit, OnDestroy {
     this.booksToDisplay = this.bookList.filter(book =>
       book.name.includes(event.target.value)
     );
-  }
-
-  ngOnDestroy() {
-    if (this.bookList$Subscription) {
-      this.bookList$Subscription.unsubscribe();
-    }
   }
 
 }

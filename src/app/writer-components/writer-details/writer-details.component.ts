@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
-import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton, addAreaCodeForIsraliNumbers } from 'src/app/utils/utils';
+import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton, addAreaCodeForIsraliNumbers, blobToObjectUrl } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
+import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { FirebaseService } from 'src/app/firebase.service';
 
 @Component({
   selector: 'app-writer-details',
@@ -25,6 +28,7 @@ export class WriterDetailsComponent implements OnInit {
   shareButton = shareButton;
   addAreaCodeForIsraliNumbers = addAreaCodeForIsraliNumbers;
 
+  errorEvent$ = new Subject<{ idUrl: string, index: number }>();
   dialogContent = null;
   preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
 
@@ -35,9 +39,14 @@ export class WriterDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     public sanitizer: DomSanitizer,
+    private firebaseService: FirebaseService,
   ) { }
 
   async ngOnInit(): Promise<void> {
+    this.errorEvent$.pipe(take(1)).subscribe((imageDetails) => {
+      this.getImgFromUploadQueue(imageDetails.idUrl, imageDetails.index);
+    });
+
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
     this.pouchDbService.getWriter(id).then(writer => {
       this.writer = writer;
@@ -53,7 +62,7 @@ export class WriterDetailsComponent implements OnInit {
         };
       }
     });
-}
+  }
 
 
   editWriter() {
@@ -107,6 +116,17 @@ export class WriterDetailsComponent implements OnInit {
 
   getSrc(index: number) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.writer.recordings[index]);
+  }
+
+  errorEventCall(idUrl: string, index: number) {
+    this.errorEvent$.next({ idUrl, index });
+  }
+
+  getImgFromUploadQueue(idUrl: string, i: number) {
+    this.firebaseService.getImageFromQueue(idUrl)
+      .then(img => {
+        this.writer.photos[i] = blobToObjectUrl(img.img);
+      });
   }
 
 }

@@ -9,7 +9,6 @@ import { RecordingService } from '../../recording.service';
 import { Store } from '@ngrx/store';
 import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
-import { loadWritersList } from '../../actions/writers.actions';
 import { Location } from '@angular/common';
 import { LocalDbNames, LocationPath, RemoveItem } from 'src/app/enums';
 
@@ -428,7 +427,6 @@ export class EditWriterComponent implements OnInit {
       } else if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
         this.pouchDbService.createWriter({ ...this.writer, ...this.writerForm.value });
       }
-      this.store$.dispatch(loadWritersList());
       this.router.navigate(['/writers-list-screen']);
     } else {
       alert('יש למלא שם פרטי, שם משפחה ומידת התאמה');
