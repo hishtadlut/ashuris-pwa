@@ -121,13 +121,16 @@ export class FirebaseService {
   }
 
   async getFromAvailableResources(urls: string[]): Promise<string[]> {
-    return urls = await Promise.all(urls.map(async (photoUrl) => {
+    return urls = await Promise.all(urls.map(async (url) => {
       try {
-        const base64Photo = blobToObjectUrl(await base64ToBlob(photoUrl));
-        return base64Photo;
+        const base64 = blobToObjectUrl(await base64ToBlob(url));
+        return base64;
       } catch (error) {
         try {
-          const img = await this.getImageFromQueue(photoUrl.replace('_620x620', ''));
+          if (url.includes('jpg')) {
+            url = url.replace('_620x620', '');
+          }
+          const img = await this.getImageFromQueue(url);
           if (img) {
             return blobToObjectUrl(img.img);
           }

@@ -61,6 +61,7 @@ export class WriterDetailsComponent implements OnInit {
         };
       }
       this.writer.photos_620x620 = await this.firebaseService.getFromAvailableResources(this.writer.photos_620x620);
+      this.writer.recordings = await this.firebaseService.getFromAvailableResources(this.writer.recordings);
     });
   }
 

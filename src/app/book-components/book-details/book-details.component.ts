@@ -49,6 +49,7 @@ export class BookDetailsComponent implements OnInit {
         };
       }
       this.book.photos_620x620 = await this.firebaseService.getFromAvailableResources(this.book.photos_620x620);
+      this.book.recordings = await this.firebaseService.getFromAvailableResources(this.book.recordings);
     });
   }
 

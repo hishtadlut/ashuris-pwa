@@ -197,7 +197,7 @@
         <div class="section-title-btn">תזכורת קולית</div>
         <div [ngClass]="{'closedMenu': !openMenuStatus.recordings}">
           <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let recording of book.recordings; trackBy: let i = index">
-            <app-audio-html5 [recordingUrl]="recording"></app-audio-html5>
+            <app-audio-html5 *ngIf="recording" [recordingUrl]="recording"></app-audio-html5>
           </div>
         </div>
       </div>
