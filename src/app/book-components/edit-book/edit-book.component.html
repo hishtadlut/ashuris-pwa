@@ -479,7 +479,7 @@
       </label>
       <div *ngFor="let photoControl of bookForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="photoControl.value" class="img">
+        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="bookForm.controls.photos_620x620.value[i]" class="img">
       </div>
     </div>
     <div class="inner-grid">
@@ -497,7 +497,7 @@
       <div>
         <div *ngFor="let recording of bookForm.controls.recordings['controls']; let i = index;">
           <div (click)="deleteRecording(i)">מחק הקלטה</div>
-          <app-audio-html5 [recordingUrl]="recording"></app-audio-html5>
+          <app-audio-html5 [recordingUrl]="recording.value"></app-audio-html5>
         </div>
       </div>
     </div>

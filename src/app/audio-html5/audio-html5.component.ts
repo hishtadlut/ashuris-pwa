@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { RecordingService } from '../recording.service';
-import { base64ToBlob, getDuration } from '../utils/utils';
+import { base64ToBlob, blobToObjectUrl, getDuration } from '../utils/utils';
 @Component({
   selector: 'app-audio-html5',
   templateUrl: './audio-html5.component.html',
@@ -17,8 +17,9 @@ export class AudioHTML5Component implements AfterViewInit {
   constructor(public recordingService: RecordingService) {
   }
 
-  ngAfterViewInit() {
-    const audio = new Audio(this.recordingUrl);
+  async ngAfterViewInit() {
+    const audioObjectUrl = blobToObjectUrl(await base64ToBlob(this.recordingUrl));
+    const audio = new Audio(audioObjectUrl);
     getDuration(audio)
       .then((duration) => {
         this.recordingState = {

@@ -23,9 +23,10 @@ export function fileToBase64(file: Blob) {
   });
 }
 export function base64ToBlob(url: string): Promise<Blob> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     fetch(url)
-      .then(res => resolve(res.blob()));
+      .then(res => resolve(res.blob()))
+      .catch(err => reject(err));
   });
 }
 
@@ -62,23 +63,26 @@ export function thereAreDetailsInGivenObject(object: { [x: string]: string | boo
 export function shareButton(photo: string) {
   if (navigator.share) {
     base64ToBlob(photo)
-      // .then(img => {
-      //   navigator.share({
-      //     files: [new File([img], 'img.jpg')]
-      //   })
-      //     .then(() => {
-      //       console.log('Thanks for sharing!');
-      //     }).catch((error => {            
-      //       // TODO fix in ios 14.02
-      //       // window.location.reload(true);
-      //     }));
-      // })
-      // .catch((error => {
-      //   // TODO fix in ios 14.02
-      //   // window.location.reload(true);
-      // }));
+      .then(img => {
+        const imgFile = new File([img], 'img.jpg');
+        navigator.share({
+          files: [imgFile]
+        })
+          .then(() => {
+            console.log('Thanks for sharing!');
+          }).catch((error => {
+            console.log('share error: ' + error);
+            // TODO fix in ios 14.02?
+            // window.location.reload(true);
+          }));
+      })
+      .catch((error => {
+        console.log('share error: ' + error);
+        // TODO fix in ios 14.02?
+        // window.location.reload(true);
+      }));
   } else {
-    // fallback
+    console.log('navigator.share err');
   }
 }
 

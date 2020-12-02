@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { blobToObjectUrl, preventDefaultAndStopPropagation, shareButton } from 'src/app/utils/utils';
+import { preventDefaultAndStopPropagation, shareButton } from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
 import { FirebaseService } from 'src/app/firebase.service';
-import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-details',
@@ -16,7 +14,6 @@ import { take } from 'rxjs/operators';
 export class BookDetailsComponent implements OnInit {
   book: Book;
   shareButton = shareButton;
-  errorEvent$ = new Subject<{ idUrl: string, index: number }>();
 
   openMenuStatus = {
     pricesDeatails: false,
@@ -38,12 +35,8 @@ export class BookDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.errorEvent$.pipe(take(1)).subscribe((imageDetails) => {
-      this.getImgFromUploadQueue(imageDetails.idUrl, imageDetails.index);
-    });
-
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-    this.pouchDbService.getBookById(id).then(book => {
+    this.pouchDbService.getBookById(id).then(async book => {
       this.book = book;
       if (this.book?.pricesDeatails?.priceForTorahScroll.price) {
         this.priceForTorahScroll = {
@@ -55,6 +48,7 @@ export class BookDetailsComponent implements OnInit {
             : this.book.pricesDeatails.priceForTorahScroll.price,
         };
       }
+      this.book.photos_620x620 = await this.firebaseService.getFromAvailableResources(this.book.photos_620x620);
     });
   }
 
@@ -91,19 +85,8 @@ export class BookDetailsComponent implements OnInit {
     audio.play();
   }
 
-  getSrc(index: number) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.book.recordings[index]);
-  }
-
   errorEventCall(idUrl: string, index: number) {
-    this.errorEvent$.next({ idUrl, index });
-  }
-
-  getImgFromUploadQueue(idUrl: string, i: number) {
-    this.firebaseService.getImageFromQueue(idUrl)
-      .then(img => {
-        this.book.photos[i] = blobToObjectUrl(img.img);
-      });
+    this.book.photos_620x620[index] = '';
   }
 
 }

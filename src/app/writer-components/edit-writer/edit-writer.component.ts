@@ -280,6 +280,7 @@ export class EditWriterComponent implements OnInit {
         boolean: new FormControl(false),
       }),
       photos: new FormArray([]),
+      photos_620x620: new FormArray([]),
       recordings: new FormArray([]),
     });
 
@@ -295,6 +296,9 @@ export class EditWriterComponent implements OnInit {
 
       const photosArray = this.writerForm.controls.photos as FormArray;
       this.writer.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
+
+      const photos620x620 = this.writerForm.controls.photos_620x620 as FormArray;
+      this.writer.photos_620x620?.forEach(photo => photos620x620.push(new FormControl(photo)));
 
       this.writerForm.patchValue(this.writer);
       this.textForSaveButton = 'שמור שינויים';
@@ -340,9 +344,11 @@ export class EditWriterComponent implements OnInit {
 
   onAddPhoto(file: File) {
     fileToBase64(file)
-      .then((base64File: string | ArrayBuffer) => {
+      .then((base64File: string) => {
         const photosArray = this.writerForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
+        const photos620x620Array = this.writerForm.controls.photos_620x620 as FormArray;
+        photos620x620Array.push(new FormControl(base64File));
       }).catch((err) => {
         console.log(err);
       });
@@ -366,20 +372,9 @@ export class EditWriterComponent implements OnInit {
       .then((audioBlob: Blob) => {
         this.recordingService.convertRecordingToBase64(audioBlob)
           .then((base64data: string) => {
-            // const audioUrl = URL.createObjectURL(base64data);
-            // const audio = new Audio('data:audio/wav;base64' + base64data.split('base64')[1]);
             const recordingsArray = this.writerForm.controls.recordings as FormArray;
-            // console.log('data:audio/wav;base64' + base64data.split('base64')[1]);
-            // audio.play();
-
             recordingsArray.push(new FormControl('data:audio/wav;base64' + base64data.split('base64')[1]));
           });
-
-        // this.recordingService.convertBase64ToBypassSecurityTrustAudioUrl(audioBlob)
-        //   .then((audioUrl: string) => {
-        //     this.recordingService.lastRecording = ;
-        //   });
-
       })
       .catch((err) => {
         console.log(err);
@@ -399,9 +394,6 @@ export class EditWriterComponent implements OnInit {
       photosArray.removeAt(index);
     }
   }
-  // playRecord() {
-  //   this.record.play();
-  // }
 
   isChecked(event, formControl: AbstractControl) {
     if (event.target.value === formControl.value) {

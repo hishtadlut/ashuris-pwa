@@ -6,6 +6,7 @@ require('firebase/auth');
 require('firebase/storage');
 
 import { v4 as uuidv4 } from 'uuid';
+import { base64ToBlob, blobToObjectUrl } from './utils/utils';
 
 interface ImgDocument {
   _id: string;
@@ -13,6 +14,7 @@ interface ImgDocument {
   folderName: string;
   fileName: string;
   extension: string;
+  imgUrl: string;
   _deleted?: boolean;
 }
 @Injectable({
@@ -28,7 +30,7 @@ export class FirebaseService {
     projectId: 'ashuris',
     storageBucket: 'ashuris.appspot.com',
     messagingSenderId: '480714379352',
-    appId: '1:480714379352:web:17f50e7faf212f650a3a2d'
+    appId: '1:480714379352:web:17f50e7faf212f650a3a2d',
   };
 
   firebaseRef = firebase.initializeApp(this.firebaseConfig);
@@ -36,18 +38,21 @@ export class FirebaseService {
     this.uploadeImagesToFirebase();
     setInterval(() => {
       this.uploadeImagesToFirebase();
-    }, 60000);
+    }, 30000);
+    this.firebaseRef.storage().setMaxOperationRetryTime(30000);
+    this.firebaseRef.storage().setMaxUploadRetryTime(30000);
   }
 
-  addImagesToQueueOfUploades(img: Blob, folderName: string, extension: string) {
+  async addImagesToQueueOfUploades(img: Blob, folderName: string, extension: string) {
     const fileName = uuidv4();
     const imgUrl = this.getUrlOfImage(folderName, fileName, extension);
     this.imagesToUploadDB.put({
-      _id: imgUrl,
+      _id: uuidv4(),
       img,
       folderName,
       fileName,
       extension,
+      imgUrl
     });
     return imgUrl;
   }
@@ -63,27 +68,77 @@ export class FirebaseService {
   uploadeImagesToFirebase() {
     this.imagesToUploadDB.allDocs<ImgDocument>({ include_docs: true })
       .then(documents => {
+        console.log(documents.rows);
         documents.rows.forEach(document => {
+          console.log('Uploade started');
           this.uploadeImgToFirebase(document.doc.img, document.doc.folderName, document.doc.fileName, document.doc.extension)
-            .then(() => {
-              this.removeImagesFromQueueOfUploades(document.doc._id);
+            .then((uploadTask) => {
+              const onResolve = (foundURL: string) => {
+                console.log('Uploade complete ' + foundURL);
+                this.removeImagesFromQueueOfUploades(document.doc._id);
+              };
+              const onReject = (error: any) => {
+                console.log('uploadTask.task.cancel()');
+                console.log(error);
+              };
+
+              this.firebaseRef
+                .storage()
+                .ref()
+                .child(`${document.doc.folderName}/${document.doc.fileName}.${document.doc.extension}`)
+                .getDownloadURL()
+                .then(onResolve, onReject);
+
+            })
+            .catch(err => {
+              console.log(err);
             });
         });
       })
-      .catch(console.error);
+      .catch(console.log);
   }
 
-  uploadeImgToFirebase(img: Blob, folderName: string, filename: string, extension: string) {
+  uploadeImgToFirebase(blob: Blob, folderName: string, filename: string, extension: string) {
+    const MIME_TYPE = extension === 'jpg' ? 'image/jpeg' : 'audio/wav';
     const imgPath = `${folderName}/${filename}.${extension}`;
     const storageRef = this.firebaseRef.storage().ref(imgPath);
-    return storageRef.put(img);
+    const uploadTask = storageRef.put(blob, { contentType: MIME_TYPE });
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      });
+    return uploadTask;
   }
 
   getUrlOfImage(folderName: string, fileName: string, extension: string) {
     return `https://firebasestorage.googleapis.com/v0/b/ashuris.appspot.com/o/${folderName}%2F${fileName}.${extension}?alt=media`;
   }
 
-  getImageFromQueue(idUrl: string) {
-    return this.imagesToUploadDB.get(idUrl);
+  async getImageFromQueue(idUrl: string) {
+    const allDocs = (await this.imagesToUploadDB.allDocs<ImgDocument>({ include_docs: true })).rows.map(doc => doc.doc);
+    const img = allDocs.find(doc => doc.imgUrl === idUrl);
+    return img;
+  }
+
+  async getFromAvailableResources(urls: string[]): Promise<string[]> {
+    return urls = await Promise.all(urls.map(async (photoUrl) => {
+      try {
+        const base64Photo = blobToObjectUrl(await base64ToBlob(photoUrl));
+        return base64Photo;
+      } catch (error) {
+        try {
+          const img = await this.getImageFromQueue(photoUrl.replace('_620x620', ''));
+          if (img) {
+            return blobToObjectUrl(img.img);
+          }
+          console.log('Can\'t find img');
+          return '';
+        } catch (err) {
+          console.log(err);
+          return '';
+        }
+      }
+    }));
   }
 }
+

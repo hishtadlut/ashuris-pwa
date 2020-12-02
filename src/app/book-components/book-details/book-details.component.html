@@ -186,12 +186,11 @@
       <div class="section" (click)="closeMenus('images')" *ngIf="book.photos.length">
         <div class="section-title-btn">תמונות</div>
         <div [ngClass]="{'closedMenu': !openMenuStatus.images}">
-          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos; trackBy: let i = index" class="photo-wrapper">
-            <img style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(photo)" alt="">
-            <img appDoubleTapOpenImg [base64Img]="photo" src="{{photo.split('.jpg').join('_620x620.jpg')}}" (error)="errorEventCall(photo, i)" class="photo-of-writing" />
+          <div (click)="preventDefaultAndStopPropagation($event)" *ngFor="let photo of book.photos_620x620; let i = index;" class="photo-wrapper">
+            <img *ngIf="photo" style="z-index: 1" class="icon-share" src="assets/icons/share.png" (click)="shareButton(book.photos[i])" alt="">
+            <img *ngIf="photo" appDoubleTapOpenImg [base64Img]="book.photos[i]" [src]="sanitizer.bypassSecurityTrustResourceUrl(photo)" (error)="errorEventCall(photo, i)" class="photo-of-writing" />
           </div>
         </div>
-        <!-- <div class="add-photo-btn">הוסף תמונה</div> -->
       </div>
 
       <div class="section" (click)="closeMenus('recordings')" *ngIf="book.recordings.length">

@@ -15,7 +15,7 @@ if (environment.production) {
 
 
 const vConsole = new VConsole();
-console.log('version 0.1.7');
+console.log('version 0.1.16');
 
 
 document.addEventListener('DOMContentLoaded', () => {

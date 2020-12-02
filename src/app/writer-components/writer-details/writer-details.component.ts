@@ -2,10 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Writer } from '../../interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
-import { preventDefaultAndStopPropagation, thereAreDetailsInGivenObject, shareButton, addAreaCodeForIsraliNumbers, blobToObjectUrl } from 'src/app/utils/utils';
+import {
+  preventDefaultAndStopPropagation,
+  thereAreDetailsInGivenObject,
+  shareButton,
+  addAreaCodeForIsraliNumbers,
+} from 'src/app/utils/utils';
 import { StitchService } from 'src/app/stitch-service.service';
-import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { FirebaseService } from 'src/app/firebase.service';
 
 @Component({
@@ -28,7 +31,6 @@ export class WriterDetailsComponent implements OnInit {
   shareButton = shareButton;
   addAreaCodeForIsraliNumbers = addAreaCodeForIsraliNumbers;
 
-  errorEvent$ = new Subject<{ idUrl: string, index: number }>();
   dialogContent = null;
   preventDefaultAndStopPropagation = preventDefaultAndStopPropagation;
 
@@ -43,12 +45,9 @@ export class WriterDetailsComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.errorEvent$.pipe(take(1)).subscribe((imageDetails) => {
-      this.getImgFromUploadQueue(imageDetails.idUrl, imageDetails.index);
-    });
 
     const id = this.activatedRoute.snapshot.queryParamMap.get('id');
-    this.pouchDbService.getWriter(id).then(writer => {
+    this.pouchDbService.getWriter(id).then(async writer => {
       this.writer = writer;
       this.writerAddress = `${this.writer.city}+${this.writer.street}+${this.writer.streetNumber}`;
       if (this.writer?.pricesDeatails?.priceForTorahScroll.price) {
@@ -61,6 +60,7 @@ export class WriterDetailsComponent implements OnInit {
             : this.writer.pricesDeatails.priceForTorahScroll.price,
         };
       }
+      this.writer.photos_620x620 = await this.firebaseService.getFromAvailableResources(this.writer.photos_620x620);
     });
   }
 
@@ -114,19 +114,8 @@ export class WriterDetailsComponent implements OnInit {
     return letterSizesArray.join(' ,');
   }
 
-  getSrc(index: number) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.writer.recordings[index]);
-  }
-
   errorEventCall(idUrl: string, index: number) {
-    this.errorEvent$.next({ idUrl, index });
-  }
-
-  getImgFromUploadQueue(idUrl: string, i: number) {
-    this.firebaseService.getImageFromQueue(idUrl)
-      .then(img => {
-        this.writer.photos[i] = blobToObjectUrl(img.img);
-      });
+    this.writer.photos_620x620[index] = '';
   }
 
 }

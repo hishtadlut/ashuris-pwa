@@ -61,6 +61,13 @@ export class EditBookComponent implements OnInit, OnDestroy {
   ) { }
 
   async ngOnInit(): Promise<void> {
+
+    this.formValues$Subscription = this.formValues$.subscribe(formValue => {
+      if (formValue) {
+        this.bookForm.patchValue(formValue);
+      }
+    });
+
     this.bookForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
@@ -211,6 +218,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
         }),
       }),
       photos: new FormArray([]),
+      photos_620x620: new FormArray([]),
       recordings: new FormArray([]),
     });
 
@@ -232,12 +240,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
     const dealerList = await this.pouchDbService.getDealersFullNameAndId();
     this.dealerList = dealerList;
 
-    this.formValues$Subscription = this.formValues$.subscribe(formValue => {
-      if (formValue) {
-        this.bookForm.patchValue(formValue);
-      }
-    });
-
     if (this.location.path().split('?')[0] === '/edit-book') {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
       this.book = await this.pouchDbService.getBookById(id);
@@ -247,6 +249,9 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
       const photosArray = this.bookForm.controls.photos as FormArray;
       this.book.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
+
+      const photos620x620 = this.bookForm.controls.photos_620x620 as FormArray;
+      this.book.photos_620x620?.forEach(photo => photos620x620.push(new FormControl(photo)));
 
       this.bookForm.patchValue(this.book);
       this.dealerId = this.dealerList.find(dealer => dealer.fullName === this.bookForm.get('dealer').value)?._id;
@@ -283,9 +288,11 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   onAddPhoto(file: File) {
     fileToBase64(file)
-      .then((base64File: string | ArrayBuffer) => {
+      .then((base64File: string) => {
         const photosArray = this.bookForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
+        const photos620x620Array = this.bookForm.controls.photos_620x620 as FormArray;
+        photos620x620Array.push(new FormControl(base64File));
       }).catch((err) => {
         console.log(err);
       });

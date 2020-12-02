@@ -148,12 +148,10 @@ export class StitchService {
     async uploadeBase64andReplaceWithStorageUrls(base64: string[], name: string, id: string, extension: string) {
         return await Promise.all(base64.map(async (photo) => {
             if (photo.indexOf('http') === 0) {
-                // const imgBlob = await base64ToBlob(photo);
-                // return this.firebaseService.addImagesToQueueOfUploades(imgBlob, `${name}_${id}`, extension);
                 return photo;
             } else {
                 const imgBlob = await base64ToBlob(photo);
-                return this.firebaseService.addImagesToQueueOfUploades(imgBlob, `${name}_${id}`, extension);
+                return await this.firebaseService.addImagesToQueueOfUploades(imgBlob, `${name}_${id}`, extension);
             }
         }));
     }
@@ -167,6 +165,8 @@ export class StitchService {
 
         if (writerClone._id) {
             writerClone.photos = await this.uploadeBase64andReplaceWithStorageUrls(writerClone.photos, fullName, writerClone._id, 'jpg');
+            writerClone.photos_620x620 = writerClone.photos.map(photoUrl => photoUrl.replace('.jpg', '_620x620.jpg'));
+
             writerClone.recordings = await this.uploadeBase64andReplaceWithStorageUrls(writerClone.recordings, fullName, writerClone._id, 'wav');
             this.localWritersDB.upsert(writerClone._id, () => {
                 return { ...writerClone };
@@ -174,6 +174,7 @@ export class StitchService {
         } else {
             writerClone._id = uuidv4();
             writerClone.photos = await this.uploadeBase64andReplaceWithStorageUrls(writerClone.photos, fullName, writerClone._id, 'jpg');
+            writerClone.photos_620x620 = writerClone.photos.map(photoUrl => photoUrl.replace('.jpg', '_620x620.jpg'));
             writerClone.recordings = await this.uploadeBase64andReplaceWithStorageUrls(writerClone.recordings, fullName, writerClone._id, 'wav');
             this.localWritersDB.put({
                 ...writerClone, levelOfUrgency: 1
@@ -373,6 +374,7 @@ export class StitchService {
 
         if (bookClone._id) {
             bookClone.photos = await this.uploadeBase64andReplaceWithStorageUrls(bookClone.photos, bookClone.name, bookClone._id, 'jpg');
+            bookClone.photos_620x620 = bookClone.photos.map(photoUrl => photoUrl.replace('.jpg', '_620x620.jpg'));
             bookClone.recordings = await this.uploadeBase64andReplaceWithStorageUrls(bookClone.recordings, bookClone.name, bookClone._id, 'wav');
             const oldBook = await this.getBookById(bookClone._id);
             const putResult = await this.localBooksDB.put({ ...oldBook, ...bookClone });
@@ -385,6 +387,7 @@ export class StitchService {
         } else {
             bookClone._id = uuidv4();
             bookClone.photos = await this.uploadeBase64andReplaceWithStorageUrls(bookClone.photos, bookClone.name, bookClone._id, 'jpg');
+            bookClone.photos_620x620 = bookClone.photos.map(photoUrl => photoUrl.replace('.jpg', '_620x620.jpg'));
             bookClone.recordings = await this.uploadeBase64andReplaceWithStorageUrls(bookClone.recordings, bookClone.name, bookClone._id, 'wav');
             const putResult = await this.localBooksDB.put({ ...bookClone });
             this.addBookToDealer(putResult.id, dealerId);

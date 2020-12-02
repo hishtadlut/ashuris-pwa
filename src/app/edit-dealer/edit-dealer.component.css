@@ -381,3 +381,16 @@ label.level-checkbox {
   font-size: 0.95rem;
   font-family: Arial;
 }
+
+.fill-location {
+  background-color: #2A2E43;
+  color: #C89C5B;
+  padding: 2vw 3vw;
+  margin: 6vw 4vw;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  max-width: 33vw;
+  text-align: center;
+}
