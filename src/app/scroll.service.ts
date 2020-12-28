@@ -1,5 +1,5 @@
 import { LocationStrategy } from '@angular/common';
-import { HostListener, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,5 @@ export class ScrollService {
   scrollToTop() {
     scroll({ top: 0 })
   }
-  
+
 }
