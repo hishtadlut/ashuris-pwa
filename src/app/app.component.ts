@@ -42,6 +42,8 @@ export class AppComponent implements OnInit {
           this.previousUrl === LocationPath.DEALER_BOOK_LIST
         ) {
           this.store.dispatch(putChangeUrgencyBookList());
+        } else if ((event.urlAfterRedirects === '/writers-list-screen') && (this.previousUrl !== '/')) {
+          localStorage.setItem('UseWriterListFilterParams', 'true');
         }
         if ((event.urlAfterRedirects === '/writers-advanced-search') && (this.previousUrl === '/search-result')) {
           this.store.dispatch(useAdvancedSearchParameters({ boolean: true }));

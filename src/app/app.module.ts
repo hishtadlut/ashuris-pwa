@@ -45,6 +45,7 @@ import { DoubleTapOpenImgDirective } from './directives/double-tap-open-img/doub
 import { CookieModule } from 'ngx-cookie';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { CurserToEndDirective } from './directives/curserToEnd/curser-to-end.directive';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -86,6 +87,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     CurserSideByLanguagaDirective,
     DoubleTapOpenImgDirective,
     LoginPageComponent,
+    CurserToEndDirective,
   ],
   imports: [
     BrowserModule,

@@ -33,10 +33,10 @@
 }
 
 .narrow-input {
-    width: 43vw;
-    height: 10vw;
-    justify-self: right;
-    padding-right: 4vw;
+  width: 43vw;
+  height: 10vw;
+  justify-self: right;
+  padding-right: 4vw;
 }
 
 .two-button-section {
@@ -66,16 +66,16 @@
 }
 
 .search-button {
-    background-color: #2A2E43;
-    color: #C89C5B;
-    font-weight: bold;
-    font-size: 0.95rem;
-    font-family: Arial;
-    padding: 2.2vw;
-    text-align: center;
-    border: solid 3px #C89C5B;
-    margin-top: 6vw;
-    width: 100%;
+  background-color: #2A2E43;
+  color: #C89C5B;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  padding: 2.2vw;
+  text-align: center;
+  border: solid 3px #C89C5B;
+  margin-top: 6vw;
+  width: 100%;
 }
 
 .name-search {
@@ -83,6 +83,7 @@
   position: relative;
   grid-template: 1fr / 1fr;
 }
+
 
 /* .name-search input {
     grid-row: 1 / 2;

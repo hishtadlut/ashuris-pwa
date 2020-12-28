@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { RecordingService } from '../../recording.service';
 import { Location } from '@angular/common';
-import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
+import { areYouSureYouWantToRemove, blobToBase64 } from '../../utils/utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../../stitch-service.service';
@@ -261,6 +261,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   setDealerId(event) {
     this.dealerId = this.dealerList.find(dealer => dealer.fullName === event.target.value)?._id;
+    console.log(this.dealerId);
   }
 
   isChecked(event, formControl: AbstractControl) {
@@ -287,7 +288,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onAddPhoto(file: File) {
-    fileToBase64(file)
+    blobToBase64(file)
       .then((base64File: string) => {
         const photosArray = this.bookForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
@@ -339,14 +340,14 @@ export class EditBookComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     if (this.bookForm.valid) {
       const div = (event.target as HTMLDivElement);
       div.classList.add('mirror-rotate');
       setTimeout(() => {
         div.classList.remove('mirror-rotate');
       }, 2000);
-      this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
+      await this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
       this.router.navigate(['/book-list-screen']);
     } else {
       alert('יש למלא שם לספר ומידת התאמה');

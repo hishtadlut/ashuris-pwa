@@ -39,7 +39,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     private location: Location,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.searchForm = new FormGroup({
       city: new FormControl(''),
       community: new FormControl(''),
@@ -67,6 +67,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
         this.communitiesList = communitiesDoc.docs.map(communityDoc => communityDoc.itemName);
       });
 
+    this.searchFormInitialValue = this.searchForm.value;
+
     if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
       const city = this.activatedRoute.snapshot.queryParamMap.get('city');
       const street = this.activatedRoute.snapshot.queryParamMap.get('street');
@@ -81,8 +83,15 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
         this.writersList = this.writersToDisplay = sortByLetters(writers);
       }, 100);
     }
-
-    this.searchFormInitialValue = this.searchForm.value;
+    if (localStorage.getItem('UseWriterListFilterParams') === 'true') {
+      this.searchForm.patchValue(JSON.parse(localStorage.getItem('writerListFilterParams')));
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const writers = await this.pouchDbService.getWriters();
+      this.writersList = this.writersToDisplay = sortByLetters(writers);
+    }
+    localStorage.setItem('UseWriterListFilterParams', 'false');
+    localStorage.setItem('writerListFilterParams', '{}');
+    
   }
 
   onKeyUpSearchByName(event) {
@@ -96,8 +105,9 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     this.searchForm.reset(this.searchFormInitialValue);
   }
 
-  search() {
-    this.writersToDisplay = this.searchService.writerListFilter(this.searchForm.value);
+  async search() {
+    localStorage.setItem('writerListFilterParams', JSON.stringify(this.searchForm.value));
+    this.writersToDisplay = await this.searchService.writerListFilter(this.searchForm.value);
   }
 
   ngOnDestroy() {

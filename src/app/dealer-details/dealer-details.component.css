@@ -199,14 +199,8 @@ img {
   display: block;
 }
 
-.icon-share {
-  position: absolute;
-  right: 76vw;
-  top: 10vw;
-}
-
 .icon-delete {
   position: absolute;
-  right: 76vw;
+  right: 68vw;
   top: 19vw;
 }

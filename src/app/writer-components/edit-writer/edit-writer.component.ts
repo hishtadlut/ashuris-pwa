@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { StitchService } from '../../stitch-service.service';
-import { areYouSureYouWantToRemove, fileToBase64 } from '../../utils/utils';
+import { areYouSureYouWantToRemove, blobToBase64 } from '../../utils/utils';
 import { GoogleMapsService } from '../../google-maps-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -334,7 +334,7 @@ export class EditWriterComponent implements OnInit {
   }
 
   onAddProfileImage(file: File) {
-    fileToBase64(file)
+    blobToBase64(file)
       .then((base64File: string | ArrayBuffer) => {
         this.writerForm.controls.profileImage.setValue(base64File);
       }).catch((err) => {
@@ -343,7 +343,7 @@ export class EditWriterComponent implements OnInit {
   }
 
   onAddPhoto(file: File) {
-    fileToBase64(file)
+    blobToBase64(file)
       .then((base64File: string) => {
         const photosArray = this.writerForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
@@ -432,6 +432,12 @@ export class EditWriterComponent implements OnInit {
       this.writerForm.controls.streetNumber.setValue(address.streetNumber);
       this.writerForm.controls.coordinates.setValue(address.coordinates);
     });
+  }
+
+  curserToEnd(event) {
+    const input = event.target as HTMLInputElement;
+    const inputLength = input.value.length;
+    input.setSelectionRange(inputLength, inputLength);
   }
 
 }

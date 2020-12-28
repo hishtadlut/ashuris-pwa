@@ -51,7 +51,6 @@
         <div>
           <label class="level-checkbox" [ngClass]="{'checked': writerForm.get(['isAppropriate', 'level']).value === 'לא מתאים'}">
                         <input type="radio" formControlName="level" value="לא מתאים">
-                        <!-- onfocus="this.oldvalue = this.value;" onchange="onChangeTest(this);this.oldvalue = this.value;" -->
                         1
                     </label>
         </div>
@@ -101,7 +100,7 @@
       <div class="prices-input-wrapper inner-grid-2">
         <div formGroupName="priceForTorahScroll" class="price-for-item inner-grid-2">
           <div class="book-desc">ספר</div>
-          <input currencyMask type="tel" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+          <input currencyMask appCurserToEnd type="tel" [placeholder]="writerForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTorahScroll', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>
@@ -119,7 +118,7 @@
         </div>
         <div formGroupName="priceForMezuzah" class="price-for-item inner-grid-2">
           <div class="book-desc">מזוזה</div>
-          <input currencyMask type="tel" placeholder="מחיר למזוזה" formControlName="price">
+          <input currencyMask appCurserToEnd type="tel" placeholder="מחיר למזוזה" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForMezuzah', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>
@@ -137,7 +136,7 @@
         </div>
         <div formGroupName="priceForTefillin" class="price-for-item inner-grid-2">
           <div class="book-desc">תפילין</div>
-          <input currencyMask type="tel" placeholder="מחיר לתפילין" formControlName="price">
+          <input currencyMask appCurserToEnd type="tel" placeholder="מחיר לתפילין" formControlName="price">
           <div class="worth-it-buttons-wrapper inner-grid-2">
             <label [ngClass]="{'checked': writerForm.get(['pricesDeatails', 'priceForTefillin', 'worthIt']).value === 'false'}" class="size-checkbox">
                             <i class="icofont-close-line"></i>
@@ -538,7 +537,7 @@
             </label>
       <div *ngFor="let photoControl of writerForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="writerForm.controls.photos_620x620.value[i]" class="img">
+        <img appDoubleTapOpenImg [base64Img]="writerForm.controls.photos.value[i]" [src]="writerForm.controls.photos_620x620.value[i]" class="img">
       </div>
     </div>
     <div class="recording-section inner-grid">

@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { State } from '../reducers';
-import { areYouSureYouWantToRemove, fileToBase64 } from '../utils/utils';
+import { areYouSureYouWantToRemove, blobToBase64 } from '../utils/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from '../stitch-service.service';
 import { Location } from '@angular/common';
@@ -115,7 +115,7 @@ export class EditDealerComponent implements OnInit {
   }
 
   onAddProfileImage(file: File) {
-    fileToBase64(file)
+    blobToBase64(file)
       .then((base64File: string | ArrayBuffer) => {
         this.dealerForm.controls.profileImage.setValue(base64File);
       }).catch((err) => {

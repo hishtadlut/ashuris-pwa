@@ -6,7 +6,7 @@ require('firebase/auth');
 require('firebase/storage');
 
 import { v4 as uuidv4 } from 'uuid';
-import { base64ToBlob, blobToObjectUrl } from './utils/utils';
+import { base64ToBlob, blobToBase64, blobToObjectUrl } from './utils/utils';
 
 interface ImgDocument {
   _id: string;
@@ -15,13 +15,15 @@ interface ImgDocument {
   fileName: string;
   extension: string;
   imgUrl: string;
+  uploded: boolean;
+  uplodedTime: number;
   _deleted?: boolean;
 }
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  imagesToUploadDB = new PouchDB<ImgDocument>(LocalDbNames.IMAGES_TO_UPLOAD_DB, { revs_limit: 1, auto_compaction: true });
+  imagesToUploadDB = new PouchDB<ImgDocument>(LocalDbNames.IMAGES_TO_UPLOAD_DB, { revs_limit: 1 });
 
   firebaseConfig = {
     apiKey: 'AIzaSyAhHbU3IToJtQtVgCi8QTC5uTVkMhp9-DU',
@@ -34,14 +36,6 @@ export class FirebaseService {
   };
 
   firebaseRef = firebase.initializeApp(this.firebaseConfig);
-  constructor() {
-    this.uploadeImagesToFirebase();
-    setInterval(() => {
-      this.uploadeImagesToFirebase();
-    }, 30000);
-    this.firebaseRef.storage().setMaxOperationRetryTime(30000);
-    this.firebaseRef.storage().setMaxUploadRetryTime(30000);
-  }
 
   async addImagesToQueueOfUploades(img: Blob, folderName: string, extension: string) {
     const fileName = uuidv4();
@@ -52,7 +46,9 @@ export class FirebaseService {
       folderName,
       fileName,
       extension,
-      imgUrl
+      imgUrl,
+      uploded: false,
+      uplodedTime: null
     });
     return imgUrl;
   }
@@ -66,36 +62,39 @@ export class FirebaseService {
   }
 
   uploadeImagesToFirebase() {
-    this.imagesToUploadDB.allDocs<ImgDocument>({ include_docs: true })
-      .then(documents => {
-        console.log(documents.rows);
-        documents.rows.forEach(document => {
-          console.log('Uploade started');
-          this.uploadeImgToFirebase(document.doc.img, document.doc.folderName, document.doc.fileName, document.doc.extension)
-            .then((uploadTask) => {
-              const onResolve = (foundURL: string) => {
-                console.log('Uploade complete ' + foundURL);
-                this.removeImagesFromQueueOfUploades(document.doc._id);
+    return new Promise<void>((resolve, reject) => {
+      this.imagesToUploadDB.allDocs<ImgDocument>({ include_docs: true })
+        .then(async documents => {
+          console.log(documents.rows);
+          for await (const document of documents.rows) {
+            if (document.doc?.uploded === false) {
+              const img = await blobToBase64(document.doc.img);
+              const form = {
+                folderName: document.doc.folderName,
+                filename: `${document.doc.fileName}.${document.doc.extension}`,
+                img,
               };
-              const onReject = (error: any) => {
-                console.log('uploadTask.task.cancel()');
-                console.log(error);
-              };
-
-              this.firebaseRef
-                .storage()
-                .ref()
-                .child(`${document.doc.folderName}/${document.doc.fileName}.${document.doc.extension}`)
-                .getDownloadURL()
-                .then(onResolve, onReject);
-
-            })
-            .catch(err => {
-              console.log(err);
-            });
+              await fetch('https://us-central1-ashuris.cloudfunctions.net/aabbcc', { method: 'POST', body: JSON.stringify(form) })
+                .then(async response => {
+                  console.log(response.status);
+                  if (response.status !== 200) {
+                    console.log('bug');
+                  } else if (response.status === 200) {
+                    await this.imagesToUploadDB.put({ ...document.doc, uploded: true, uplodedTime: new Date().getTime() });
+                  }
+                })
+                .catch(console.error);
+            } else if (document.doc?.uploded === true) {
+              console.log(document.doc.uplodedTime, new Date().getTime());
+              console.log((new Date().getTime() - document.doc.uplodedTime) / 60000);
+              if ((new Date().getTime() - document.doc.uplodedTime) >= 600000) {
+                await this.removeImagesFromQueueOfUploades(document.doc._id);
+              }
+            }
+          }
         });
-      })
-      .catch(console.log);
+      resolve();
+    }).catch(console.log);
   }
 
   uploadeImgToFirebase(blob: Blob, folderName: string, filename: string, extension: string) {

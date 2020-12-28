@@ -14,7 +14,7 @@ interface Navigator {
   canShare?: (data?: ShareData) => boolean;
 }
 
-export function fileToBase64(file: Blob) {
+export function blobToBase64(file: Blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -25,7 +25,12 @@ export function fileToBase64(file: Blob) {
 export function base64ToBlob(url: string): Promise<Blob> {
   return new Promise((resolve, reject) => {
     fetch(url)
-      .then(res => resolve(res.blob()))
+      .then(res => {
+        if (res.status === 404) {
+          return reject();
+        }
+        resolve(res.blob());
+      })
       .catch(err => reject(err));
   });
 }
@@ -73,13 +78,13 @@ export function shareButton(photo: string) {
           }).catch((error => {
             console.log('share error: ' + error);
             // TODO fix in ios 14.02?
-            // window.location.reload(true);
+            window.location.reload(true);
           }));
       })
       .catch((error => {
         console.log('share error: ' + error);
         // TODO fix in ios 14.02?
-        // window.location.reload(true);
+        window.location.reload(true);
       }));
   } else {
     console.log('navigator.share err');

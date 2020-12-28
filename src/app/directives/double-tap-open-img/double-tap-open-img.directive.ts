@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { base64ToBlob } from 'src/app/utils/utils';
+import { base64ToBlob, blobToObjectUrl } from 'src/app/utils/utils';
 
 @Directive({
   selector: '[appDoubleTapOpenImg]'
@@ -21,23 +21,12 @@ export class DoubleTapOpenImgDirective {
     this.openImgInOterPage();
   }
 
-  openImgInOterPage() {
+  async openImgInOterPage() {
     console.log('tapped');
+    if (this.base64Img.includes('data:image/jpeg;base64,')) {
+      return window.open(blobToObjectUrl(await base64ToBlob(this.base64Img)));
+    }
     const win = window.open(this.base64Img);
-    // const img = new Image();
-    // img.src = this.base64Img;
-    // img.style.width = '100%';
-    // const newPage = window.open(this.base64Img).document.body.appendChild(img);
-    // base64ToBlob(this.base64Img)
-    //   .then(img => {
-    //     this.openBlob(img);
-    //   });
   }
-
-  openBlob(base64URL: Blob) {
-    const fileURL = URL.createObjectURL(base64URL);
-    const win = window.open(fileURL);
-    // var file = new Blob([byteArray], { type: mimeType + ';base64' });
-    // win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-  }
+  
 }

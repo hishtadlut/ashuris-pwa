@@ -66,83 +66,93 @@ export class StitchService {
         //   console.log(err);
         // });
         this.syncAllDBS();
-        setInterval(() => {
-            this.syncAllDBS();
-        }, 120000);
     }
 
     syncWritersDBS() {
-        this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
+        return this.syncDb(this.localWritersDB, this.remoteWritersDB, loadWritersList);
     }
 
     syncDealersDBS() {
-        this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
+        return this.syncDb(this.localDealersDB, this.remoteDealersDB, loadDealerList);
     }
 
     syncBooksDBS() {
-        this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
+        return this.syncDb(this.localBooksDB, this.remoteBooksDB, loadBookList);
     }
 
     syncGeneralDBS() {
-        this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
+        return this.syncDb(this.localGeneralDB, this.remoteGeneralDB);
     }
 
-    syncAllDBS() {
-        this.syncWritersDBS();
-        this.syncDealersDBS();
-        this.syncBooksDBS();
-        this.syncGeneralDBS();
+    async syncAllDBS() {
+        while (true) {
+            try {
+                await this.syncWritersDBS();
+                await this.syncBooksDBS();
+                await this.syncDealersDBS();
+                await this.syncGeneralDBS();
+                await this.firebaseService.uploadeImagesToFirebase();
+                await new Promise(resolve => setTimeout(resolve, 60000));
+            } catch (error) {
+                console.log(error);
+                await new Promise(resolve => setTimeout(resolve, 60000));
+            }
+        }
     }
 
     syncDb(localDb: PouchDB.Database<{}>, remoteDb: PouchDB.Database<{}>, actionToDispatch?: any) {
-        localDb.compact();
         let syncHandler: PouchDB.Replication.Sync<{}>;
-        const startSync = () => {
+
+        const removeListeners = async (DBS: PouchDB.Replication.Sync<{}>) => {
+            DBS.cancel();
+            await DBS.removeAllListeners();
+        };
+
+        const stopSync = async (DBS: PouchDB.Replication.Sync<{}>) => {
             try {
-                remoteDb.logIn('aaf', 'Aaf0583215251').then((user) => {
-                    syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
-                    syncHandler.on('change', (change) => {
-                        console.log(localDb.name);
-                        console.log(change);
-                    });
-                    syncHandler.on('error', (err) => {
-                        console.log(err);
-                        console.log('sync err stopped ' + localDb.name);
-                        stopSync(syncHandler);
-                    });
-                    syncHandler.on('active', () => {
-                        console.log('active');
-                    });
-                    syncHandler.on('complete', () => {
-                        console.log('sync complete ' + localDb.name);
-                        if (actionToDispatch) {
-                            this.store$.dispatch(actionToDispatch());
-                        }
-                        stopSync(syncHandler);
-                    });
-                });
+                await removeListeners(DBS);
+                console.log('sync stopped ' + localDb.name);
             } catch (error) {
                 console.log(error);
-                console.log('sync stopped ' + localDb.name);
-                stopSync(syncHandler);
             }
         };
-        const stopSync = (DBS: PouchDB.Replication.Sync<{}>) => {
-            try {
-                console.log('sync stopped ' + localDb.name);
-                removeListeners(DBS);
-            } catch (error) {
-                console.log(error);
-                console.log('sync stopped ' + localDb.name);
-                stopSync(DBS);
-            }
+        const startSync = () => {
+            return new Promise<void>((resolve, reject) => {
+                remoteDb.logIn('aaf', 'Aaf0583215251')
+                    .then((user) => {
+                        syncHandler = localDb.sync(remoteDb, { timeout: 60000 });
+                        syncHandler.on('change', (change) => {
+                            console.log(localDb.name);
+                            console.log(change);
+                        });
+                        syncHandler.on('error', async (err) => {
+                            console.log(err);
+                            console.log('sync err stopped ' + localDb.name);
+                            await stopSync(syncHandler);
+                            reject();
+                        });
+                        syncHandler.on('active', () => {
+                            console.log('active');
+                        });
+                        syncHandler.on('complete', async () => {
+                            console.log('sync complete ' + localDb.name);
+                            if (actionToDispatch) {
+                                this.store$.dispatch(actionToDispatch());
+                            }
+                            await stopSync(syncHandler);
+                            resolve();
+                        });
+                    })
+                    .catch(async error => {
+                        console.log(error);
+                        console.log('sync log in err stopped');
+                        reject();
+                    });
+            });
 
         };
-        const removeListeners = (DBS: PouchDB.Replication.Sync<{}>) => {
-            DBS.cancel();
-            DBS.removeAllListeners();
-        };
-        startSync();
+
+        return startSync();
     }
 
     async uploadeBase64andReplaceWithStorageUrls(base64: string[], name: string, id: string, extension: string) {
@@ -379,10 +389,10 @@ export class StitchService {
             const oldBook = await this.getBookById(bookClone._id);
             const putResult = await this.localBooksDB.put({ ...oldBook, ...bookClone });
             if (oldBook.dealer) {
-                this.removeBookFromDealer(oldBook.dealer, bookClone._id);
+                await this.removeBookFromDealer(oldBook.dealer, bookClone._id);
             }
             if (dealerId) {
-                this.addBookToDealer(putResult.id, dealerId);
+                await this.addBookToDealer(putResult.id, dealerId);
             }
         } else {
             bookClone._id = uuidv4();
@@ -390,19 +400,20 @@ export class StitchService {
             bookClone.photos_620x620 = bookClone.photos.map(photoUrl => photoUrl.replace('.jpg', '_620x620.jpg'));
             bookClone.recordings = await this.uploadeBase64andReplaceWithStorageUrls(bookClone.recordings, bookClone.name, bookClone._id, 'wav');
             const putResult = await this.localBooksDB.put({ ...bookClone });
-            this.addBookToDealer(putResult.id, dealerId);
+            await this.addBookToDealer(putResult.id, dealerId);
         }
     }
 
-    addBookToDealer(bookId: string, dealerId: string) {
-        this.localDealersDB.get(dealerId)
-            .then(dealer => {
-                console.log(dealer + ' dealer');
-                let bookArray = dealer.books ? dealer.books : [];
-                bookArray.push(bookId);
-                bookArray = [...new Set(Object.values(bookArray))];
-                this.localDealersDB.put({ ...dealer, books: bookArray });
-            }).catch(console.log);
+    async addBookToDealer(bookId: string, dealerId: string) {
+        try {
+            const dealer = await this.localDealersDB.get(dealerId);
+            let bookArray = dealer.books ? dealer.books : [];
+            bookArray.push(bookId);
+            bookArray = [...new Set(Object.values(bookArray))];
+            await this.localDealersDB.put({ ...dealer, books: bookArray });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     async getDealerBookIds(dealerId: string): Promise<string[]> {
@@ -419,7 +430,7 @@ export class StitchService {
             const bookList = bookIds.map(async bookId => {
                 const bookList = await this.localBooksDB.find({
                     selector: { _id: bookId },
-                    fields: ['_id', 'levelOfUrgency', 'name', 'writingDeatails'],
+                    fields: ['_id', 'levelOfUrgency', 'name', 'writingDeatails', 'isSold'],
                     limit: 1
                 });
                 // there is just one there "limit: 1"
@@ -439,21 +450,20 @@ export class StitchService {
         return writerList.docs.map(writer => writer);
     }
 
-    removeBookFromDealer(dealerFullName: string, bookId: string) {
-        this.getDealersFullNameAndId()
-            .then((dealerList => {
-                const dealerId = dealerList.find(dealer => dealer.fullName === dealerFullName)._id;
-                this.getDealerById(dealerId)
-                    .then(dealer => {
-                        const booksArray: string[] = dealer.books;
-                        const index = booksArray.indexOf(bookId);
-                        if (index > -1) {
-                            booksArray.splice(index, 1);
-                        }
-                        this.localDealersDB.put({ ...dealer, books: booksArray });
-                    })
-                    .catch(console.error);
-            }));
+    async removeBookFromDealer(dealerFullName: string, bookId: string) {
+        try {
+            const dealerList = await this.getDealersFullNameAndId();
+            const dealerId = dealerList.find(dealer => dealer.fullName === dealerFullName)?._id;
+            const dealer = await this.getDealerById(dealerId);
+            const booksArray: string[] = dealer.books;
+            const index = booksArray.indexOf(bookId);
+            if (index > -1) {
+                booksArray.splice(index, 1);
+            }
+            return this.localDealersDB.put({ ...dealer, books: booksArray });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     removeItem(localDbName: LocalDbNames, item: Writer | Book | Dealer) {

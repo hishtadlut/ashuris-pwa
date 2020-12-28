@@ -24,26 +24,23 @@ export class BookListScreenComponent implements OnInit {
     private pouchDbService: StitchService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.showOnlySoldedBooks = false;
     this.locationWithoutParameters = this.location.path().split('?')[0];
     if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
-      setTimeout(async () => {
-        this.getBooksBySoldCondition(false);
-      }, 100);
+      await this.getBooksBySoldCondition(false);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
       this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
         .then(books => {
-          this.booksToDisplay = sortByLetters(books);
+          const availableBooks = books.filter((book: Book) => book?.isSold.boolean === false);
+          this.booksToDisplay = sortByLetters(availableBooks);
         });
     }
   }
 
-  getBooksBySoldCondition(isSold: boolean) {
-    this.pouchDbService.getBooksBySoldCondition(isSold)
-      .then(books => {
-        this.bookList = this.booksToDisplay = sortByLetters(books.docs);
-      });
+  async getBooksBySoldCondition(isSold: boolean) {
+    const books = await this.pouchDbService.getBooksBySoldCondition(isSold)
+    this.bookList = this.booksToDisplay = sortByLetters(books.docs);
   }
 
   onKeyUpSearchByName(event) {

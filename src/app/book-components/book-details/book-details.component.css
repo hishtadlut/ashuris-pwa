@@ -190,13 +190,14 @@ img {
 
 .icon-share {
   position: absolute;
-  right: 76vw;
+  padding: 20px;
+  right: 68vw;
   top: 10vw;
 }
 
 .icon-delete {
   position: absolute;
-  right: 76vw;
+  right: 68vw;
   top: 19vw;
 }
 

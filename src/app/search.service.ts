@@ -314,8 +314,9 @@ export class SearchService implements OnDestroy {
         }
     }
 
-    writerListFilter(filters: WriterListFilters) {
-        const queryResult = this.writersList.filter(writer => {
+    async writerListFilter(filters: WriterListFilters) {
+        const writersList = await this.pouchDbService.getWriters()
+        const queryResult = writersList.filter(writer => {
             const cityQuery = (writer.city === filters.city || filters.city === '');
             const communityQuery = (writer.communityDeatails.community === filters.community || filters.community === '');
 

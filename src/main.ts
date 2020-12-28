@@ -6,7 +6,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import 'hammerjs';
 import VConsole from 'vconsole';
 
 if (environment.production) {
@@ -15,7 +14,7 @@ if (environment.production) {
 
 
 const vConsole = new VConsole();
-console.log('version 0.1.16');
+console.log('Version 0.2.12');
 
 
 document.addEventListener('DOMContentLoaded', () => {

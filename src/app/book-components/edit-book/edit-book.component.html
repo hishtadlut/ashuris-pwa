@@ -389,13 +389,13 @@
         <div class="input-grid">
           <div class="book-desc">מחיר</div>
           <div formGroupName="priceForTorahScroll" class="gap inner-grid-2">
-            <input currencyMask type="tel" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
+            <input currencyMask appCurserToEnd type="tel" [placeholder]="bookForm.get(['pricesDeatails','isPricePerPage']).value" formControlName="price">
           </div>
         </div>
         <div class="input-grid">
           <div class="book-desc">שווה</div>
           <div formGroupName="priceForTorahScroll" class="inner-grid-2">
-            <input currencyMask type="tel" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
+            <input currencyMask appCurserToEnd type="tel" placeholder="כמה שווה לדעתי" formControlName="howMuchIsItWorth">
           </div>
         </div>
       </div>
@@ -479,7 +479,7 @@
       </label>
       <div *ngFor="let photoControl of bookForm.controls.photos['controls']; let i = index;">
         <div (click)="deletePhoto(i)">מחק תמונה</div>
-        <img appDoubleTapOpenImg [base64Img]="photoControl.value" [src]="bookForm.controls.photos_620x620.value[i]" class="img">
+        <img appDoubleTapOpenImg [base64Img]="bookForm.controls.photos.value[i]" [src]="bookForm.controls.photos_620x620.value[i]" class="img">
       </div>
     </div>
     <div class="inner-grid">
