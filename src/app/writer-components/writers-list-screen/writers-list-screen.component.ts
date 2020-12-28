@@ -10,6 +10,7 @@ import { StitchService } from 'src/app/stitch-service.service';
 import { LocationPath } from 'src/app/enums';
 import { Location } from '@angular/common';
 import { sortByLetters } from 'src/app/utils/utils';
+import { ScrollService } from 'src/app/scroll.service';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -37,6 +38,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     private location: Location,
+    private scrollService: ScrollService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -78,10 +80,9 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
           this.writersList = this.writersToDisplay = writers;
         });
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
-      setTimeout(async () => {
-        const writers = await this.pouchDbService.getWriters();
-        this.writersList = this.writersToDisplay = sortByLetters(writers);
-      }, 100);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      const writers = await this.pouchDbService.getWriters();
+      this.writersList = this.writersToDisplay = sortByLetters(writers);
     }
     if (localStorage.getItem('UseWriterListFilterParams') === 'true') {
       this.searchForm.patchValue(JSON.parse(localStorage.getItem('writerListFilterParams')));
@@ -89,9 +90,11 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       const writers = await this.pouchDbService.getWriters();
       this.writersList = this.writersToDisplay = sortByLetters(writers);
     }
+    setTimeout(() => {
+      this.scrollService.scroll();
+    }, 0);
     localStorage.setItem('UseWriterListFilterParams', 'false');
     localStorage.setItem('writerListFilterParams', '{}');
-    
   }
 
   onKeyUpSearchByName(event) {

@@ -5,6 +5,7 @@ import { LocationPath } from 'src/app/enums';
 import { ActivatedRoute } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
 import { sortByLetters } from 'src/app/utils/utils';
+import { ScrollService } from 'src/app/scroll.service';
 
 @Component({
   selector: 'app-book-list-screen',
@@ -21,7 +22,8 @@ export class BookListScreenComponent implements OnInit {
   constructor(
     private location: Location,
     private activatedRoute: ActivatedRoute,
-    private pouchDbService: StitchService
+    private pouchDbService: StitchService,
+    private scrollService: ScrollService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -30,12 +32,13 @@ export class BookListScreenComponent implements OnInit {
     if (this.locationWithoutParameters === LocationPath.BOOK_LIST_SCREEN) {
       await this.getBooksBySoldCondition(false);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
-      this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
-        .then(books => {
-          const availableBooks = books.filter((book: Book) => book?.isSold.boolean === false);
-          this.booksToDisplay = sortByLetters(availableBooks);
-        });
+      const books = await this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
+      const availableBooks = books.filter((book: Book) => book?.isSold.boolean === false);
+      this.booksToDisplay = sortByLetters(availableBooks);
     }
+    setTimeout(() => {
+      this.scrollService.scroll();
+    }, 0);
   }
 
   async getBooksBySoldCondition(isSold: boolean) {

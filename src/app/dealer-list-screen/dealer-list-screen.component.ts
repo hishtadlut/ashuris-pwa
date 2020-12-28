@@ -3,6 +3,7 @@ import { Dealer } from '../interfaces';
 import { Store, select } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
 import { State } from '../reducers';
+import { ScrollService } from '../scroll.service';
 
 @Component({
   selector: 'app-dealer-list-screen',
@@ -29,11 +30,14 @@ export class DealerListScreenComponent implements OnInit, OnDestroy {
     select('writers', 'communitiesList')
   );
 
-  constructor(private store$: Store<State>) { }
+  constructor(private store$: Store<State>, private scrollService: ScrollService) { }
 
   ngOnInit(): void {
     this.dealerList$Subscription = this.dealerList$.subscribe((dealerList) => {
       this.dealerList = this.dealersToDisplay = dealerList;
+      setTimeout(() => {
+        this.scrollService.scroll();
+      }, 0);
     });
     this.citiesList$Subscription = this.citiesList$.subscribe((citiesList) => this.citiesList = citiesList);
     this.communitiesList$Subscription = this.communitiesList$.subscribe((communitiesList) => this.communitiesList = communitiesList);

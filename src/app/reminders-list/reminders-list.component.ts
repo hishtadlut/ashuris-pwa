@@ -7,6 +7,7 @@ import { BooksOrDealers } from '../enums';
 import { Store } from '@ngrx/store';
 import { State } from '../reducers';
 import { putChangeUrgencyBookList, putChangeUrgencyWritersList } from '../actions/writers.actions';
+import { ScrollService } from '../scroll.service';
 
 
 @Component({
@@ -16,40 +17,43 @@ import { putChangeUrgencyBookList, putChangeUrgencyWritersList } from '../action
 })
 export class RemindersListComponent implements OnInit {
 
-  constructor(private location: Location, private pouchDbService: StitchService, private store: Store<State>) { }
+  constructor(
+    private location: Location, 
+    private pouchDbService: StitchService, 
+    private store: Store<State>,
+    private scrollService: ScrollService
+    ) { }
   levelOfUrgency = 3;
   booksOrDealersPage: BooksOrDealers;
-  getReminders: (levelOfUrgency: number) => void;
+  getReminders: (levelOfUrgency: number) => Promise<void>;
   listToDisplay: Writer[] | Book[] = [];
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.location.path() === '/writer-reminders') {
       this.booksOrDealersPage = BooksOrDealers.dealers;
       this.getReminders = this.getSoferReminders;
-      this.getReminders(this.levelOfUrgency);
+      await this.getReminders(this.levelOfUrgency);
     } else if (this.location.path() === '/book-reminders') {
       this.booksOrDealersPage = BooksOrDealers.books;
       this.getReminders = this.getbookReminders;
-      this.getReminders(this.levelOfUrgency);
+      await this.getReminders(this.levelOfUrgency);
     }
+    setTimeout(() => {
+      this.scrollService.scroll();
+    }, 0);
   }
 
-  getSoferReminders(levelOfUrgency: number) {
+  async getSoferReminders(levelOfUrgency: number) {
     this.store.dispatch(putChangeUrgencyWritersList());
     this.levelOfUrgency = levelOfUrgency;
-    this.pouchDbService.getSoferReminders(levelOfUrgency)
-      .then((writersResponse) => {
-        this.levelOfUrgency = levelOfUrgency;
-        this.listToDisplay = sortByLetters(writersResponse.docs) as Writer[];
-      });
+    const writersResponse = await this.pouchDbService.getSoferReminders(levelOfUrgency)
+    this.listToDisplay = sortByLetters(writersResponse.docs) as Writer[];
   }
 
-  getbookReminders(levelOfUrgency: number) {
+  async getbookReminders(levelOfUrgency: number) {
     this.store.dispatch(putChangeUrgencyBookList());
     this.levelOfUrgency = levelOfUrgency;
-    this.pouchDbService.getBookReminders(levelOfUrgency)
-      .then((booksResponse) => {
-        this.listToDisplay = sortByLetters(booksResponse.docs.filter((book => book.isSold.boolean === false))) as Book[];
-      });
+    const booksResponse = await this.pouchDbService.getBookReminders(levelOfUrgency)
+    this.listToDisplay = sortByLetters(booksResponse.docs.filter((book => book.isSold.boolean === false))) as Book[];
   }
 
 }

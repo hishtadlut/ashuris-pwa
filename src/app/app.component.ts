@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationEnd } from '@angular/router';
+import { Router, Event, NavigationEnd, NavigationStart } from '@angular/router';
 import { State } from './reducers';
 import { Store } from '@ngrx/store';
 import {
@@ -11,6 +11,7 @@ import {
 import { LocationPath } from './enums';
 import { Subscription } from 'rxjs';
 import { SearchService } from './search.service';
+import { ScrollService } from './scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,16 @@ export class AppComponent implements OnInit {
     private router: Router,
     private store: Store<State>,
     private searchService: SearchService,
+    private scrollService: ScrollService,
   ) { }
 
   ngOnInit() {
     this.routerNavigation$Subscription = this.router.events.subscribe((event: Event) => {
-
+      if (event instanceof NavigationStart) {
+        this.scrollService.setLastScrollPosition()
+      }
       if (event instanceof NavigationEnd) {
+        this.scrollService.scrollToTop();
         if (
           this.previousUrl === '/writers-list-screen' ||
           this.previousUrl === '/search-result' ||
@@ -62,7 +67,6 @@ export class AppComponent implements OnInit {
           this.store.dispatch(setBookFormValues({ form: null }));
           this.searchService.clearAdvancedSearchParameters();
         }
-        this.previousUrl = event.urlAfterRedirects;
         this.previousUrl = event.urlAfterRedirects;
       }
     });

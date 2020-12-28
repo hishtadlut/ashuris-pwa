@@ -6,6 +6,7 @@ import { State } from '../reducers';
 import { Location } from '@angular/common';
 import { LocationPath } from '../enums';
 import { SearchService } from '../search.service';
+import { ScrollService } from '../scroll.service';
 
 @Component({
   selector: 'app-search-result',
@@ -23,10 +24,16 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     private store$: Store<State>,
     private searchService: SearchService,
     public location: Location,
+    private scrollService: ScrollService,
   ) { }
 
   ngOnInit(): void {
-    this.searchResult$Subscription = this.searchResult$.subscribe((searchResult) => this.searchResult = searchResult);
+    this.searchResult$Subscription = this.searchResult$.subscribe((searchResult) => {
+      this.searchResult = searchResult;
+      setTimeout(() => {
+        this.scrollService.scroll();
+      }, 0);
+    });
   }
 
   newSearch() {
