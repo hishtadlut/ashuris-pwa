@@ -19,7 +19,7 @@ import { ScrollService } from 'src/app/scroll.service';
 })
 export class WritersListScreenComponent implements OnInit, OnDestroy {
   sortButtonText: string;
-  
+
   writersToDisplay: Writer[] = [];
 
   writersList: Writer[];
@@ -34,6 +34,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
   searchFormInitialValue: any;
+
+  getWritersFunction: () => Promise<void>;
   constructor(
     private store$: Store<State>,
     private searchService: SearchService,
@@ -75,15 +77,19 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     this.searchFormInitialValue = this.searchForm.value;
 
     if (this.location.path().split('?')[0] === LocationPath.WRITERS_IN_ROOM_LIST) {
-      const city = this.activatedRoute.snapshot.queryParamMap.get('city');
-      const street = this.activatedRoute.snapshot.queryParamMap.get('street');
-      const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
-      const writers = await this.pouchDbService.getWritersInRoom(city, street, streetNumber)
-      this.writersList = writers;
+      this.getWritersFunction = async () => {
+        const city = this.activatedRoute.snapshot.queryParamMap.get('city');
+        const street = this.activatedRoute.snapshot.queryParamMap.get('street');
+        const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
+        const writers = await this.pouchDbService.getWritersInRoom(city, street, streetNumber)
+        this.writersList = writers;
+      }
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
-      await new Promise(resolve => setTimeout(resolve, 100));
-      const writers = await this.pouchDbService.getWriters();
-      this.writersList = writers;
+      this.getWritersFunction = async () => {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        const writers = await this.pouchDbService.getWriters();
+        this.writersList = writers;
+      }
     }
     if (localStorage.getItem('UseWriterListFilterParams') === 'true') {
       this.searchForm.patchValue(JSON.parse(localStorage.getItem('writerListFilterParams')));
@@ -105,14 +111,16 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     );
   }
 
-  resetSearch() {
-    this.writersToDisplay = this.writersList;
+  async resetSearch() {
+    await this.getWritersFunction()
+    this.sortList();
     this.searchForm.reset(this.searchFormInitialValue);
   }
 
   async search() {
     localStorage.setItem('writerListFilterParams', JSON.stringify(this.searchForm.value));
-    this.writersToDisplay = await this.searchService.writerListFilter(this.searchForm.value);
+    this.writersList = await this.searchService.writerListFilter(this.searchForm.value);
+    this.sortList();
   }
 
   sortList() {
