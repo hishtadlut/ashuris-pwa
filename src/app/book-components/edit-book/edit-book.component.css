@@ -145,8 +145,6 @@ label input {
   align-content: center;
 }
 
-.price-deatail-section {}
-
 .type-of-price-selection-wrapper {
   grid-template: auto / 1fr 1fr;
 }
@@ -415,4 +413,17 @@ label .visible-input {
 
 .margin-top-bottom {
   margin: 3vw 0;
+}
+
+.fill-location {
+  background-color: #2A2E43;
+  color: #C89C5B;
+  padding: 2vw 3vw;
+  margin: 6vw 4vw;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  font-family: Arial;
+  max-width: 33vw;
+  text-align: center;
 }

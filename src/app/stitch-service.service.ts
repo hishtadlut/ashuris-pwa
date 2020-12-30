@@ -308,7 +308,7 @@ export class StitchService {
     async getBooksBySoldCondition(isSold: boolean) {
         return await this.localBooksDB.find({
             selector: { 'isSold.boolean': isSold },
-            fields: ['_id', 'name', 'levelOfUrgency', 'writingDeatails'],
+            fields: ['_id', 'name', 'levelOfUrgency', 'writingDeatails', 'editDate'],
         });
     }
 

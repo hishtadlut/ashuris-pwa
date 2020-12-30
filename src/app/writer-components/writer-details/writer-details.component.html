@@ -259,6 +259,10 @@
           </div>
         </div>
       </div>
+      <div class="date-stamp-wrapper">
+        <div *ngIf="writer.creationDate" class="date-stamp"> Creation Date: {{writer.creationDate | date: 'medium'}} </div>
+        <div *ngIf="writer.editDate" class="date-stamp"> Edit Date: {{writer.editDate | date:'medium'}}</div>
+      </div>
     </div>
   </div>
 </div>

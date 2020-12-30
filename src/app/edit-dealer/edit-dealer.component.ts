@@ -20,7 +20,7 @@ import { LocalDbNames, LocationPath, RemoveItem } from '../enums';
 })
 export class EditDealerComponent implements OnInit {
   editMode: boolean;
-  dealerForm: FormGroup;
+  ngForm: FormGroup;
   dialogFormGroup: FormGroup = null;
   locationWithoutParameters = this.location.path().split('?')[0];
   locationPath: typeof LocationPath = LocationPath;
@@ -46,8 +46,13 @@ export class EditDealerComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.editMode = (this.location.path().split('?')[0] === '/edit-dealer');
 
-    this.dealerForm = new FormGroup({
-
+    this.ngForm = new FormGroup({
+      creationDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
+      editDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
       note: new FormControl('', [
         // Validators.required,
       ]),
@@ -96,7 +101,7 @@ export class EditDealerComponent implements OnInit {
     if (this.editMode) {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
       this.dealer = await this.pouchDbService.getDealerById(id);
-      this.dealerForm.patchValue(this.dealer);
+      this.ngForm.patchValue(this.dealer);
       this.textForSaveButton = 'שמור שינויים';
     }
   }
@@ -117,7 +122,7 @@ export class EditDealerComponent implements OnInit {
   onAddProfileImage(file: File) {
     blobToBase64(file)
       .then((base64File: string | ArrayBuffer) => {
-        this.dealerForm.controls.profileImage.setValue(base64File);
+        this.ngForm.controls.profileImage.setValue(base64File);
       }).catch((err) => {
         console.log(err);
       });
@@ -130,13 +135,13 @@ export class EditDealerComponent implements OnInit {
   }
 
   onSubmit(event) {
-    if (this.dealerForm.valid) {
+    if (this.ngForm.valid) {
       const div = (event.target as HTMLDivElement);
       div.classList.add('mirror-rotate');
       setTimeout(() => {
         div.classList.remove('mirror-rotate');
       }, 2000);
-      this.pouchDbService.createDealer({ ...this.dealer, ...this.dealerForm.value });
+      this.pouchDbService.createDealer({ ...this.dealer, ...this.ngForm.value });
       this.store$.dispatch(loadDealerList());
       if (this.location.path() === LocationPath.CREATE_DEALER_FOR_BOOK) {
         this.router.navigate([LocationPath.SAVE_DEALER_FOR_BOOK]);
@@ -151,10 +156,14 @@ export class EditDealerComponent implements OnInit {
   fillLocation() {
     this.googleMapsService.setAddressThroghGoogleMaps()
       .then((address: Address) => {
-        this.dealerForm.controls.city.setValue(address.city);
-        this.dealerForm.controls.street.setValue(address.street);
-        this.dealerForm.controls.streetNumber.setValue(address.streetNumber);
-        this.dealerForm.controls.coordinates.setValue(address.coordinates);
+        this.ngForm.controls.city.setValue(address.city);
+        this.ngForm.controls.street.setValue(address.street);
+        this.ngForm.controls.streetNumber.setValue(address.streetNumber);
+        this.ngForm.controls.coordinates.setValue(address.coordinates);
       });
+  }
+
+  updateEditDate() {
+    this.ngForm.controls.editDate.setValue(new Date().getTime())
   }
 }

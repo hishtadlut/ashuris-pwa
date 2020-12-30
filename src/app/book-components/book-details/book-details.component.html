@@ -201,6 +201,10 @@
           </div>
         </div>
       </div>
+      <div class="date-stamp-wrapper">
+        <div *ngIf="book.creationDate" class="date-stamp"> Creation Date: {{book.creationDate | date: 'medium'}} </div>
+        <div *ngIf="book.editDate" class="date-stamp"> Edit Date: {{book.editDate | date:'medium'}}</div>
+      </div>
 
 
     </div>

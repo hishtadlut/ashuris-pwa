@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   getXMinutesFromNow(minutes: number): Date {
-    return new Date(new Date().getTime() + minutes * 60000);
+    return new Date(new Date().getTime() + (minutes * 60000));
   }
 
 

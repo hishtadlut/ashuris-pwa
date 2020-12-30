@@ -1,4 +1,5 @@
 import { RemoveItem } from '../enums';
+import { Book, Dealer, Writer } from '../interfaces';
 
 declare const navigator: Navigator;
 
@@ -109,4 +110,16 @@ export function getDuration(audio: HTMLAudioElement): Promise<number> {
       resolve(audio.duration);
     });
   });
+}
+
+export function sortByDate(list: any[]) {
+  list.map(((item: Book | Writer | Dealer) => {
+    if (!item.editDate) {
+      item.editDate = 0;
+    }
+    return item;
+  }))
+  return list.sort((a, b) => {
+    return b.editDate - a.editDate;
+  })
 }

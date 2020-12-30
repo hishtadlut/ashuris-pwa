@@ -26,7 +26,7 @@ export class EditWriterComponent implements OnInit {
 
   communitiesList: string[];
 
-  writerForm: FormGroup;
+  ngForm: FormGroup;
   map: google.maps.Map;
   isRecording = false;
   hasRecord = false;
@@ -47,7 +47,13 @@ export class EditWriterComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.writerForm = new FormGroup({
+    this.ngForm = new FormGroup({
+      creationDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
+      editDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
       note: new FormControl('', [
         // Validators.required,
       ]),
@@ -291,16 +297,16 @@ export class EditWriterComponent implements OnInit {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
       this.writer = await this.pouchDbService.getWriter(id);
 
-      const recordingsArray = this.writerForm.controls.recordings as FormArray;
+      const recordingsArray = this.ngForm.controls.recordings as FormArray;
       this.writer.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
 
-      const photosArray = this.writerForm.controls.photos as FormArray;
+      const photosArray = this.ngForm.controls.photos as FormArray;
       this.writer.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
-      const photos620x620 = this.writerForm.controls.photos_620x620 as FormArray;
+      const photos620x620 = this.ngForm.controls.photos_620x620 as FormArray;
       this.writer.photos_620x620?.forEach(photo => photos620x620.push(new FormControl(photo)));
 
-      this.writerForm.patchValue(this.writer);
+      this.ngForm.patchValue(this.writer);
       this.textForSaveButton = 'שמור שינויים';
     }
 
@@ -336,7 +342,7 @@ export class EditWriterComponent implements OnInit {
   onAddProfileImage(file: File) {
     blobToBase64(file)
       .then((base64File: string | ArrayBuffer) => {
-        this.writerForm.controls.profileImage.setValue(base64File);
+        this.ngForm.controls.profileImage.setValue(base64File);
       }).catch((err) => {
         console.log(err);
       });
@@ -345,9 +351,9 @@ export class EditWriterComponent implements OnInit {
   onAddPhoto(file: File) {
     blobToBase64(file)
       .then((base64File: string) => {
-        const photosArray = this.writerForm.controls.photos as FormArray;
+        const photosArray = this.ngForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
-        const photos620x620Array = this.writerForm.controls.photos_620x620 as FormArray;
+        const photos620x620Array = this.ngForm.controls.photos_620x620 as FormArray;
         photos620x620Array.push(new FormControl(base64File));
       }).catch((err) => {
         console.log(err);
@@ -372,7 +378,7 @@ export class EditWriterComponent implements OnInit {
       .then((audioBlob: Blob) => {
         this.recordingService.convertRecordingToBase64(audioBlob)
           .then((base64data: string) => {
-            const recordingsArray = this.writerForm.controls.recordings as FormArray;
+            const recordingsArray = this.ngForm.controls.recordings as FormArray;
             recordingsArray.push(new FormControl('data:audio/wav;base64' + base64data.split('base64')[1]));
           });
       })
@@ -383,14 +389,14 @@ export class EditWriterComponent implements OnInit {
 
   deleteRecording(index: number) {
     if (areYouSureYouWantToRemove(RemoveItem.recording)) {
-      const recordingsArray = this.writerForm.controls.recordings as FormArray;
+      const recordingsArray = this.ngForm.controls.recordings as FormArray;
       recordingsArray.removeAt(index);
     }
   }
 
   deletePhoto(index: number) {
     if (areYouSureYouWantToRemove(RemoveItem.img)) {
-      const photosArray = this.writerForm.controls.photos as FormArray;
+      const photosArray = this.ngForm.controls.photos as FormArray;
       photosArray.removeAt(index);
     }
   }
@@ -408,16 +414,16 @@ export class EditWriterComponent implements OnInit {
   }
 
   onSubmit(event) {
-    if (this.writerForm.valid) {
+    if (this.ngForm.valid) {
       const div = (event.target as HTMLDivElement);
       div.classList.add('mirror-rotate');
       setTimeout(() => {
         div.classList.remove('mirror-rotate');
       }, 2000);
       if (this.locationWithoutParameters === LocationPath.CREATE_WRITER) {
-        this.pouchDbService.createWriter({ ...this.writerForm.value });
+        this.pouchDbService.createWriter({ ...this.ngForm.value });
       } else if (this.locationWithoutParameters === LocationPath.EDIT_WRITER) {
-        this.pouchDbService.createWriter({ ...this.writer, ...this.writerForm.value });
+        this.pouchDbService.createWriter({ ...this.writer, ...this.ngForm.value });
       }
       this.router.navigate(['/writers-list-screen']);
     } else {
@@ -427,10 +433,10 @@ export class EditWriterComponent implements OnInit {
 
   fillLocation() {
     this.googleMapsService.setAddressThroghGoogleMaps().then((address: Address) => {
-      this.writerForm.controls.city.setValue(address.city);
-      this.writerForm.controls.street.setValue(address.street);
-      this.writerForm.controls.streetNumber.setValue(address.streetNumber);
-      this.writerForm.controls.coordinates.setValue(address.coordinates);
+      this.ngForm.controls.city.setValue(address.city);
+      this.ngForm.controls.street.setValue(address.street);
+      this.ngForm.controls.streetNumber.setValue(address.streetNumber);
+      this.ngForm.controls.coordinates.setValue(address.coordinates);
     });
   }
 
@@ -438,6 +444,10 @@ export class EditWriterComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const inputLength = input.value.length;
     input.setSelectionRange(inputLength, inputLength);
+  }
+
+  updateEditDate() {
+    this.ngForm.controls.editDate.setValue(new Date().getTime())
   }
 
 }

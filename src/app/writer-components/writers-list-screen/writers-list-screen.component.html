@@ -82,4 +82,5 @@
     <div (click)="resetSearch()" class="display-all-btn button">הצג רשימה מלאה</div>
   </div>
 </form>
+<button *ngIf="sortButtonText" (click)="changeSortMethod()" class="sort-by-button">{{ sortButtonText }}</button>
 <app-writer-list-item *ngFor="let writer of writersToDisplay" [writer]="writer"></app-writer-list-item>

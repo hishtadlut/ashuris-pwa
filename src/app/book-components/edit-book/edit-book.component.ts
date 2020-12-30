@@ -19,7 +19,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./edit-book.component.css']
 })
 export class EditBookComponent implements OnInit, OnDestroy {
-  bookForm: FormGroup;
+  ngForm: FormGroup;
   dialogFormGroup: FormGroup = null;
 
   isRecording = false;
@@ -64,11 +64,17 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
     this.formValues$Subscription = this.formValues$.subscribe(formValue => {
       if (formValue) {
-        this.bookForm.patchValue(formValue);
+        this.ngForm.patchValue(formValue);
       }
     });
 
-    this.bookForm = new FormGroup({
+    this.ngForm = new FormGroup({
+      creationDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
+      editDate: new FormControl(new Date().getTime(), [
+        Validators.required,
+      ]),
       name: new FormControl('', [
         Validators.required,
       ]),
@@ -244,17 +250,17 @@ export class EditBookComponent implements OnInit, OnDestroy {
       const id = this.activatedRoute.snapshot.queryParamMap.get('id');
       this.book = await this.pouchDbService.getBookById(id);
 
-      const recordingsArray = this.bookForm.controls.recordings as FormArray;
+      const recordingsArray = this.ngForm.controls.recordings as FormArray;
       this.book.recordings.forEach(recording => recordingsArray.push(new FormControl(recording)));
 
-      const photosArray = this.bookForm.controls.photos as FormArray;
+      const photosArray = this.ngForm.controls.photos as FormArray;
       this.book.photos?.forEach(photo => photosArray.push(new FormControl(photo)));
 
-      const photos620x620 = this.bookForm.controls.photos_620x620 as FormArray;
+      const photos620x620 = this.ngForm.controls.photos_620x620 as FormArray;
       this.book.photos_620x620?.forEach(photo => photos620x620.push(new FormControl(photo)));
 
-      this.bookForm.patchValue(this.book);
-      this.dealerId = this.dealerList.find(dealer => dealer.fullName === this.bookForm.get('dealer').value)?._id;
+      this.ngForm.patchValue(this.book);
+      this.dealerId = this.dealerList.find(dealer => dealer.fullName === this.ngForm.get('dealer').value)?._id;
       this.textForSaveButton = 'שמור שינויים';
     }
   }
@@ -290,9 +296,9 @@ export class EditBookComponent implements OnInit, OnDestroy {
   onAddPhoto(file: File) {
     blobToBase64(file)
       .then((base64File: string) => {
-        const photosArray = this.bookForm.controls.photos as FormArray;
+        const photosArray = this.ngForm.controls.photos as FormArray;
         photosArray.push(new FormControl(base64File));
-        const photos620x620Array = this.bookForm.controls.photos_620x620 as FormArray;
+        const photos620x620Array = this.ngForm.controls.photos_620x620 as FormArray;
         photos620x620Array.push(new FormControl(base64File));
       }).catch((err) => {
         console.log(err);
@@ -317,7 +323,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       .then((audioBlob: Blob) => {
         this.recordingService.convertRecordingToBase64(audioBlob)
           .then((base64data: string) => {
-            const recordingsArray = this.bookForm.controls.recordings as FormArray;
+            const recordingsArray = this.ngForm.controls.recordings as FormArray;
             recordingsArray.push(new FormControl('data:audio/wav;base64' + base64data.split('base64')[1]));
           });
       })
@@ -328,26 +334,26 @@ export class EditBookComponent implements OnInit, OnDestroy {
 
   deletePhoto(index: number) {
     if (areYouSureYouWantToRemove(RemoveItem.img)) {
-      const photosArray = this.bookForm.controls.photos as FormArray;
+      const photosArray = this.ngForm.controls.photos as FormArray;
       photosArray.removeAt(index);
     }
   }
 
   deleteRecording(index: number) {
     if (areYouSureYouWantToRemove(RemoveItem.recording)) {
-      const recordingsArray = this.bookForm.controls.recordings as FormArray;
+      const recordingsArray = this.ngForm.controls.recordings as FormArray;
       recordingsArray.removeAt(index);
     }
   }
 
   async onSubmit(event) {
-    if (this.bookForm.valid) {
+    if (this.ngForm.valid) {
       const div = (event.target as HTMLDivElement);
       div.classList.add('mirror-rotate');
       setTimeout(() => {
         div.classList.remove('mirror-rotate');
       }, 2000);
-      await this.pouchDbService.createBook({ ...this.book, ...this.bookForm.value }, this.dealerId);
+      await this.pouchDbService.createBook({ ...this.book, ...this.ngForm.value }, this.dealerId);
       this.router.navigate(['/book-list-screen']);
     } else {
       alert('יש למלא שם לספר ומידת התאמה');
@@ -356,7 +362,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   routeToCreateNewDealer() {
-    this.store.dispatch(setBookFormValues({ form: this.bookForm.value }));
+    this.store.dispatch(setBookFormValues({ form: this.ngForm.value }));
     this.router.navigate([LocationPath.CREATE_DEALER_FOR_BOOK]);
   }
 
@@ -364,6 +370,10 @@ export class EditBookComponent implements OnInit, OnDestroy {
     if (areYouSureYouWantToRemove(RemoveItem.book)) {
       this.pouchDbService.removeItem(LocalDbNames.BOOKS, this.book);
     }
+  }
+  
+  updateEditDate() {
+    this.ngForm.controls.editDate.setValue(new Date().getTime())
   }
 
   ngOnDestroy() {

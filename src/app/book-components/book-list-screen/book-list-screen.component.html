@@ -12,4 +12,5 @@
 <div class="count-section grid">
   <div *ngIf="booksToDisplay" class="count">ספרים ברשימה {{ booksToDisplay.length }}</div>
 </div>
+<button *ngIf="sortButtonText" (click)="changeSortMethod()" class="sort-by-button">{{ sortButtonText }}</button>
 <app-book-list-item *ngFor="let book of booksToDisplay" [book]="book"></app-book-list-item>

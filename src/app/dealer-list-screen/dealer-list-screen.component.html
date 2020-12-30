@@ -4,4 +4,5 @@
 <div class="count-section grid">
   <div *ngIf="dealersToDisplay" class="count">סוחרים ברשימה {{ dealersToDisplay.length }}</div>
 </div>
+<button *ngIf="sortButtonText" (click)="changeSortMethod()" class="sort-by-button">{{ sortButtonText }}</button>
 <app-dealer-list-item *ngFor="let dealer of dealersToDisplay" [dealer]="dealer"></app-dealer-list-item>

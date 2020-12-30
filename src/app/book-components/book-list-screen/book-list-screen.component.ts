@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { LocationPath } from 'src/app/enums';
 import { ActivatedRoute } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
-import { sortByLetters } from 'src/app/utils/utils';
+import { sortByDate, sortByLetters } from 'src/app/utils/utils';
 import { ScrollService } from 'src/app/scroll.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { ScrollService } from 'src/app/scroll.service';
   styleUrls: ['./book-list-screen.component.css']
 })
 export class BookListScreenComponent implements OnInit {
+  sortButtonText: string;
   locationPath: typeof LocationPath = LocationPath;
   locationWithoutParameters: string;
   bookList: Book[];
@@ -33,9 +34,9 @@ export class BookListScreenComponent implements OnInit {
       await this.getBooksBySoldCondition(false);
     } else if (this.locationWithoutParameters === LocationPath.DEALER_BOOK_LIST) {
       const books = await this.pouchDbService.getDealerBooks(this.activatedRoute.snapshot.queryParamMap.get('id'))
-      const availableBooks = books.filter((book: Book) => book?.isSold.boolean === false);
-      this.booksToDisplay = sortByLetters(availableBooks);
+      this.bookList = books.filter((book: Book) => book?.isSold.boolean === false);
     }
+    this.sortList();
     setTimeout(() => {
       this.scrollService.scroll();
     }, 0);
@@ -43,13 +44,32 @@ export class BookListScreenComponent implements OnInit {
 
   async getBooksBySoldCondition(isSold: boolean) {
     const books = await this.pouchDbService.getBooksBySoldCondition(isSold)
-    this.bookList = this.booksToDisplay = sortByLetters(books.docs);
+    this.bookList = books.docs;
+    this.sortList();
   }
 
   onKeyUpSearchByName(event) {
     this.booksToDisplay = this.bookList.filter(book =>
       book.name.includes(event.target.value)
     );
+  }
+
+  sortList() {
+    const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
+    localStorage.setItem('sortListByLetters', (sortListByLetters).toString());
+    if (sortListByLetters) {
+      this.sortButtonText = 'ממוין לפי א - ב';
+      this.booksToDisplay = sortByLetters(this.bookList);
+    } else {
+      this.sortButtonText = 'ממוין לפי תאריך'
+      this.booksToDisplay = sortByDate(this.bookList);
+    }
+  }
+
+  changeSortMethod() {
+    const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
+    localStorage.setItem('sortListByLetters', (!sortListByLetters).toString());
+    this.sortList();
   }
 
 }

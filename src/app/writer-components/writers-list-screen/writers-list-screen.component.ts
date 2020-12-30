@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
 import { LocationPath } from 'src/app/enums';
 import { Location } from '@angular/common';
-import { sortByLetters } from 'src/app/utils/utils';
+import { sortByDate, sortByLetters } from 'src/app/utils/utils';
 import { ScrollService } from 'src/app/scroll.service';
 
 @Component({
@@ -18,6 +18,8 @@ import { ScrollService } from 'src/app/scroll.service';
   styleUrls: ['./writers-list-screen.component.css']
 })
 export class WritersListScreenComponent implements OnInit, OnDestroy {
+  sortButtonText: string;
+  
   writersToDisplay: Writer[] = [];
 
   writersList: Writer[];
@@ -57,6 +59,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
         veryGood: new FormControl(true),
       }),
       quickSearch: new FormControl(''),
+      sortedByLetters: new FormControl(false)
     });
 
     this.pouchDbService.getCities()
@@ -75,21 +78,20 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       const city = this.activatedRoute.snapshot.queryParamMap.get('city');
       const street = this.activatedRoute.snapshot.queryParamMap.get('street');
       const streetNumber = this.activatedRoute.snapshot.queryParamMap.get('streetNumber');
-      this.pouchDbService.getWritersInRoom(city, street, streetNumber)
-        .then(writers => {
-          this.writersList = this.writersToDisplay = writers;
-        });
+      const writers = await this.pouchDbService.getWritersInRoom(city, street, streetNumber)
+      this.writersList = writers;
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
       await new Promise(resolve => setTimeout(resolve, 100));
       const writers = await this.pouchDbService.getWriters();
-      this.writersList = this.writersToDisplay = sortByLetters(writers);
+      this.writersList = writers;
     }
     if (localStorage.getItem('UseWriterListFilterParams') === 'true') {
       this.searchForm.patchValue(JSON.parse(localStorage.getItem('writerListFilterParams')));
       await new Promise(resolve => setTimeout(resolve, 100));
       const writers = await this.pouchDbService.getWriters();
-      this.writersList = this.writersToDisplay = sortByLetters(writers);
+      this.writersList = writers;
     }
+    this.sortList();
     setTimeout(() => {
       this.scrollService.scroll();
     }, 0);
@@ -111,6 +113,24 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
   async search() {
     localStorage.setItem('writerListFilterParams', JSON.stringify(this.searchForm.value));
     this.writersToDisplay = await this.searchService.writerListFilter(this.searchForm.value);
+  }
+
+  sortList() {
+    const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
+    localStorage.setItem('sortListByLetters', (sortListByLetters).toString());
+    if (sortListByLetters) {
+      this.sortButtonText = 'ממוין לפי א - ב';
+      this.writersToDisplay = sortByLetters(this.writersList);
+    } else {
+      this.sortButtonText = 'ממוין לפי תאריך'
+      this.writersToDisplay = sortByDate(this.writersList);
+    }
+  }
+
+  changeSortMethod() {
+    const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
+    localStorage.setItem('sortListByLetters', (!sortListByLetters).toString());
+    this.sortList();
   }
 
   ngOnDestroy() {

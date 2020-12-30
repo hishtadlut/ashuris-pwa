@@ -46,6 +46,10 @@
           <div class="description ">כתובת</div>
         </div>
       </div>
+      <div class="date-stamp-wrapper">
+        <div *ngIf="dealer.creationDate" class="date-stamp"> Creation Date: {{dealer.creationDate | date: 'medium'}} </div>
+        <div *ngIf="dealer.editDate" class="date-stamp"> Edit Date: {{dealer.editDate | date:'medium'}}</div>
+      </div>
     </div>
   </div>
 </div>

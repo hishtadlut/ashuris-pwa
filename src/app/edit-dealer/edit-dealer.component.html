@@ -1,17 +1,22 @@
 <app-note-dialog (closeDialogAndDeleteChanges)="closeDialogAndDeleteChanges($event)" *ngIf="dialogFormGroup !== null" (closeDialog)="closeDialog()" [formGroup]="dialogFormGroup">
 </app-note-dialog>
 <div class="edit-writer-wrapper">
-  <div class="fill-location" (click)="fillLocation()">
-    מיקום אוטומטי
+  <div class="date-stamp-wrapper">
+    <div class="date-stamp"> Creation Date: {{ngForm.controls.creationDate.value | date: 'medium'}} </div>
+    <div class="date-stamp"> Edit Date: {{ngForm.controls.editDate.value | date:'medium'}}</div>
   </div>
-  <form [formGroup]="dealerForm">
+  <div class="top-buttons">
+    <div class="fill-location" (click)="updateEditDate()"> תאריך שינוי </div>
+    <div class="fill-location" (click)="fillLocation()"> מיקום אוטומטי </div>
+  </div>
+  <form [formGroup]="ngForm">
     <div class="page-grid">
       <div class="profile-image-section">
         <input (change)="onAddProfileImage($event.target.files[0])" id="profileImage" style="display:none;" type="file" accept="image/*" value="הוסף תמונת פרופיל" class="circle-image">
         <label for="profileImage" class="bold-text inner-grid">
                     <div>
-                        <i *ngIf="!dealerForm.controls.profileImage.value" class="icofont-user-alt-7"></i>
-                        <img *ngIf="dealerForm.controls.profileImage.value" [src]="dealerForm.controls.profileImage.value"
+                        <i *ngIf="!ngForm.controls.profileImage.value" class="icofont-user-alt-7"></i>
+                        <img *ngIf="ngForm.controls.profileImage.value" [src]="ngForm.controls.profileImage.value"
                             class="profile-image">
                     </div>
                     <div>
@@ -23,7 +28,7 @@
         <div class="section-title-w-note inner-grid-2">
           <div>פרטים נוספים</div>
           <div>
-            <p (click)="openDialog(dealerForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
+            <p (click)="openDialog(ngForm)" class="note"><i class="icofont-pencil-alt-2"></i></p>
           </div>
         </div>
 
