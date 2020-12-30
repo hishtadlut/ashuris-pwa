@@ -1,8 +1,8 @@
 <div class="book-list-item" (click)="goToBookDetails()">
   <div class="book-details">
-    <div class="book-name">ס"ת {{ book.name }}</div>
+    <div class="book-name">ס"ת {{ book?.name }}</div>
     <div class="book-desk">
-      <span *ngIf="book.writingDeatails.letterSize.size">{{ book.writingDeatails.letterSize.size }}</span><span *ngIf="book.writingDeatails.writingType"> {{ book.writingDeatails.writingType }}</span></div>
+      <span *ngIf="book?.writingDeatails.letterSize.size">{{ book?.writingDeatails.letterSize.size }}</span><span *ngIf="book?.writingDeatails.writingType"> {{ book?.writingDeatails.writingType }}</span></div>
   </div>
   <div class="reminder" [ngClass]="{'highlight-regular': levelOfUrgency === 2, 'highlight-ergent': levelOfUrgency === 3 }" (click)="changeUrgencyLevel($event)"></div>
 </div>

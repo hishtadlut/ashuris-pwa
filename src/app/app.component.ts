@@ -19,6 +19,7 @@ import { ScrollService } from './scroll.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title = "Ashuris";
   routerNavigation$Subscription: Subscription;
   previousUrl: string;
   constructor(
