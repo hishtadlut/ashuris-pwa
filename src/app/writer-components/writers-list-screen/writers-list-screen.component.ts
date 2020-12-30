@@ -84,12 +84,14 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
         const writers = await this.pouchDbService.getWritersInRoom(city, street, streetNumber)
         this.writersList = writers;
       }
+      await this.getWritersFunction();
     } else if (this.location.path() === LocationPath.WRITERS_LIST_SCREEN) {
       this.getWritersFunction = async () => {
         await new Promise(resolve => setTimeout(resolve, 100));
         const writers = await this.pouchDbService.getWriters();
         this.writersList = writers;
       }
+      await this.getWritersFunction();
     }
     if (localStorage.getItem('UseWriterListFilterParams') === 'true') {
       this.searchForm.patchValue(JSON.parse(localStorage.getItem('writerListFilterParams')));
