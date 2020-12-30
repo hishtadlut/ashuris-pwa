@@ -91,9 +91,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
         boolean: new FormControl(false, [
           // Validators.required,
         ]),
-        note: new FormControl('', [
-          // Validators.required,
-        ]),
       }),
       endDate: new FormGroup({
         gregorianDate: new FormControl('', [

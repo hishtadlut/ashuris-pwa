@@ -235,7 +235,6 @@ export interface Book {
   note: string;
   isSold: {
     boolean: boolean;
-    note: string;
   };
   endDate: {
     gregorianDate: CalendarDate
