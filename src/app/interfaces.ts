@@ -83,6 +83,12 @@ export interface Writer {
       price: number;
       worthIt: string;
     }
+
+    priceForMegilla: {
+      note: string;
+      price: number;
+      worthIt: string;
+    }
   };
 
   placeOfWriting: {

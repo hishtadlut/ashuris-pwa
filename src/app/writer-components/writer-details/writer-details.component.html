@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="extra-details-section">
-      <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price || writer.pricesDeatails.priceForMezuzah.price || writer.pricesDeatails.priceForTefillin.price" class="section" (click)="closeMenus('pricesDeatails')">
+      <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price || writer.pricesDeatails.priceForMezuzah.price || writer.pricesDeatails.priceForTefillin.price || writer.pricesDeatails.priceForMegilla.price" class="section" (click)="closeMenus('pricesDeatails')">
         <div class="section-title-btn">מחירים</div>
         <div class="internal-details-wrapper" [ngClass]="{'closedMenu': !openMenuStatus.pricesDeatails}">
           <div *ngIf="writer.pricesDeatails.priceForTorahScroll.price" class="price-extra-detail">
@@ -107,6 +107,15 @@
               <i [class.icofont-check-alt]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'false'"></i>
             </div>
             <div *ngIf="writer.pricesDeatails.priceForTefillin.note" (click)="openDialog($event, writer.pricesDeatails.priceForTefillin.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
+          </div>
+          <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForMegilla?.price">
+            <div class="detail-title description">מחיר לתפילין</div>
+            <div class="detail">{{ writer.pricesDeatails.priceForMegilla.price | currency: "USD":true:"1.0-1" }}</div>
+            <div *ngIf="writer.pricesDeatails.priceForMegilla.worthIt.toString()" class="shave description">שווה לדעתי</div>
+            <div>
+              <i [class.icofont-check-alt]="writer.pricesDeatails.priceForMegilla.worthIt.toString() === 'true'" [class.icofont-close-line]="writer.pricesDeatails.priceForTefillin.worthIt.toString() === 'false'"></i>
+            </div>
+            <div *ngIf="writer.pricesDeatails.priceForMegilla.note" (click)="openDialog($event, writer.pricesDeatails.priceForMegilla.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
           </div>
         </div>
       </div>

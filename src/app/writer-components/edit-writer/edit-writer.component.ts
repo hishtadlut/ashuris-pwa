@@ -144,6 +144,17 @@ export class EditWriterComponent implements OnInit {
             // Validators.required,
           ]),
         }),
+        priceForMegilla: new FormGroup({
+          price: new FormControl('', [
+            // Validators.required
+          ]),
+          worthIt: new FormControl('', [
+            // Validators.required,
+          ]),
+          note: new FormControl('', [
+            // Validators.required,
+          ]),
+        }),
       }),
       writingDeatails: new FormGroup({
         letterSizes: new FormGroup({

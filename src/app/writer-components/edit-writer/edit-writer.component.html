@@ -157,6 +157,24 @@
           </div>
           <p (click)="openDialog(HelperAbstractControlToFormGroup(ngForm.get(['pricesDeatails', 'priceForTefillin'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
         </div>
+        <div formGroupName="priceForMegilla" class="price-for-item inner-grid-2">
+          <div class="book-desc">מגילה</div>
+          <input currencyMask appCurserToEnd type="tel" placeholder="מחיר למגילה" formControlName="price">
+          <div class="worth-it-buttons-wrapper inner-grid-2">
+            <label [ngClass]="{'checked': ngForm.get(['pricesDeatails', 'priceForMegilla', 'worthIt']).value === 'false'}" class="size-checkbox">
+                            <i class="icofont-close-line"></i>
+                            <input type="radio" formControlName="worthIt" value='false'
+                                (click)="isChecked($event, ngForm.get(['pricesDeatails', 'priceForMegilla', 'worthIt']))">
+                        </label>
+            <label [ngClass]="{'checked': ngForm.get(['pricesDeatails', 'priceForMegilla', 'worthIt']).value === 'true'}" class="size-checkbox">
+                            <i class="icofont-check-alt"></i>
+                            <input type="radio" formControlName="worthIt" value='true'
+                                (click)="isChecked($event, ngForm.get(['pricesDeatails', 'priceForMegilla', 'worthIt']))">
+                        </label>
+
+          </div>
+          <p (click)="openDialog(HelperAbstractControlToFormGroup(ngForm.get(['pricesDeatails', 'priceForMegilla'])))" class="note"><i class="icofont-pencil-alt-2"></i></p>
+        </div>
       </div>
     </div>
     <div formGroupName="writingDeatails" class="writing-detail-section inner-grid">
