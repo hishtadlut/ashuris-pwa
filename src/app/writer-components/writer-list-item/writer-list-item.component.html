@@ -1,11 +1,11 @@
-<div class="writer-list-item" (click)="goToWriterDetails()">
-  <div *ngIf="!writer.profileImage" class="icofont-wrapper">
-    <i class="icofont-user-alt-7"></i>
+<div appSwipe [levelOfUrgency]="levelOfUrgency" (changeUrgencyLevel)="changeUrgencyLevel($event)" class=" writer-list-item " (click)="goToWriterDetails() ">
+  <div *ngIf="!writer.profileImage " class="icofont-wrapper ">
+    <i class="icofont-user-alt-7 "></i>
   </div>
-  <img *ngIf="writer.profileImage" [src]="writer.profileImage">
-  <div class="writer-details">
-    <div class="writer-name">{{ writer.lastName }} {{ writer.firstName }}</div>
-    <div class="writer-address">{{ writer.street }}, {{ writer.city }}</div>
+  <img *ngIf="writer.profileImage " [src]="writer.profileImage ">
+  <div class="writer-details ">
+    <div class="writer-name ">{{ writer.lastName }} {{ writer.firstName }}</div>
+    <div class="writer-address ">{{ writer.street }}, {{ writer.city }}</div>
   </div>
-  <div class="reminder" [ngClass]="{'highlight-regular': levelOfUrgency === 2, 'highlight-ergent': levelOfUrgency === 3 }" (click)="changeUrgencyLevel($event)"></div>
+  <div class="reminder" [ngClass]="{ 'highlight-regular': levelOfUrgency===2 , 'highlight-ergent': levelOfUrgency===3 } " (click)="changeUrgencyLevel($event) "></div>
 </div>

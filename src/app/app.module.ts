@@ -46,6 +46,7 @@ import { CookieModule } from 'ngx-cookie';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { CurserToEndDirective } from './directives/curserToEnd/curser-to-end.directive';
+import { SwipeDirective } from './directives/swipe/swipe.directive';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -88,6 +89,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     DoubleTapOpenImgDirective,
     LoginPageComponent,
     CurserToEndDirective,
+    SwipeDirective,
   ],
   imports: [
     BrowserModule,

@@ -101,6 +101,14 @@ export class EditWriterComponent implements OnInit {
           // Validators.required,
         ]),
       }),
+      lengthOfWritingBook: new FormGroup({
+        length: new FormControl('', [
+          // Validators.required
+        ]),
+        note: new FormControl('', [
+          // Validators.required,
+        ]),
+      }),
       isAppropriate: new FormGroup({
         level: new FormControl('', [
           Validators.required
