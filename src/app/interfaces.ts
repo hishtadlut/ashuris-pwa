@@ -23,6 +23,10 @@ export interface Writer {
     level: string;
     note: string;
   };
+  lengthOfWritingBook: {
+    length: string;
+    note: string;
+  },
   startDate: {
     gregorianDate: CalendarDate
     hebrewDateInWords: string

@@ -48,6 +48,17 @@
       <app-hebrew-date-form-control [parentForm]="ngForm" formGroupName="startDate" sectionTitle="תאריך התחלה">
       </app-hebrew-date-form-control>
     </div>
+    <div formGroupName="lengthOfWritingBook" class="community-section inner-grid">
+      <div class="section-title-w-note inner-grid-2">
+        <div>
+          אורך כתיבת ספר
+        </div>
+        <p (click)="openDialog(HelperAbstractControlToFormGroup(ngForm.get(['lengthOfWritingBook'])))" class="note">
+          <i class="icofont-pencil-alt-2"></i>
+        </p>
+      </div>
+      <input appCurserSideByLanguaga placeholder="אורך כתיבת ספר" formControlName="length" class="full-width">
+    </div>
     <div formGroupName="isAppropriate" class="is-appropriate-section">
       <div class="is-appropriate-radio-buttons-wraper inner-grid">
         <div class="section-title">

@@ -109,7 +109,7 @@
             <div *ngIf="writer.pricesDeatails.priceForTefillin.note" (click)="openDialog($event, writer.pricesDeatails.priceForTefillin.note)" class="comment-icon"><i class="icofont-exclamation-circle"></i></div>
           </div>
           <div class="price-extra-detail" *ngIf="writer.pricesDeatails.priceForMegilla?.price">
-            <div class="detail-title description">מחיר לתפילין</div>
+            <div class="detail-title description">מחיר למגילה</div>
             <div class="detail">{{ writer.pricesDeatails.priceForMegilla.price | currency: "USD":true:"1.0-1" }}</div>
             <div *ngIf="writer.pricesDeatails.priceForMegilla.worthIt.toString()" class="shave description">שווה לדעתי</div>
             <div>
@@ -169,7 +169,8 @@
               writer.additionalDetails.hasWritenKabala.boolean ||
               writer.additionalDetails.hasWritenBefore.boolean ||
               writer.placeOfWriting.place ||
-              writer.communityDeatails.community
+              writer.communityDeatails.community ||
+              writer.lengthOfWritingBook?.length
             ">
         <div class="section-title-btn">פרטים נוספים</div>
         <div class="internal-details-wrapper" [ngClass]="{ closedMenu: !openMenuStatus.additionalDeatails }">
@@ -244,6 +245,13 @@
             <div class="detail-title description">דרגת סופר</div>
             <div class="detail">{{ writer.additionalDetails.writerLevel.level }}</div>
             <div *ngIf="writer.additionalDetails.writerLevel.note" (click)="openDialog($event, writer.additionalDetails.writerLevel.note)" class="comment-icon">
+              <i class="icofont-exclamation-circle"></i>
+            </div>
+          </div>
+          <div class="writing-extra-detail" *ngIf="writer.lengthOfWritingBook?.length">
+            <div class="detail-title description">אורך כתיבת ספר</div>
+            <div class="detail">{{ writer.lengthOfWritingBook?.length }}</div>
+            <div *ngIf="writer.lengthOfWritingBook?.note" (click)="openDialog($event, writer.lengthOfWritingBook?.note)" class="comment-icon">
               <i class="icofont-exclamation-circle"></i>
             </div>
           </div>
