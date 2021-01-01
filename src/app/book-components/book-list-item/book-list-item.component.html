@@ -1,4 +1,4 @@
-<div class="book-list-item" (click)="goToBookDetails()">
+<div appSwipe [levelOfUrgency]="levelOfUrgency" (changeUrgencyLevel)="changeUrgencyLevel($event)" class="book-list-item" (click)="goToBookDetails()">
   <div class="book-details">
     <div class="book-name">ס"ת {{ book?.name }}</div>
     <div class="book-desk">

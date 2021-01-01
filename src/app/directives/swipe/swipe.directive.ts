@@ -6,28 +6,57 @@ import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/cor
 export class SwipeDirective {
   @Input() levelOfUrgency: number;
   @Output() changeUrgencyLevel = new EventEmitter<string>();
-  constructor(private elementRef: ElementRef) {
+
+  element: HTMLDivElement
+
+  constructor(private elementRef: ElementRef<HTMLDivElement>) {
+    this.element = elementRef.nativeElement;
     let touchstartX = 0;
     let touchendX = 0;
-
-    elementRef.nativeElement.addEventListener('touchstart', e => {
+    this.element.classList.add('animate__animated')
+    this.element.style.setProperty('--animate-duration', '0.6s');
+    this.element.addEventListener('touchstart', e => {
       touchstartX = e.changedTouches[0].screenX;
     });
 
-    elementRef.nativeElement.addEventListener('touchend', e => {
+    this.element.addEventListener('touchend', e => {
       touchendX = e.changedTouches[0].screenX;
-      this.handleGesture(touchstartX, touchendX);
+      this.handleGesture(touchstartX, touchendX, e);
     });
+
+    this.element.addEventListener('animationend', () => {
+      this.element.classList.remove('animate__fadeOutLeft')
+    });
+    this.element.addEventListener('animationend', () => {
+      this.element.classList.remove('animate__fadeOutRight')
+    });
+
+    var defaultPrevent = function (e) { e.preventDefault(); }
+    // this.element.addEventListener("touchstart", defaultPrevent);
+    // this.element.addEventListener("touchmove", defaultPrevent);
   }
 
-  handleGesture(touchstartX: number, touchendX: number) {
-    console.log(this.levelOfUrgency)
+  defaultPrevent(e) { e.preventDefault(); }
 
-    if (touchendX + 100 < touchstartX) {
-      console.log('swiped left!')
+  handleGesture(touchstartX: number, touchendX: number, event: TouchEvent) {
+    if (touchendX + 200 < touchstartX) {
+      this.defaultPrevent(event)
+
+      // console.log('swiped left!')
+
+      this.element.classList.add('animate__fadeOutLeft');
+      // this.element.addEventListener('animationend', () => {
+      //   this.element.classList.remove('animate__fadeOutLeft')
+      // });
       this.changeUrgencyLevel.emit('+');
-    } else if (touchendX - 100 > touchstartX) {
-      console.log('swiped right!')
+    } else if (touchendX - 200 > touchstartX) {
+      this.defaultPrevent(event)
+      // console.log('swiped right!')
+
+      this.element.classList.add('animate__fadeOutRight');
+      // this.element.addEventListener('animationend', () => {
+      //   this.element.classList.remove('animate__fadeOutRight')
+      // });
       this.changeUrgencyLevel.emit('-');
     };
   }

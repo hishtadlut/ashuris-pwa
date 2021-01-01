@@ -34,6 +34,7 @@
     "@ngrx/effects": "^9.2.0",
     "@ngrx/schematics": "^9.2.0",
     "@ngrx/store": "^9.2.0",
+    "animate.css": "^4.1.1",
     "bootstrap": "^4.4.0",
     "firebase": "^8.1.1",
     "hammerjs": "^2.0.8",
