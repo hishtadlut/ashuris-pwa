@@ -98,13 +98,13 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       await new Promise(resolve => setTimeout(resolve, 100));
       const writers = await this.pouchDbService.getWriters();
       this.writersList = writers;
+      this.search()
     }
     this.sortList();
     setTimeout(() => {
       this.scrollService.scroll();
     }, 0);
     localStorage.setItem('UseWriterListFilterParams', 'false');
-    localStorage.setItem('writerListFilterParams', '{}');
   }
 
   onKeyUpSearchByName(event) {
