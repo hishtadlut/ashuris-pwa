@@ -5,6 +5,8 @@ import { Subscription, Observable } from 'rxjs';
 import { State } from '../reducers';
 import { ScrollService } from '../scroll.service';
 import { sortByDate, sortByLetters } from '../utils/utils';
+import { ReportsService } from '../report-page/reports.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dealer-list-screen',
@@ -32,7 +34,12 @@ export class DealerListScreenComponent implements OnInit, OnDestroy {
   );
   sortButtonText: string;
 
-  constructor(private store$: Store<State>, private scrollService: ScrollService) { }
+  constructor(
+    private store$: Store<State>, 
+    private scrollService: ScrollService,
+    private reportsService: ReportsService,
+    private router: Router,
+    ) { }
 
   ngOnInit(): void {
     this.dealerList$Subscription = this.dealerList$.subscribe((dealerList) => {
@@ -70,6 +77,11 @@ export class DealerListScreenComponent implements OnInit, OnDestroy {
     const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
     localStorage.setItem('sortListByLetters', (!sortListByLetters).toString());
     this.sortList();
+  }
+
+  goToReportPage() {
+    this.reportsService.reportList.next(this.dealersToDisplay);
+    this.router.navigate(['/report'])
   }
 
   ngOnDestroy() {

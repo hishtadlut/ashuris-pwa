@@ -18,6 +18,7 @@ import { LocationPath } from './enums';
 import { LoginPageComponent } from './login-page/login-page.component';
 
 import { LoginGuard } from './guards/login-guard/login-guard.guard';
+import { ReportPageComponent } from './report-page/report-page.component';
 
 const routes: Routes = [
   { path: 'login-page', component: LoginPageComponent },
@@ -162,6 +163,12 @@ const routes: Routes = [
     path: 'book-reminders',
     component: RemindersListComponent,
     data: { 'nav-bar-title': 'תזכורות ספרים' },
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'report',
+    component: ReportPageComponent,
+    data: { 'nav-bar-title': 'פרטים' },
     canActivate: [LoginGuard],
   },
 ];

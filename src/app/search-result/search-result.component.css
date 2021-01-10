@@ -1,37 +1,55 @@
 .add-sofer-button {
-    background-color: #2A2E43;
-    font-size: 1fr;
-    color: #C89C5B;
-    font-weight: bold;
-    padding: 2vw;
-    border-radius: 10px;
-    margin-bottom: 5vw;
-    margin-top: 5vw;
-    border: solid 2px #C89C5B;
-    box-shadow: 0pt 3pt 6pt #00000029;
+  background-color: #2A2E43;
+  font-size: 1fr;
+  color: #C89C5B;
+  font-weight: bold;
+  padding: 2vw;
+  border-radius: 10px;
+  margin-bottom: 5vw;
+  margin-top: 5vw;
+  border: solid 2px #C89C5B;
+  box-shadow: 0pt 3pt 6pt #00000029;
 }
 
 .page-grid {
-    direction: rtl;
-    display: grid;
-    margin: 0 4vw;
+  direction: rtl;
+  display: grid;
+  margin: 0 4vw;
 }
 
 .grid {
-    display: grid;
-    align-items: center;
-}
-
-.count-section {
-    grid-template: auto / 1fr auto;
-    grid-gap: 10vw;
-    padding: 1vw 4vw;
-    align-items: end;
+  display: grid;
+  align-items: center;
 }
 
 .count {
-    font-weight: normal;
-    font-size: 0.75rem;
-    font-family: Arial;
-    text-align: right;
+  font-weight: normal;
+  font-size: 0.75rem;
+  font-family: Arial;
+  text-align: right;
+}
+
+.count-section {
+  grid-template: auto / 80px auto;
+  grid-gap: 10vw;
+  padding: 1vw 4vw;
+  align-items: baseline;
+  font-size: 18px;
+}
+
+.button {
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-size: 0.85rem;
+  font-family: Arial;
+  background-color: #C4C4C4;
+  padding: 2.5vw 3vw;
+  margin-top: 4vw;
+  border-radius: 4px;
+}
+
+.display-all-btn {
+  background-color: #2A2E43;
+  margin: 0;
 }

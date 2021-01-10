@@ -47,6 +47,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { CurserToEndDirective } from './directives/curserToEnd/curser-to-end.directive';
 import { SwipeDirective } from './directives/swipe/swipe.directive';
+import { ReportPageComponent } from './report-page/report-page.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -90,6 +92,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     LoginPageComponent,
     CurserToEndDirective,
     SwipeDirective,
+    ReportPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     CurrencyMaskModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([WritersEffects]),
+    NgxDatatableModule,
   ],
   providers: [
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }

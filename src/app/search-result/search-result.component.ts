@@ -7,6 +7,8 @@ import { Location } from '@angular/common';
 import { LocationPath } from '../enums';
 import { SearchService } from '../search.service';
 import { ScrollService } from '../scroll.service';
+import { ReportsService } from '../report-page/reports.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-result',
@@ -25,6 +27,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     public location: Location,
     private scrollService: ScrollService,
+    private reportsService: ReportsService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +43,11 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   newSearch() {
     this.searchService.clearAdvancedSearchParameters();
     this.location.back();
+  }
+
+  goToReportPage() {
+    this.reportsService.reportList.next(this.searchResult);
+    this.router.navigate(['/report'])
   }
 
   ngOnDestroy() {

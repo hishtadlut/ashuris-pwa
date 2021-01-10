@@ -64,3 +64,28 @@ button {
 label input {
   display: none;
 }
+
+.count-section {
+  grid-template: auto / auto 80px;
+  grid-gap: 10vw;
+  padding: 1vw 4vw;
+  align-items: baseline;
+  font-size: 18px;
+}
+
+.button {
+  text-align: center;
+  color: white;
+  font-weight: normal;
+  font-size: 0.85rem;
+  font-family: Arial;
+  background-color: #C4C4C4;
+  padding: 2.5vw 3vw;
+  margin-top: 4vw;
+  border-radius: 4px;
+}
+
+.display-all-btn {
+  background-color: #2A2E43;
+  margin: 0;
+}

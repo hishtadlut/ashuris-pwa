@@ -122,10 +122,10 @@
 }
 
 .count-section {
-  grid-template: auto / 1fr auto;
+  grid-template: auto / 1fr auto auto;
   grid-gap: 10vw;
   padding: 1vw 4vw;
-  align-items: end;
+  align-items: baseline;
 }
 
 .display-all-btn {

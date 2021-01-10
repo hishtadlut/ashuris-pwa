@@ -5,12 +5,13 @@ import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SearchService } from '../../search.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
 import { LocationPath } from 'src/app/enums';
 import { Location } from '@angular/common';
 import { sortByDate, sortByLetters } from 'src/app/utils/utils';
 import { ScrollService } from 'src/app/scroll.service';
+import { ReportsService } from 'src/app/report-page/reports.service';
 
 @Component({
   selector: 'app-writers-list-screen',
@@ -43,6 +44,8 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     private pouchDbService: StitchService,
     private location: Location,
     private scrollService: ScrollService,
+    private reportsService: ReportsService,
+    private router: Router,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -105,6 +108,7 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
       this.scrollService.scroll();
     }, 0);
     localStorage.setItem('UseWriterListFilterParams', 'false');
+    // localStorage.setItem('writerListFilterParams', '{}');
   }
 
   onKeyUpSearchByName(event) {
@@ -147,6 +151,11 @@ export class WritersListScreenComponent implements OnInit, OnDestroy {
     if (this.writersList$Subscription) {
       this.writersList$Subscription.unsubscribe();
     }
+  }
+
+  goToReportPage() {
+    this.reportsService.reportList.next(this.writersToDisplay);
+    this.router.navigate(['/report'])
   }
 
 }

@@ -80,6 +80,7 @@
   <div class="count-section grid">
     <div *ngIf="writersToDisplay" class="count">סופרים ברשימה {{ writersToDisplay.length }}</div>
     <div (click)="resetSearch()" class="display-all-btn button">הצג רשימה מלאה</div>
+    <div (click)="goToReportPage()" class="display-all-btn button"><i class="icofont-list"></i></div>
   </div>
 </form>
 <button *ngIf="sortButtonText" (click)="changeSortMethod()" class="sort-by-button">{{ sortButtonText }}</button>

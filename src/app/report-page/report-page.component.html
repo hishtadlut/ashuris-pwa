@@ -1,0 +1,7 @@
+<div (click)="printPage()" id="fixedbutton"><i class="icofont-file-pdf"></i></div>
+<div dir="rtl">
+  <ngx-datatable *ngIf="reportList && reportList[0]?.firstName" limit="100" [virtualization]="false " [scrollbarV]="true " [columnMode]="'force'" class="material striped " [headerHeight]="50" [rowHeight]="50 " [rows]="this.reportList " [columns]="columns">
+  </ngx-datatable>
+  <ngx-datatable *ngIf="reportList && !reportList[0]?.firstName" limit="100" [virtualization]="false " [scrollbarV]="true " [columnMode]="'force'" class="material striped " [headerHeight]="50" [rowHeight]="50 " [rows]="this.reportList " [columns]="bookColumns">
+  </ngx-datatable>
+</div>

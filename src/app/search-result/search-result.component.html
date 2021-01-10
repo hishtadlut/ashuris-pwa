@@ -1,4 +1,5 @@
 <div class="count-section grid">
+  <div (click)="goToReportPage()" class="display-all-btn button"><i class="icofont-list"></i></div>
   <div *ngIf="searchResult" class="count">כמות ברשימה {{ searchResult.length }}</div>
 </div>
 <div class="page-grid">

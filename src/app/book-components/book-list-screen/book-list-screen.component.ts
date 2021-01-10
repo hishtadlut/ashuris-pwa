@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from '../../interfaces';
 import { Location } from '@angular/common';
 import { LocationPath } from 'src/app/enums';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StitchService } from 'src/app/stitch-service.service';
 import { sortByDate, sortByLetters } from 'src/app/utils/utils';
 import { ScrollService } from 'src/app/scroll.service';
+import { ReportsService } from 'src/app/report-page/reports.service';
 
 @Component({
   selector: 'app-book-list-screen',
@@ -25,6 +26,8 @@ export class BookListScreenComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private pouchDbService: StitchService,
     private scrollService: ScrollService,
+    private reportsService: ReportsService,
+    private router: Router,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -70,6 +73,11 @@ export class BookListScreenComponent implements OnInit {
     const sortListByLetters = localStorage.getItem('sortListByLetters') === 'true';
     localStorage.setItem('sortListByLetters', (!sortListByLetters).toString());
     this.sortList();
+  }
+
+  goToReportPage() {
+    this.reportsService.reportList.next(this.booksToDisplay);
+    this.router.navigate(['/report'])
   }
 
 }
