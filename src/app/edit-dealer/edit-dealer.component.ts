@@ -11,6 +11,7 @@ import { Address, Dealer } from '../interfaces';
 import { loadDealerList } from '../actions/writers.actions';
 import { GoogleMapsService } from '../google-maps-service.service';
 import { LocalDbNames, LocationPath, RemoveItem } from '../enums';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class EditDealerComponent implements OnInit {
     private location: Location,
     private activatedRoute: ActivatedRoute,
     private googleMapsService: GoogleMapsService,
+    private authService: AuthService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -53,6 +55,7 @@ export class EditDealerComponent implements OnInit {
       editDate: new FormControl(new Date().getTime(), [
         Validators.required,
       ]),
+      editorUserName: new FormControl(this.authService.getCookieUserName()),
       note: new FormControl('', [
         // Validators.required,
       ]),

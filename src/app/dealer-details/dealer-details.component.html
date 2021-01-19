@@ -41,14 +41,17 @@
         <i class="icofont-location-pin "></i>
         <div>
           <div class="information">
-            <a href="http://maps.google.com/?q={{ dealerAddress }}">{{ dealer.street }} {{ dealer.streetNumber }} <span *ngIf="dealer.apartmentNumber ">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}</a>
+            <a href="http://maps.google.com/?q={{ dealerAddress }}">{{ dealer.street }} {{ dealer.streetNumber }} <span
+                *ngIf="dealer.apartmentNumber ">דירה {{ dealer.apartmentNumber }}</span> {{ dealer.city }}</a>
           </div>
           <div class="description ">כתובת</div>
         </div>
       </div>
       <div class="date-stamp-wrapper">
-        <div *ngIf="dealer.creationDate" class="date-stamp"> Creation Date: {{dealer.creationDate | date: 'medium'}} </div>
+        <div *ngIf="dealer.creationDate" class="date-stamp"> Creation Date: {{dealer.creationDate | date: 'medium'}}
+        </div>
         <div *ngIf="dealer.editDate" class="date-stamp"> Edit Date: {{dealer.editDate | date:'medium'}}</div>
+        <div *ngIf="dealer.editorUserName" class="date-stamp"> edited by: {{dealer.editorUserName}}</div>
       </div>
     </div>
   </div>

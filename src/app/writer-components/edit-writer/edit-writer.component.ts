@@ -6,11 +6,10 @@ import { GoogleMapsService } from '../../google-maps-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RecordingService } from '../../recording.service';
-import { Store } from '@ngrx/store';
-import { State } from '../../reducers';
 import { Writer, Address } from '../../interfaces';
 import { Location } from '@angular/common';
 import { LocalDbNames, LocationPath, RemoveItem } from 'src/app/enums';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-edit-writer',
@@ -40,10 +39,10 @@ export class EditWriterComponent implements OnInit {
     private googleMapsService: GoogleMapsService,
     public recordingService: RecordingService,
     public sanitizer: DomSanitizer,
-    private store$: Store<State>,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
+    private authService: AuthService,
   ) { }
 
   async ngOnInit() {
@@ -54,6 +53,7 @@ export class EditWriterComponent implements OnInit {
       editDate: new FormControl(new Date().getTime(), [
         Validators.required,
       ]),
+      editorUserName: new FormControl(this.authService.getCookieUserName()),
       note: new FormControl('', [
         // Validators.required,
       ]),
@@ -466,7 +466,8 @@ export class EditWriterComponent implements OnInit {
   }
 
   updateEditDate() {
-    this.ngForm.controls.editDate.setValue(new Date().getTime())
+    this.ngForm.controls.editDate.setValue(new Date().getTime());
+    this.ngForm.controls.editorUserName.setValue(this.authService.getCookieUserName());
   }
 
 }

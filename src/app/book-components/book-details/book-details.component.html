@@ -64,35 +64,40 @@
             <div class="detail-title description">דרגת כתיבה</div>
             <div class="detail">{{ book.writingDeatails.writingLevel.level }}</div>
             <div *ngIf="book.writingDeatails.writingLevel.note" (click)="openDialog($event ,book.writingDeatails.writingLevel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
           <div *ngIf="book.writingDeatails.stabilityLevel.level" class="writing-extra-detail">
             <div class="detail-title description">יציבות</div>
             <div class="detail">{{ book.writingDeatails.stabilityLevel.level }}</div>
             <div *ngIf="book.writingDeatails.stabilityLevel.note" (click)="openDialog($event ,book.writingDeatails.stabilityLevel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
           <div *ngIf="book.writingDeatails.eraseLevel.level" class="writing-extra-detail">
             <div class="detail-title description">מחיקה</div>
             <div class="detail">{{ book.writingDeatails.eraseLevel.level }}</div>
             <div *ngIf="book.writingDeatails.eraseLevel.note" (click)="openDialog($event ,book.writingDeatails.eraseLevel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
           <div *ngIf="book.writingDeatails.parchmentLevel.level" class="writing-extra-detail">
             <div class="detail-title description">איכות הקלף</div>
             <div class="detail">{{ book.writingDeatails.parchmentLevel.level }}</div>
             <div *ngIf="book.writingDeatails.parchmentLevel.note" (click)="openDialog($event ,book.writingDeatails.parchmentLevel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
           <div *ngIf="book.writingDeatails.parchmentType.type" class="writing-extra-detail">
             <div class="detail-title description">סוג הקלף</div>
             <div class="detail">{{ book.writingDeatails.parchmentType.type }}</div>
             <div *ngIf="book.writingDeatails.parchmentType.note" (click)="openDialog($event ,book.writingDeatails.parchmentType.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
           <div *ngIf="book.writingDeatails.letterSize.size" class="writing-extra-detail">
@@ -134,7 +139,8 @@
               <i [class.icofont-check-alt]="book.additionalDetails.goesToKotel.boolean.toString() === 'true'" [class.icofont-close-line]="book.additionalDetails.goesToKotel.boolean.toString() === 'false'"></i>
             </div>
             <div *ngIf="book.additionalDetails.goesToKotel.note" (click)="openDialog($event ,book.additionalDetails.goesToKotel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
 
         </div>
@@ -178,7 +184,8 @@
             <div class="detail-title description">דרגת סופר</div>
             <div class="detail">{{ book.additionalDetails.writerLevel.level }}</div>
             <div *ngIf="book.additionalDetails.writerLevel.note" (click)="openDialog($event ,book.additionalDetails.writerLevel.note)" class="comment-icon">
-              <i class="icofont-exclamation-circle"></i></div>
+              <i class="icofont-exclamation-circle"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -204,6 +211,7 @@
       <div class="date-stamp-wrapper">
         <div *ngIf="book.creationDate" class="date-stamp"> Creation Date: {{book.creationDate | date: 'medium'}} </div>
         <div *ngIf="book.editDate" class="date-stamp"> Edit Date: {{book.editDate | date:'medium'}}</div>
+        <div *ngIf="book.editorUserName" class="date-stamp"> edited by: {{book.editorUserName}}</div>
       </div>
 
 

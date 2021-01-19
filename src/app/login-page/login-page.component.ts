@@ -28,12 +28,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     const userName = this.loginForm.get('userName').value;
     const password = this.loginForm.get('password').value;
     this.authService.getNewToken(userName, password)
-          .subscribe(data => {
-            this.authService.setCookie(data.accessToken);
-            this.router.navigate([`/`]);
-          }, (err) => {
-            alert('פרטים לא נכונים');
-          });
+      .subscribe(data => {
+        this.authService.setCookie(userName, data.accessToken);
+        this.router.navigate([`/`]);
+      }, (err) => {
+        console.log(err);
+        alert('פרטים לא נכונים');
+      });
   }
 
   ngOnDestroy() {

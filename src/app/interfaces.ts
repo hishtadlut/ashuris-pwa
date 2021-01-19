@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 export interface Writer {
   _id?: any;
   _rev?: string;
+  editorUserName: string;
   creationDate: number;
   editDate: number;
   photos_620x620?: string[];
@@ -215,6 +216,7 @@ export interface Address {
 export interface Dealer {
   _id?: any;
   _rev?: string;
+  editorUserName: string;
   creationDate: number;
   editDate: number;
   firstName: string;
@@ -235,6 +237,7 @@ export interface Dealer {
 export interface Book {
   _id?: any;
   _rev?: string;
+  editorUserName: string;
   creationDate: number;
   editDate: number;
   photos_620x620?: string[];

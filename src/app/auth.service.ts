@@ -25,13 +25,18 @@ export class AuthService {
     return this.cookieService.get('token');
   }
 
+  getCookieUserName() {
+    return this.cookieService.get('userName');
+  }
+
   getXMinutesFromNow(minutes: number): Date {
     return new Date(new Date().getTime() + (minutes * 60000));
   }
 
 
-  setCookie(accessToken: string) {
-    return this.cookieService.put('token', accessToken, { expires: this.getXMinutesFromNow((60 * 24)) });
+  setCookie(userName: string, accessToken: string) {
+    this.cookieService.put('userName', userName, { expires: this.getXMinutesFromNow((60 * 24)) });
+    this.cookieService.put('token', accessToken, { expires: this.getXMinutesFromNow((60 * 24)) });
   }
 
 }

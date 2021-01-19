@@ -4,6 +4,7 @@
   <div class="date-stamp-wrapper">
     <div class="date-stamp"> Creation Date: {{ngForm.controls.creationDate.value | date: 'medium'}} </div>
     <div class="date-stamp"> Edit Date: {{ngForm.controls.editDate.value | date:'medium'}}</div>
+    <div class="date-stamp"> edited by: {{ngForm.controls.editorUserName.value}}</div>
   </div>
   <div class="fill-location" (click)="updateEditDate()"> תאריך שינוי </div>
   <form [formGroup]="ngForm" class="page-grid">

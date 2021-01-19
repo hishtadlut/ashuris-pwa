@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
-import firebase from 'firebase/app';
 import { LocalDbNames } from './enums';
-require('firebase/auth');
-require('firebase/storage');
 
 import { v4 as uuidv4 } from 'uuid';
 import { base64ToBlob, blobToBase64, blobToObjectUrl } from './utils/utils';
@@ -24,18 +21,6 @@ interface ImgDocument {
 })
 export class FirebaseService {
   imagesToUploadDB = new PouchDB<ImgDocument>(LocalDbNames.IMAGES_TO_UPLOAD_DB, { revs_limit: 1 });
-
-  firebaseConfig = {
-    apiKey: 'AIzaSyAhHbU3IToJtQtVgCi8QTC5uTVkMhp9-DU',
-    authDomain: 'ashuris.firebaseapp.com',
-    databaseURL: 'https://ashuris.firebaseio.com',
-    projectId: 'ashuris',
-    storageBucket: 'ashuris.appspot.com',
-    messagingSenderId: '480714379352',
-    appId: '1:480714379352:web:17f50e7faf212f650a3a2d',
-  };
-
-  firebaseRef = firebase.initializeApp(this.firebaseConfig);
 
   async addImagesToQueueOfUploades(img: Blob, folderName: string, extension: string) {
     const fileName = uuidv4();
@@ -95,18 +80,6 @@ export class FirebaseService {
         });
       resolve();
     }).catch(console.log);
-  }
-
-  uploadeImgToFirebase(blob: Blob, folderName: string, filename: string, extension: string) {
-    const MIME_TYPE = extension === 'jpg' ? 'image/jpeg' : 'audio/wav';
-    const imgPath = `${folderName}/${filename}.${extension}`;
-    const storageRef = this.firebaseRef.storage().ref(imgPath);
-    const uploadTask = storageRef.put(blob, { contentType: MIME_TYPE });
-    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      });
-    return uploadTask;
   }
 
   getUrlOfImage(folderName: string, fileName: string, extension: string) {

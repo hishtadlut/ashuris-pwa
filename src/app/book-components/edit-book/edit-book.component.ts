@@ -12,6 +12,7 @@ import { setBookFormValues } from 'src/app/actions/writers.actions';
 import { Store, select } from '@ngrx/store';
 import { State } from '../../reducers';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-edit-book',
@@ -57,7 +58,8 @@ export class EditBookComponent implements OnInit, OnDestroy {
     private router: Router,
     private pouchDbService: StitchService,
     private activatedRoute: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<State>,
+    private authService: AuthService,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -75,6 +77,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       editDate: new FormControl(new Date().getTime(), [
         Validators.required,
       ]),
+      editorUserName: new FormControl(this.authService.getCookieUserName()),
       name: new FormControl('', [
         Validators.required,
       ]),
@@ -368,7 +371,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
       this.pouchDbService.removeItem(LocalDbNames.BOOKS, this.book);
     }
   }
-  
+
   updateEditDate() {
     this.ngForm.controls.editDate.setValue(new Date().getTime())
   }
