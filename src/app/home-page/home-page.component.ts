@@ -5,4 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent { }
+export class HomePageComponent {
+
+  backupApp() {
+    fetch('https://ashuris.online/backupEverything')
+      .then(res => res.status === 200 ? alert('Backups will start soon') : alert('error'))
+      .catch(err => alert('error'));
+  }
+}

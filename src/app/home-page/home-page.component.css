@@ -3,7 +3,7 @@
 }
 
 .home-page {
-  min-height: 100vh;
+  min-height: 130vh;
   max-height: 150vh;
   padding-bottom: 5vw;
   background-image: url("../../assets/icons/background.png");
@@ -50,4 +50,22 @@ h2 {
   font-size: 16pt;
   text-align: center;
   margin: 0;
+}
+
+.backup-button-wrapper button {
+  text-align: center;
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 0.85rem;
+  font-family: Arial;
+  background-color: #C4C4C4;
+  padding: 2.5vw 3vw;
+  /* margin-top: 4vw; */
+  border-radius: 4px;
+  border: none;
+  width: 100%;
+}
+
+.backup-button-wrapper button:active {
+  box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5), inset 8px 8px 16px rgba(0, 0, 0, 0.1);
 }
