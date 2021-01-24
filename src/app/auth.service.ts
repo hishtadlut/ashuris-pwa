@@ -39,4 +39,8 @@ export class AuthService {
     this.cookieService.put('token', accessToken, { expires: this.getXMinutesFromNow((60 * 24)) });
   }
 
+  removeCookies() {
+    this.cookieService.removeAll();
+  }
+
 }
